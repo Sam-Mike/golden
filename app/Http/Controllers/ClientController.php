@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Client;
-use DB;
 
 class ClientController extends Controller
 {
@@ -41,7 +40,27 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'address'=>'required',
+            'phone_number'=>'required'
+        ]);
+
+        $client = new Client();
+
+        $client->client_name = request('name');
+        $client->address = request('address');
+        $client->phone = request('phone_number');
+        $client->contact_name = request('contact_name');
+        $client->mobile = request('mobile');
+        $client->email = request('email');
+
+        $client->save();
+
+        return redirect('/');
+
+        // $request->input();
+        
     }
 
     /**

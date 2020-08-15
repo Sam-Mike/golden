@@ -22,3 +22,5 @@ Route::get('/shows', function () {
 Route::get('/shows', function () {
     return view('table');
 });
+
+Route::post('table','ClientController@store');
