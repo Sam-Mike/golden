@@ -16,7 +16,6 @@ class ClientController extends Controller
     {
         $clients = Client::all();
         //$client = DB::table('client')->get();
-
         //return view('table', ['table'->$client]);
         return view('table', compact('clients'));
         //return view('table')->with(['client' =>  Client::all()]);

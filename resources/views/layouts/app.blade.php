@@ -100,7 +100,7 @@
           <i class="fas fa-fw fa-folder"></i>
           <span>Pages</span>
         </a>
-        <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
             <a class="collapse-item" href="login.html">Login</a>
@@ -332,8 +332,6 @@
         <div class="container-fluid">
             @yield('content')
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
 
         </div>
         <!-- /.container-fluid -->
