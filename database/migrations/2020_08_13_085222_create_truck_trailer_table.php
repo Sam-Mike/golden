@@ -15,7 +15,7 @@ class CreateTruckTrailerTable extends Migration
     {
         Schema::create('truck_trailer', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('truck_id')->constrained('truck');
+            $table->foreignId('truck_id')->constrained('trucks');
             $table->foreignId('trailer_id')->constrained('trailer');
             $table->string('status');
             $table->timestamps();

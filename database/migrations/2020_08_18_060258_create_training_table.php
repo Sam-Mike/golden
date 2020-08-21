@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFuelDispenseTable extends Migration
+class CreateTrainingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateFuelDispenseTable extends Migration
      */
     public function up()
     {
-        Schema::create('fuel_dispense', function (Blueprint $table) {
+        Schema::create('training', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('truck_id')->constrained('trucks');
-            $table->foreignId('fuel_tank_id')->constrained('fuel_tank');
+            $table->string('training_name');
+            $table->date('training_date');
+            $table->date('next_training_date');
+            $table->integer('retrain_days');
+            $table->foreignId('training_group_id')->constrained('training_group');
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ class CreateFuelDispenseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fuel_dispense');
+        Schema::dropIfExists('training');
     }
 }

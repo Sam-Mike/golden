@@ -15,6 +15,7 @@ class CreateTrailerTable extends Migration
     {
         Schema::create('trailer', function (Blueprint $table) {
             $table->id();
+            $table->integer('tl_number');
             $table->string('reg_number');
             $table->foreignId('trailer_type_id')->constrained('trailer_type');
             $table->timestamps();

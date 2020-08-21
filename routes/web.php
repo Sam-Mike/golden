@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'ClientController@index');
+Route::get('/', 'ClientsController@index');
 
 Route::get('/shows', function () {
     return view('shows.table');
@@ -23,4 +23,5 @@ Route::get('/shows', function () {
     return view('table');
 });
 
-Route::post('table','ClientController@store');
+Route::post('table','ClientsController@store');
+Route::get('/people', 'PeopleController@index');

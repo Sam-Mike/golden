@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Client;
+use App\People;
+use App\Company;
+use App\Departments;
 
-class ClientController extends Controller
+class PeopleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,12 +16,10 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
-        //$client = DB::table('client')->get();
-
-        //return view('table', ['table'->$client]);
-        return view('table', compact('clients'));
-        //return view('table')->with(['client' =>  Client::all()]);
+        $people= People::all();
+        $company=Company::all();
+        $departments=Departments::all();
+        return view('/people.people', compact('people', 'company', 'departments'));
     }
 
     /**
@@ -40,27 +40,7 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'=>'required',
-            'address'=>'required',
-            'phone_number'=>'required'
-        ]);
-
-        $client = new Client();
-
-        $client->client_name = request('name');
-        $client->address = request('address');
-        $client->phone = request('phone_number');
-        $client->contact_name = request('contact_name');
-        $client->mobile = request('mobile');
-        $client->email = request('email');
-
-        $client->save();
-
-        return redirect('/');
-
-        // $request->input();
-        
+        //
     }
 
     /**
