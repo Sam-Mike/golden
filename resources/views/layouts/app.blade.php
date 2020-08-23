@@ -26,14 +26,13 @@
   <div id="wrapper">
 
     <!-- Sidebar -->
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">GOLDEN</div>
       </a>
 
       <!-- Divider -->
@@ -330,8 +329,11 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          <h1 class="h3 mb-4 text-gray-800">PAGE NAME</h1>
+
             @yield('content')
 
+          <!-- Page Heading -->
 
         </div>
         <!-- /.container-fluid -->
@@ -388,6 +390,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
+  <script> src=</script>
   @yield('scripts')
 
 </body>

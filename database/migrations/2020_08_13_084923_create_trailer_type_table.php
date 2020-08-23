@@ -17,7 +17,6 @@ class CreateTrailerTypeTable extends Migration
             $table->id();
             $table->string('trailer_type_name');
             $table->integer('trailer_size');
-            $table->integer('tl_number');
             $table->timestamps();
         });
     }

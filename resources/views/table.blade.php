@@ -111,9 +111,8 @@
             </div>
           </div>
 
-
         @endsection
 
-        @section('srripts')
+        @section('scripts')
             
         @endsection

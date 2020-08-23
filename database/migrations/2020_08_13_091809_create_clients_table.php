@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFuelDispenseTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,14 @@ class CreateFuelDispenseTable extends Migration
      */
     public function up()
     {
-        Schema::create('fuel_dispense', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('truck_id')->constrained('trucks');
-            $table->foreignId('fuel_tank_id')->constrained('fuel_tank');
+            $table->string('client_name');
+            $table->string('address');
+            $table->text('phone');
+            $table->string('contact_name');
+            $table->text('mobile');
+            $table->string('email');
             $table->timestamps();
         });
     }
@@ -28,6 +32,6 @@ class CreateFuelDispenseTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fuel_dispense');
+        Schema::dropIfExists('client');
     }
 }

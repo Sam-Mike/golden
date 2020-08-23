@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTruckTable extends Migration
+class CreateTrucksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateTruckTable extends Migration
      */
     public function up()
     {
-        Schema::create('truck', function (Blueprint $table) {
+        Schema::create('trucks', function (Blueprint $table) {
             $table->id();
             $table->string('reg_number');
             $table->foreignId('company_id')->constrained('company');
