@@ -14,6 +14,7 @@ class AllocationsController extends Controller
         //2. destinationId
         //3. clientId
         //4. manifestnNo
+        //5. trucksList (Array)
 
         //handle them and return json response.
     }
