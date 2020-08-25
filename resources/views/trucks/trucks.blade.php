@@ -220,7 +220,7 @@ Dashboard
         var manifestNo = document.getElementById('manifestNo').value
 
         axios.post('http://127.0.0.1:8000/api/allocation', {
-            cargoId: cargoId
+            cargoId: cargoId,
             clientId: clientId,
             destinationId: destinationId,
             manifestNo: manifestNo
