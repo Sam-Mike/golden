@@ -7,6 +7,21 @@ use Illuminate\Http\Request;
 
 class AllocationsController extends Controller
 {
+
+    public function setAllocation(Request $request){
+        //you are recieving the following:
+        //1. cargoId
+        //2. destinationId
+        //3. clientId
+        //4. manifestnNo
+
+        //handle them and return json response.
+    }
+
+
+
+
+
     /**
      * Display a listing of the resource.
      *

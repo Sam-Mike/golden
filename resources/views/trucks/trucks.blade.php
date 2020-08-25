@@ -12,7 +12,7 @@ Dashboard
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Choose Client</label>
         </div>
-        <select class="custom-select" id="inputGroupSelect01">
+        <select class="custom-select" id="clientSelector">
             <option selected>Choose Client</option>
             @foreach($clients as $client)
             <option value="{{$client->id}}">{{$client->client_name}}</option>
@@ -23,7 +23,7 @@ Dashboard
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Choose Cargo</label>
         </div>
-        <select class="custom-select" id="inputGroupSelect01">
+        <select class="custom-select" id="cargoSelector">
             <option selected>Choose Cargo</option>
             @foreach ($cargo as $cargo)
             <option value="{{$cargo->id}}">{{$cargo->cargo_name}}</option>
@@ -34,7 +34,7 @@ Dashboard
         <div class="input-group-prepend">
             <label class="input-group-text" for="inputGroupSelect01">Choose Destination</label>
         </div>
-        <select class="custom-select" id="inputGroupSelect01">
+        <select class="custom-select" id="destinationSelector">
             <option selected>Choose Destination</option>
             @foreach ($locations as $location)
             <option value="{{$location->id}}">{{$location->location_name}}</option>
@@ -42,7 +42,7 @@ Dashboard
         </select>
     </div>
     <div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#allocation_modal">Create
+        <button type="button" class="btn btn-primary" onclick="setAllocationData()">Create
             Allocation</button>
     </div>
     <!-- create allocation modal-->
@@ -59,13 +59,11 @@ Dashboard
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Manifest Number</label>
-                        <input type="number" class="form-control" name="first_name"
+                        <input type="number" class="form-control" name="manifestNo" id="manifestNo"
                             placeholder="Enter the manifest number" required>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary"
-                            data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-primary" onclick="sendAllocationData()">Save</button>
                     </div>
                 </div>
             </div>
@@ -192,8 +190,12 @@ Dashboard
 @endsection
 
 @section('scripts')
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
     var trucksList = [];
+    var cargoId
+    var clientId
+    var destinationId
 
     function trucksArray() {};
 
@@ -206,6 +208,31 @@ Dashboard
         console.log('the trucksList array is ',trucksList);
     }
 
+    function setAllocationData(){
+        cargoId = document.getElementById('cargoSelector').value;
+        clientId = document.getElementById('clientSelector').value;
+        destinationId = document.getElementById('destinationSelector').value;
+        $('#allocation_modal').modal('show');
+        console.log(cargoId)
+    }
+
+    function sendAllocationData(){
+        var manifestNo = document.getElementById('manifestNo').value
+
+        axios.post('http://127.0.0.1:8000/api/allocation', {
+            cargoId: cargoId
+            clientId: clientId,
+            destinationId: destinationId,
+            manifestNo: manifestNo
+        })
+        .then(function (response) {
+            console.log(response);
+            $('#allocation_modal').modal('toggle');
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
 </script>
 
 @endsection
