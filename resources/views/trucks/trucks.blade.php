@@ -42,8 +42,31 @@ Dashboard
         </select>
     </div>
     <div>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Create Allocation</button>
-    </div class="btn_btn">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#allocation_modal">Create
+            Allocation</button>
+    </div>
+    <!-- create allocation modal-->
+    <div class="modal fade" id="allocation_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Allocation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hnameden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Manifest Number</label>
+                        <input type="number" class="form-control" name="first_name"
+                            placeholder="Enter the manifest number" required>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
@@ -147,7 +170,8 @@ Dashboard
                 <tbody>
                     @foreach ($trucks as $truck)
                     <tr>
-                    <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$truck->id}}" onclick="trucksArray({{$truck->id}});"></td>
+                        <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$truck->id}}"
+                                onclick="trucksArray({{$truck->id}});"></td>
                         <td>{{$truck->reg_number}}</td>
                         <td>{{$truck->company->company_name}}</td>
                         <td>{{$truck->cluster->cluster_name}}</td>
@@ -165,17 +189,19 @@ Dashboard
 
 @section('scripts')
 <script>
-    var trucksList=[];
-    function trucksArray(){};
-    function trucksArray(id){
-        if (trucksList.indexOf(id)<0){
+    var trucksList = [];
+
+    function trucksArray() {};
+
+    function trucksArray(id) {
+        if (trucksList.indexOf(id) < 0) {
             trucksList.push(id);
-        }else
-        {
+        } else {
             trucksList.pop(id);
         }
         console.log(trucksList);
     }
+
 </script>
 
 @endsection
