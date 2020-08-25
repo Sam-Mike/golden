@@ -174,7 +174,7 @@ Dashboard
         {
             trucksList.pop(id);
         }
-        console.log(trucksList);
+        console.log('the trucksList array is ',trucksList);
     }
 </script>
 
