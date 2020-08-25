@@ -62,7 +62,11 @@ Dashboard
                         <input type="number" class="form-control" name="first_name"
                             placeholder="Enter the manifest number" required>
                     </div>
-
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                            data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
