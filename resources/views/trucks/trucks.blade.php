@@ -230,7 +230,7 @@ Dashboard
             clientId: clientId,
             destinationId: destinationId,
             manifestNo: manifestNo,
-            truckslist: trucksList
+            trucksList: trucksList
         })
         .then(function (response) {
             console.log(response);
