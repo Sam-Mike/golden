@@ -16,19 +16,23 @@ class AllocationsController extends Controller
         //4. manifestnNo
         //5. trucksList (Array)
 
+        $truckslist = $request->trucksList;
+
         //handle them and return json response.
-        foreach ($trucksList as $truck){
+        foreach ($truckslist as $truck){
         $allocations = new Allocations();
 
-        $allocations->client_id = request('ClientId');
-        $allocations->cargo_id = request('CargoId');
-        $allocations->destination_id=request('DestinationId');
-        $allocations->manifest_number=request('manifestNo');
-        $allocations->truck_id=request('truck');
+        $allocations->client_id = $request->clientId;
+        $allocations->cargo_id = $request->cargoId;
+        $allocations->destination_id= $request->destinationId;
+        $allocations->manifest_no= $request->manifestNo;
+        $allocations->truck_trailer_id= $truck;
 
         $allocations->save();
         }
-        return response()->json();
+        return response()->json([
+            'success'
+        ], 200);
 
     }
 
