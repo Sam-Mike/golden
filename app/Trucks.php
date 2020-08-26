@@ -17,4 +17,7 @@ class Trucks extends Model
     public function truck_type(){
         return $this->belongsTo('App\TruckType');
     }
+    public function truck_trailer_people(){
+        return $this->hasMany('App\TruckTrailerPeople');
+    }
 }
