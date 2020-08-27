@@ -25,3 +25,5 @@ Route::get('/shows', function () {
 Route::post('table','ClientsController@store');
 Route::get('/people', 'PeopleController@index');
 Route::get('/trucks', 'TrucksController@index');
+Route::get('/truck_trailer_people', 'TruckTrailerPeopleController@index');
+Route::get('/allocations', 'AllocationsController@index');

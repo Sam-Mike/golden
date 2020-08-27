@@ -3,22 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Allocations;
+use App\People;
+use App\TruckTrailerPeople;
+use App\Cargo;
+use App\Location;
+use App\Clients;
 use Illuminate\Http\Request;
 
 class AllocationsController extends Controller
 {
 
     public function setAllocation(Request $request){
-        //you are recieving the following:
-        //1. cargoId
-        //2. destinationId
-        //3. clientId
-        //4. manifestnNo
-        //5. trucksList (Array)
+        //receiving data from the api
 
         $truckslist = $request->trucksList;
 
-        //handle them and return json response.
         foreach ($truckslist as $truck){
         $allocations = new Allocations();
 
@@ -26,7 +25,7 @@ class AllocationsController extends Controller
         $allocations->cargo_id = $request->cargoId;
         $allocations->destination_id= $request->destinationId;
         $allocations->manifest_no= $request->manifestNo;
-        $allocations->truck_trailer_id= $truck;
+        $allocations->truck_trailer_people_id= $truck;
 
         $allocations->save();
         }
@@ -35,11 +34,6 @@ class AllocationsController extends Controller
         ], 200);
 
     }
-
-
-
-
-
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +41,13 @@ class AllocationsController extends Controller
      */
     public function index()
     {
-        //
+        $allocations=Allocations::all();
+        $truck_trailer_people=TruckTrailerPeople::all();
+        $cargo=Cargo::all();
+        $clients=Clients::all();
+        $locations=Location::all();
+        return view('/allocations.allocations', compact('allocations','truck_trailer_people', 'cargo', 'clients', 'locations',));
+ 
     }
 
     /**

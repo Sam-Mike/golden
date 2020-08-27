@@ -15,10 +15,11 @@ class CreateAllocationsTable extends Migration
     {
         Schema::create('allocations', function (Blueprint $table) {
             $table->id();
+            $table->integer('manifest_no');
             $table->foreignId('client_id')->constrained('clients');
             $table->foreignId('cargo_id')->constrained('cargo');
-            $table->foreignId('people_id')->constrained('people');
-            $table->foreignId('truck_trailer_id')->constrained('truck_trailer');
+            $table->foreignId('destination_id')->constrained('location');
+            $table->foreignId('truck_trailer_people_id')->constrained('truck_trailer_people');
             $table->timestamps();
         });
     }

@@ -8,8 +8,8 @@ class TruckTrailerPeople extends Model
 {
     protected $table='truck_trailer_people';
 
-    public function truck(){
-        return $this->belongsTo('App\LicenseClasses');
+    public function trucks(){
+        return $this->belongsTo('App\Trucks', 'truck_id', 'id');
     }
     public function trailer(){
         return $this->belongsTo('App\Trailers');

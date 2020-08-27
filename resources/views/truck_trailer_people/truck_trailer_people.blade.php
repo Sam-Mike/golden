@@ -37,7 +37,7 @@
         <div class="col-md-4">
         <select class="custom-select" id="destinationSelector">
             <option selected>Choose Destination</option>
-            @foreach ($locations as $location)
+            @foreach ($location as $location)
             <option value="{{$location->id}}">{{$location->location_name}}</option>
             @endforeach
         </select>
@@ -80,7 +80,7 @@
                 {{-- Placing our modal here --}}
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
-                    Truck</button>
+                    TruckTrailerPeople</button>
 
                 <!-- Modal -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -88,50 +88,38 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add Truck</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Add TruckTrailerPeople</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hnameden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="people">
+                                <form method="POST" action="truck_trailer_people">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">First Name</label>
-                                        <input type="text" class="form-control" name="first_name"
-                                            placeholder="Enter your first name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Middle Name</label>
-                                        <input type="text" class="form-control" name="middle_name"
-                                            placeholder="Enter your middle name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Last Name</label>
-                                        <input type="text" class="form-control" name="last_name"
-                                            placeholder="Enter your last name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Date of Birth</label>
-                                        <input type="text" class="form-control" name="dob"
-                                            placeholder="Enter date of birth" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Start Date</label>
-                                        <input type="date" class="form-control" name="start_date"
-                                            placeholder="Enter employment date" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">License Number</label>
-                                        <input type="email" class="form-control" name="license_number"
-                                            placeholder="Enter License Number" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Company</label>
+                                        <label for="exampleInputEmail1">Truck</label>
                                         <select type="email" class="form-control" name="license_number"
                                             placeholder="Choose company" required>
-                                            @foreach ($company as $company)
-                                            <option value="{{$company->id}}">{{$company->company_name}}</option>
+                                            @foreach ($trucks as $truck)
+                                            <option value="{{$truck->id}}">{{$truck->reg_number}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>                                 
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Trailer</label>
+                                        <select type="email" class="form-control" name="license_number"
+                                            placeholder="Choose company" required>
+                                            @foreach ($trailers as $trailer)
+                                            <option value="{{$trailer->id}}">{{$trailer->tl_number}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">People</label>
+                                        <select type="email" class="form-control" name="license_number"
+                                            placeholder="Choose company" required>
+                                            @foreach ($people as $person)
+                                            <option value="{{$person->id}}">{{$person->first_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -160,6 +148,8 @@
                         <th>COMPANY</th>
                         <th>CLUSTER</th>
                         <th>TRUCK TYPE</th>
+                        <th>TRUCK TRAILER</th>
+                        <th>TRUCK DRIVER</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -169,17 +159,21 @@
                         <th>COMPANY</th>
                         <th>CLUSTER</th>
                         <th>TRUCK TYPE</th>
+                        <th>TRUCK TRAILER</th>
+                        <th>TRUCK DRIVER</th>
                     </tr>
                 </tfoot>
                 <tbody>
-                    @foreach ($trucks as $truck)
+                    @foreach ($truck_trailer_people as $ttp)
                     <tr>
-                        <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$truck->id}}"
-                                onclick="trucksArray({{$truck->id}});"></td>
-                        <td>{{$truck->reg_number}}</td>
-                        <td>{{$truck->company->company_name}}</td>
-                        <td>{{$truck->cluster->cluster_name}}</td>
-                        <td>{{$truck->truck_type->truck_type_name}}</td>
+                        <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$ttp->id}}"
+                                onclick="trucksArray({{$ttp->id}});"></td>
+                        <td>{{$ttp->trucks->reg_number}}</td>
+                        <td>{{$ttp->trucks->company->company_name}}</td>
+                        <td>{{$ttp->trucks->cluster->cluster_name}}</td>
+                        <td>{{$ttp->trucks->truck_type->truck_type_name}}</td>
+                        <td>{{$ttp->trailer->reg_number}}</td>
+                        <td>{{$ttp->people->first_name}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -233,7 +227,7 @@
             $('#allocation_modal').modal('toggle');
         })
         .catch(function (error) {
-            console.log(error);
+            console.log(error.response);
         });
     }
 </script>

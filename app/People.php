@@ -8,7 +8,6 @@ class People extends Model
 {
     protected $table='people';
 
-
     public function company(){
         return $this->belongsTo('App\Company');
     }

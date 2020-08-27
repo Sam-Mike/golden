@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@section('title')
-    Dashboard
-@endsection
-
 @section('content')
 
 <div class="widget widget-table action-table">

@@ -9,13 +9,13 @@ class Allocations extends Model
     protected $table='allocations';
 
     public function clients(){
-        $this->belongsTo('App\Clients');
+        return $this->belongsTo('App\Clients', 'client_id', 'id');
     }
     public function cargo(){
-        $this->belongsTo('App\Cargo');
+        return $this->belongsTo('App\Cargo');
     }
     public function location(){
-        return $this->belongsTo('App\Location');
+        return $this->belongsTo('App\Location', 'destination_id', 'id');
     }
     public function truck_trailer_people(){
         return $this->belongsTo('App\TruckTrailerPeople');
