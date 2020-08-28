@@ -51,6 +51,7 @@
                             <td>{{$allocation->truck_trailer_people->trucks->reg_number}}</td>
                             <td>{{$allocation->truck_trailer_people->trailer->tl_number}}</td>
                             <td>{{$allocation->location->location_name}}</td>
+                            <td>{{$allocation->truck_trailer_people->people->first_name}}</td>
                         </tr>
                         @endforeach
                     </tbody>
