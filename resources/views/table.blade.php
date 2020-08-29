@@ -8,7 +8,7 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
 
               {{-- Placing our modal here --}}
               <!-- Button trigger modal -->

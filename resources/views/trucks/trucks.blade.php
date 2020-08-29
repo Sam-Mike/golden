@@ -4,7 +4,7 @@
 
 <div class="widget widget-table action-table">
     @yield ('content')
-    
+
     <!-- create allocation modal-->
     <!-- DataTales Example -->
     <div class="card shadow mb-4 mt-3">
@@ -83,41 +83,41 @@
 
             </div>
         </div>
-    </div>
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>REG NUMBER</th>
-                        <th>COMPANY</th>
-                        <th>CLUSTER</th>
-                        <th>TRUCK TYPE</th>
-                    </tr>
-                </thead>
-                <tfoot>
-                    <tr>
-                        <th></th>
-                        <th>REG NUMBER</th>
-                        <th>COMPANY</th>
-                        <th>CLUSTER</th>
-                        <th>TRUCK TYPE</th>
-                    </tr>
-                </tfoot>
-                <tbody>
-                    @foreach ($trucks as $truck)
-                    <tr>
-                        <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$truck->id}}"
-                                onclick="trucksArray({{$truck->id}});"></td>
-                        <td>{{$truck->reg_number}}</td>
-                        <td>{{$truck->company->company_name}}</td>
-                        <td>{{$truck->cluster->cluster_name}}</td>
-                        <td>{{$truck->truck_type->truck_type_name}}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>REG NUMBER</th>
+                            <th>COMPANY</th>
+                            <th>CLUSTER</th>
+                            <th>TRUCK TYPE</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th>REG NUMBER</th>
+                            <th>COMPANY</th>
+                            <th>CLUSTER</th>
+                            <th>TRUCK TYPE</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        @foreach ($trucks as $truck)
+                        <tr>
+                            <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$truck->id}}"
+                                    onclick="trucksArray({{$truck->id}});"></td>
+                            <td>{{$truck->reg_number}}</td>
+                            <td>{{$truck->company->company_name}}</td>
+                            <td>{{$truck->cluster->cluster_name}}</td>
+                            <td>{{$truck->truck_type->truck_type_name}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
@@ -141,10 +141,10 @@
         } else {
             trucksList.pop(id);
         }
-        console.log('the trucksList array is ',trucksList);
+        console.log('the trucksList array is ', trucksList);
     }
 
-    function setAllocationData(){
+    function setAllocationData() {
         cargoId = document.getElementById('cargoSelector').value;
         clientId = document.getElementById('clientSelector').value;
         destinationId = document.getElementById('destinationSelector').value;
@@ -152,24 +152,25 @@
         console.log(cargoId)
     }
 
-    function sendAllocationData(){
+    function sendAllocationData() {
         var manifestNo = document.getElementById('manifestNo').value
 
         axios.post('http://127.0.0.1:8000/api/allocation', {
-            cargoId: cargoId,
-            clientId: clientId,
-            destinationId: destinationId,
-            manifestNo: manifestNo,
-            trucksList: trucksList
-        })
-        .then(function (response) {
-            console.log(response);
-            $('#allocation_modal').modal('toggle');
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+                cargoId: cargoId,
+                clientId: clientId,
+                destinationId: destinationId,
+                manifestNo: manifestNo,
+                trucksList: trucksList
+            })
+            .then(function (response) {
+                console.log(response);
+                $('#allocation_modal').modal('toggle');
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
+
 </script>
 
 @endsection
