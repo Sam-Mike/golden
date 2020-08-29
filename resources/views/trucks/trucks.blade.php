@@ -4,80 +4,14 @@
 
 <div class="widget widget-table action-table">
     @yield ('content')
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Choose Client</label>
-        </div>
-        <div class="col-md-4">
-        <select class="custom-select" id="clientSelector">
-            <option selected>Choose Client</option>
-            @foreach($clients as $client)
-            <option value="{{$client->id}}">{{$client->client_name}}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Choose Cargo</label>
-        </div>
-        <div class="col-md-4">
-        <select class="custom-select" id="cargoSelector">
-            <option selected>Choose Cargo</option>
-            @foreach ($cargo as $cargo)
-            <option value="{{$cargo->id}}">{{$cargo->cargo_name}}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Choose Destination</label>
-        </div>
-        <div class="col-md-4">
-        <select class="custom-select" id="destinationSelector">
-            <option selected>Choose Destination</option>
-            @foreach ($locations as $location)
-            <option value="{{$location->id}}">{{$location->location_name}}</option>
-            @endforeach
-        </select>
-        </div>
-    </div>
-    <div>
-        <button type="button" class="btn btn-primary" onclick="setAllocationData()">Create
-            Allocation</button>
-    </div>
+    
     <!-- create allocation modal-->
-    <div class="modal fade" id="allocation_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Allocation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hnameden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Manifest Number</label>
-                        <input type="number" class="form-control" name="manifestNo" id="manifestNo"
-                            placeholder="Enter the manifest number" required>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" onclick="sendAllocationData()">Save</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- DataTales Example -->
     <div class="card shadow mb-4 mt-3">
         <div class="card-header py-3">
             <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Trucks table</h6>
 
-                {{-- Placing our modal here --}}
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
                     Truck</button>
