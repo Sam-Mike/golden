@@ -7,10 +7,10 @@
 
     <!-- create allocation modal-->
     <!-- DataTales Example -->
-    <div class="card shadow mb-4 mt-3">
+    <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Trucks table</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
 
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
@@ -85,7 +85,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th></th>

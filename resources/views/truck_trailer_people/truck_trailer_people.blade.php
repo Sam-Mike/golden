@@ -21,7 +21,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputEmail1">Truck</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose company"
+                            <select type="email" class="form-control" name="license_number" placeholder="Choose truck"
                                 required>
                                 @foreach ($trucks as $truck)
                                 <option value="{{$truck->id}}">{{$truck->reg_number}}</option>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Trailer</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose company"
+                            <select type="email" class="form-control" name="license_number" placeholder="Choose trailer"
                                 required>
                                 @foreach ($trailers as $trailer)
                                 <option value="{{$trailer->id}}">{{$trailer->tl_number}}</option>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">People</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose company"
+                            <select type="email" class="form-control" name="license_number" placeholder="Choose Person"
                                 required>
                                 @foreach ($people as $person)
                                 <option value="{{$person->id}}">{{$person->first_name}}</option>
@@ -56,7 +56,7 @@
             </div>
         </div>
     </div>
-    <div class="card shadow mb-4 mt-3">
+    <div class="card shadow mb-4">
         <div style="padding:20px;">
             <!--inserting the list here-->
             <div class="input-group mb-3">
@@ -130,10 +130,10 @@
         </div>
     </div>
     <!-- DataTales Example -->
-    <div class="card shadow mb-4 mt-3">
+    <div class="card shadow mb-4">
         <div class="card-header py-3">
             <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Trucks table</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
                     TruckTrailerPeople</button>
@@ -141,7 +141,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th></th>
@@ -183,7 +183,6 @@
         </div>
     </div>
 </div>
-
 
 @endsection
 

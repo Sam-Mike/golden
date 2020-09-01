@@ -1,0 +1,17 @@
+body{
+    padding-top:150px;
+}
+.btn-outline-gold{
+    color:#e98b50;
+    border-color:#e98b50;
+}
+.doublenav{
+    overflow:hidden;
+}
+nav.navbar {
+    padding: 0px;
+}
+nav > div > ul > li > a:hover{
+    background-color:gray;
+    color: white;
+}
