@@ -1,5 +1,5 @@
 body{
-    padding-top:150px;
+    padding-top:120px;
 }
 .btn-outline-gold{
     color:#e98b50;
@@ -11,7 +11,13 @@ body{
 nav.navbar {
     padding: 0px;
 }
-nav > div > ul > li > a:hover{
-    background-color:gray;
+nav>div>ul>li>a:hover{
+    background-color:black;
     color: white;
+}
+.allocations-list{
+    list-style-type: none;
+}
+.input-group-prepend {
+    display: inline-flex;
 }

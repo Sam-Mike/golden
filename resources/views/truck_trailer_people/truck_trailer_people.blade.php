@@ -39,11 +39,11 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">People</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose Person"
+                            <input type="email" class="form-control" name="license_number" placeholder="Choose Person"
                                 required>
-                                @foreach ($people as $person)
-                                <option value="{{$person->id}}">{{$person->first_name}}</option>
-                                @endforeach
+                            @foreach ($people as $person)
+                            <option value="{{$person->id}}">{{$person->first_name}}</option>
+                            @endforeach
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -59,46 +59,39 @@
     <div class="card shadow mb-4">
         <div style="padding:20px;">
             <!--inserting the list here-->
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Choose Client</label>
+            <div class="row">
+                <div class="input-group mb-1 col">
+                    <div class="col-md-8">
+                        <select class="custom-select" id="clientSelector">
+                            <option selected>Choose Client</option>
+                            @foreach($clients as $client)
+                            <option value="{{$client->id}}">{{$client->client_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <select class="custom-select" id="clientSelector">
-                        <option selected>Choose Client</option>
-                        @foreach($clients as $client)
-                        <option value="{{$client->id}}">{{$client->client_name}}</option>
-                        @endforeach
-                    </select>
+                <div class="input-group mb-1 col">
+                    <div class="col-md-8">
+                        <select class="custom-select" id="cargoSelector">
+                            <option selected>Choose Cargo</option>
+                            @foreach ($cargo as $cargo)
+                            <option value="{{$cargo->id}}">{{$cargo->cargo_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Choose Cargo</label>
-                </div>
-                <div class="col-md-4">
-                    <select class="custom-select" id="cargoSelector">
-                        <option selected>Choose Cargo</option>
-                        @foreach ($cargo as $cargo)
-                        <option value="{{$cargo->id}}">{{$cargo->cargo_name}}</option>
-                        @endforeach
-                    </select>
-                </div>
-            </div>
-            <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Choose Destination</label>
-                </div>
-                <div class="col-md-4">
-                    <select class="custom-select" id="destinationSelector">
-                        <option selected>Choose Destination</option>
-                        @foreach ($location as $location)
-                        <option value="{{$location->id}}">{{$location->location_name}}</option>
-                        @endforeach
-                    </select>
+                <div class="input-group mb-1 col">
+                    <div class="col-md-8">
+                        <select class="custom-select" id="destinationSelector">
+                            <option selected>Choose Destination</option>
+                            @foreach ($location as $location)
+                            <option value="{{$location->id}}">{{$location->location_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div>
+            <div calss="row">
                 <button type="button" class="btn btn-primary" onclick="setAllocationData()">Create
                     Allocation</button>
             </div>

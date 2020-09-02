@@ -23,7 +23,7 @@ Route::get('/shows', function () {
 });
 
 Route::post('table','ClientsController@store');
-Route::get('/people', 'PeopleController@index');
-Route::get('/trucks', 'TrucksController@index');
-Route::get('/truck_trailer_people', 'TruckTrailerPeopleController@index');
-Route::get('/allocations', 'AllocationsController@index');
+Route::get('/people', 'PeopleController@index')->name('people');
+Route::get('/trucks', 'TrucksController@index')->name('trucks');
+Route::get('/truck_trailer_people', 'TruckTrailerPeopleController@index')->name('truck_trailer_people');
+Route::get('/allocations', 'AllocationsController@index')->name('allocations');

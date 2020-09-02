@@ -30,7 +30,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        
+
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -40,30 +40,51 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <div class="fixed-top d-flex flex-column" >
+                <div class="fixed-top d-flex flex-column">
                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item active">
                                     <a class="nav-link" href="#">Home</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Operations
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('truck_trailer_people')}}">TruckTrailerPeople</a>
+                                    <a class="dropdown-item" href="{{route('allocations')}}">Allocations</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Documents</a>
+                                    </div>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Dropdown
+                                        Trucks
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="{{route('trucks')}}">All Trucks</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Active</a>
+                                        <a class="dropdown-item" href="#">Inactive</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Trailers</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        HR
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('people')}}">All People</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Something else here</a>
                                     </div>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Link</a>
                                 </li>
                             </ul>
                         </div>
