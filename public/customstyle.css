@@ -1,18 +1,19 @@
 body{
-    padding-top:120px;
-}
-.btn-outline-gold{
-    color:#e98b50;
-    border-color:#e98b50;
+    padding-top:56px;
 }
 .doublenav{
     overflow:hidden;
 }
 nav.navbar {
     padding: 0px;
+    border-bottom:solid 3px #e98b50;
 }
 nav>div>ul>li>a:hover{
-    background-color:black;
+    background-color:#e98b50;
+    color: white;
+}
+nav>div>ul>li.active {
+    background-color:#e98b50;
     color: white;
 }
 .allocations-list{
@@ -20,4 +21,7 @@ nav>div>ul>li>a:hover{
 }
 .input-group-prepend {
     display: inline-flex;
+}
+.dropdown:hover .dropdown-menu{
+    display:block;
 }

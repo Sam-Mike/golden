@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">People</label>
-                            <input type="email" class="form-control" name="license_number" placeholder="Choose Person"
+                            <select type="email" class="form-control" name="license_number" placeholder="Choose Person"
                                 required>
                             @foreach ($people as $person)
                             <option value="{{$person->id}}">{{$person->first_name}}</option>
@@ -59,6 +59,10 @@
     <div class="card shadow mb-4">
         <div style="padding:20px;">
             <!--inserting the list here-->
+            <div calss="row">
+                <button type="button" style="float: right;" class="btn btn-primary" onclick="setAllocationData()">Create
+                    Allocation</button>
+            </div>
             <div class="row">
                 <div class="input-group mb-1 col">
                     <div class="col-md-8">
@@ -91,10 +95,7 @@
                     </div>
                 </div>
             </div>
-            <div calss="row">
-                <button type="button" class="btn btn-primary" onclick="setAllocationData()">Create
-                    Allocation</button>
-            </div>
+            
             <!-- create allocation modal-->
             <div class="modal fade" id="allocation_modal" tabindex="-1" role="dialog"
                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -134,40 +135,30 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                <table class="table table-bordered table-sm table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="thead-dark">
                         <tr>
                             <th></th>
                             <th>REG NUMBER</th>
-                            <th>COMPANY</th>
+                            <th>TRUCK DRIVER</th>
+                            <th>TRANSPORTER</th>
                             <th>CLUSTER</th>
                             <th>TRUCK TYPE</th>
                             <th>TRUCK TRAILER</th>
-                            <th>TRUCK DRIVER</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th>REG NUMBER</th>
-                            <th>COMPANY</th>
-                            <th>CLUSTER</th>
-                            <th>TRUCK TYPE</th>
-                            <th>TRUCK TRAILER</th>
-                            <th>TRUCK DRIVER</th>
-                        </tr>
-                    </tfoot>
+                    
                     <tbody>
                         @foreach ($truck_trailer_people as $ttp)
                         <tr>
                             <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$ttp->id}}"
                                     onclick="trucksArray({{$ttp->id}});"></td>
                             <td>{{$ttp->trucks->reg_number}}</td>
+                            <td>{{$ttp->people->first_name}}</td>
                             <td>{{$ttp->trucks->company->company_name}}</td>
                             <td>{{$ttp->trucks->cluster->cluster_name}}</td>
                             <td>{{$ttp->trucks->truck_type->truck_type_name}}</td>
                             <td>{{$ttp->trailer->reg_number}}</td>
-                            <td>{{$ttp->people->first_name}}</td>
                         </tr>
                         @endforeach
                     </tbody>

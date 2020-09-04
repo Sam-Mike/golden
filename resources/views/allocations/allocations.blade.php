@@ -19,8 +19,8 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                <table class="table table-bordered table-sm table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                    <thead class="thead-dark">
                         <tr>
                             <th>MANIFEST</th>
                             <th>CLIENT</th>
@@ -31,17 +31,7 @@
                             <th>DESTINATION</th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>MANIFEST </th>
-                            <th>CLIENT</th>
-                            <th>CARGO</th>
-                            <th>TRUCK</th>
-                            <th>TRAILER</th>
-                            <th>DRIVER</th>
-                            <th>DESTINATION</th>
-                        </tr>
-                    </tfoot>
+                    
                     <tbody>
                         @foreach ($allocations as $allocation)
                         <tr>
