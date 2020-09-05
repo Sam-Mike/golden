@@ -9,6 +9,7 @@ use App\Cluster;
 use App\Cargo;
 use App\Clients;
 use App\Location;
+use App\Status;
 use Illuminate\Http\Request;
 
 class TrucksController extends Controller
@@ -27,7 +28,8 @@ class TrucksController extends Controller
         $cargo=Cargo::all();
         $clients=Clients::all();
         $locations=Location::all();
-        return view('/trucks.trucks', compact('trucks', 'company', 'truck_type', 'cluster', 'locations', 'cargo', 'clients'));
+        $status=Status::all();
+        return view('/trucks.trucks', compact('trucks', 'company', 'truck_type', 'cluster', 'locations', 'cargo', 'clients', 'status'));
     }
 
     /**

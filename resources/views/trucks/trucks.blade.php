@@ -31,41 +31,39 @@
                                 <form method="POST" action="people">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">First Name</label>
-                                        <input type="text" class="form-control" name="first_name"
-                                            placeholder="Enter your first name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Middle Name</label>
-                                        <input type="text" class="form-control" name="middle_name"
-                                            placeholder="Enter your middle name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Last Name</label>
-                                        <input type="text" class="form-control" name="last_name"
-                                            placeholder="Enter your last name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Date of Birth</label>
-                                        <input type="text" class="form-control" name="dob"
-                                            placeholder="Enter date of birth" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Start Date</label>
-                                        <input type="date" class="form-control" name="start_date"
-                                            placeholder="Enter employment date" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">License Number</label>
-                                        <input type="email" class="form-control" name="license_number"
-                                            placeholder="Enter License Number" required>
+                                        <label for="exampleInputEmail1">Reg Number</label>
+                                        <input type="text" class="form-control" name="reg_number"
+                                            placeholder="Enter truck registration number" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Company</label>
-                                        <select type="email" class="form-control" name="license_number"
-                                            placeholder="Choose company" required>
+                                        <select type="email" class="form-control" name="license_number" placeholder="Choose company" required>
                                             @foreach ($company as $company)
                                             <option value="{{$company->id}}">{{$company->company_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Cluster</label>
+                                        <select type="email" class="form-control" name="cluster_name" placeholder="Choose Cluster" required>
+                                            @foreach ($cluster as $cluster)
+                                            <option value="{{$cluster->id}}">{{$cluster->cluster_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Truck Type</label>
+                                        <select type="email" class="form-control" name="truck_type" placeholder="Choose Truck Type" required>
+                                            @foreach ($truck_type as $truck_type)
+                                            <option value="{{$truck_type->id}}">{{$truck_type->truck_type_name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Truck Status</label>
+                                        <select type="email" class="form-control" name="status" placeholder="Status" required>
+                                            @foreach ($status as $status)
+                                            <option value="{{$status->id}}">{{$status->status_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
