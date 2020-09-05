@@ -15,7 +15,7 @@ class CreateLicenseClassesTable extends Migration
     {
         Schema::create('license_classes', function (Blueprint $table) {
             $table->id();
-            $table->char('licence_class');
+            $table->char('license_class');
             $table->timestamps();
         });
     }

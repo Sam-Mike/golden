@@ -26,10 +26,6 @@ class ClientsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -55,7 +51,7 @@ class ClientsController extends Controller
         $client->email = request('email');
         $client->save();
 
-        return redirect('/');
+        return redirect('table');
 
         // $request->input();
         

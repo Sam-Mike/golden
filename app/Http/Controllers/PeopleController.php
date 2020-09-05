@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\People;
 use App\Company;
 use App\Departments;
+use App\LicenseClasses;
 
 class PeopleController extends Controller
 {
@@ -19,7 +20,8 @@ class PeopleController extends Controller
         $people= People::all();
         $company=Company::all();
         $departments=Departments::all();
-        return view('/people.people', compact('people', 'company', 'departments'));
+        $license_classes=LicenseClasses::all();
+        return view('/people.people', compact('people', 'company', 'departments', 'license_classes'));
     }
 
     /**
@@ -40,7 +42,21 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $people=new People();
+        $people->first_name=request('first_name');
+        $people->middle_name=request('middle_name');
+        $people->last_name=request('last_name');
+        $people->dob=request('dob');
+        $people->mobile=request('mobile');
+        $people->start_date=request('start_date');
+        $people->company_id=$request->company_name;
+        $people->department_id=$request->department_name;
+        $people->license_number=request('license_number');
+        $people->license_issue_date=request('license_issue_date');
+        $people->license_class_id=$request->license_class;
+        $people->save();
+        return redirect('people');
+
     }
 
     /**

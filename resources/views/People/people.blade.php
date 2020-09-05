@@ -5,7 +5,7 @@
 <div class="widget widget-table action-table">
     @yield ('content')
 
-    <!-- Modal -->
+    <!-- Add Person Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -36,22 +36,22 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Date of Birth</label>
-                            <input type="text" class="form-control" name="dob" placeholder="Enter date of birth"
+                            <input type="date" class="form-control" name="dob" placeholder="Enter date of birth"
                                 required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Mobile Number</label>
+                            <input type="date" class="form-control" name="mobile" placeholder="Enter Mobile Number" required>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Start Date</label>
                             <input type="date" class="form-control" name="start_date"
                                 placeholder="Enter employment date" required>
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">License Number</label>
-                            <input type="email" class="form-control" name="license_number"
-                                placeholder="Enter License Number" required>
-                        </div>
+                        
                         <div class="form-group">
                             <label for="exampleInputEmail1">Company</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose company"
+                            <select type="text" class="form-control" name="company_name" placeholder="Choose company"
                                 required>
                                 @foreach ($company as $company)
                                 <option value="{{$company->id}}">{{$company->company_name}}</option>
@@ -60,10 +60,27 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Department</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose company"
+                            <select type="text" class="form-control" name="department_name" placeholder="Choose company"
                                 required>
                                 @foreach ($departments as $departments)
                                 <option value="{{$departments->id}}">{{$departments->department_name}}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">License Number</label>
+                            <input type="number" class="form-control" name="license_number" placeholder="Enter License Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">License Issue Date</label>
+                            <input type="date" class="form-control" name="license_issue_date" placeholder="Enter License Issue Date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">License Class</label>
+                            <select type="text" class="form-control" name="license_class" placeholder="Choose company" required>
+                                @foreach ($license_classes as $license_class)
+                                <option value="{{$license_class->id}}">{{$license_class->license_class}}
                                 </option>
                                 @endforeach
                             </select>
@@ -95,7 +112,8 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-sm table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-sm table-striped table-hover" id="dataTable" width="100%"
+                    cellspacing="0">
                     <thead class="thead-dark">
                         <tr>
                             <th>NAME</th>
