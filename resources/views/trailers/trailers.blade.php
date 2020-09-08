@@ -22,43 +22,31 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Add Truck</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Add Trailer</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hnameden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="people">
+                                <form method="POST" action="trailer">
                                     @csrf
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">First Name</label>
-                                        <input type="text" class="form-control" name="first_name"
-                                            placeholder="Enter your first name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Middle Name</label>
-                                        <input type="text" class="form-control" name="middle_name"
-                                            placeholder="Enter your middle name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Last Name</label>
-                                        <input type="text" class="form-control" name="last_name"
-                                            placeholder="Enter your last name" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Date of Birth</label>
+                                        <label for="exampleInputEmail1">Reg Number</label>
                                         <input type="text" class="form-control" name="dob"
-                                            placeholder="Enter date of birth" required>
+                                            placeholder="Enter trailer registration number" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Start Date</label>
-                                        <input type="date" class="form-control" name="start_date"
-                                            placeholder="Enter employment date" required>
+                                        <label for="exampleInputEmail1">TL Number</label>
+                                        <input type="number" class="form-control" name="tl_number"
+                                            placeholder="Enter trailer TL number" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">License Number</label>
-                                        <input type="email" class="form-control" name="license_number"
-                                            placeholder="Enter License Number" required>
+                                        <label for="exampleInputEmail1">Trailer Type</label>
+                                        <select type="email" class="form-control" name="trailer_type" placeholder="Choose Trailer Type" required>
+                                            @foreach ($trailer_type as $trailer_type)
+                                            <option value="{{$trailer_type->id}}">{{$trailer_type->trailer_type_name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Company</label>
@@ -90,21 +78,21 @@
                         <tr>
                             <th></th>
                             <th>REG NUMBER</th>
+                            <th>TL NUMBER</th>
+                            <th>TRAILER TYPE</th>
                             <th>COMPANY</th>
-                            <th>CLUSTER</th>
-                            <th>TRUCK TYPE</th>
                         </tr>
                     </thead>
                     
                     <tbody>
-                        @foreach ($trucks as $truck)
+                        @foreach ($trailers as $trailer)
                         <tr>
-                            <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$truck->id}}"
-                                    onclick="trucksArray({{$truck->id}});"></td>
-                            <td>{{$truck->reg_number}}</td>
-                            <td>{{$truck->company->company_name}}</td>
-                            <td>{{$truck->cluster->cluster_name}}</td>
-                            <td>{{$truck->truck_type->truck_type_name}}</td>
+                            <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{$trailer->id}}"
+                                    onclick="trucksArray({{$trailer->id}});"></td>
+                            <td>{{$trailer->reg_number}}</td>
+                            <td>{{$trailer->tl_number}}</td>
+                            <td>{{$trailer->trailer_type->trailer_type_name}}</td>
+                            <td>{{$trailer->company->company_name}}</td>
                         </tr>
                         @endforeach
                     </tbody>

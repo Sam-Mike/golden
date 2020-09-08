@@ -21,7 +21,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="exampleInputEmail1">Truck</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose truck"
+                            <select type="email" class="form-control" name="truck" placeholder="Choose truck"
                                 required>
                                 @foreach ($trucks as $truck)
                                 <option value="{{$truck->id}}">{{$truck->reg_number}}</option>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Trailer</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose trailer"
+                            <select type="email" class="form-control" name="trailer" placeholder="Choose trailer"
                                 required>
                                 @foreach ($trailers as $trailer)
                                 <option value="{{$trailer->id}}">{{$trailer->tl_number}}</option>
@@ -38,8 +38,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail1">People</label>
-                            <select type="email" class="form-control" name="license_number" placeholder="Choose Person"
+                            <label for="exampleInputEmail1">Driver</label>
+                            <select type="email" class="form-control" name="driver" placeholder="Choose Person"
                                 required>
                             @foreach ($people as $person)
                             <option value="{{$person->id}}">{{$person->first_name}}</option>
@@ -114,8 +114,8 @@
                                     placeholder="Enter the manifest number" required>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary"
-                                    onclick="sendAllocationData()">Save</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="sendAllocationData()">Save</button>
                             </div>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Add
-                    TruckTrailerPeople</button>
+                    TruckTrailerDriver</button>
             </div>
         </div>
         <div class="card-body">
@@ -144,7 +144,7 @@
                             <th>TRANSPORTER</th>
                             <th>CLUSTER</th>
                             <th>TRUCK TYPE</th>
-                            <th>TRUCK TRAILER</th>
+                            <th>TRAILER</th>
                         </tr>
                     </thead>
                     

@@ -28,7 +28,7 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <form method="POST" action="people">
+                                <form method="POST" action="trucks">
                                     @csrf
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Reg Number</label>
@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Company</label>
-                                        <select type="email" class="form-control" name="license_number" placeholder="Choose company" required>
+                                        <select type="email" class="form-control" name="company_name" placeholder="Choose company" required>
                                             @foreach ($company as $company)
                                             <option value="{{$company->id}}">{{$company->company_name}}</option>
                                             @endforeach
@@ -56,14 +56,6 @@
                                         <select type="email" class="form-control" name="truck_type" placeholder="Choose Truck Type" required>
                                             @foreach ($truck_type as $truck_type)
                                             <option value="{{$truck_type->id}}">{{$truck_type->truck_type_name}}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Truck Status</label>
-                                        <select type="email" class="form-control" name="status" placeholder="Status" required>
-                                            @foreach ($status as $status)
-                                            <option value="{{$status->id}}">{{$status->status_name}}</option>
                                             @endforeach
                                         </select>
                                     </div>

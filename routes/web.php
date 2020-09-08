@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('table', 'ClientsController@index');
+//Clients
+Route::get('/', 'ClientsController@index')->name('table');
 Route::post('table','ClientsController@store')->name('table');
 
 //People
@@ -23,6 +24,10 @@ Route::post('/people', 'PeopleController@store')->name('people');
 //Trucks
 Route::get('/trucks', 'TrucksController@index')->name('trucks');
 Route::post('/trucks', 'TrucksController@store')->name('trucks');
+
+//Trailers
+Route::get('/trailers', 'TrailersController@index')->name('trailers');
+Route::post('/trailers', 'TrailersController@store')->name('trailers');
 
 //TruckTrailerPeople
 Route::get('/truck_trailer_people', 'TruckTrailerPeopleController@index')->name('truck_trailer_people');

@@ -11,4 +11,7 @@ class Company extends Model
     public function people(){
         return $this->hasMany('App\People');
     }
+    public function trailers(){
+        return $this->hasMany('App\Trailers');
+    }
 }

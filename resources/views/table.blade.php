@@ -65,8 +65,8 @@
     </div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered table-sm" id="dataTable" width="100%" cellspacing="0">
-          <thead>
+        <table class="table table-bordered table-sm table-striped table-hover" id="dataTable" width="100%" cellspacing="0">
+          <thead class="thead-dark">
             <tr>
               <th>Name</th>
               <th>Address</th>
@@ -76,16 +76,7 @@
               <th>Email</th>
             </tr>
           </thead>
-          <tfoot>
-            <tr>
-              <th>Name</th>
-              <th>Address</th>
-              <th>Phone</th>
-              <th>Contact</th>
-              <th>Mobile</th>
-              <th>Email</th>
-            </tr>
-          </tfoot>
+          
           <tbody>
             @foreach ($clients as $client)
             <tr>

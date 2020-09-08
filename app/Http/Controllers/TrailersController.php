@@ -2,17 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Trucks;
-use App\Company;
-use App\TruckType;
-use App\Cluster;
-use App\Cargo;
-use App\Clients;
-use App\Location;
-use App\Status;
 use Illuminate\Http\Request;
+use App\Trailers;
+use App\TrailerType;
+use App\company;
 
-class TrucksController extends Controller
+class TrailersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,15 +16,10 @@ class TrucksController extends Controller
      */
     public function index()
     {
-        $trucks= Trucks::all();
+        $trailers=Trailers::all();
         $company=Company::all();
-        $truck_type=TruckType::all();
-        $cluster=Cluster::all();
-        $cargo=Cargo::all();
-        $clients=Clients::all();
-        $locations=Location::all();
-        $status=Status::all();
-        return view('/trucks.trucks', compact('trucks', 'company', 'truck_type', 'cluster', 'locations', 'cargo', 'clients', 'status'));
+        $trailer_type=TrailerType::all();
+        return view('/trailers.trailers', compact('trailers', 'company', 'trailer_type'));
     }
 
     /**
@@ -50,24 +40,24 @@ class TrucksController extends Controller
      */
     public function store(Request $request)
     {
-        $trucks = new Trucks();
+        $trailer = new Trailers();
 
-        $trucks->reg_number = request('reg_number');
-        $trucks->company_id = request('company_name');
-        $trucks->cluster_id = request('cluster_name');
-        $trucks->truck_type_id = request('truck_type');
+        $trailer->tl_number = request('tl_number');
+        $trailer->reg_number = request('reg_number');
+        $trailer->truck_type_id = request('truck_type');
+        $trailer->company_id = request('company_name');
 
-        $trucks->save();
-        return redirect('trucks');
+        $trailer->save();
+        return redirect('trailers');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Trucks  $trucks
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Trucks $trucks)
+    public function show($id)
     {
         //
     }
@@ -75,10 +65,10 @@ class TrucksController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Trucks  $trucks
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Trucks $trucks)
+    public function edit($id)
     {
         //
     }
@@ -87,10 +77,10 @@ class TrucksController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Trucks  $trucks
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Trucks $trucks)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -98,10 +88,10 @@ class TrucksController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Trucks  $trucks
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Trucks $trucks)
+    public function destroy($id)
     {
         //
     }
