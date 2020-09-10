@@ -2,6 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AllocationsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('allocation', 'AllocationsController@setAllocation');
+Route::post('allocation', [AllocationsController::class, 'setAllocation']);

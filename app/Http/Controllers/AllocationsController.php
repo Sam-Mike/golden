@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Allocations;
-use App\People;
-use App\TruckTrailerPeople;
-use App\Cargo;
-use App\Location;
-use App\Clients;
+use App\Models\Allocations;
+use App\Models\People;
+use App\Models\TruckTrailerPeople;
+use App\Models\Cargo;
+use App\Models\Location;
+use App\Models\Clients;
 use Illuminate\Http\Request;
 
 class AllocationsController extends Controller

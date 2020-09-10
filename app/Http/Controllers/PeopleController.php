@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\People;
-use App\Company;
-use App\Departments;
-use App\LicenseClasses;
+use App\Models\People;
+use App\Models\Company;
+use App\Models\Departments;
+use App\Models\LicenseClasses;
 
 class PeopleController extends Controller
 {

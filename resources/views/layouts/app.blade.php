@@ -53,8 +53,7 @@
                                         Operations
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item"
-                                            href="{{route('truck_trailer_people')}}">TruckTrailerPeople</a>
+                                        <a class="dropdown-item" href="{{route('truck_trailer_people')}}">TruckTrailerPeople</a>
                                         <a class="dropdown-item" href="{{route('allocations')}}">Allocations</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Documents</a>
@@ -73,7 +72,7 @@
                                     </div>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link" href="{{route('trailers')}}">Trailers</a>
+                                    <a class="nav-link" href="{{route('trailers')}}">Trailers</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"

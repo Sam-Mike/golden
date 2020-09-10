@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Trucks;
-use App\Company;
-use App\TruckType;
-use App\Cluster;
-use App\Cargo;
-use App\Clients;
-use App\Location;
-use App\Status;
+use App\Models\Trucks;
+use App\Models\Company;
+use App\Models\TruckType;
+use App\Models\Cluster;
+use App\Models\Cargo;
+use App\Models\Clients;
+use App\Models\Location;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class TrucksController extends Controller

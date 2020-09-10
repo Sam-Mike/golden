@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\TruckTrailerPeople;
-use App\Trucks;
-use App\Trailers;
-use App\People;
-use App\Clients;
-use App\Cargo;
-use App\Location;
+use App\Models\TruckTrailerPeople;
+use App\Models\Trucks;
+use App\Models\Trailers;
+use App\Models\People;
+use App\Models\Clients;
+use App\Models\Cargo;
+use App\Models\Location;
 
 class TruckTrailerPeopleController extends Controller
 {

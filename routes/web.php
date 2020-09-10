@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\TrucksController;
+use App\Http\Controllers\TrailersController;
+use App\Http\Controllers\TruckTrailerPeopleController;
+use App\Http\Controllers\AllocationsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,25 +19,31 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 //Clients
-Route::get('/', 'ClientsController@index')->name('table');
-Route::post('table','ClientsController@store')->name('table');
+Route::get('/', [ClientsController::class, 'index']);
+Route::post('table',[ClientsController::class, 'store'])->name('table');
 
 //People
-Route::get('/people', 'PeopleController@index')->name('people');
-Route::post('/people', 'PeopleController@store')->name('people');
+Route::get('/people', [PeopleController::class,'index']);
+Route::post('/people', [PeopleController::class,'store'])->name('people');
 
 //Trucks
-Route::get('/trucks', 'TrucksController@index')->name('trucks');
-Route::post('/trucks', 'TrucksController@store')->name('trucks');
+Route::get('/trucks', [TrucksController::class, 'index']);
+Route::post('/trucks', [TrucksController::class, 'store'])->name('trucks');
 
 //Trailers
-Route::get('/trailers', 'TrailersController@index')->name('trailers');
-Route::post('/trailers', 'TrailersController@store')->name('trailers');
+Route::get('/trailers', [TrailersController::class, 'index']);
+Route::post('/trailers', [TrailersController::class. 'store'])->name('trailers');
 
 //TruckTrailerPeople
-Route::get('/truck_trailer_people', 'TruckTrailerPeopleController@index')->name('truck_trailer_people');
-Route::post('/truck_trailer_people', 'TruckTrailerPeopleController@store')->name('truck_trailer_people');
+Route::get('/truck_trailer_people', [TruckTrailerPeopleController::class, 'index']);
+Route::post('/truck_trailer_people', [TruckTrailerPeopleController::class, 'store'])->name('truck_trailer_people');
 
 //Allocations
-Route::get('/allocations', 'AllocationsController@index')->name('allocations');
+Route::get('/allocations', [AllocationsController::class, 'index'])->name('allocations');
+
+

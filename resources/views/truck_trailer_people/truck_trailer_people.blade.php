@@ -2,60 +2,7 @@
 
 @section('content')
 
-<div class="widget widget-table action-table">
-    @yield ('content')
-
-    <!-- Modal to add trucktrailerpeople combination -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add TruckTrailerPeople</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hnameden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="truck_trailer_people">
-                        @csrf
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Truck</label>
-                            <select type="email" class="form-control" name="truck" placeholder="Choose truck"
-                                required>
-                                @foreach ($trucks as $truck)
-                                <option value="{{$truck->id}}">{{$truck->reg_number}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Trailer</label>
-                            <select type="email" class="form-control" name="trailer" placeholder="Choose trailer"
-                                required>
-                                @foreach ($trailers as $trailer)
-                                <option value="{{$trailer->id}}">{{$trailer->tl_number}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Driver</label>
-                            <select type="email" class="form-control" name="driver" placeholder="Choose Person"
-                                required>
-                            @foreach ($people as $person)
-                            <option value="{{$person->id}}">{{$person->first_name}}</option>
-                            @endforeach
-                            </select>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="card shadow mb-4">
         <div style="padding:20px;">
             <!--inserting the list here-->
@@ -166,8 +113,54 @@
             </div>
         </div>
     </div>
-</div>
 
+<!-- Modal to add TruckTrailerDriver combination -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add TruckTrailerPeople</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hnameden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="truck_trailer_people">
+                    @csrf
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Truck</label>
+                        <select type="email" class="form-control" name="truck" placeholder="Choose truck" required>
+                            @foreach ($trucks as $truck)
+                            <option value="{{$truck->id}}">{{$truck->reg_number}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Trailer</label>
+                        <select type="email" class="form-control" name="trailer" placeholder="Choose trailer" required>
+                            @foreach ($trailers as $trailer)
+                            <option value="{{$trailer->id}}">{{$trailer->tl_number}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Driver</label>
+                        <select type="email" class="form-control" name="driver" placeholder="Choose Person" required>
+                            @foreach ($people as $person)
+                            <option value="{{$person->id}}">{{$person->first_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('scripts')

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Trailers;
-use App\TrailerType;
-use App\company;
+use App\Models\Trailers;
+use App\Models\TrailerType;
+use App\Models\Company;
 
 class TrailersController extends Controller
 {

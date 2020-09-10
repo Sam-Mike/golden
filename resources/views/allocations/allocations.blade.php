@@ -9,12 +9,6 @@
         <div class="card-header py-3">
             <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">All Allocations</h6>
-
-                {{-- Placing our modal here --}}
-                <!-- Button trigger modal -->
-
-                <!-- Modal -->
-
             </div>
         </div>
         <div class="card-body">
