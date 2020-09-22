@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Clients;
+use App\Http\Resources\ClientResource;
 
 class ClientsController extends Controller
 {
@@ -15,7 +16,8 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Clients::all();
-        return view('table', compact('clients'));
+        return $clients;
+        //return view('table', compact('clients'));
         //$client = DB::table('client')->get();
         //return view('table', ['table'->$client]);
         //return view('table')->with(['client' =>  Client::all()]);

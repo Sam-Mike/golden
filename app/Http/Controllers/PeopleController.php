@@ -21,7 +21,9 @@ class PeopleController extends Controller
         $company=Company::all();
         $departments=Departments::all();
         $license_classes=LicenseClasses::all();
-        return view('/people.people', compact('people', 'company', 'departments', 'license_classes'));
+        $people_array[]=[$people, $company, $departments, $license_classes];
+        return $people_array;
+        //return view('/people.people', compact('people', 'company', 'departments', 'license_classes'));
     }
 
     /**

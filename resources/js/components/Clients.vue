@@ -1,0 +1,168 @@
+<template>
+  <div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="d-flex row justify-content-between">
+          <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
+          <!-- Button trigger modal -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#exampleModal"
+          >Add Client</button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table
+            class="table table-bordered table-sm table-striped table-hover"
+            id="dataTable"
+            width="100%"
+            cellspacing="0"
+          >
+            <thead class="thead-dark">
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Contact</th>
+                <th>Mobile</th>
+                <th>Email</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr v-for="client in clientsList" :key="client.id">
+                <td>{{client.client_name}}</td>
+                <td>{{ client.address }}</td>
+                <td>{{ client.phone }}</td>
+                <td>{{ client.contact_name }}</td>
+                <td>{{ client.mobile }}</td>
+                <td>{{ client.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- Add Client Modal -->
+    <!-- <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Client</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hnameden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="table">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="name"
+                  placeholder="Enter client name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  placeholder="Enter client Address"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Phone Number</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="phone_number"
+                  placeholder="Enter client's phone number"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Contact Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="contact_name"
+                  placeholder="Enter contact name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Mobile Number</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="mobile"
+                  placeholder="Enter mobile number"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Email address</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  name="email"
+                  aria-describedby="emailHelp"
+                  placeholder="Enter client's email"
+                  required
+                />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>-->
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+var clientsList = {};
+export default {
+  data() {
+    return {
+      clientsList: {},
+    }
+  },
+  created() {
+       axios
+        .get("http://localhost:8000/api/clients")
+        .then(response=>{
+          this.clientsList=response.data.data;
+           console.log(clientsList);
+        })
+        .catch((error) => {
+          return console.log(error);
+        });
+    console.log("Clients loaded");
+    console.log(clientsList);
+  },
+  methods: {
+
+  },
+};
+</script>

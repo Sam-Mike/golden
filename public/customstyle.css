@@ -8,11 +8,14 @@ nav.navbar {
     padding: 0px;
     border-bottom:solid 3px #e98b50;
 }
+ul li a{
+    display: block;
+}
 nav>div>ul>li>a:hover{
     background-color:#e98b50;
     color: white;
 }
-nav>div>ul>li.active {
+nav>div>ul>li.active> a {
     background-color:#e98b50;
     color: white;
 }

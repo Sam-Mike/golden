@@ -3,6 +3,11 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AllocationsController;
+use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\TrucksController;
+use App\Http\Controllers\TrailersController;
+use App\Http\Controllers\TruckTrailerPeopleController;
 
 
 /*
@@ -21,3 +26,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('allocation', [AllocationsController::class, 'setAllocation']);
+
+
+Route::get('/clients', [ClientsController::class, 'index']);
+Route::post('table',[ClientsController::class, 'store']);
+
+Route::get('/people', [PeopleController::class,'index']);
+Route::post('/people', [PeopleController::class,'store']);
+
+Route::get('/trucks', [TrucksController::class, 'index']);
+Route::post('/trucks', [TrucksController::class, 'store']);
+
+Route::get('/trailers', [TrailersController::class, 'index']);
+Route::post('/trailers', [TrailersController::class, 'store']);
+
+Route::get('/truck_trailer_people', [TruckTrailerPeopleController::class, 'index']);
+Route::post('/truck_trailer_people', [TruckTrailerPeopleController::class, 'store']);
+
+Route::get('/allocations', [AllocationsController::class, 'index'])->name('allocations');

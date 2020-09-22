@@ -41,11 +41,10 @@ class TrailersController extends Controller
     public function store(Request $request)
     {
         $trailer = new Trailers();
-
         $trailer->tl_number = request('tl_number');
         $trailer->reg_number = request('reg_number');
-        $trailer->truck_type_id = request('truck_type');
-        $trailer->company_id = request('company_name');
+        $trailer->trailer_type_id = $request->trailer_type;
+        $trailer->company_id = $request->company_name;
 
         $trailer->save();
         return redirect('trailers');
