@@ -140,29 +140,19 @@
 </template>
 
 <script>
-import axios from "axios";
-var clientsList = {};
 export default {
   data() {
     return {
-      clientsList: {},
+      clientsList: [],
     }
   },
-  created() {
+  mounted() {
        axios
         .get("http://localhost:8000/api/clients")
-        .then(response=>{
-          this.clientsList=response.data.data;
-           console.log(clientsList);
-        })
+        .then(({data})=>(this.clientsList=data))
         .catch((error) => {
           return console.log(error);
         });
-    console.log("Clients loaded");
-    console.log(clientsList);
-  },
-  methods: {
-
   },
 };
 </script>
