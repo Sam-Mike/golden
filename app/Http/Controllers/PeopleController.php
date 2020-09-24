@@ -17,18 +17,8 @@ class PeopleController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        $people= People::all();
-        $company=Company::all();
-        $departments=Departments::all();
-        $license_classes=LicenseClasses::all();
-        $people_array=[$people, $company, $departments, $license_classes];
-        return $people_array;
-        //return view('/people.people', compact('people', 'company', 'departments', 'license_classes'));
-=======
         $people = People:: with(['company', 'departments', 'license_classes'])->get();
         return $people;
->>>>>>> 073fa2b1484899963ec4f0a69f9aad7c62bdfc1c
     }
 
     /**
