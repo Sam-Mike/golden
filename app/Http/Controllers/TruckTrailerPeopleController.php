@@ -15,14 +15,16 @@ class TruckTrailerPeopleController extends Controller
 {
     public function index()
     {
-        $truck_trailer_people=TruckTrailerPeople::all();
-        $trucks= Trucks::all();
-        $people=People::all();
-        $trailers=Trailers::all();
-        $clients=Clients::all();
-        $cargo=Cargo::all();
-        $location=Location::all();
-        return view('/truck_trailer_people.truck_trailer_people', compact('truck_trailer_people', 'trucks', 'trailers', 'people', 'clients', 'cargo', 'location'));
+        $truck_trailer_people = TruckTrailerPeople::with (['trucks', 'trailers', 'people'])->get();
+        $clients = Clients:: all();
+        $cargo = Cargo::all();
+        $locations = Location:: all(); 
+        return response()->json([
+            'truck_trailer_people'=>$truck_trailer_people,
+            'clients'=>$clients,
+            'cargo'=>$cargo,
+            'locations'=>$locations,
+            ]);
     }
 
     public function store(Request $request){

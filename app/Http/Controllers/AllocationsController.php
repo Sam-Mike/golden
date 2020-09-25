@@ -41,12 +41,7 @@ class AllocationsController extends Controller
      */
     public function index()
     {
-        $allocations=Allocations::all();
-        $truck_trailer_people=TruckTrailerPeople::all();
-        $cargo=Cargo::all();
-        $clients=Clients::all();
-        $locations=Location::all();
-        return view('/allocations.allocations', compact('allocations','truck_trailer_people', 'cargo', 'clients', 'locations',));
+        $allocations = Allocations:: with(['allocations','truck_trailer_people', 'cargo', 'clients', 'locations',])->get();
  
     }
 

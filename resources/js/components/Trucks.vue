@@ -28,7 +28,6 @@
           >
             <thead class="thead-dark">
               <tr>
-                <th></th>
                 <th>REG NUMBER</th>
                 <th>COMPANY</th>
                 <th>CLUSTER</th>
@@ -37,16 +36,7 @@
             </thead>
 
             <tbody>
-              <tr>
-                <td>
-                  <input
-                    class="form-check-input ml-2"
-                    type="checkbox"
-                    value:
-                    v-bind="truck.id"
-                    @click="trucksArray(truck.id);"
-                  />
-                </td>
+              <tr v-for="truck in trucks" :key="truck.id">
                 <td>{{truck.reg_number}}</td>
                 <td>{{truck.company.company_name}}</td>
                 <td>{{truck.cluster.cluster_name}}</td>
@@ -149,50 +139,9 @@ export default {
     axios
       .get("http://localhost:8000/api/trucks")
       .then(({ data }) => (this.trucks = data));
+      console.log('here i am');
 
-    var trucksList = [];
-    var cargoId;
-    var clientId;
-    var destinationId;
 
-    function trucksArray() {}
-
-    function trucksArray(id) {
-      if (trucksList.indexOf(id) < 0) {
-        trucksList.push(id);
-      } else {
-        trucksList.pop(id);
-      }
-      console.log("the trucksList array is ", trucksList);
-    }
-
-    function setAllocationData() {
-      cargoId = document.getElementById("cargoSelector").value;
-      clientId = document.getElementById("clientSelector").value;
-      destinationId = document.getElementById("destinationSelector").value;
-      $("#allocation_modal").modal("show");
-      console.log(cargoId);
-    }
-
-    function sendAllocationData() {
-      var manifestNo = document.getElementById("manifestNo").value;
-
-      axios
-        .post("http://127.0.0.1:8000/api/allocation", {
-          cargoId: cargoId,
-          clientId: clientId,
-          destinationId: destinationId,
-          manifestNo: manifestNo,
-          trucksList: trucksList,
-        })
-        .then(function (response) {
-          console.log(response);
-          $("#allocation_modal").modal("toggle");
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
   },
-};
+}
 </script>

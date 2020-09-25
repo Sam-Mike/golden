@@ -16,10 +16,8 @@ class TrailersController extends Controller
      */
     public function index()
     {
-        $trailers=Trailers::all();
-        $company=Company::all();
-        $trailer_type=TrailerType::all();
-        return view('/trailers.trailers', compact('trailers', 'company', 'trailer_type'));
+        $trailers=Trailers:: with([ 'company', 'trailer_type'])->get();
+        return $trailers;
     }
 
     /**

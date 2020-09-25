@@ -23,9 +23,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td><input class="form-check-input ml-2" type="checkbox" value="" id="{{trailer->id}}"
-                                    @click="trucksArray($trailer.id);"></td>
+                        <tr v-for="trailer in trailers" :key="trailer.id">
+                            <td></td>
                             <td>{{trailer.reg_number}}</td>
                             <td>{{trailer.tl_number}}</td>
                             <td>{{trailer.trailer_type.trailer_type_name}}</td>
@@ -91,6 +90,17 @@
 </template>
 <script>
 export default {
+    data(){
+        return{
+            trailers:[]
+        }
+    },
+    mounted(){
+        axios
+        .get("http://localhost:8000/api/trailers")
+        .then(({data})=>(this.trailers= data));
+
+    }
     
 }
 </script>

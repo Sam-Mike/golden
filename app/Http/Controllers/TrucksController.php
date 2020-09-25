@@ -21,15 +21,8 @@ class TrucksController extends Controller
      */
     public function index()
     {
-        $trucks= Trucks::all();
-        $company=Company::all();
-        $truck_type=TruckType::all();
-        $cluster=Cluster::all();
-        $cargo=Cargo::all();
-        $clients=Clients::all();
-        $locations=Location::all();
-        $status=Status::all();
-        return view('/trucks.trucks', compact('trucks', 'company', 'truck_type', 'cluster', 'locations', 'cargo', 'clients', 'status'));
+        $trucks= Trucks:: with(['company', 'truck_type', 'cluster', 'status'])->get();
+        return $trucks;
     }
 
     /**

@@ -11,7 +11,7 @@ class TruckTrailerPeople extends Model
     public function trucks(){
         return $this->belongsTo('App\Models\Trucks', 'truck_id', 'id');
     }
-    public function trailer(){
+    public function trailers(){
         return $this->belongsTo('App\Models\Trailers', 'trailer_id', 'id');
     }
     public function people(){
