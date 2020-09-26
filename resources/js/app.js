@@ -7,10 +7,16 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+import { BootstrapVue } from 'bootstrap-vue';
+import {VuejsDatatableFactory} from 'vuejs-datatable';
 import VueRouter from 'vue-router';
 import routes from './routes';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(VueRouter);
+Vue.use(BootstrapVue);
+Vue.use(VuejsDatatableFactory);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

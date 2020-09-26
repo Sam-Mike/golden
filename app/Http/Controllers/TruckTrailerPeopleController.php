@@ -15,7 +15,7 @@ class TruckTrailerPeopleController extends Controller
 {
     public function index()
     {
-        $truck_trailer_people = TruckTrailerPeople::with (['trucks', 'trailers', 'people'])->get();
+        $truck_trailer_people = TruckTrailerPeople::with (['trucks', 'trucks.company', 'trucks.cluster', 'trucks.truck_type', 'trailers', 'people'])->get();
         $clients = Clients:: all();
         $cargo = Cargo::all();
         $locations = Location:: all(); 

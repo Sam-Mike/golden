@@ -11,6 +11,7 @@
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#exampleModal"
+            @click="$bvModal.show('addClient')"
           >Add Client</button>
         </div>
       </div>
@@ -48,9 +49,9 @@
       </div>
     </div>
     <!-- Add Client Modal -->
-    <!-- <div
+    <b-modal 
       class="modal fade"
-      id="exampleModal"
+      id="addClient"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -135,7 +136,7 @@
           </div>
         </div>
       </div>
-    </div>-->
+    </b-modal>
   </div>
 </template>
 
