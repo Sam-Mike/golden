@@ -12,7 +12,9 @@
             data-toggle="modal"
             data-target="#exampleModal"
             @click="$bvModal.show('addClient')"
-          >Add Client</button>
+          >
+            Add Client
+          </button>
         </div>
       </div>
       <div class="card-body">
@@ -36,7 +38,7 @@
 
             <tbody>
               <tr v-for="client in clientsList" :key="client.id">
-                <td>{{client.client_name}}</td>
+                <td>{{ client.client_name }}</td>
                 <td>{{ client.address }}</td>
                 <td>{{ client.phone }}</td>
                 <td>{{ client.contact_name }}</td>
@@ -49,30 +51,28 @@
       </div>
     </div>
     <!-- Add Client Modal -->
-    <b-modal 
+
+    <b-modal
+      ok-title="Save"
+      title="Add Client"
       class="modal fade"
       id="addClient"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
+      @ok ="handleOk"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Client</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hnameden="true">&times;</span>
-            </button>
-          </div>
           <div class="modal-body">
-            <form method="POST" action="table">
+            <form ref="form" @submit.stop.prevent="submitClient">
               <div class="form-group">
                 <label for="exampleInputEmail1">Name</label>
                 <input
                   type="text"
                   class="form-control"
-                  name="name"
+                  v-model="name"
                   placeholder="Enter client name"
                   required
                 />
@@ -82,7 +82,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  name="address"
+                  v-model="address"
                   placeholder="Enter client Address"
                   required
                 />
@@ -92,7 +92,7 @@
                 <input
                   type="number"
                   class="form-control"
-                  name="phone_number"
+                  v-model="phone_number"
                   placeholder="Enter client's phone number"
                   required
                 />
@@ -102,7 +102,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  name="contact_name"
+                  v-model="contact_name"
                   placeholder="Enter contact name"
                   required
                 />
@@ -112,7 +112,7 @@
                 <input
                   type="number"
                   class="form-control"
-                  name="mobile"
+                  v-model="mobile"
                   placeholder="Enter mobile number"
                   required
                 />
@@ -122,15 +122,11 @@
                 <input
                   type="email"
                   class="form-control"
-                  name="email"
+                  v-model="email"
                   aria-describedby="emailHelp"
                   placeholder="Enter client's email"
                   required
                 />
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </form>
           </div>
@@ -145,15 +141,40 @@ export default {
   data() {
     return {
       clientsList: [],
-    }
+      name:'', 
+      address:'', 
+      phone_number:'', contact_name:'', mobile:'', email:''
+
+    };
   },
   mounted() {
-       axios
-        .get("http://localhost:8000/api/clients")
-        .then(({data})=>(this.clientsList=data))
-        .catch((error) => {
-          return console.log(error);
-        });
+    axios
+      .get("http://localhost:8000/api/clients")
+      .then(({ data }) => (this.clientsList = data))
+      .catch((error) => {
+        return console.log(error);
+      });
   },
+  methods: {
+    handleOk(bvModalEvt) {
+        // Prevent modal from closing
+        bvModalEvt.preventDefault()
+        // Trigger submit handler
+        this.submitClient()
+      },
+      submitClient(){
+        axios
+        .post("http://127.0.0.1:8000/api/clients", {
+          name: this.name,
+          address: this.address,
+          phone_number: this.phone_number,
+          contact_name:this.contact_name, mobile: this.mobile, email:this.email
+
+        });
+        this.$bvModal.hide('addClient');
+
+
+      }
+  }
 };
 </script>

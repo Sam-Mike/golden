@@ -29,7 +29,7 @@ Route::post('allocation', [AllocationsController::class, 'setAllocation']);
 
 
 Route::get('/clients', [ClientsController::class, 'index']);
-Route::post('table',[ClientsController::class, 'store']);
+Route::post('clients',[ClientsController::class, 'store']);
 
 Route::get('/people', [PeopleController::class,'index']);
 Route::post('/people', [PeopleController::class,'store']);
