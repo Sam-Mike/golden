@@ -137,15 +137,14 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Company</label>
                 <select
-                  v-for="company in people.company"
-                  :key="company.id"
                   type="text"
                   class="form-control"
-                  name="company_name"
+                  v-model="person.company_name"
                   placeholder="Choose company"
                   required
                 >
-                  <option :value="company.id">
+                  <option v-for="company in people.company"
+                  :key="company.id" :value="company.id">
                     {{ company.company_name }}
                   </option>
                 </select>
@@ -153,16 +152,16 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Department</label>
                 <select
-                  v-for="department in people.departments"
-                  :key="department.id"
                   type="text"
                   class="form-control"
-                  name="department_name"
+                  v-model="person.department_name"
                   placeholder="Choose department"
                   required
                 >
-                  <option :value="departments.id">
-                    {{ departments.department_name }}
+                  <option 
+                  v-for="department in people.departments"
+                  :key="department.id" :value="department.id">
+                    {{ department.department_name }}
                   </option>
                 </select>
               </div>
@@ -171,7 +170,7 @@
                 <input
                   type="number"
                   class="form-control"
-                  v-model="license_number"
+                  v-model="person.license_number"
                   placeholder="Enter License Number"
                   required
                 />
@@ -181,7 +180,7 @@
                 <input
                   type="date"
                   class="form-control"
-                  name="license_issue_date"
+                  v-model="person.license_issue_date"
                   placeholder="Enter License Issue Date"
                   required
                 />
@@ -189,28 +188,21 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">License Class</label>
                 <select
-                  v-for="licenseClass in people.license_classes"
-                  :key="licenseClass.id"
                   type="text"
                   class="form-control"
-                  v-model="license_class"
-                  placeholder="Choose company"
+                  v-model="person.license_class"
+                  placeholder="Choose license class"
                   required
                 >
-                  <option :value="licenseClass.id">
+                  <option 
+                  v-for="licenseClass in people.license_classes"
+                  :key="licenseClass.id" :value="licenseClass.id">
                     {{ licenseClass.license_class }}
                   </option>
                 </select>
               </div>
               <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-dismiss="modal"
-                >
-                  Close
-                </button>
-                <button type="submit" class="btn btn-primary">Save</button>
+               
               </div>
             </form>
           </div>
@@ -224,7 +216,16 @@ export default {
   data() {
     return {
       people: [],
-      person: {},
+      person: {
+        first_name:'',
+        middle_name:'',
+        last_name:'',
+        dob:'',
+        start_date:'',
+         company_name:'',department_name:'',license_number:'', license_issue_date:'',license_class:'',
+        
+
+      },
     };
   },
   mounted() {
@@ -236,7 +237,34 @@ export default {
         .get("http://localhost:8000/api/people")
         .then(({ data }) => (this.people = data));
     },
-    handleOk() {},
+    handleOk() {
+        // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.submitPerson();
+    },
+    submitPerson(){
+      axios
+      .post("http://localhost:8000/api/people", {
+        first_name:this.person.first_name,
+        middle_name:this.person.middle_name,
+        last_name:this.person.last_name,
+        dob:this.person.dob,
+        start_date:this.person.start_date,
+        company_name:this.person.company_name,
+        department_name:this.person.department_name,
+        license_number:this.person.license_number,
+        license_issue_date:this.person.license_issue_date,
+        license_class:this.person.license_class
+      })
+      .then(res=>
+      console.log('Person added'));
+      this.$nextTick(() => {
+        this.$bvModal.hide("addPerson");
+        this.getPeople();
+      });
+    }
+
   },
 };
 </script>
