@@ -18,7 +18,15 @@ class PeopleController extends Controller
     public function index()
     {
         $people = People:: with(['company', 'departments', 'license_classes'])->get();
-        return $people;
+        $company = Company::all();
+        $departments = Departments::all();
+        $license_classes = LicenseClasses::all();
+        return response()->json([
+            'people'=>$people,
+            'company'=>$company,
+            'departments'=>$departments,
+            'license_classes'=>$license_classes
+        ]);
     }
 
     /**

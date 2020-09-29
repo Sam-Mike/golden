@@ -32,15 +32,15 @@ Route::get('/clients', [ClientsController::class, 'index']);
 Route::post('clients',[ClientsController::class, 'store']);
 
 Route::get('/people', [PeopleController::class,'index']);
-Route::post('/people', [PeopleController::class,'store']);
+Route::post('people', [PeopleController::class,'store']);
 
 Route::get('/trucks', [TrucksController::class, 'index']);
-Route::post('/trucks', [TrucksController::class, 'store']);
+Route::post('trucks', [TrucksController::class, 'store']);
 
 Route::get('/trailers', [TrailersController::class, 'index']);
-Route::post('/trailers', [TrailersController::class, 'store']);
+Route::post('trailers', [TrailersController::class, 'store']);
 
 Route::get('/truck_trailer_people', [TruckTrailerPeopleController::class, 'index']);
-Route::post('/truck_trailer_people', [TruckTrailerPeopleController::class, 'store']);
+Route::post('truck_trailer_people', [TruckTrailerPeopleController::class, 'store']);
 
 Route::get('/allocations', [AllocationsController::class, 'index'])->name('allocations');

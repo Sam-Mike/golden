@@ -49,9 +49,10 @@ class ClientsController extends Controller
         $client->email = request('email');
         $client->save();
 
-        return redirect('table');
-
-        // $request->input();
+        return response()->json([
+            'success'
+        ], 200);
+        //return redirect('api/clients');
         
     }
 

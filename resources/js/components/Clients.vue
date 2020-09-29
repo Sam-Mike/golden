@@ -11,7 +11,7 @@
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#exampleModal"
-            @click="$bvModal.show('addClient')"
+            v-b-modal.addClient
           >
             Add Client
           </button>
@@ -61,7 +61,7 @@
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
-      @ok ="handleOk"
+      @ok="handleOk"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -72,7 +72,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-model="name"
+                  v-model="client.name"
                   placeholder="Enter client name"
                   required
                 />
@@ -82,7 +82,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-model="address"
+                  v-model="client.address"
                   placeholder="Enter client Address"
                   required
                 />
@@ -92,7 +92,7 @@
                 <input
                   type="number"
                   class="form-control"
-                  v-model="phone_number"
+                  v-model="client.phone_number"
                   placeholder="Enter client's phone number"
                   required
                 />
@@ -102,7 +102,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-model="contact_name"
+                  v-model="client.contact_name"
                   placeholder="Enter contact name"
                   required
                 />
@@ -112,7 +112,7 @@
                 <input
                   type="number"
                   class="form-control"
-                  v-model="mobile"
+                  v-model="client.mobile"
                   placeholder="Enter mobile number"
                   required
                 />
@@ -122,7 +122,7 @@
                 <input
                   type="email"
                   class="form-control"
-                  v-model="email"
+                  v-model="client.email"
                   aria-describedby="emailHelp"
                   placeholder="Enter client's email"
                   required
@@ -141,40 +141,53 @@ export default {
   data() {
     return {
       clientsList: [],
-      name:'', 
-      address:'', 
-      phone_number:'', contact_name:'', mobile:'', email:''
-
+      client: {
+        name: "",
+        address: "",
+        phone_number: "",
+        contact_name: "",
+        mobile: "",
+        email: "",
+      },
+      rerender: 0,
     };
   },
   mounted() {
-    axios
-      .get("http://localhost:8000/api/clients")
-      .then(({ data }) => (this.clientsList = data))
-      .catch((error) => {
-        return console.log(error);
-      });
+    this.getClients();
   },
   methods: {
-    handleOk(bvModalEvt) {
-        // Prevent modal from closing
-        bvModalEvt.preventDefault()
-        // Trigger submit handler
-        this.submitClient()
-      },
-      submitClient(){
-        axios
-        .post("http://127.0.0.1:8000/api/clients", {
-          name: this.name,
-          address: this.address,
-          phone_number: this.phone_number,
-          contact_name:this.contact_name, mobile: this.mobile, email:this.email
-
+    getClients() {
+      axios
+        .get("http://localhost:8000/api/clients")
+        .then(({ data }) => (this.clientsList = data))
+        .catch((error) => {
+          return console.log(error);
         });
-        this.$bvModal.hide('addClient');
-
-
-      }
-  }
+    },
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.submitClient();
+    },
+    submitClient() {
+      axios
+        .post("http://127.0.0.1:8000/api/clients", {
+          name: this.client.name,
+          address: this.client.address,
+          phone_number: this.client.phone_number,
+          contact_name: this.client.contact_name,
+          mobile: this.client.mobile,
+          email: this.client.email,
+        })
+        .then((res) => {
+          console.log("Client added");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("addClient");
+        this.getClients();
+      });
+    },
+  },
 };
 </script>
