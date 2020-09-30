@@ -17,7 +17,13 @@ class TrailersController extends Controller
     public function index()
     {
         $trailers=Trailers:: with([ 'company', 'trailer_type'])->get();
-        return $trailers;
+        $trailer_type= TrailerType::all();
+        $company= Company::all();
+        return response()->json([
+            'trailers'=>$trailers,
+            'trailer_type'=>$trailer_type,
+            'company'=>$company
+        ]);
     }
 
     /**
@@ -25,17 +31,8 @@ class TrailersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $trailer = new Trailers();
@@ -45,8 +42,9 @@ class TrailersController extends Controller
         $trailer->company_id = $request->company_name;
 
         $trailer->save();
-        return redirect('trailers');
-    }
+        return response()->json([
+            'success'
+        ], 200);    }
 
     /**
      * Display the specified resource.

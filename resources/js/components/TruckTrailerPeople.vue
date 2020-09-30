@@ -34,7 +34,11 @@
           </div>
           <div class="input-group mb-1 col">
             <div class="col-md-8">
-              <select v-model="selectedCargo" class="custom-select" id="cargoSelector">
+              <select
+                v-model="selectedCargo"
+                class="custom-select"
+                id="cargoSelector"
+              >
                 <option selected>Choose Cargo</option>
                 <option
                   v-for="cargo in truckTrailerDriver.cargo"
@@ -48,7 +52,11 @@
           </div>
           <div class="input-group mb-1 col">
             <div class="col-md-8">
-              <select v-model="selectedLocation" class="custom-select" id="destinationSelector">
+              <select
+                v-model="selectedLocation"
+                class="custom-select"
+                id="destinationSelector"
+              >
                 <option selected>Choose Destination</option>
                 <option
                   v-for="location in truckTrailerDriver.locations"
@@ -116,12 +124,10 @@
             <thead class="thead-dark">
               <tr>
                 <th></th>
-                <th>REG NUMBER</th>
-                <th>TRUCK DRIVER</th>
-                <th>TRANSPORTER</th>
-                <th>CLUSTER</th>
-                <th>TRUCK TYPE</th>
+                <th>TRUCK REGISTRATION</th>
                 <th>TRAILER</th>
+                <th>TL NUMBER</th>
+                <th>DRIVER</th>
               </tr>
             </thead>
 
@@ -140,11 +146,9 @@
                   />
                 </td>
                 <td>{{ ttp.trucks.reg_number }}</td>
-                <td>{{ ttp.people.first_name }}</td>
-                <td>{{ ttp.trucks.company.company_name }}</td>
-                <td>{{ ttp.trucks.cluster.cluster_name }}</td>
-                <td>{{ ttp.trucks.truck_type.truck_type_name }}</td>
                 <td>{{ ttp.trailers.reg_number }}</td>
+                <td>{{ttp.trailers.tl_number}}</td>
+                <td>{{ ttp.people.first_name }}</td>
               </tr>
             </tbody>
           </table>
@@ -207,8 +211,8 @@ export default {
     return {
       truckTrailerDriver: [],
       selectedClient: "",
-      selectedCargo:"",
-      selectedLocation:"",
+      selectedCargo: "",
+      selectedLocation: "",
       checkedTtp: [],
     };
   },
@@ -219,7 +223,7 @@ export default {
         this.truckTrailerDriver = data;
       });
     console.log("here i am");
-    
+
     function setAllocationData() {
       cargoId = document.getElementById("cargoSelector").value;
       clientId = document.getElementById("clientSelector").value;

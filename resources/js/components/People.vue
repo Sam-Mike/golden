@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- DataTales Example -->
+    <!-- DataTales  -->
     <div class="card shadow mb-4">
       <div class="card-header py-3">
         <div class="d-flex row justify-content-between">
@@ -116,7 +116,7 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Mobile Number</label>
                 <input
-                  type="date"
+                  type="text"
                   class="form-control"
                   v-model="person.mobile"
                   placeholder="Enter Mobile Number"
@@ -143,8 +143,11 @@
                   placeholder="Choose company"
                   required
                 >
-                  <option v-for="company in people.company"
-                  :key="company.id" :value="company.id">
+                  <option
+                    v-for="company in people.company"
+                    :key="company.id"
+                    :value="company.id"
+                  >
                     {{ company.company_name }}
                   </option>
                 </select>
@@ -158,9 +161,11 @@
                   placeholder="Choose department"
                   required
                 >
-                  <option 
-                  v-for="department in people.departments"
-                  :key="department.id" :value="department.id">
+                  <option
+                    v-for="department in people.departments"
+                    :key="department.id"
+                    :value="department.id"
+                  >
                     {{ department.department_name }}
                   </option>
                 </select>
@@ -194,15 +199,14 @@
                   placeholder="Choose license class"
                   required
                 >
-                  <option 
-                  v-for="licenseClass in people.license_classes"
-                  :key="licenseClass.id" :value="licenseClass.id">
+                  <option
+                    v-for="licenseClass in people.license_classes"
+                    :key="licenseClass.id"
+                    :value="licenseClass.id"
+                  >
                     {{ licenseClass.license_class }}
                   </option>
                 </select>
-              </div>
-              <div class="modal-footer">
-               
               </div>
             </form>
           </div>
@@ -217,14 +221,17 @@ export default {
     return {
       people: [],
       person: {
-        first_name:'',
-        middle_name:'',
-        last_name:'',
-        dob:'',
-        start_date:'',
-         company_name:'',department_name:'',license_number:'', license_issue_date:'',license_class:'',
-        
-
+        first_name: "",
+        middle_name: "",
+        last_name: "",
+        dob: "",
+        mobile:"",
+        start_date: "",
+        company_name: "",
+        department_name: "",
+        license_number: "",
+        license_issue_date: "",
+        license_class: "",
       },
     };
   },
@@ -237,34 +244,35 @@ export default {
         .get("http://localhost:8000/api/people")
         .then(({ data }) => (this.people = data));
     },
-    handleOk() {
-        // Prevent modal from closing
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
       this.submitPerson();
     },
-    submitPerson(){
+    submitPerson() {
       axios
-      .post("http://localhost:8000/api/people", {
-        first_name:this.person.first_name,
-        middle_name:this.person.middle_name,
-        last_name:this.person.last_name,
-        dob:this.person.dob,
-        start_date:this.person.start_date,
-        company_name:this.person.company_name,
-        department_name:this.person.department_name,
-        license_number:this.person.license_number,
-        license_issue_date:this.person.license_issue_date,
-        license_class:this.person.license_class
-      })
-      .then(res=>
-      console.log('Person added'));
+        .post("http://localhost:8000/api/people", {
+          first_name: this.person.first_name,
+          middle_name: this.person.middle_name,
+          last_name: this.person.last_name,
+          dob: this.person.dob,
+          mobile: this.person.mobile,
+          start_date: this.person.start_date,
+          company_name: this.person.company_name,
+          department_name: this.person.department_name,
+          license_number: this.person.license_number,
+          license_issue_date: this.person.license_issue_date,
+          license_class: this.person.license_class,
+        })
+        .then((res) => console.log("Person added"))
+        .catch(err=> console.log(err));
       this.$nextTick(() => {
         this.$bvModal.hide("addPerson");
         this.getPeople();
+        
       });
-    }
-
+    },
   },
 };
 </script>

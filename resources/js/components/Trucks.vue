@@ -49,9 +49,11 @@
     </div>
 
     <!-- Add Truck Modal -->
-    <!-- <div
+    <b-modal
+    title="Add Truck"
+    ok-title="Save"
       class="modal fade"
-      id="exampleModal"
+      id="addTruck"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -59,21 +61,14 @@
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Truck</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hnameden="true">&times;</span>
-            </button>
-          </div>
           <div class="modal-body">
-            <form method="POST" action="trucks">
-              @csrf
+            <form >
               <div class="form-group">
                 <label for="exampleInputEmail1">Reg Number</label>
                 <input
                   type="text"
                   class="form-control"
-                  name="reg_number"
+                  v-model="truck.reg_number"
                   placeholder="Enter truck registration number"
                   required
                 />
@@ -83,25 +78,23 @@
                 <select
                   type="email"
                   class="form-control"
-                  name="company_name"
+                  v-model="truck.company_name"
                   placeholder="Choose company"
                   required
                 >
-                  @foreach ($company as $company)
-                  <option value="{{$company->id}}">{{$company->company_name}}</option>@endforeach
+                  <option v-for="company in trucks.company" :key="company.id" :value="company.id">{{company.company_name}}</option>
                 </select>
-              </div>
+                </div>
               <div class="form-group">
                 <label for="exampleInputEmail1">Cluster</label>
                 <select
                   type="email"
                   class="form-control"
-                  name="cluster_name"
+                  v-model="truck.cluster_name"
                   placeholder="Choose Cluster"
                   required
                 >
-                  @foreach ($cluster as $cluster)
-                  <option value="{{$cluster->id}}">{{$cluster->cluster_name}}</option>@endforeach
+                  <option v-for="cluster in trucks.cluster" :key="cluster.id" :value="cluster.id">{{cluster.cluster_name}}</option>
                 </select>
               </div>
               <div class="form-group">
@@ -109,23 +102,18 @@
                 <select
                   type="email"
                   class="form-control"
-                  name="truck_type"
+                  v-model="truck.truck_type"
                   placeholder="Choose Truck Type"
                   required
                 >
-                  @foreach ($truck_type as $truck_type)
-                  <option value="{{$truck_type->id}}">{{$truck_type->truck_type_name}}</option>@endforeach
+                  <option v-for="trucktype in trucks.trucktype" :key="trucktype.id" :value="truck_type.id">{{truck_type.truck_type_name}}</option>
                 </select>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </form>
           </div>
         </div>
       </div>
-    </div>-->
+    </b-modal>
   </div>
 </template>
 <script>
@@ -133,15 +121,45 @@ export default {
   data() {
     return {
       trucks: [],
+      truck:{
+        reg_number:"",
+        company_name:"",
+        cluster:"",
+        truck_type:""
+      }
     };
   },
   mounted() {
-    axios
+    this.getTrucks();
+    
+  },
+  methods:{
+    getTrucks(){
+      axios
       .get("http://localhost:8000/api/trucks")
       .then(({ data }) => (this.trucks = data));
-      console.log('here i am');
+    },
+    handleOk(bvModalEvt){
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.submitTruck();
+    },
+    submitTruck(){
+      axios
+      .post("http://localhost:8000/api/trucks", {
+        reg_number:this.truck.reg_number,
+        company_name: this.truck.company_name,
+        cluster:this.truck.cluster,
+        truck_type:this.truck.truck_type
+      })
+      .then(res=>console.log('truck added'));
 
-
-  },
-}
+      this.$nextTick(()=>{
+        this.$bvModal.hide('addTruck');
+        this.getTrucks();
+      });
+    }
+  }
+};
 </script>

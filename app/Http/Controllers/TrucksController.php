@@ -22,7 +22,9 @@ class TrucksController extends Controller
     public function index()
     {
         $trucks= Trucks:: with(['company', 'truck_type', 'cluster', 'status'])->get();
-        return $trucks;
+        return response()->json([
+            'trucks'=>$trucks
+        ]);
     }
 
     /**
