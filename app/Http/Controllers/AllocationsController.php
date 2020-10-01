@@ -41,7 +41,10 @@ class AllocationsController extends Controller
      */
     public function index()
     {
-        $allocations = Allocations:: with(['allocations','truck_trailer_people', 'cargo', 'clients', 'locations',])->get();
+        $allocations = Allocations:: with(['truck_trailer_people.trucks', 'truck_trailer_people.trailers', 'truck_trailer_people.people', 'cargo', 'clients', 'location',])->get();
+        return response()->json([
+            'allocations'=>$allocations
+        ]);
  
     }
 

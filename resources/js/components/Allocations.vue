@@ -28,14 +28,14 @@
             </thead>
 
             <tbody>
-              <tr v-for="allocation in allocations" :key="allocation.id">
+              <tr v-for="allocation in allocations.allocations" :key="allocation.id">
                 <td>{{ allocation.manifest_no }}</td>
                 <td>{{ allocation.clients.client_name }}</td>
                 <td>{{ allocation.cargo.cargo_name }}</td>
                 <td>{{ allocation.truck_trailer_people.trucks.reg_number }}</td>
-                <td>{{ allocation.truck_trailer_people.trailer.tl_number }}</td>
-                <td>{{ allocation.location.location_name }}</td>
+                <td>{{ allocation.truck_trailer_people.trailers.tl_number }}</td>
                 <td>{{ allocation.truck_trailer_people.people.first_name }}</td>
+                <td>{{ allocation.location.location_name }}</td>
               </tr>
             </tbody>
           </table>
@@ -49,12 +49,18 @@ export default {
   data() {
     return {
       allocations: [],
-    };
+    }
   },
   mounted() {
-    axios
-      .get("http://localhost:8000/api/allocations")
-      .then(({ data }) => (this.allocations = data));
+    this.getAllocations()
+  },
+  methods: {
+    getAllocations() {
+      axios
+        .get("http://localhost:8000/api/allocations")
+        .then(({ data }) => (this.allocations = data));
+        console.log('gotten allocations');
+    },
   },
 };
 </script>

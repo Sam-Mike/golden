@@ -11,7 +11,8 @@
             type="button"
             class="btn btn-primary"
             data-toggle="modal"
-            data-target="#addTrailer"
+            data-target="#exampleModal"
+            v-b-modal.addTrailer
           >
             Add Trailer
           </button>
@@ -27,7 +28,6 @@
           >
             <thead class="thead-dark">
               <tr>
-                <th></th>
                 <th>REG NUMBER</th>
                 <th>TL NUMBER</th>
                 <th>TRAILER TYPE</th>
@@ -35,8 +35,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="trailer in trailers" :key="trailer.id">
-                <td></td>
+              <tr v-for="trailer in trailers.trailers" :key="trailer.id">
                 <td>{{ trailer.reg_number }}</td>
                 <td>{{ trailer.tl_number }}</td>
                 <td>{{ trailer.trailer_type.trailer_type_name }}</td>
@@ -57,12 +56,12 @@
       role="dialog"
       aria-labelledby="exampleModalLabel"
       aria-hidden="true"
-      @ok="submitTrailer"
+      @ok="handleOk"
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-body">
-            <form>
+            <form ref="forms" @submit.stop.prevent="submitTrailer">
               <div class="form-group">
                 <label for="exampleInputEmail1">Reg Number</label>
                 <input
@@ -160,7 +159,7 @@ export default {
           reg_number: this.trailer.reg_number,
           tl_number: this.trailer.tl_number,
           trailer_type: this.trailer.trailer_type,
-          trailer_type: this.trailer.company_name,
+          company_name: this.trailer.company_name,
         })
         .then((res) => console.log("trailer added"));
         this.$nextTick(() => {

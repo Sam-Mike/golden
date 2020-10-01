@@ -25,21 +25,30 @@ class TrailersController extends Controller
             'company'=>$company
         ]);
     }
-
-    /**
+/**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function create()
+    {
+        //
+    }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
 
     public function store(Request $request)
     {
         $trailer = new Trailers();
         $trailer->tl_number = request('tl_number');
         $trailer->reg_number = request('reg_number');
-        $trailer->trailer_type_id = $request->trailer_type;
-        $trailer->company_id = $request->company_name;
+        $trailer->trailer_type_id = request('trailer_type');
+        $trailer->company_id = request('company_name');
 
         $trailer->save();
         return response()->json([

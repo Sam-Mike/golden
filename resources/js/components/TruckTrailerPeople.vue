@@ -17,11 +17,11 @@
           <div class="input-group mb-1 col">
             <div class="col-md-8">
               <select
-                v-model="selectedClient"
+                v-model="allocation.selectedClient"
                 class="custom-select"
                 id="clientSelector"
               >
-                <option selected>Choose Client</option>
+                <option :value="undefined" disabled >Choose Client</option>
                 <option
                   v-for="client in truckTrailerDriver.clients"
                   :key="client.id"
@@ -35,11 +35,11 @@
           <div class="input-group mb-1 col">
             <div class="col-md-8">
               <select
-                v-model="selectedCargo"
+                v-model="allocation.selectedCargo"
                 class="custom-select"
                 id="cargoSelector"
               >
-                <option selected>Choose Cargo</option>
+                <option :value="undefined" disabled>Choose Cargo</option>
                 <option
                   v-for="cargo in truckTrailerDriver.cargo"
                   :key="cargo.id"
@@ -53,11 +53,11 @@
           <div class="input-group mb-1 col">
             <div class="col-md-8">
               <select
-                v-model="selectedLocation"
+                v-model="allocation.selectedLocation"
                 class="custom-select"
                 id="destinationSelector"
               >
-                <option selected>Choose Destination</option>
+                <option value="undefined" disabled>Choose Destination</option>
                 <option
                   v-for="location in truckTrailerDriver.locations"
                   :key="location.id"
@@ -142,13 +142,13 @@
                     type="checkbox"
                     :value="ttp.id"
                     :id="ttp.id"
-                    v-model="checkedTtp"
+                    v-model="allocation.checkedTtp"
                   />
                 </td>
                 <td>{{ ttp.trucks.reg_number }}</td>
                 <td>{{ ttp.trailers.reg_number }}</td>
-                <td>{{ttp.trailers.tl_number}}</td>
-                <td>{{ ttp.people.first_name }}</td>
+                <td>{{ ttp.trailers.tl_number }}</td>
+                <td>{{ ttp.people.first_name }} {{ttp.people.middle_name}} {{ttp.people.last_name}}</td>
               </tr>
             </tbody>
           </table>
@@ -157,7 +157,7 @@
     </div>
 
     <!-- Modal to add TruckTrailerDriver combination -->
-    <!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -191,7 +191,6 @@
                         <select type="email" class="form-control" name="driver" placeholder="Choose Person" required>
                             @foreach ($people as $person)
                             <option value="{{$person->id}}">{{$person->first_name}}</option>
-                            @endforeach
                         </select>
                     </div>
                     <div class="modal-footer">
@@ -202,7 +201,7 @@
             </div>
         </div>
     </div>
-</div> -->
+</div>
   </div>
 </template>
 <script>
@@ -210,10 +209,12 @@ export default {
   data() {
     return {
       truckTrailerDriver: [],
-      selectedClient: "",
-      selectedCargo: "",
-      selectedLocation: "",
-      checkedTtp: [],
+      allocation: {
+        selectedClient: "",
+        selectedCargo: "",
+        selectedLocation: '',
+        checkedTtp: [], //check with the controller accepting the arrays for allocation
+      },
     };
   },
   mounted() {
@@ -224,23 +225,12 @@ export default {
       });
     console.log("here i am");
 
-    function setAllocationData() {
-      cargoId = document.getElementById("cargoSelector").value;
-      clientId = document.getElementById("clientSelector").value;
-      destinationId = document.getElementById("destinationSelector").value;
-      $("#allocation_modal").modal("show");
-      console.log(cargoId);
-    }
-
     function sendAllocationData() {
-      var manifestNo = document.getElementById("manifestNo").value;
-
       axios
         .post("http://127.0.0.1:8000/api/allocation", {
-          cargoId: cargoId,
-          clientId: clientId,
-          destinationId: destinationId,
-          manifestNo: manifestNo,
+          cargoId: this.allocation.selectedCargo,
+          clientId: this.allocation.selectedClient,
+          destinationId: this.allocation.selectedLocation,
           trucksList: trucksList,
         })
         .then(function (response) {

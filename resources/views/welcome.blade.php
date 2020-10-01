@@ -29,7 +29,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <router-link class="dropdown-item" to="/truck_trailer_people">TruckTrailerPeople
                                     </router-link>
-                                    <a class="dropdown-item" to="/allocations">Allocations</a>
+                                    <router-link class="dropdown-item" to="/allocations">Allocations</router-link>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Documents</a>
                                 </div>

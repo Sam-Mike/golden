@@ -2,10 +2,10 @@ import Clients from './components/Clients';
 import People from './components/People';
 import Trailers from './components/Trailers';
 import Trucks from './components/Trucks';
+import Allocations from './components/Allocations';
 import TruckTrailerPeople from './components/TruckTrailerPeople';
 
 export default {
-    mode: 'history',
     routes: [
         {
         path: '/',
@@ -26,6 +26,10 @@ export default {
         {
             path: '/truck_trailer_people',
             component: TruckTrailerPeople
+        },
+        {
+            path: '/allocations',
+            component: Allocations
         }
     ]
 }
