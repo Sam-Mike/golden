@@ -24,6 +24,7 @@ class CreatePeopleTable extends Migration
             $table->foreignId('company_id')->constrained('company');
             $table->foreignId('department_id')->constrained('departments');
             $table->Biginteger('license_number');
+            $table->string('passport');
             $table->date('license_issue_date');
             $table->foreignId('license_class_id')->constrained('license_classes');
             $table->timestamps();

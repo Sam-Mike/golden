@@ -6,9 +6,6 @@ use App\Models\Trucks;
 use App\Models\Company;
 use App\Models\TruckType;
 use App\Models\Cluster;
-use App\Models\Cargo;
-use App\Models\Clients;
-use App\Models\Location;
 use App\Models\Status;
 use Illuminate\Http\Request;
 
@@ -22,8 +19,13 @@ class TrucksController extends Controller
     public function index()
     {
         $trucks= Trucks:: with(['company', 'truck_type', 'cluster', 'status'])->get();
+        $company= Company::all();
+        $truck_type= TruckType::all();
+        $cluster= Cluster::all();
         return response()->json([
-            'trucks'=>$trucks
+            'trucks'=>$trucks,
+            'company'=>$company,
+            'truck_type'=>$truck_type
         ]);
     }
 
