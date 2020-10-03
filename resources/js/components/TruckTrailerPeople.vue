@@ -267,7 +267,7 @@
         </b-tabs>
       </b-card>
     </div>
-   
+
     <!-- Modal to add TruckTrailerDriver combination -->
     <b-modal
       class="modal fade"
@@ -365,8 +365,22 @@ export default {
       },
     };
   },
-  computed:{
-    
+  computed: {
+    coachTrucks(){
+      return this.truckTrailerDriver.trucks.filter((allTrucks)=>{
+        return allTrucks.company.company_name==='Golden Coach';
+      })
+    },
+    fleetTrucks(){
+      return this.truckTrailerDriver.trucks.filter((allTrucks)=>{
+        return allTrucks.company.company_name==='Golden Fleet';
+      })
+    },
+    wheelsTrucks(){
+      return this.truckTrailerDriver.trucks.filter((allTrucks)=>{
+        return allTrucks.company.company_name==='Golden Wheels';
+      })
+    }
   },
   mounted() {
     this.getTruckTrailerDrivers();

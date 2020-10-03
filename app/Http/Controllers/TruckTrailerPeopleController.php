@@ -21,7 +21,7 @@ class TruckTrailerPeopleController extends Controller
         $clients = Clients:: all();
         $cargo = Cargo::all();
         $locations = Location:: all();
-        $trucks = Trucks:: all();
+        $trucks = Trucks:: with(['company'])->get();
         $trailers = Trailers:: all();
         $people = People:: all();
         return response()->json([
