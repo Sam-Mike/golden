@@ -21,6 +21,7 @@
                 <th>CLIENT</th>
                 <th>CARGO</th>
                 <th>TRUCK</th>
+                <th>TRUCK COMPANY</th>
                 <th>TRAILER</th>
                 <th>DRIVER</th>
                 <th>DESTINATION</th>
@@ -33,6 +34,7 @@
                 <td>{{ allocation.clients.client_name }}</td>
                 <td>{{ allocation.cargo.cargo_name }}</td>
                 <td>{{ allocation.truck_trailer_people.trucks.reg_number }}</td>
+                <td>{{ allocation.truck_trailer_people.trucks.company.company_name }}</td>
                 <td>{{ allocation.truck_trailer_people.trailers.tl_number }}</td>
                 <td>{{ allocation.truck_trailer_people.people.first_name }}</td>
                 <td>{{ allocation.location.location_name }}</td>

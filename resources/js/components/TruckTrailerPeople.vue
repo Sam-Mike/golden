@@ -85,7 +85,7 @@
                     class="btn btn-primary"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    v-b-modal.addTruckTrailerDriver
+                    v-b-modal.addGoldenCoachTruckTrailerDriver
                   >
                     Add TruckTrailerDriver
                   </button>
@@ -148,7 +148,7 @@
                     class="btn btn-primary"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    v-b-modal.addTruckTrailerDriver
+                    v-b-modal.addGoldenFleetTruckTrailerDriver
                   >
                     Add TruckTrailerDriver
                   </button>
@@ -211,7 +211,7 @@
                     class="btn btn-primary"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    v-b-modal.addTruckTrailerDriver
+                    v-b-modal.addGoldenWheelsTruckTrailerDriver
                   >
                     Add TruckTrailerDriver
                   </button>
@@ -268,10 +268,10 @@
       </b-card>
     </div>
 
-    <!-- Modal to add TruckTrailerDriver combination -->
+    <!-- Modal to create TruckTrailerDriver combination for COACH TRUCKS -->
     <b-modal
       class="modal fade"
-      id="addTruckTrailerDriver"
+      id="addGoldenCoachTruckTrailerDriver"
       tabindex="-1"
       role="dialog"
       aria-labelledby="exampleModalLabel"
@@ -279,7 +279,6 @@
       ok-title="Save"
       title=" New Truck Trailer Driver"
       @ok="handleOk"
-      b-v-modal.addTruckTrailerDriver
     >
       <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -295,11 +294,165 @@
                   required
                 >
                   <option
-                    v-for="truck in truckTrailerDriver.trucks"
-                    :key="truck.id"
-                    :value="truck.id"
+                    v-for="coachTruck in coachTrucks"
+                    :key="coachTruck.id"
+                    :value="coachTruck.id"
                   >
-                    {{ truck.reg_number }}
+                    {{ coachTruck.reg_number }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Trailer</label>
+                <select
+                  type="email"
+                  class="form-control"
+                  v-model="newTruckTrailerDriver.trailer"
+                  placeholder="Choose trailer"
+                  required
+                >
+                  <option
+                    v-for="trailer in truckTrailerDriver.trailers"
+                    :key="trailer.id"
+                    :value="trailer.id"
+                  >
+                    {{ trailer.tl_number }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Driver</label>
+                <select
+                  type="email"
+                  class="form-control"
+                  v-model="newTruckTrailerDriver.driver"
+                  placeholder="Choose Person"
+                  required
+                >
+                  <option
+                    v-for="person in truckTrailerDriver.people"
+                    :key="person.id"
+                    :value="person.id"
+                  >
+                    {{ person.first_name }} {{ person.middle_name }}
+                    {{ person.last_name }}
+                  </option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </b-modal>
+
+    <!-- Modal to create TruckTrailerDriver combination for FLEET TRUCKS -->
+    <b-modal
+      class="modal fade"
+      id="addGoldenFleetTruckTrailerDriver"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      ok-title="Save"
+      title=" New Truck Trailer Driver"
+      @ok="handleOk"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Truck</label>
+                <select
+                  type="email"
+                  class="form-control"
+                  v-model="newTruckTrailerDriver.truck"
+                  placeholder="Choose truck"
+                  required
+                >
+                  <option
+                    v-for="fleetTruck in fleetTrucks"
+                    :key="fleetTruck.id"
+                    :value="fleetTruck.id"
+                  >
+                    {{ fleetTruck.reg_number }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Trailer</label>
+                <select
+                  type="email"
+                  class="form-control"
+                  v-model="newTruckTrailerDriver.trailer"
+                  placeholder="Choose trailer"
+                  required
+                >
+                  <option
+                    v-for="trailer in truckTrailerDriver.trailers"
+                    :key="trailer.id"
+                    :value="trailer.id"
+                  >
+                    {{ trailer.tl_number }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputEmail1">Driver</label>
+                <select
+                  type="email"
+                  class="form-control"
+                  v-model="newTruckTrailerDriver.driver"
+                  placeholder="Choose Person"
+                  required
+                >
+                  <option
+                    v-for="person in truckTrailerDriver.people"
+                    :key="person.id"
+                    :value="person.id"
+                  >
+                    {{ person.first_name }} {{ person.middle_name }}
+                    {{ person.last_name }}
+                  </option>
+                </select>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </b-modal>
+
+    <!-- Modal to create TruckTrailerDriver combination for WHEELS TRUCKS -->
+    <b-modal
+      class="modal fade"
+      id="addGoldenWheelsTruckTrailerDriver"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+      ok-title="Save"
+      title=" New Truck Trailer Driver"
+      @ok="handleOk"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
+              <div class="form-group">
+                <label for="exampleInputEmail1">Truck</label>
+                <select
+                  type="email"
+                  class="form-control"
+                  v-model="newTruckTrailerDriver.truck"
+                  placeholder="Choose truck"
+                  required
+                >
+                  <option
+                    v-for="wheelsTruck in wheelsTrucks.trucks"
+                    :key="wheelsTruck.id"
+                    :value="wheelsTruck.id"
+                  >
+                    {{ wheelsTruck.reg_number }}
                   </option>
                 </select>
               </div>
@@ -354,6 +507,7 @@ export default {
       truckTrailerDriver: [],
       newTruckTrailerDriver: {
         truck: "",
+        truckCompany:"",
         trailer: "",
         driver: "",
       },
@@ -366,21 +520,33 @@ export default {
     };
   },
   computed: {
-    coachTrucks(){
-      return this.truckTrailerDriver.trucks.filter((allTrucks)=>{
-        return allTrucks.company.company_name==='Golden Coach';
-      })
+    //compute truck_trailer_people by company name and render to company tabs to be selected during TTP allocation
+    coachTrucks() {
+      return this.truckTrailerDriver.trucks.filter((allTrucks) => {
+        var coachCompanyName = "golden coach";
+        return (
+          allTrucks.company.company_name.toLowerCase() === coachCompanyName
+        );
+      });
     },
-    fleetTrucks(){
-      return this.truckTrailerDriver.trucks.filter((allTrucks)=>{
-        return allTrucks.company.company_name==='Golden Fleet';
-      })
+    fleetTrucks() {
+      return this.truckTrailerDriver.trucks.filter((allTrucks) => {
+        var fleetCompanyName = "golden fleet";
+        return (
+          allTrucks.company.company_name.toLowerCase() === fleetCompanyName
+        );
+      });
     },
-    wheelsTrucks(){
-      return this.truckTrailerDriver.trucks.filter((allTrucks)=>{
-        return allTrucks.company.company_name==='Golden Wheels';
-      })
-    }
+    wheelsTrucks() {
+      return this.truckTrailerDriver.trucks.filter((allTrucks) => {
+        var wheelsCompanyName = "golden wheels";
+        return (
+          allTrucks.company.company_name.toLowerCase() === wheelsCompanyName
+        );
+      });
+    },
+
+    // compute TTP trucks by company and add render to ttp table for allocation process
   },
   mounted() {
     this.getTruckTrailerDrivers();
