@@ -37,7 +37,7 @@
             </thead>
 
             <tbody>
-              <tr v-for="client in clientsList" :key="client.id">
+              <tr v-for="client in clientsList.clients" :key="client.id">
                 <td>{{ client.client_name }}</td>
                 <td>{{ client.address }}</td>
                 <td>{{ client.phone }}</td>

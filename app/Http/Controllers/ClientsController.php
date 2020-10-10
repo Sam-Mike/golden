@@ -16,7 +16,8 @@ class ClientsController extends Controller
     public function index()
     {
         $clients = Clients::all();
-        return $clients;
+        return response()->json([
+            'clients'=>$clients]);
     }
 
     /**
@@ -48,7 +49,6 @@ class ClientsController extends Controller
         $client->mobile = request('mobile');
         $client->email = request('email');
         $client->save();
-
         return response()->json([
             'success'
         ], 200);

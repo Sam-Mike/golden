@@ -74,6 +74,7 @@
     <!-- Allocation Tabs -->
     <div>
       <b-card no-body>
+        <!-- COACH TAB -->
         <b-tabs content-class="mt-3">
           <b-tab title="Golden Coach" active>
             <div class="card shadow mb-4">
@@ -108,10 +109,9 @@
                         <th>DRIVER</th>
                       </tr>
                     </thead>
-
                     <tbody>
                       <tr
-                        v-for="ttp in truckTrailerDriver.truck_trailer_people"
+                        v-for="ttp in coachTruckTrailerDriver"
                         :key="ttp.id"
                       >
                         <td>
@@ -138,6 +138,7 @@
               </div>
             </div>
           </b-tab>
+          <!-- FLEET TAB -->
           <b-tab title="Golden Fleet">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -174,7 +175,7 @@
 
                     <tbody>
                       <tr
-                        v-for="ttp in truckTrailerDriver.truck_trailer_people"
+                        v-for="ttp in fleetTruckTrailerDriver"
                         :key="ttp.id"
                       >
                         <td>
@@ -201,6 +202,7 @@
               </div>
             </div>
           </b-tab>
+          <!-- WHEELS TAB -->
           <b-tab title="Golden Wheels">
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -237,7 +239,7 @@
 
                     <tbody>
                       <tr
-                        v-for="ttp in truckTrailerDriver.truck_trailer_people"
+                        v-for="ttp in wheelsTruckTrailerDriver"
                         :key="ttp.id"
                       >
                         <td>
@@ -448,7 +450,7 @@
                   required
                 >
                   <option
-                    v-for="wheelsTruck in wheelsTrucks.trucks"
+                    v-for="wheelsTruck in wheelsTrucks"
                     :key="wheelsTruck.id"
                     :value="wheelsTruck.id"
                   >
@@ -504,10 +506,9 @@
 export default {
   data() {
     return {
-      truckTrailerDriver: [],
+      truckTrailerDriver: null,
       newTruckTrailerDriver: {
         truck: "",
-        truckCompany:"",
         trailer: "",
         driver: "",
       },
@@ -522,31 +523,37 @@ export default {
   computed: {
     //compute truck_trailer_people by company name and render to company tabs to be selected during TTP allocation
     coachTrucks() {
-      return this.truckTrailerDriver.trucks.filter((allTrucks) => {
-        var coachCompanyName = "golden coach";
-        return (
-          allTrucks.company.company_name.toLowerCase() === coachCompanyName
-        );
-      });
+      console.log(this.truckTrailerDriver);
+      return this.truckTrailerDriver.trucks.filter(
+        (allTrucks) => allTrucks.company_id === 1
+      );
     },
     fleetTrucks() {
-      return this.truckTrailerDriver.trucks.filter((allTrucks) => {
-        var fleetCompanyName = "golden fleet";
-        return (
-          allTrucks.company.company_name.toLowerCase() === fleetCompanyName
-        );
-      });
+      return this.truckTrailerDriver.trucks.filter(
+        (allTrucks) => allTrucks.company_id === 2
+      );
     },
     wheelsTrucks() {
-      return this.truckTrailerDriver.trucks.filter((allTrucks) => {
-        var wheelsCompanyName = "golden wheels";
-        return (
-          allTrucks.company.company_name.toLowerCase() === wheelsCompanyName
-        );
-      });
+      return this.truckTrailerDriver.trucks.filter(
+        (allTrucks) => allTrucks.company_id === 3
+      );
     },
-
     // compute TTP trucks by company and add render to ttp table for allocation process
+    coachTruckTrailerDriver() {
+      return this.truckTrailerDriver.truck_trailer_people.filter(
+        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 1
+      );
+    },
+    fleetTruckTrailerDriver() {
+      return this.truckTrailerDriver.truck_trailer_people.filter(
+        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 2
+      );
+    },
+    wheelsTruckTrailerDriver() {
+      return this.truckTrailerDriver.truck_trailer_people.filter(
+        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 3
+      );
+    },
   },
   mounted() {
     this.getTruckTrailerDrivers();
@@ -558,13 +565,29 @@ export default {
         .then(({ data }) => {
           this.truckTrailerDriver = data;
         });
-      console.log("here i am");
+      console.log("gotten ttp");
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.sendAllocationData();
+      this.submitTruckTrailerPeople();
+    },
+    submitTruckTrailerPeople(){
+      axios
+      .post("http://127.0.0.1:8000/api/truck_trailer_people", {
+        truck:this.newTruckTrailerDriver.truck,
+        trailer:this.newTruckTrailerDriver.trailer,
+        driver:this.newTruckTrailerDriver.driver
+      })
+      .then(res=>console.log('truck trailer driver added'))
+      .catch(err=>res.err);
+      this.$nextTick(()=>{
+        this.$bvModal.hide('addGoldenCoachTruckTrailerDriver');
+        this.$bvModal.hide('addGoldenFleetTruckTrailerDriver');
+        this.$bvModal.hide('addGoldenWheelsTruckTrailerDriver');
+        this.getTruckTrailerDrivers();
+      });
     },
 
     sendAllocationData() {

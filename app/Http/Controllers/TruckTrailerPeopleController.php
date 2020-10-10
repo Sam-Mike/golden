@@ -44,7 +44,8 @@ class TruckTrailerPeopleController extends Controller
         $truck_trailer_people->people_id = request('driver');
 
         $truck_trailer_people->save();
-        return redirect('truck_trailer_people');
-
+        return  response()->json([
+            'success'
+        ], 200);
     }
 }

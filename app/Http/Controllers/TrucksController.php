@@ -25,7 +25,8 @@ class TrucksController extends Controller
         return response()->json([
             'trucks'=>$trucks,
             'company'=>$company,
-            'truck_type'=>$truck_type
+            'truck_type'=>$truck_type,
+            'cluster'=>$cluster
         ]);
     }
 
@@ -55,8 +56,9 @@ class TrucksController extends Controller
         $trucks->truck_type_id = request('truck_type');
 
         $trucks->save();
-        return redirect('trucks');
-    }
+        return  response()->json([
+            'success'
+        ], 200);    }
 
     /**
      * Display the specified resource.
