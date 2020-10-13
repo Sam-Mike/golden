@@ -21,7 +21,7 @@
                 class="custom-select"
                 id="clientSelector"
               >
-                <option :value="undefined" disabled>Choose Client</option>
+                <option :selected="true">Choose Client</option>
                 <option
                   v-for="client in truckTrailerDriver.clients"
                   :key="client.id"
@@ -111,7 +111,7 @@
                     </thead>
                     <tbody>
                       <tr
-                        v-for="ttp in coachTruckTrailerDriver"
+                        v-for="ttp in coachTruckTrailerDriver()"
                         :key="ttp.id"
                       >
                         <td>
@@ -175,7 +175,7 @@
 
                     <tbody>
                       <tr
-                        v-for="ttp in fleetTruckTrailerDriver"
+                        v-for="ttp in fleetTruckTrailerDriver()"
                         :key="ttp.id"
                       >
                         <td>
@@ -239,7 +239,7 @@
 
                     <tbody>
                       <tr
-                        v-for="ttp in wheelsTruckTrailerDriver"
+                        v-for="ttp in wheelsTruckTrailerDriver()"
                         :key="ttp.id"
                       >
                         <td>
@@ -296,7 +296,7 @@
                   required
                 >
                   <option
-                    v-for="coachTruck in coachTrucks"
+                    v-for="coachTruck in coachTrucks()"
                     :key="coachTruck.id"
                     :value="coachTruck.id"
                   >
@@ -373,7 +373,7 @@
                   required
                 >
                   <option
-                    v-for="fleetTruck in fleetTrucks"
+                    v-for="fleetTruck in fleetTrucks()"
                     :key="fleetTruck.id"
                     :value="fleetTruck.id"
                   >
@@ -450,7 +450,7 @@
                   required
                 >
                   <option
-                    v-for="wheelsTruck in wheelsTrucks"
+                    v-for="wheelsTruck in wheelsTrucks()"
                     :key="wheelsTruck.id"
                     :value="wheelsTruck.id"
                   >
@@ -520,10 +520,45 @@ export default {
       },
     };
   },
-  computed: {
+  mounted() {
+    this.getTruckTrailerDrivers();
+  },
+  methods: {
+    getTruckTrailerDrivers() {
+      axios
+        .get("http://localhost:8000/api/truck_trailer_people")
+        .then(({ data }) => {
+          this.truckTrailerDriver = data;
+        });
+      console.log("gotten ttp");
+    },
+
+    handleOk(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.submitTruckTrailerPeople();
+    },
+
+    submitTruckTrailerPeople() {
+      axios
+        .post("http://127.0.0.1:8000/api/truck_trailer_people", {
+          truck: this.newTruckTrailerDriver.truck,
+          trailer: this.newTruckTrailerDriver.trailer,
+          driver: this.newTruckTrailerDriver.driver,
+        })
+        .then((res) => console.log("truck trailer driver added"))
+        .catch((err) => res.err);
+      this.$nextTick(() => {
+        this.$bvModal.hide("addGoldenCoachTruckTrailerDriver");
+        this.$bvModal.hide("addGoldenFleetTruckTrailerDriver");
+        this.$bvModal.hide("addGoldenWheelsTruckTrailerDriver");
+        this.getTruckTrailerDrivers();
+      });
+    },
+
     //compute truck_trailer_people by company name and render to company tabs to be selected during TTP allocation
     coachTrucks() {
-      console.log(this.truckTrailerDriver);
       return this.truckTrailerDriver.trucks.filter(
         (allTrucks) => allTrucks.company_id === 1
       );
@@ -554,42 +589,6 @@ export default {
         (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 3
       );
     },
-  },
-  mounted() {
-    this.getTruckTrailerDrivers();
-  },
-  methods: {
-    getTruckTrailerDrivers() {
-      axios
-        .get("http://localhost:8000/api/truck_trailer_people")
-        .then(({ data }) => {
-          this.truckTrailerDriver = data;
-        });
-      console.log("gotten ttp");
-    },
-    handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault();
-      // Trigger submit handler
-      this.submitTruckTrailerPeople();
-    },
-    submitTruckTrailerPeople(){
-      axios
-      .post("http://127.0.0.1:8000/api/truck_trailer_people", {
-        truck:this.newTruckTrailerDriver.truck,
-        trailer:this.newTruckTrailerDriver.trailer,
-        driver:this.newTruckTrailerDriver.driver
-      })
-      .then(res=>console.log('truck trailer driver added'))
-      .catch(err=>res.err);
-      this.$nextTick(()=>{
-        this.$bvModal.hide('addGoldenCoachTruckTrailerDriver');
-        this.$bvModal.hide('addGoldenFleetTruckTrailerDriver');
-        this.$bvModal.hide('addGoldenWheelsTruckTrailerDriver');
-        this.getTruckTrailerDrivers();
-      });
-    },
-
     sendAllocationData() {
       axios
         .post("http://127.0.0.1:8000/api/allocation", {

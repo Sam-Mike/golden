@@ -28,19 +28,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('allocation', [AllocationsController::class, 'setAllocation']);
 
 
-Route::get('/clients', [ClientsController::class, 'index']);
-Route::post('clients',[ClientsController::class, 'store']);
+Route::apiResource('clients',ClientsController::class);
 
-Route::get('/people', [PeopleController::class,'index']);
+Route::get('people', [PeopleController::class,'index']);
 Route::post('people', [PeopleController::class,'store']);
 
-Route::get('/trucks', [TrucksController::class, 'index']);
+Route::get('trucks', [TrucksController::class, 'index']);
 Route::post('trucks', [TrucksController::class, 'store']);
 
-Route::get('/trailers', [TrailersController::class, 'index']);
+Route::get('trailers', [TrailersController::class, 'index']);
 Route::post('trailers', [TrailersController::class, 'store']);
 
-Route::get('/truck_trailer_people', [TruckTrailerPeopleController::class, 'index']);
+Route::get('truck_trailer_people', [TruckTrailerPeopleController::class, 'index']);
 Route::post('truck_trailer_people', [TruckTrailerPeopleController::class, 'store']);
 
-Route::get('/allocations', [AllocationsController::class, 'index'])->name('allocations');
+Route::get('allocations', [AllocationsController::class, 'index'])->name('allocations');

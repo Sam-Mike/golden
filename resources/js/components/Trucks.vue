@@ -35,7 +35,7 @@
             </thead>
 
             <tbody>
-              <tr v-for="truck in trucks" :key="truck.id">
+              <tr v-for="truck in trucks.trucks" :key="truck.id">
                 <td>{{ truck.reg_number }}</td>
                 <td>{{ truck.company.company_name }}</td>
                 <td>{{ truck.cluster.cluster_name }}</td>
