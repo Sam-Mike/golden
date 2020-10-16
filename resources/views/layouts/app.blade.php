@@ -19,17 +19,19 @@
         rel="stylesheet">
 
     <!--bootstrap-vue-->
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
-    <link type="text/css" rel="stylesheet" href="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
+    <link type="text/css" rel="stylesheet" href="{{asset('//unpkg.com/bootstrap/dist/css/bootstrap.min.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{asset('//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css')}}" />
 
-    <script src="//unpkg.com/vue@latest/dist/vue.min.js"></script>
-    <script src="//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
-    
+    <script src="{{asset('//unpkg.com/vue@latest/dist/vue.min.js')}}"></script>
+    <script src="{{asset('//unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js')}}"></script>
+
+    {{-- <link href="{{asset('vendor/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet"> --}}
+
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="customstyle.css" rel="stylesheet">
-    
+    <link href="{{asset('css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{asset('customstyle.css')}}" rel="stylesheet">
+    <link href="{{asset('css/loading.css')}}" rel="stylesheet">
+
 
 </head>
 
@@ -49,10 +51,9 @@
     <!-- Custom scripts for all pages-->
     <script src="{{asset('js/sb-admin-2.min.js')}}"></script>
     {{-- <script src="{{asset('vendor/datatables/jquery.dataTables.min.js')}}"></script> --}}
-    <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script>
-
+    {{-- <script src="{{asset('vendor/datatables/dataTables.bootstrap4.min.js')}}"></script> --}}
+    {{-- <script src="{{asset('js/demo/datatables-demo.js')}}"></script> --}}
     <!-- Page level custom scripts -->
-    <script src="{{asset('js/demo/datatables-demo.js')}}"></script>
 
     @yield('scripts')
 
