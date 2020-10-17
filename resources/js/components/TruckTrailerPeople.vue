@@ -506,6 +506,7 @@
 export default {
   data() {
     return {
+      coachttp:null,
       truckTrailerDriver: null,
       newTruckTrailerDriver: {
         truck: "",
@@ -556,11 +557,27 @@ export default {
         this.getTruckTrailerDrivers();
       });
     },
-
+    // compute TTP trucks by company and add render to ttp table for allocation process
+    coachTruckTrailerDriver() {
+       this.coachttp = this.truckTrailerDriver.truck_trailer_people.filter(
+        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 1
+      );
+      return this.coachttp;
+    },
+    fleetTruckTrailerDriver() {
+      return this.truckTrailerDriver.truck_trailer_people.filter(
+        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 2
+      );
+    },
+    wheelsTruckTrailerDriver() {
+      return this.truckTrailerDriver.truck_trailer_people.filter(
+        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 3
+      );
+    },
     //compute truck_trailer_people by company name and render to company tabs to be selected during TTP allocation
     coachTrucks() {
       return this.truckTrailerDriver.trucks.filter(
-        (allTrucks) => allTrucks.company_id === 1
+        (allTrucks) => allTrucks.company_id === 1 && allTrucks.reg_number !== this.coachttp.trucks.reg_number
       );
     },
     fleetTrucks() {
@@ -573,22 +590,7 @@ export default {
         (allTrucks) => allTrucks.company_id === 3
       );
     },
-    // compute TTP trucks by company and add render to ttp table for allocation process
-    coachTruckTrailerDriver() {
-      return this.truckTrailerDriver.truck_trailer_people.filter(
-        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 1
-      );
-    },
-    fleetTruckTrailerDriver() {
-      return this.truckTrailerDriver.truck_trailer_people.filter(
-        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 2
-      );
-    },
-    wheelsTruckTrailerDriver() {
-      return this.truckTrailerDriver.truck_trailer_people.filter(
-        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 3
-      );
-    },
+
     sendAllocationData() {
       axios
         .post("http://127.0.0.1:8000/api/allocation", {
