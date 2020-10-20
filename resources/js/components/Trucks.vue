@@ -12,6 +12,7 @@
             class="btn btn-primary"
             data-toggle="modal"
             data-target="#exampleModal"
+            v-b-modal.addTruck
           >
             Add Truck
           </button>
@@ -68,7 +69,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-model="truck.reg_number"
+                  v-model="new_truck.reg_number"
                   placeholder="Enter truck registration number"
                   required
                 />
@@ -76,9 +77,9 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Company</label>
                 <select
-                  type="email"
+                  type="text"
                   class="form-control"
-                  v-model="truck.company_name"
+                  v-model="new_truck.company_id"
                   placeholder="Choose company"
                   required
                 >
@@ -94,9 +95,9 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Cluster</label>
                 <select
-                  type="email"
+                  type="text"
                   class="form-control"
-                  v-model="truck.cluster_name"
+                  v-model="new_truck.cluster_id"
                   placeholder="Choose Cluster"
                   required
                 >
@@ -112,15 +113,15 @@
               <div class="form-group">
                 <label for="exampleInputEmail1">Truck Type</label>
                 <select
-                  type="email"
+                  type="text"
                   class="form-control"
-                  v-model="truck.truck_type"
+                  v-model="new_truck.truck_type_id"
                   placeholder="Choose Truck Type"
                   required
                 >
                   <option
-                    v-for="trucktype in trucks.trucktype"
-                    :key="trucktype.id"
+                    v-for="truck_type in trucks.truck_type"
+                    :key="truck_type.id"
                     :value="truck_type.id"
                   >
                     {{ truck_type.truck_type_name }}
@@ -139,7 +140,7 @@ export default {
   data() {
     return {
       trucks: [],
-      truck: {
+      new_truck: {
         reg_number: "",
         company_name: "",
         cluster: "",
@@ -165,10 +166,10 @@ export default {
     submitTruck() {
       axios
         .post("http://localhost:8000/api/trucks", {
-          reg_number: this.truck.reg_number,
-          company_name: this.truck.company_name,
-          cluster: this.truck.cluster,
-          truck_type: this.truck.truck_type,
+          reg_number: this.new_truck.reg_number,
+          company_id: this.new_truck.company_id,
+          cluster_id: this.new_truck.cluster_id,
+          truck_type_id: this.new_truck.truck_type_id,
         })
         .then((res) => console.log("truck added"));
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\TruckTrailerPeople;
+use App\Models\TruckTrailerDriver;
 use App\Models\Trucks;
 use App\Models\Trailers;
 use App\Models\People;
@@ -12,11 +12,11 @@ use App\Models\Cargo;
 use App\Models\Company;
 use App\Models\Location;
 
-class TruckTrailerPeopleController extends Controller
+class TruckTrailerDriverController extends Controller
 {
     public function index()
     {
-        $truck_trailer_people = TruckTrailerPeople::with (['trucks', 'trucks.company', 'trucks.cluster', 'trucks.truck_type', 'trailers', 'people'])->get();
+        $truck_trailer_driver = TruckTrailerDriver::with (['trucks', 'trucks.company', 'trucks.cluster', 'trucks.truck_type', 'trailers','people'])->get();
         $company = Company:: all();
         $clients = Clients:: all();
         $cargo = Cargo::all();
@@ -25,7 +25,7 @@ class TruckTrailerPeopleController extends Controller
         $trailers = Trailers:: all();
         $people = People:: all();
         return response()->json([
-            'truck_trailer_people'=>$truck_trailer_people,
+            'truck_trailer_driver'=>$truck_trailer_driver,
             'company'=>$company,
             'clients'=>$clients,
             'cargo'=>$cargo,
@@ -37,13 +37,16 @@ class TruckTrailerPeopleController extends Controller
     }
 
     public function store(Request $request){
-        $truck_trailer_people = new TruckTrailerPeople();
+        $truck_trailer_driver = new TruckTrailerDriver();
 
-        $truck_trailer_people->truck_id = request('truck');
-        $truck_trailer_people->trailer_id = request('trailer');
-        $truck_trailer_people->people_id = request('driver');
+        $truck_trailer_driver->truck_id = request('truck_id');
+        $truck_trailer_driver->trailer_id = request('trailer_id');
+        $truck_trailer_driver->driver_id = request('driver_id');
+        $truck_trailer_driver->save();
 
-        $truck_trailer_people->save();
+        $truck = Trucks::find($truck_trailer_driver->truck_id);
+        $truck->allocation_status_id = 2;
+        $truck->save();
         return  response()->json([
             'success'
         ], 200);

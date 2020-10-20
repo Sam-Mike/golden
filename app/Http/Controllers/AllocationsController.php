@@ -16,15 +16,15 @@ class AllocationsController extends Controller
     public function setAllocation(Request $request){
         //receiving data from the api
 
-        $truckslist = $request->trucksList;
+        $trips = $request->checked_truck_trailer_drivers;
 
-        foreach ($truckslist as $truck){
+        foreach ($trips as $trip){
         $allocations = new Allocations();
 
-        $allocations->client_id = $request->clientId;
-        $allocations->cargo_id = $request->cargoId;
-        $allocations->destination_id= $request->destinationId;
-        $allocations->manifest_no= $request->manifestNo;
+        $allocations->client_id = $request->selected_client;
+        $allocations->cargo_id = $request->selecte_cargo;
+        $allocations->destination_id= $request->selected_destination;
+        $allocations->manifest_no= $request->manifest_no;
         $allocations->truck_trailer_people_id= $truck;
 
         $allocations->save();

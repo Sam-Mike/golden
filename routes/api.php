@@ -7,7 +7,7 @@ use App\Http\Controllers\ClientsController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\TrucksController;
 use App\Http\Controllers\TrailersController;
-use App\Http\Controllers\TruckTrailerPeopleController;
+use App\Http\Controllers\TruckTrailerDriverController;
 
 
 /*
@@ -39,7 +39,7 @@ Route::post('trucks', [TrucksController::class, 'store']);
 Route::get('trailers', [TrailersController::class, 'index']);
 Route::post('trailers', [TrailersController::class, 'store']);
 
-Route::get('truck_trailer_people', [TruckTrailerPeopleController::class, 'index']);
-Route::post('truck_trailer_people', [TruckTrailerPeopleController::class, 'store']);
+Route::get('truck_trailer_driver', [TruckTrailerDriverController::class, 'index']);
+Route::post('truck_trailer_driver', [TruckTrailerDriverController::class, 'store']);
 
 Route::get('allocations', [AllocationsController::class, 'index'])->name('allocations');

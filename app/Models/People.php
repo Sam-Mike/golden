@@ -19,4 +19,7 @@ class People extends Model
     public function license_classes(){
         return $this->belongsTo('App\Models\LicenseClasses');
     }
+    public function truck_trailer_driver(){
+        return $this->hasMany('App\Models\TruckTrailerDriver');
+    }
 }

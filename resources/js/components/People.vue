@@ -233,6 +233,7 @@ export default {
         license_issue_date: "",
         license_class: "",
       },
+      //remember to activate and deactivate people
     };
   },
   mounted() {

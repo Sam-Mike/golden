@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TruckTrailerPeople extends Model
+class TruckTrailerDriver extends Model
 {
-    protected $table='truck_trailer_people';
+    protected $table='truck_trailer_driver';
 
     public function trucks(){
         return $this->belongsTo('App\Models\Trucks', 'truck_id', 'id');
@@ -15,7 +15,7 @@ class TruckTrailerPeople extends Model
         return $this->belongsTo('App\Models\Trailers', 'trailer_id', 'id');
     }
     public function people(){
-        return $this->belongsTo('App\Models\People');
+        return $this->belongsTo('App\Models\People', 'driver_id');
     }
     public function allocations(){
         return $this->hasMany('App\Models\Allocations');

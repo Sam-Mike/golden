@@ -17,7 +17,6 @@
           >
             <thead class="thead-dark">
               <tr>
-                <th>MANIFEST</th>
                 <th>CLIENT</th>
                 <th>CARGO</th>
                 <th>TRUCK</th>
@@ -25,12 +24,12 @@
                 <th>TRAILER</th>
                 <th>DRIVER</th>
                 <th>DESTINATION</th>
+                <th>CURRENT LOCATION</th>
               </tr>
             </thead>
 
             <tbody>
               <tr v-for="allocation in allocations.allocations" :key="allocation.id">
-                <td>{{ allocation.manifest_no }}</td>
                 <td>{{ allocation.clients.client_name }}</td>
                 <td>{{ allocation.cargo.cargo_name }}</td>
                 <td>{{ allocation.truck_trailer_people.trucks.reg_number }}</td>
@@ -38,6 +37,7 @@
                 <td>{{ allocation.truck_trailer_people.trailers.tl_number }}</td>
                 <td>{{ allocation.truck_trailer_people.people.first_name }}</td>
                 <td>{{ allocation.location.location_name }}</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
@@ -51,6 +51,7 @@ export default {
   data() {
     return {
       allocations: [],
+      //when trip is declared ended we need to change the truck allocation status to free again
     }
   },
   mounted() {

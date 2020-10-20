@@ -27,7 +27,7 @@
                                     Operations
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <router-link class="dropdown-item" to="/truck_trailer_people">TruckTrailerPeople
+                                    <router-link class="dropdown-item" to="/truck_trailer_driver">TruckTrailerDrivers
                                     </router-link>
                                     <router-link class="dropdown-item" to="/allocations">Allocations</router-link>
                                     <div class="dropdown-divider"></div>
