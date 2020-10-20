@@ -1,12 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ClientsController;
-use App\Http\Controllers\PeopleController;
-use App\Http\Controllers\TrucksController;
-use App\Http\Controllers\TrailersController;
-use App\Http\Controllers\TruckTrailerPeopleController;
-use App\Http\Controllers\AllocationsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +15,7 @@ use App\Http\Controllers\AllocationsController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('layout/app');
 });
 
 

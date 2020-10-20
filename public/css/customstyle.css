@@ -1,0 +1,27 @@
+.doublenav{
+    overflow:hidden;
+}
+nav.navbar {
+    padding: 0px;
+    border-bottom:solid 3px #e98b50;
+}
+ul li a{
+    display: block;
+}
+nav>div>ul>li>a:hover{
+    background-color:#e98b50;
+    color: white;
+}
+nav>div>ul>li.active> a {
+    background-color:#e98b50;
+    color: white;
+}
+.allocations-list{
+    list-style-type: none;
+}
+.input-group-prepend {
+    display: inline-flex;
+}
+.dropdown:hover .dropdown-menu{
+    display:block;
+}

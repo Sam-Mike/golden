@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ loading: loading }">
+  <div v-bind:class="loading">
     <div class="card shadow mb-4">
       <div style="padding: 20px">
         <!--inserting the list here-->
