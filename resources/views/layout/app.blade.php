@@ -122,7 +122,7 @@
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
-                            <span>Copyright &copy; Golden Group 2020</span>
+                            <span>Copyright &copy; Golden Group {{ date('Y') }}</span>
                         </div>
                     </div>
                 </footer>

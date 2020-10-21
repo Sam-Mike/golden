@@ -1,6 +1,7 @@
 <template>
   <div>
     <!-- DataTales Example -->
+    <loading :active.sync="isLoading" />
     <div class="card shadow mb-4">
       <div class="card-header py-3">
         <div class="d-flex row justify-content-between">
@@ -137,9 +138,17 @@
 </template>
 
 <script>
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css';
+
 export default {
+  components: {
+            Loading
+        },
   data() {
     return {
+      isLoading:false,
+      isSuccess: false,
       clientsList: [],
       client: {
         name: "",
@@ -157,12 +166,17 @@ export default {
   },
   methods: {
     getClients() {
+      this.isLoading = true;
       axios
         .get("http://localhost:8000/api/clients")
-        .then(({ data }) => (this.clientsList = data))
+        .then(({ data }) => {
+          this.clientsList = data;
+          this.isSuccess = true;
+          })
         .catch((error) => {
           return console.log(error);
-        });
+        })
+        .finally(()=> this.isLoading = false);
     },
     handleOk(bvModalEvt) {
       // Prevent modal from closing

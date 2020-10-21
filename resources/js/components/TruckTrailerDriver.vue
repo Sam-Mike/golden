@@ -1,5 +1,6 @@
 <template>
-  <div v-bind:class="loading">
+  <div>
+    <loading :active.sync="isLoading" />
     <div class="card shadow mb-4">
       <div style="padding: 20px">
         <!--inserting the list here-->
@@ -14,20 +15,30 @@
         <div class="row">
           <div class="input-group mb-1 col">
             <div class="col-md-8">
-              <select
-                v-model="allocation.selectedClient"
-                class="custom-select"
+              <input
+                v-model.trim="searchClient"
+                class="dropdown-input"
+                type="text"
+                placeholder="Choose Client"
                 id="clientSelector"
-              >
-                <option :value="undefined" disabled>Choose Client</option>
-                <option
-                  v-for="client in truckTrailerDriver.clients"
-                  :key="client.id"
-                  :value="client.id"
+              />
+              <div v-show="searchClient && apiLoaded" class="dropdown-list">
+                <div
+                  v-show="itemVisible(item)"
+                  v-for="item in truckTrailerDriver.clients"
+                  :key="item.client_name"
                 >
-                  {{ client.client_name }}
-                </option>
-              </select>
+                  {{ item.client_name }}
+                </div>
+              </div>
+              <option :value="undefined" disabled>Choose Client</option>
+              <option
+                v-for="client in truckTrailerDriver.clients"
+                :key="client.id"
+                :value="client.id"
+              >
+                {{ client.client_name }}
+              </option>
             </div>
           </div>
           <div class="input-group mb-1 col">
@@ -490,21 +501,29 @@
   </div>
 </template>
 <script>
+import Loading from 'vue-loading-overlay'
+
+import 'vue-loading-overlay/dist/vue-loading.css';
 export default {
+  
+  components: {
+        Loading,
+    },
   data() {
     return {
-      loading: true,
+      isLoading: false,
+      isSuccess: false,
       truckTrailerDriver: null,
-      search_client: "",
-      search_cargo: "",
-      search_destination: "",
-      search_truck: "",
-      search_trailer: "",
-      search_driver: "",
+      searchClient: "",
+      searchCargo: "",
+      searchDestination: "",
+      searchTruck: "",
+      searchTrailer: "",
+      searchDriver: "",
       newTruckTrailerDriver: {
-        truck_id: "",
-        trailer_id: "",
-        driver_id: "",
+        truckId: "",
+        trailerId: "",
+        driverId: "",
       },
       allocation: {
         selectedClient: "",
@@ -519,12 +538,15 @@ export default {
   },
   methods: {
     getTruckTrailerDrivers() {
+      this.isLoading = true;
+      this.isSuccess = false;
       axios
         .get("http://localhost:8000/api/truck_trailer_driver")
         .then(({ data }) => {
           this.truckTrailerDriver = data;
-          this.loading = false;
-        });
+          this.isSuccess = true;
+        })
+        .finally(() => (this.isLoading = false));
       console.log("gotten ttp");
     },
 
@@ -538,9 +560,9 @@ export default {
     submitTruckTrailerPeople() {
       axios
         .post("http://127.0.0.1:8000/api/truck_trailer_driver", {
-          truck_id: this.newTruckTrailerDriver.truck_id,
-          trailer_id: this.newTruckTrailerDriver.trailer_id,
-          driver_id: this.newTruckTrailerDriver.driver_id,
+          truck_id: this.newTruckTrailerDriver.truckId,
+          trailer_id: this.newTruckTrailerDriver.trailerId,
+          driver_id: this.newTruckTrailerDriver.driverId,
         })
         .then((res) => console.log("truck trailer driver added"))
         .catch((err) => res.err);
@@ -550,6 +572,13 @@ export default {
         this.$bvModal.hide("addGoldenWheelsTruckTrailerDriver");
         this.getTruckTrailerDrivers();
       });
+    },
+    itemVisible(item) {
+      if ((this.apiLoaded = true)) {
+        return item.client_name
+          .toLowerCase()
+          .includes(this.truckTrailerDriver.clients.client_name.toLowerCase());
+      } else console.log("cannot find");
     },
     // compute TTP trucks by company and add render to ttp table for allocation process
     coachTruckTrailerDriver() {

@@ -11,11 +11,14 @@ import { BootstrapVue } from 'bootstrap-vue';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import VueRouter from 'vue-router';
 import routes from './routes';
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(Loading);
 Vue.use(VuejsDatatableFactory);
 
 /**

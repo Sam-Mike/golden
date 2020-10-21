@@ -13,26 +13,26 @@ use Illuminate\Http\Request;
 class AllocationsController extends Controller
 {
 
-    public function setAllocation(Request $request){
+    public function setAllocation(Request $request)
+    {
         //receiving data from the api
 
         $trips = $request->checked_truck_trailer_drivers;
 
-        foreach ($trips as $trip){
-        $allocations = new Allocations();
+        foreach ($trips as $trip) {
+            $allocations = new Allocations();
 
-        $allocations->client_id = $request->selected_client;
-        $allocations->cargo_id = $request->selecte_cargo;
-        $allocations->destination_id= $request->selected_destination;
-        $allocations->manifest_no= $request->manifest_no;
-        $allocations->truck_trailer_people_id= $truck;
+            $allocations->client_id = $request->selected_client;
+            $allocations->cargo_id = $request->selecte_cargo;
+            $allocations->destination_id = $request->selected_destination;
+            $allocations->manifest_no = $request->manifest_no;
+            //$allocations->truck_trailer_driver_id = $truck;
 
-        $allocations->save();
+            $allocations->save();
         }
         return response()->json([
             'success'
         ], 200);
-
     }
     /**
      * Display a listing of the resource.
@@ -41,11 +41,10 @@ class AllocationsController extends Controller
      */
     public function index()
     {
-        $allocations = Allocations:: with(['truck_trailer_people.trucks', 'truck_trailer_people.trailers', 'truck_trailer_people.people', 'cargo', 'clients', 'location',])->get();
+        $allocations = Allocations::with(['truck_trailer_people.trucks', 'truck_trailer_people.trailers', 'truck_trailer_people.people', 'cargo', 'clients', 'location',])->get();
         return response()->json([
-            'allocations'=>$allocations
+            'allocations' => $allocations
         ]);
- 
     }
 
     /**

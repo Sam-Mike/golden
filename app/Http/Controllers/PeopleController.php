@@ -17,15 +17,15 @@ class PeopleController extends Controller
      */
     public function index()
     {
-        $people = People:: with(['company', 'departments', 'license_classes'])->get();
+        $people = People::with(['company', 'departments', 'license_classes'])->get();
         $company = Company::all();
         $departments = Departments::all();
         $license_classes = LicenseClasses::all();
         return response()->json([
-            'people'=>$people,
-            'company'=>$company,
-            'departments'=>$departments,
-            'license_classes'=>$license_classes
+            'people' => $people,
+            'company' => $company,
+            'departments' => $departments,
+            'license_classes' => $license_classes
         ]);
     }
 
@@ -47,23 +47,22 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
-        $people=new People();
-        $people->first_name=request('first_name');
-        $people->middle_name=request('middle_name');
-        $people->last_name=request('last_name');
-        $people->dob=request('dob');
-        $people->mobile=request('mobile');
-        $people->start_date=request('start_date');
-        $people->company_id=request('company_name');
-        $people->department_id=request('department_name');
-        $people->license_number=request('license_number');
-        $people->license_issue_date=request('license_issue_date');
-        $people->license_class_id=request('license_class');
+        $people = new People();
+        $people->first_name = request('first_name');
+        $people->middle_name = request('middle_name');
+        $people->last_name = request('last_name');
+        $people->dob = request('dob');
+        $people->mobile = request('mobile');
+        $people->start_date = request('start_date');
+        $people->company_id = request('company_name');
+        $people->department_id = request('department_name');
+        $people->license_number = request('license_number');
+        $people->license_issue_date = request('license_issue_date');
+        $people->license_class_id = request('license_class');
         $people->save();
         return  response()->json([
             'success'
         ], 200);
-
     }
 
     /**
