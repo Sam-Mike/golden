@@ -25,7 +25,7 @@
               <div v-show="searchClient && apiLoaded" class="dropdown-list">
                 <div
                   v-show="itemVisible(item)"
-                  v-for="item in truckTrailerDriver.clients"
+                  v-for="item in clients"
                   :key="item.client_name"
                 >
                   {{ item.client_name }}
@@ -33,7 +33,7 @@
               </div>
               <option :value="undefined" disabled>Choose Client</option>
               <option
-                v-for="client in truckTrailerDriver.clients"
+                v-for="client in clients"
                 :key="client.id"
                 :value="client.id"
               >
@@ -50,7 +50,7 @@
               >
                 <option :value="undefined" disabled>Choose Cargo</option>
                 <option
-                  v-for="cargo in truckTrailerDriver.cargo"
+                  v-for="cargo in cargo"
                   :key="cargo.id"
                   :value="cargo.id"
                 >
@@ -68,7 +68,7 @@
               >
                 <option :value="undefined" disabled>Choose Destination</option>
                 <option
-                  v-for="location in truckTrailerDriver.locations"
+                  v-for="location in locations"
                   :key="location.id"
                   :value="location.id"
                 >
@@ -312,7 +312,7 @@
                   required
                 >
                   <option
-                    v-for="trailer in truckTrailerDriver.trailers"
+                    v-for="trailer in trailers"
                     :key="trailer.id"
                     :value="trailer.id"
                   >
@@ -330,7 +330,7 @@
                   required
                 >
                   <option
-                    v-for="person in truckTrailerDriver.people"
+                    v-for="person in people"
                     :key="person.id"
                     :value="person.id"
                   >
@@ -389,7 +389,7 @@
                   required
                 >
                   <option
-                    v-for="trailer in truckTrailerDriver.trailers"
+                    v-for="trailer in trailers"
                     :key="trailer.id"
                     :value="trailer.id"
                   >
@@ -407,7 +407,7 @@
                   required
                 >
                   <option
-                    v-for="person in truckTrailerDriver.people"
+                    v-for="person in people"
                     :key="person.id"
                     :value="person.id"
                   >
@@ -466,7 +466,7 @@
                   required
                 >
                   <option
-                    v-for="trailer in truckTrailerDriver.trailers"
+                    v-for="trailer in trailers"
                     :key="trailer.id"
                     :value="trailer.id"
                   >
@@ -484,7 +484,7 @@
                   required
                 >
                   <option
-                    v-for="person in truckTrailerDriver.people"
+                    v-for="person in people"
                     :key="person.id"
                     :value="person.id"
                   >
@@ -501,19 +501,25 @@
   </div>
 </template>
 <script>
-import Loading from 'vue-loading-overlay'
+import Loading from "vue-loading-overlay";
 
-import 'vue-loading-overlay/dist/vue-loading.css';
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
-  
   components: {
-        Loading,
-    },
+    Loading,
+  },
   data() {
     return {
       isLoading: false,
       isSuccess: false,
-      truckTrailerDriver: null,
+      truckTrailerDrivers: [],
+      company: [],
+      clients: [],
+      cargo: [],
+      locations: [],
+      trucks: [],
+      trailers: [],
+      people: [],
       searchClient: "",
       searchCargo: "",
       searchDestination: "",
@@ -533,7 +539,7 @@ export default {
       },
     };
   },
-  mounted() {
+  created() {
     this.getTruckTrailerDrivers();
   },
   methods: {
@@ -543,7 +549,14 @@ export default {
       axios
         .get("http://localhost:8000/api/truck_trailer_driver")
         .then(({ data }) => {
-          this.truckTrailerDriver = data;
+          this.truckTrailerDrivers = data.truck_trailer_driver;
+          this.company = data.company;
+          this.clients = data.clients;
+          this.cargo = data.cargo;
+          this.locations = data.locations;
+          this.trucks = data.trucks;
+          this.trailers = data.trailers;
+          this.people = data.people;
           this.isSuccess = true;
         })
         .finally(() => (this.isLoading = false));
@@ -574,43 +587,41 @@ export default {
       });
     },
     itemVisible(item) {
-      if ((this.apiLoaded = true)) {
-        return item.client_name
-          .toLowerCase()
-          .includes(this.truckTrailerDriver.clients.client_name.toLowerCase());
-      } else console.log("cannot find");
+      return item.client_name
+        .toLowerCase()
+        .includes(this.clients.client_name.toLowerCase());
     },
     // compute TTP trucks by company and add render to ttp table for allocation process
     coachTruckTrailerDriver() {
-      return this.truckTrailerDriver.truck_trailer_driver.filter(
+      return this.truckTrailerDrivers.filter(
         (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 1
       );
     },
     fleetTruckTrailerDriver() {
-      return this.truckTrailerDriver.truck_trailer_driver.filter(
+      return this.truckTrailerDrivers.filter(
         (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 2
       );
     },
     wheelsTruckTrailerDriver() {
-      return this.truckTrailerDriver.truck_trailer_driver.filter(
+      return this.truckTrailerDrivers.filter(
         (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 3
       );
     },
     //compute truck_trailer_driver by company name and render to company tabs to be selected during TTP allocation
     coachTrucks() {
-      return this.truckTrailerDriver.trucks.filter(
+      return this.trucks.filter(
         (allTrucks) =>
           allTrucks.company_id === 1 && allTrucks.allocation_status_id === 1
       );
     },
     fleetTrucks() {
-      return this.truckTrailerDriver.trucks.filter(
+      return this.trucks.filter(
         (allTrucks) =>
           allTrucks.company_id === 2 && allTrucks.allocation_status_id === 1
       );
     },
     wheelsTrucks() {
-      return this.truckTrailerDriver.trucks.filter(
+      return this.trucks.filter(
         (allTrucks) =>
           allTrucks.company_id === 3 && allTrucks.allocation_status_id === 1
       );

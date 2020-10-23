@@ -161,7 +161,7 @@ export default {
       rerender: 0,
     };
   },
-  mounted() {
+  created() {
     this.getClients();
   },
   methods: {
