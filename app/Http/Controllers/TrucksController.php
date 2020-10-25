@@ -50,10 +50,10 @@ class TrucksController extends Controller
     {
         $trucks = new Trucks();
 
-        $trucks->reg_number = request('reg_number');
-        $trucks->company_id = request('company_id');
-        $trucks->cluster_id = request('cluster_id');
-        $trucks->truck_type_id = request('truck_type_id');
+        $trucks->reg_number = request('registrationNumber');
+        $trucks->company_id = request('companyId');
+        $trucks->cluster_id = request('clusterId');
+        $trucks->truck_type_id = request('truckTypeId');
         $trucks->allocation_status_id = 1;
 
         $trucks->save();

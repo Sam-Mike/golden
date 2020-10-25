@@ -69,7 +69,7 @@
                 <input
                   type="text"
                   class="form-control"
-                  v-model="new_truck.reg_number"
+                  v-model="newTruck.registrationNumber"
                   placeholder="Enter truck registration number"
                   required
                 />
@@ -79,7 +79,7 @@
                 <select
                   type="text"
                   class="form-control"
-                  v-model="new_truck.company_id"
+                  v-model="newTruck.companyId"
                   placeholder="Choose company"
                   required
                 >
@@ -97,7 +97,7 @@
                 <select
                   type="text"
                   class="form-control"
-                  v-model="new_truck.cluster_id"
+                  v-model="newTruck.clusterId"
                   placeholder="Choose Cluster"
                   required
                 >
@@ -115,7 +115,7 @@
                 <select
                   type="text"
                   class="form-control"
-                  v-model="new_truck.truck_type_id"
+                  v-model="newTruck.truckTypeId"
                   placeholder="Choose Truck Type"
                   required
                 >
@@ -140,11 +140,12 @@ export default {
   data() {
     return {
       trucks: [],
-      new_truck: {
-        reg_number: "",
-        company_name: "",
-        cluster: "",
-        truck_type: "",
+      newTruck: {
+        registrationNumber:"",
+        companyId:"",
+        clusterId:"",
+        truckTypeId:""
+
       },
     };
   },
@@ -166,10 +167,10 @@ export default {
     submitTruck() {
       axios
         .post("http://localhost:8000/api/trucks", {
-          reg_number: this.new_truck.reg_number,
-          company_id: this.new_truck.company_id,
-          cluster_id: this.new_truck.cluster_id,
-          truck_type_id: this.new_truck.truck_type_id,
+          registrationNumber: this.newTruck.registrationNumber,
+          companyId: this.newTruck.companyId,
+          clusterId: this.newTruck.clusterId,
+          truckTypeId: this.newTruck.truckTypeId,
         })
         .then((res) => console.log("truck added"));
 

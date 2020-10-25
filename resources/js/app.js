@@ -7,7 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import { BootstrapVue } from 'bootstrap-vue';
+import { BootstrapVue, FormPlugin} from 'bootstrap-vue';
 import {VuejsDatatableFactory} from 'vuejs-datatable';
 import VueRouter from 'vue-router';
 import routes from './routes';
@@ -18,6 +18,7 @@ import 'vue-loading-overlay/dist/vue-loading.css';
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
+Vue.use(FormPlugin);
 Vue.use(Loading);
 Vue.use(VuejsDatatableFactory);
 
@@ -27,7 +28,12 @@ Vue.use(VuejsDatatableFactory);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import App from './layout/App.vue';
+
 const app = new Vue({
     el: '#app',
-    router: new VueRouter(routes),
+    components: {
+        App,
+    },
+    router: new VueRouter(routes)
 });

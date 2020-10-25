@@ -50,6 +50,8 @@
 export default {
   data() {
     return {
+      isLoading: false,
+      isSuccess: false,
       allocations: [],
       //when trip is declared ended we need to change the truck allocation status to free again
     }
@@ -61,7 +63,10 @@ export default {
     getAllocations() {
       axios
         .get("http://localhost:8000/api/allocations")
-        .then(({ data }) => (this.allocations = data));
+        .then(({ data }) => 
+        (this.allocations = data)
+        
+        );
         console.log('gotten allocations');
     },
   },

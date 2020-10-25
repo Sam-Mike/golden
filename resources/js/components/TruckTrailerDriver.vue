@@ -15,66 +15,26 @@
         <div class="row">
           <div class="input-group mb-1 col">
             <div class="col-md-8">
-              <input
-                v-model.trim="searchClient"
-                class="dropdown-input"
-                type="text"
-                placeholder="Choose Client"
-                id="clientSelector"
-              />
-              <div v-show="searchClient && apiLoaded" class="dropdown-list">
-                <div
-                  v-show="itemVisible(item)"
-                  v-for="item in clients"
-                  :key="item.client_name"
-                >
-                  {{ item.client_name }}
-                </div>
-              </div>
-              <option :value="undefined" disabled>Choose Client</option>
-              <option
-                v-for="client in clients"
-                :key="client.id"
-                :value="client.id"
-              >
-                {{ client.client_name }}
-              </option>
+              <b-form-input v-model="newAllocation.clientId"  list="allClients" placeholder="Choose Client"></b-form-input>
+              <b-form-datalist id="allClients">
+                <option v-for="client in clients" :key="client.id">{{client.client_name}}</option>
+              </b-form-datalist>
             </div>
           </div>
           <div class="input-group mb-1 col">
             <div class="col-md-8">
-              <select
-                v-model="allocation.selectedCargo"
-                class="custom-select"
-                id="cargoSelector"
-              >
-                <option :value="undefined" disabled>Choose Cargo</option>
-                <option
-                  v-for="cargo in cargo"
-                  :key="cargo.id"
-                  :value="cargo.id"
-                >
-                  {{ cargo.cargo_name }}
-                </option>
-              </select>
+                <b-form-input v-model="newAllocation.cargoId" list="allCargo" placeholder="Choose Cargo"></b-form-input>
+              <b-form-datalist id="allCargo">
+                <option v-for="cargo in cargo" :key="cargo.id">{{cargo.cargo_name}}</option>
+              </b-form-datalist>
             </div>
           </div>
           <div class="input-group mb-1 col">
             <div class="col-md-8">
-              <select
-                v-model="allocation.selectedLocation"
-                class="custom-select"
-                id="destinationSelector"
-              >
-                <option :value="undefined" disabled>Choose Destination</option>
-                <option
-                  v-for="location in locations"
-                  :key="location.id"
-                  :value="location.id"
-                >
-                  {{ location.location_name }}
-                </option>
-              </select>
+              <b-form-input v-model="newAllocation.destinationLocationId" list="allLocations" placeholder="Choose Destination"></b-form-input>
+              <b-form-datalist id="allLocations">
+                <option v-for="location in locations" :key="location.id">{{location.location_name}}</option>
+              </b-form-datalist>
             </div>
           </div>
         </div>
@@ -125,7 +85,7 @@
                           type="checkbox"
                           :value="ttp.id"
                           :id="ttp.id"
-                          v-model="allocation.checkedTruckTrailerDriver"
+                          v-model="newAllocation.checkedTruckTrailerDriver"
                         />
                       </td>
                       <td>{{ ttp.trucks.reg_number }}</td>
@@ -289,7 +249,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.truck_id"
+                  v-model="newTruckTrailerDriver.truckId"
                   placeholder="Choose truck"
                   required
                 >
@@ -307,7 +267,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.trailer_id"
+                  v-model="newTruckTrailerDriver.trailerId"
                   placeholder="Choose trailer"
                   required
                 >
@@ -325,7 +285,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.driver_id"
+                  v-model="newTruckTrailerDriver.driverId"
                   placeholder="Choose Person"
                   required
                 >
@@ -366,7 +326,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.truck_id"
+                  v-model="newTruckTrailerDriver.truckId"
                   placeholder="Choose truck"
                   required
                 >
@@ -384,7 +344,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.trailer_id"
+                  v-model="newTruckTrailerDriver.trailerId"
                   placeholder="Choose trailer"
                   required
                 >
@@ -402,7 +362,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.driver_id"
+                  v-model="newTruckTrailerDriver.driverId"
                   placeholder="Choose Person"
                   required
                 >
@@ -443,7 +403,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.truck_id"
+                  v-model="newTruckTrailerDriver.truckId"
                   placeholder="Choose truck"
                   required
                 >
@@ -461,7 +421,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.trailer_id"
+                  v-model="newTruckTrailerDriver.trailerId"
                   placeholder="Choose trailer"
                   required
                 >
@@ -479,7 +439,7 @@
                 <select
                   type="email"
                   class="form-control"
-                  v-model="newTruckTrailerDriver.driver_id"
+                  v-model="newTruckTrailerDriver.driverId"
                   placeholder="Choose Person"
                   required
                 >
@@ -520,21 +480,15 @@ export default {
       trucks: [],
       trailers: [],
       people: [],
-      searchClient: "",
-      searchCargo: "",
-      searchDestination: "",
-      searchTruck: "",
-      searchTrailer: "",
-      searchDriver: "",
       newTruckTrailerDriver: {
-        truckId: "",
-        trailerId: "",
-        driverId: "",
+        truckId:"",
+        trailerId:"",
+        driverId:""
       },
-      allocation: {
-        selectedClient: "",
-        selectedCargo: "",
-        selectedDestination: "",
+      newAllocation: {
+        clientId:"",
+        cargoId:"",
+        destinationLocationId:"",
         checkedTruckTrailerDriver: [], //check with the controller accepting the arrays for allocation
       },
     };
@@ -573,9 +527,9 @@ export default {
     submitTruckTrailerPeople() {
       axios
         .post("http://127.0.0.1:8000/api/truck_trailer_driver", {
-          truck_id: this.newTruckTrailerDriver.truckId,
-          trailer_id: this.newTruckTrailerDriver.trailerId,
-          driver_id: this.newTruckTrailerDriver.driverId,
+          truckId: this.newTruckTrailerDriver.truckId,
+          trailerId: this.newTruckTrailerDriver.trailerId,
+          driverId: this.newTruckTrailerDriver.driverId,
         })
         .then((res) => console.log("truck trailer driver added"))
         .catch((err) => res.err);
@@ -589,7 +543,7 @@ export default {
     itemVisible(item) {
       return item.client_name
         .toLowerCase()
-        .includes(this.clients.client_name.toLowerCase());
+        .includes(this.clients.toLowerCase());
     },
     // compute TTP trucks by company and add render to ttp table for allocation process
     coachTruckTrailerDriver() {
@@ -630,10 +584,10 @@ export default {
     sendAllocationData() {
       axios
         .post("http://127.0.0.1:8000/api/allocation", {
-          cargoId: this.allocation.selectedCargo,
-          clientId: this.allocation.selectedClient,
-          destinationId: this.allocation.selectedDestination,
-          truckTrailerDriverList: this.allocation.checkedTruckTrailerDriver,
+          cargoId: this.newAllocation.cargoId,
+          clientId: this.newAllocation.clientlId,
+          destinationId: this.newAllocation.destinationLocationId,
+          truckTrailerDriverList: this.newAllocation.checkedTruckTrailerDriver,
         })
         .then(function (response) {
           console.log(response);

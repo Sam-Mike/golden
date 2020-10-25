@@ -39,9 +39,9 @@ class TruckTrailerDriverController extends Controller
     public function store(Request $request){
         $truck_trailer_driver = new TruckTrailerDriver();
 
-        $truck_trailer_driver->truck_id = request('truck_id');
-        $truck_trailer_driver->trailer_id = request('trailer_id');
-        $truck_trailer_driver->driver_id = request('driver_id');
+        $truck_trailer_driver->truck_id = request('truckId');
+        $truck_trailer_driver->trailer_id = request('trailerId');
+        $truck_trailer_driver->driver_id = request('driverId');
         $truck_trailer_driver->save();
 
         $truck = Trucks::find($truck_trailer_driver->truck_id);
