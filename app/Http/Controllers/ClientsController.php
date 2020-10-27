@@ -42,12 +42,12 @@ class ClientsController extends Controller
 
         $client = new Clients();
 
-        $client->client_name = request('name');
-        $client->address = request('address');
-        $client->phone = request('phone_number');
-        $client->contact_name = request('contact_name');
-        $client->mobile = request('mobile');
-        $client->email = request('email');
+        $client->client_name = request('clientName');
+        $client->address = request('clientAddress');
+        $client->phone = request('clientPhoneNumber');
+        $client->contact_name = request('clientContactPersonName');
+        $client->mobile = request('clientMobile');
+        $client->email = request('clientEmail');
         $client->save();
         return response()->json([
             'success'

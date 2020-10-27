@@ -1,478 +1,495 @@
 <template>
   <div>
-    <loading :active.sync="isLoading" />
-    <div class="card shadow mb-4">
-      <div style="padding: 20px">
-        <!--inserting the list here-->
-        <button
-          type="button"
-          style="float: right"
-          class="btn btn-primary"
-          onclick="setAllocationData()"
-        >
-          Create Allocation
-        </button>
-        <div class="row">
-          <div class="input-group mb-1 col">
-            <div class="col-md-8">
-              <b-form-input v-model="newAllocation.clientId"  list="allClients" placeholder="Choose Client"></b-form-input>
-              <b-form-datalist id="allClients">
-                <option v-for="client in clients" :key="client.id">{{client.client_name}}</option>
-              </b-form-datalist>
+    <b-overlay :show="loading">
+      <div class="card shadow mb-4">
+        <div style="padding: 20px">
+          <!--inserting the list here-->
+          <button
+            type="button"
+            style="float: right"
+            class="btn btn-primary"
+            onclick="setAllocationData()"
+          >
+            Create Allocation
+          </button>
+          <div class="row">
+            <div class="input-group mb-1 col">
+              <div class="col-md-8">
+                <v-select
+                  v-model="newAllocation.clientId"
+                  label="client_name"
+                  :options="clients"
+                  :reduce="(clients) => clients.id"
+                  placeholder="Choose Client"
+                ></v-select>
+              </div>
             </div>
-          </div>
-          <div class="input-group mb-1 col">
-            <div class="col-md-8">
-                <b-form-input v-model="newAllocation.cargoId" list="allCargo" placeholder="Choose Cargo"></b-form-input>
-              <b-form-datalist id="allCargo">
-                <option v-for="cargo in cargo" :key="cargo.id">{{cargo.cargo_name}}</option>
-              </b-form-datalist>
+            <div class="input-group mb-1 col">
+              <div class="col-md-8">
+                <v-select
+                  v-model="newAllocation.cargoId"
+                  label="cargo_name"
+                  :options="cargo"
+                  :reduce="(cargo) => cargo.id"
+                  placeholder="Choose Cargo"
+                ></v-select>
+              </div>
             </div>
-          </div>
-          <div class="input-group mb-1 col">
-            <div class="col-md-8">
-              <b-form-input v-model="newAllocation.destinationLocationId" list="allLocations" placeholder="Choose Destination"></b-form-input>
-              <b-form-datalist id="allLocations">
-                <option v-for="location in locations" :key="location.id">{{location.location_name}}</option>
-              </b-form-datalist>
+            <div class="input-group mb-1 col">
+              <div class="col-md-8">
+                <v-select
+                  v-model="newAllocation.destinationLocationId"
+                  label="location_name"
+                  :options="locations"
+                  :reduce="(locations) => locations.id"
+                  placeholder="Choose Destination"
+                ></v-select>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Allocation Tabs -->
-    <b-card no-body>
-      <!-- COACH TAB -->
-      <b-tabs content-class="mt-3">
-        <b-tab title="Golden Coach" active>
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Allocations</h6>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                  v-b-modal.addGoldenCoachTruckTrailerDriver
-                >
-                  Add TruckTrailerDriver
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table
-                  class="table table-bordered table-sm table-striped table-hover"
-                  id="dataTable"
-                  width="100%"
-                  cellspacing="0"
-                >
-                  <thead class="thead-dark">
-                    <tr>
-                      <th></th>
-                      <th>TRUCK REGISTRATION</th>
-                      <th>TRAILER</th>
-                      <th>TL NUMBER</th>
-                      <th>DRIVER</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="ttp in coachTruckTrailerDriver()" :key="ttp.id">
-                      <td>
-                        <input
-                          class="form-check-input ml-2"
-                          type="checkbox"
-                          :value="ttp.id"
-                          :id="ttp.id"
-                          v-model="newAllocation.checkedTruckTrailerDriver"
-                        />
-                      </td>
-                      <td>{{ ttp.trucks.reg_number }}</td>
-                      <td>{{ ttp.trailers.reg_number }}</td>
-                      <td>{{ ttp.trailers.tl_number }}</td>
-                      <td>
-                        {{ ttp.people.first_name }}
-                        {{ ttp.people.middle_name }}
-                        {{ ttp.people.last_name }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </b-tab>
-        <!-- FLEET TAB -->
-        <b-tab title="Golden Fleet">
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                  v-b-modal.addGoldenFleetTruckTrailerDriver
-                >
-                  Add TruckTrailerDriver
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table
-                  class="table table-bordered table-sm table-striped table-hover"
-                  id="dataTable"
-                  width="100%"
-                  cellspacing="0"
-                >
-                  <thead class="thead-dark">
-                    <tr>
-                      <th></th>
-                      <th>TRUCK REGISTRATION</th>
-                      <th>TRAILER</th>
-                      <th>TL NUMBER</th>
-                      <th>DRIVER</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr v-for="ttp in fleetTruckTrailerDriver()" :key="ttp.id">
-                      <td>
-                        <input
-                          class="form-check-input ml-2"
-                          type="checkbox"
-                          :value="ttp.id"
-                          :id="ttp.id"
-                          v-model="allocation.checkedTruckTrailerDriver"
-                        />
-                      </td>
-                      <td>{{ ttp.trucks.reg_number }}</td>
-                      <td>{{ ttp.trailers.reg_number }}</td>
-                      <td>{{ ttp.trailers.tl_number }}</td>
-                      <td>
-                        {{ ttp.people.first_name }}
-                        {{ ttp.people.middle_name }}
-                        {{ ttp.people.last_name }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </b-tab>
-        <!-- WHEELS TAB -->
-        <b-tab title="Golden Wheels">
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                  v-b-modal.addGoldenWheelsTruckTrailerDriver
-                >
-                  Add TruckTrailerDriver
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table
-                  class="table table-bordered table-sm table-striped table-hover"
-                  id="dataTable"
-                  width="100%"
-                  cellspacing="0"
-                >
-                  <thead class="thead-dark">
-                    <tr>
-                      <th></th>
-                      <th>TRUCK REGISTRATION</th>
-                      <th>TRAILER</th>
-                      <th>TL NUMBER</th>
-                      <th>DRIVER</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    <tr v-for="ttp in wheelsTruckTrailerDriver()" :key="ttp.id">
-                      <td>
-                        <input
-                          class="form-check-input ml-2"
-                          type="checkbox"
-                          :value="ttp.id"
-                          :id="ttp.id"
-                          v-model="allocation.checkedTruckTrailerDriver"
-                        />
-                      </td>
-                      <td>{{ ttp.trucks.reg_number }}</td>
-                      <td>{{ ttp.trailers.reg_number }}</td>
-                      <td>{{ ttp.trailers.tl_number }}</td>
-                      <td>
-                        {{ ttp.people.first_name }}
-                        {{ ttp.people.middle_name }}
-                        {{ ttp.people.last_name }}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </b-tab>
-      </b-tabs>
-    </b-card>
-
-    <!-- Modal to create TruckTrailerDriver combination for COACH TRUCKS -->
-    <b-modal
-      class="modal fade"
-      id="addGoldenCoachTruckTrailerDriver"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-      ok-title="Save"
-      title=" New Truck Trailer Driver"
-      @ok="handleOk"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Truck</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.truckId"
-                  placeholder="Choose truck"
-                  required
-                >
-                  <option
-                    v-for="coachTruck in coachTrucks()"
-                    :key="coachTruck.id"
-                    :value="coachTruck.id"
+      <!-- Allocation Tabs -->
+      <b-card no-body>
+        <!-- COACH TAB -->
+        <b-tabs content-class="mt-3">
+          <b-tab title="Golden Coach" active>
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Allocations</h6>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.addGoldenCoachTruckTrailerDriver
                   >
-                    {{ coachTruck.reg_number }}
-                  </option>
-                </select>
+                    Add TruckTrailerDriver
+                  </button>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Trailer</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.trailerId"
-                  placeholder="Choose trailer"
-                  required
-                >
-                  <option
-                    v-for="trailer in trailers"
-                    :key="trailer.id"
-                    :value="trailer.id"
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered table-sm table-striped table-hover"
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0"
                   >
-                    {{ trailer.tl_number }}
-                  </option>
-                </select>
+                    <thead class="thead-dark">
+                      <tr>
+                        <th></th>
+                        <th>TRUCK REGISTRATION</th>
+                        <th>TRAILER</th>
+                        <th>TL NUMBER</th>
+                        <th>DRIVER</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="ttp in coachTruckTrailerDriver()"
+                        :key="ttp.id"
+                      >
+                        <td>
+                          <input
+                            class="form-check-input ml-2"
+                            type="checkbox"
+                            :value="ttp.id"
+                            :id="ttp.id"
+                            v-model="newAllocation.checkedTruckTrailerDriver"
+                          />
+                        </td>
+                        <td>{{ ttp.trucks.reg_number }}</td>
+                        <td>{{ ttp.trailers.reg_number }}</td>
+                        <td>{{ ttp.trailers.tl_number }}</td>
+                        <td>
+                          {{ ttp.people.first_name }}
+                          {{ ttp.people.middle_name }}
+                          {{ ttp.people.last_name }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Driver</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.driverId"
-                  placeholder="Choose Person"
-                  required
-                >
-                  <option
-                    v-for="person in people"
-                    :key="person.id"
-                    :value="person.id"
+            </div>
+          </b-tab>
+          <!-- FLEET TAB -->
+          <b-tab title="Golden Fleet">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.addGoldenFleetTruckTrailerDriver
                   >
-                    {{ person.first_name }} {{ person.middle_name }}
-                    {{ person.last_name }}
-                  </option>
-                </select>
+                    Add TruckTrailerDriver
+                  </button>
+                </div>
               </div>
-            </form>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered table-sm table-striped table-hover"
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0"
+                  >
+                    <thead class="thead-dark">
+                      <tr>
+                        <th></th>
+                        <th>TRUCK REGISTRATION</th>
+                        <th>TRAILER</th>
+                        <th>TL NUMBER</th>
+                        <th>DRIVER</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr
+                        v-for="ttp in fleetTruckTrailerDriver()"
+                        :key="ttp.id"
+                      >
+                        <td>
+                          <input
+                            class="form-check-input ml-2"
+                            type="checkbox"
+                            :value="ttp.id"
+                            :id="ttp.id"
+                            v-model="newAllocation.checkedTruckTrailerDriver"
+                          />
+                        </td>
+                        <td>{{ ttp.trucks.reg_number }}</td>
+                        <td>{{ ttp.trailers.reg_number }}</td>
+                        <td>{{ ttp.trailers.tl_number }}</td>
+                        <td>
+                          {{ ttp.people.first_name }}
+                          {{ ttp.people.middle_name }}
+                          {{ ttp.people.last_name }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+          <!-- WHEELS TAB -->
+          <b-tab title="Golden Wheels">
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.addGoldenWheelsTruckTrailerDriver
+                  >
+                    Add TruckTrailerDriver
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table
+                    class="table table-bordered table-sm table-striped table-hover"
+                    id="dataTable"
+                    width="100%"
+                    cellspacing="0"
+                  >
+                    <thead class="thead-dark">
+                      <tr>
+                        <th></th>
+                        <th>TRUCK REGISTRATION</th>
+                        <th>TRAILER</th>
+                        <th>TL NUMBER</th>
+                        <th>DRIVER</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr
+                        v-for="ttp in wheelsTruckTrailerDriver()"
+                        :key="ttp.id"
+                      >
+                        <td>
+                          <input
+                            class="form-check-input ml-2"
+                            type="checkbox"
+                            :value="ttp.id"
+                            :id="ttp.id"
+                            v-model="newAllocation.checkedTruckTrailerDriver"
+                          />
+                        </td>
+                        <td>{{ ttp.trucks.reg_number }}</td>
+                        <td>{{ ttp.trailers.reg_number }}</td>
+                        <td>{{ ttp.trailers.tl_number }}</td>
+                        <td>
+                          {{ ttp.people.first_name }}
+                          {{ ttp.people.middle_name }}
+                          {{ ttp.people.last_name }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+
+      <!-- Modal to create TruckTrailerDriver combination for COACH TRUCKS -->
+      <b-modal
+        class="modal fade"
+        id="addGoldenCoachTruckTrailerDriver"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ok-title="Save"
+        title=" New Truck Trailer Driver"
+        @ok="handleOk"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Truck</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.truckId"
+                    placeholder="Choose truck"
+                    required
+                  >
+                    <option
+                      v-for="coachTruck in coachTrucks()"
+                      :key="coachTruck.id"
+                      :value="coachTruck.id"
+                    >
+                      {{ coachTruck.reg_number }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Trailer</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.trailerId"
+                    placeholder="Choose trailer"
+                    required
+                  >
+                    <option
+                      v-for="trailer in trailers"
+                      :key="trailer.id"
+                      :value="trailer.id"
+                    >
+                      {{ trailer.tl_number }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Driver</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.driverId"
+                    placeholder="Choose Person"
+                    required
+                  >
+                    <option
+                      v-for="person in people"
+                      :key="person.id"
+                      :value="person.id"
+                    >
+                      {{ person.first_name }} {{ person.middle_name }}
+                      {{ person.last_name }}
+                    </option>
+                  </select>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </b-modal>
+      </b-modal>
 
-    <!-- Modal to create TruckTrailerDriver combination for FLEET TRUCKS -->
-    <b-modal
-      class="modal fade"
-      id="addGoldenFleetTruckTrailerDriver"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-      ok-title="Save"
-      title=" New Truck Trailer Driver"
-      @ok="handleOk"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Truck</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.truckId"
-                  placeholder="Choose truck"
-                  required
-                >
-                  <option
-                    v-for="fleetTruck in fleetTrucks()"
-                    :key="fleetTruck.id"
-                    :value="fleetTruck.id"
+      <!-- Modal to create TruckTrailerDriver combination for FLEET TRUCKS -->
+      <b-modal
+        class="modal fade"
+        id="addGoldenFleetTruckTrailerDriver"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ok-title="Save"
+        title=" New Truck Trailer Driver"
+        @ok="handleOk"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Truck</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.truckId"
+                    placeholder="Choose truck"
+                    required
                   >
-                    {{ fleetTruck.reg_number }}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Trailer</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.trailerId"
-                  placeholder="Choose trailer"
-                  required
-                >
-                  <option
-                    v-for="trailer in trailers"
-                    :key="trailer.id"
-                    :value="trailer.id"
+                    <option
+                      v-for="fleetTruck in fleetTrucks()"
+                      :key="fleetTruck.id"
+                      :value="fleetTruck.id"
+                    >
+                      {{ fleetTruck.reg_number }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Trailer</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.trailerId"
+                    placeholder="Choose trailer"
+                    required
                   >
-                    {{ trailer.tl_number }}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Driver</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.driverId"
-                  placeholder="Choose Person"
-                  required
-                >
-                  <option
-                    v-for="person in people"
-                    :key="person.id"
-                    :value="person.id"
+                    <option
+                      v-for="trailer in trailers"
+                      :key="trailer.id"
+                      :value="trailer.id"
+                    >
+                      {{ trailer.tl_number }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Driver</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.driverId"
+                    placeholder="Choose Person"
+                    required
                   >
-                    {{ person.first_name }} {{ person.middle_name }}
-                    {{ person.last_name }}
-                  </option>
-                </select>
-              </div>
-            </form>
+                    <option
+                      v-for="person in people"
+                      :key="person.id"
+                      :value="person.id"
+                    >
+                      {{ person.first_name }} {{ person.middle_name }}
+                      {{ person.last_name }}
+                    </option>
+                  </select>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </b-modal>
+      </b-modal>
 
-    <!-- Modal to create TruckTrailerDriver combination for WHEELS TRUCKS -->
-    <b-modal
-      class="modal fade"
-      id="addGoldenWheelsTruckTrailerDriver"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-      ok-title="Save"
-      title=" New Truck Trailer Driver"
-      @ok="handleOk"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
-              <div class="form-group">
-                <label for="exampleInputEmail1">Truck</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.truckId"
-                  placeholder="Choose truck"
-                  required
-                >
-                  <option
-                    v-for="wheelsTruck in wheelsTrucks()"
-                    :key="wheelsTruck.id"
-                    :value="wheelsTruck.id"
+      <!-- Modal to create TruckTrailerDriver combination for WHEELS TRUCKS -->
+      <b-modal
+        class="modal fade"
+        id="addGoldenWheelsTruckTrailerDriver"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        ok-title="Save"
+        title=" New Truck Trailer Driver"
+        @ok="handleOk"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Truck</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.truckId"
+                    placeholder="Choose truck"
+                    required
                   >
-                    {{ wheelsTruck.reg_number }}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Trailer</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.trailerId"
-                  placeholder="Choose trailer"
-                  required
-                >
-                  <option
-                    v-for="trailer in trailers"
-                    :key="trailer.id"
-                    :value="trailer.id"
+                    <option
+                      v-for="wheelsTruck in wheelsTrucks()"
+                      :key="wheelsTruck.id"
+                      :value="wheelsTruck.id"
+                    >
+                      {{ wheelsTruck.reg_number }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Trailer</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.trailerId"
+                    placeholder="Choose trailer"
+                    required
                   >
-                    {{ trailer.tl_number }}
-                  </option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputEmail1">Driver</label>
-                <select
-                  type="email"
-                  class="form-control"
-                  v-model="newTruckTrailerDriver.driverId"
-                  placeholder="Choose Person"
-                  required
-                >
-                  <option
-                    v-for="person in people"
-                    :key="person.id"
-                    :value="person.id"
+                    <option
+                      v-for="trailer in trailers"
+                      :key="trailer.id"
+                      :value="trailer.id"
+                    >
+                      {{ trailer.tl_number }}
+                    </option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Driver</label>
+                  <select
+                    type="email"
+                    class="form-control"
+                    v-model="newTruckTrailerDriver.driverId"
+                    placeholder="Choose Person"
+                    required
                   >
-                    {{ person.first_name }} {{ person.middle_name }}
-                    {{ person.last_name }}
-                  </option>
-                </select>
-              </div>
-            </form>
+                    <option
+                      v-for="person in people"
+                      :key="person.id"
+                      :value="person.id"
+                    >
+                      {{ person.first_name }} {{ person.middle_name }}
+                      {{ person.last_name }}
+                    </option>
+                  </select>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </b-modal>
+      </b-modal>
+    </b-overlay>
   </div>
 </template>
 <script>
-import Loading from "vue-loading-overlay";
-
-import "vue-loading-overlay/dist/vue-loading.css";
 export default {
-  components: {
-    Loading,
-  },
   data() {
     return {
-      isLoading: false,
+      loading: false,
       isSuccess: false,
       truckTrailerDrivers: [],
+      truckTrailerDriversFields: [
+        {},{}
+      ],
+      tableHeadVariant: "dark",
       company: [],
       clients: [],
       cargo: [],
@@ -481,14 +498,14 @@ export default {
       trailers: [],
       people: [],
       newTruckTrailerDriver: {
-        truckId:"",
-        trailerId:"",
-        driverId:""
+        truckId: "",
+        trailerId: "",
+        driverId: "",
       },
       newAllocation: {
-        clientId:"",
-        cargoId:"",
-        destinationLocationId:"",
+        clientId: "",
+        cargoId: "",
+        destinationLocationId: "",
         checkedTruckTrailerDriver: [], //check with the controller accepting the arrays for allocation
       },
     };
@@ -498,7 +515,7 @@ export default {
   },
   methods: {
     getTruckTrailerDrivers() {
-      this.isLoading = true;
+      this.loading = true;
       this.isSuccess = false;
       axios
         .get("http://localhost:8000/api/truck_trailer_driver")
@@ -513,7 +530,7 @@ export default {
           this.people = data.people;
           this.isSuccess = true;
         })
-        .finally(() => (this.isLoading = false));
+        .finally(() => (this.loading = false));
       console.log("gotten ttp");
     },
 

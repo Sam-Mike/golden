@@ -7,20 +7,18 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-import { BootstrapVue, FormPlugin} from 'bootstrap-vue';
-import {VuejsDatatableFactory} from 'vuejs-datatable';
+import { BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin } from 'bootstrap-vue';
 import VueRouter from 'vue-router';
 import routes from './routes';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
 
 Vue.use(VueRouter);
-Vue.use(BootstrapVue);
-Vue.use(FormPlugin);
-Vue.use(Loading);
-Vue.use(VuejsDatatableFactory);
+Vue.use(BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin);
+
+Vue.component('v-select', vSelect);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

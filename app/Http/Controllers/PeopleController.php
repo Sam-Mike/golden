@@ -48,17 +48,17 @@ class PeopleController extends Controller
     public function store(Request $request)
     {
         $people = new People();
-        $people->first_name = request('first_name');
-        $people->middle_name = request('middle_name');
-        $people->last_name = request('last_name');
+        $people->first_name = request('firstName');
+        $people->middle_name = request('middleName');
+        $people->last_name = request('lastName');
         $people->dob = request('dob');
         $people->mobile = request('mobile');
-        $people->start_date = request('start_date');
-        $people->company_id = request('company_name');
-        $people->department_id = request('department_name');
-        $people->license_number = request('license_number');
-        $people->license_issue_date = request('license_issue_date');
-        $people->license_class_id = request('license_class');
+        $people->start_date = request('startDate');
+        $people->company_id = request('companyName');
+        $people->department_id = request('departmentName');
+        $people->license_number = request('licenseNumber');
+        $people->license_issue_date = request('licenseIssueDate');
+        $people->license_class_id = request('licenseClass');
         $people->save();
         return  response()->json([
             'success'
