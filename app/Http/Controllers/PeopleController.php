@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CompanyResource;
+use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\PeopleResource;
 use Illuminate\Http\Request;
+use App\Models\Departments;
 use App\Models\People;
 use App\Models\Company;
-use App\Models\Departments;
 use App\Models\LicenseClasses;
 
 class PeopleController extends Controller
@@ -17,16 +20,23 @@ class PeopleController extends Controller
      */
     public function index()
     {
-        $people = People::with(['company', 'departments', 'license_classes'])->get();
-        $company = Company::all();
-        $departments = Departments::all();
-        $license_classes = LicenseClasses::all();
-        return response()->json([
-            'people' => $people,
-            'company' => $company,
-            'departments' => $departments,
-            'license_classes' => $license_classes
-        ]);
+        //$people = People::with(['company', 'departments', 'license_classes'])->get();
+        // $company = Company::all();
+        // $departments = Departments::all();
+        // $license_classes = LicenseClasses::all();
+        return [
+            'people'=>PeopleResource::collection(People::all()),
+            'company'=>CompanyResource::collection(Company::all()),
+            'departments'=>DepartmentResource::collection(Departments::all()),
+            //'licenseClass'=>LicenseClasses::collection(Licence::all())
+        ];
+
+        // return response()->json([
+        //     'people' => $people,
+        //     'company' => $company,
+        //     'departments' => $departments,
+        //     'license_classes' => $license_classes
+        // ]);
     }
 
     /**

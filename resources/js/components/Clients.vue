@@ -132,10 +132,10 @@ export default {
       isSuccess: false,
       clients: [],
       clientsFields: [
-        { key: "client_name", sortable: true },
+        { key: "name", sortable: true },
         { key: "address" },
         { key: "phone" },
-        { key: "contact_name" },
+        { key: "contactPerson" },
         { key: "mobile" },
         { key: "email" },
       ],

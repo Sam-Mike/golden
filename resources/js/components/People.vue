@@ -32,8 +32,8 @@
               :sticky-header="true"
             >
               <template #cell(fullname)="data">
-                {{ data.item.first_name }} {{ data.item.middle_name }}
-                {{ data.item.last_name }}
+                {{ data.item.firstName }} {{ data.item.middleName }}
+                {{ data.item.lastName }}
               </template>
             </b-table>
           </div>
@@ -208,14 +208,14 @@ export default {
         { key: "fullName", label: "Full Name" },
         { key: "dob" },
         { key: "mobile" },
-        { key: "company.company_name", label: "Company", sortable: true },
-        { key: "start_date", sortable: true },
+        { key: "company.companyName", label: "Company", sortable: true },
+        { key: "startDate", sortable: true },
         {
-          key: "departments.department_name",
+          key: "department.departmentName",
           label: "Department",
           sortable: true,
         },
-        { key: "license_issue_date", label: "Company", sortable: true },
+        { key: "licenseIssueDate" },
       ],
       tableHeadVariant: "dark",
       company: [],

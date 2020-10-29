@@ -15,9 +15,12 @@ class ClientsController extends Controller
      */
     public function index()
     {
-        $clients = Clients::all();
-        return response()->json([
-            'clients'=>$clients]);
+        return ['clients'=> ClientResource::collection(Clients::all())];
+        // $clients = Clients::all();
+        // return response()->json([
+        //     'clients' => $clients
+        // ]);
+
     }
 
     /**
@@ -35,9 +38,9 @@ class ClientsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'=>'required',
-            'address'=>'required',
-            'phone_number'=>'required'
+            'clientName'=>'required',
+            'clientAddress'=>'required',
+            'clientPhoneNumber'=>'required'
         ]);
 
         $client = new Clients();
