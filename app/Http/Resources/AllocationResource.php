@@ -14,6 +14,21 @@ class AllocationResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'client' => new ClientResource($this->client),
+            'cargo' => new CargoResource($this->cargo),
+            'destination' => new LocationResource($this->location),
+            'truckTrailerDriver' => new TruckTrailerDriverResource($this->truck_trailer_driver),
+            'loadingDate' => $this->loading_date,
+            'dispatchDate' => $this->dispatch_date,
+            'etaSite' => $this->eta_site,
+            'routeCode' => $this->route_code,
+            'tripStatus' => $this->trip_status,
+            'currentLocation' => $this->current_location,
+            'manifestNumber' => $this->manifest_number,
+            'fileNumber' => $this->file_number,
+            'cargoWeight' => $this->cargo_weight,
+        ];
     }
 }

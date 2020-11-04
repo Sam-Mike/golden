@@ -16,8 +16,8 @@ class TrailerTypeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'trailerType' => $this->trailer_type_name,
-            'trailerSize' => $this->trailer_size,
+            'name' => $this->name,
+            'size' => $this->size,
         ];
     }
 }

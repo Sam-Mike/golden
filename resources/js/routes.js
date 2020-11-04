@@ -8,8 +8,8 @@ import TruckTrailerDriver from './components/TruckTrailerDriver';
 export default {
     routes: [
         {
-        path: '/',
-        component: Clients
+            path: '/',
+            component: Clients
         },
         {
             path: '/people',

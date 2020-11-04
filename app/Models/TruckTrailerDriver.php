@@ -2,22 +2,29 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TruckTrailerDriver extends Model
 {
-    protected $table='truck_trailer_driver';
+    use HasFactory;
 
-    public function trucks(){
-        return $this->belongsTo('App\Models\Trucks', 'truck_id', 'id');
+    protected $table = 'truck_trailer_driver';
+
+    public function trucks()
+    {
+        return $this->belongsTo('App\Models\Truck', 'truck_id', 'id');
     }
-    public function trailers(){
-        return $this->belongsTo('App\Models\Trailers', 'trailer_id', 'id');
+    public function trailers()
+    {
+        return $this->belongsTo('App\Models\Trailer', 'trailer_id', 'id');
     }
-    public function people(){
+    public function people()
+    {
         return $this->belongsTo('App\Models\People', 'driver_id');
     }
-    public function allocations(){
-        return $this->hasMany('App\Models\Allocations');
+    public function allocations()
+    {
+        return $this->hasMany('App\Models\Allocation');
     }
 }

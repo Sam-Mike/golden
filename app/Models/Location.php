@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
 {
-    protected $table='location';
+    use HasFactory;
 
-    public function allocations(){
-        return $this->hasMany('App\Models\Allocations');
+    protected $table = 'location';
+
+    public function allocations()
+    {
+        return $this->hasMany('App\Models\Allocation');
     }
 }

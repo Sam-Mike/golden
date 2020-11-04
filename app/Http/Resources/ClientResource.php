@@ -16,10 +16,10 @@ class ClientResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->client_name,
+            'name' => $this->name,
             'address' => $this->address,
             'phone' => $this->phone,
-            'contactPerson' => $this->contact_name,
+            'contactPerson' => $this->contact_person_name,
             'mobile' => $this->mobile,
             'email' => $this->email
         ];

@@ -22,7 +22,8 @@
         <div class="card-body">
           <div class="table-responsive">
             <b-table
-            responsive
+              class="table-list"
+              responsive
               bordered
               striped
               hover
@@ -31,8 +32,7 @@
               :fields="trucksFields"
               :head-variant="tableHeadVariant"
               :sticky-header="true"
-              >
-
+            >
             </b-table>
           </div>
         </div>
@@ -74,11 +74,11 @@
                     required
                   >
                     <option
-                      v-for="company in trucks.company"
+                      v-for="company in company"
                       :key="company.id"
                       :value="company.id"
                     >
-                      {{ company.company_name }}
+                      {{ company.name }}
                     </option>
                   </select>
                 </div>
@@ -92,11 +92,11 @@
                     required
                   >
                     <option
-                      v-for="cluster in trucks.cluster"
+                      v-for="cluster in cluster"
                       :key="cluster.id"
                       :value="cluster.id"
                     >
-                      {{ cluster.cluster_name }}
+                      {{ cluster.name }}
                     </option>
                   </select>
                 </div>
@@ -110,11 +110,11 @@
                     required
                   >
                     <option
-                      v-for="truck_type in trucks.truck_type"
-                      :key="truck_type.id"
-                      :value="truck_type.id"
+                      v-for="truckType in truckType"
+                      :key="truckType.id"
+                      :value="truckType.id"
                     >
-                      {{ truck_type.truck_type_name }}
+                      {{ truckType.name }}
                     </option>
                   </select>
                 </div>
@@ -132,13 +132,16 @@ export default {
     return {
       loading: false,
       trucks: [],
-      trucksFields:[
-        {key:"reg_number"},
-        {key:"company.company_name", label:"Company"},
-        {key:"cluster.cluster_name", label:"Cluster Name"},
-        {key:"truck_type.truck_type_name", label:"Truck Type"}
+      truckType: [],
+      company: [],
+      cluster: [],
+      trucksFields: [
+        { key: "registrationNumber" },
+        { key: "company.name", label: "Company" },
+        { key: "cluster.name", label: "Cluster Name" },
+        { key: "truckType.name", label: "Truck Type" },
       ],
-      tableHeadVariant:"dark",
+      tableHeadVariant: "dark",
       newTruck: {
         registrationNumber: "",
         companyId: "",
@@ -155,6 +158,9 @@ export default {
       this.loading = true;
       axios.get("http://localhost:8000/api/trucks").then(({ data }) => {
         this.trucks = data.trucks;
+        this.truckType = data.truckType;
+        this.company = data.company;
+        this.cluster = data.cluster;
         this.loading = false;
       });
     },
@@ -171,6 +177,7 @@ export default {
           companyId: this.newTruck.companyId,
           clusterId: this.newTruck.clusterId,
           truckTypeId: this.newTruck.truckTypeId,
+          allocationStatusId:1
         })
         .then((res) => console.log("truck added"));
 

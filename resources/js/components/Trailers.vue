@@ -22,6 +22,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <b-table
+              class="table-list"
               responsive
               bordered
               striped
@@ -77,16 +78,16 @@
                   <select
                     type="email"
                     class="form-control"
-                    v-model="newTrailer.trailerType"
+                    v-model="newTrailer.trailerTypeId"
                     placeholder="Choose Trailer Type"
                     required
                   >
                     <option
-                      v-for="trailer_type in trailers.trailer_type"
-                      :key="trailer_type.id"
-                      :value="trailer_type.id"
+                      v-for="trailerType in trailerType"
+                      :key="trailerType.id"
+                      :value="trailerType.id"
                     >
-                      {{ trailer_type.trailer_type_name }}
+                      {{ trailerType.name }}
                     </option>
                   </select>
                 </div>
@@ -95,16 +96,16 @@
                   <select
                     type="email"
                     class="form-control"
-                    v-model="newTrailer.companyName"
+                    v-model="newTrailer.companyId"
                     placeholder="Choose company"
                     required
                   >
                     <option
-                      v-for="company in trailers.company"
+                      v-for="company in company"
                       :key="company.id"
                       :value="company.id"
                     >
-                      {{ company.company_name }}
+                      {{ company.name }}
                     </option>
                   </select>
                 </div>
@@ -123,9 +124,9 @@ export default {
       loading: false,
       trailers: [],
       trailersFields: [
-        { key: "reg_number" },
-        { key: "tl_number", sortable: true },
-        { key: "company.company_name", label:"Company" },
+        { key: "registrationNumber" },
+        { key: "tlNumber", sortable: true },
+        { key: "company.name", label:"Company" },
       ],
       tableHeadVariant: "dark",
       trailerType: [],
@@ -133,8 +134,8 @@ export default {
       newTrailer: {
         registrationNumber: "",
         tlNumber: "",
-        trailerType: "",
-        companyName: "",
+        trailerTypeId: "",
+        companyId: "",
       },
     };
   },
@@ -148,6 +149,8 @@ export default {
         .get("http://localhost:8000/api/trailers")
         .then(({ data }) => {
           this.trailers = data.trailers;
+          this.trailerType = data.trailerType;
+          this.company = data.company;
           this.loading = false;
         })
         .catch((error) => {
@@ -165,8 +168,8 @@ export default {
         .post("http://localhost:8000/api/trailers", {
           registrationNumber: this.newTrailer.registrationNumber,
           tlNumber: this.newTrailer.tlNumber,
-          trailerType: this.newTrailer.trailerType,
-          companyName: this.newTrailer.companyName,
+          trailerTypeId: this.newTrailer.trailerTypeId,
+          companyId: this.newTrailer.companyId,
         })
         .then((res) => console.log("trailer added"));
       this.$nextTick(() => {

@@ -21,6 +21,7 @@
         <div class="card-body">
           <div class="table-responsive">
             <b-table
+              class="table-list"
               responsive
               bordered
               striped
@@ -56,7 +57,7 @@
             <div class="modal-body">
               <form ref="form" @submit.stop.prevent="submitPerson">
                 <div class="form-group">
-                  <label for="exampleInputEmail1">First Name</label>
+                  <label for="firstName">First Name</label>
                   <input
                     type="text"
                     class="form-control"
@@ -66,7 +67,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Middle Name</label>
+                  <label for="middleName">Middle Name</label>
                   <input
                     type="text"
                     class="form-control"
@@ -76,7 +77,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Last Name</label>
+                  <label for="lastName">Last Name</label>
                   <input
                     type="text"
                     class="form-control"
@@ -86,7 +87,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Date of Birth</label>
+                  <label for="dob">Date of Birth</label>
                   <input
                     type="date"
                     class="form-control"
@@ -96,9 +97,9 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Mobile Number</label>
+                  <label for="mobile">Mobile Number</label>
                   <input
-                    type="text"
+                    type="tel"
                     class="form-control"
                     v-model="newPerson.mobile"
                     placeholder="Enter Mobile Number"
@@ -106,7 +107,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Start Date</label>
+                  <label for="startDate">Start Date</label>
                   <input
                     type="date"
                     class="form-control"
@@ -117,7 +118,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Company</label>
+                  <label for="company">Company</label>
                   <select
                     type="text"
                     class="form-control"
@@ -126,16 +127,16 @@
                     required
                   >
                     <option
-                      v-for="company in people.company"
+                      v-for="company in company"
                       :key="company.id"
                       :value="company.id"
                     >
-                      {{ company.company_name }}
+                      {{ company.name }}
                     </option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Department</label>
+                  <label for="department">Department</label>
                   <select
                     type="text"
                     class="form-control"
@@ -144,16 +145,16 @@
                     required
                   >
                     <option
-                      v-for="department in people.departments"
+                      v-for="department in departments"
                       :key="department.id"
                       :value="department.id"
                     >
-                      {{ department.department_name }}
+                      {{ department.name }}
                     </option>
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">License Number</label>
+                  <label for="licenseNumber">License Number</label>
                   <input
                     type="number"
                     class="form-control"
@@ -163,7 +164,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">License Issue Date</label>
+                  <label for="licenseIssueDate">License Issue Date</label>
                   <input
                     type="date"
                     class="form-control"
@@ -173,7 +174,7 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">License Class</label>
+                  <label for="licenseClass">License Class</label>
                   <select
                     type="text"
                     class="form-control"
@@ -186,7 +187,7 @@
                       :key="licenseClass.id"
                       :value="licenseClass.id"
                     >
-                      {{ licenseClass.license_class }}
+                      {{ licenseClass.name }}
                     </option>
                   </select>
                 </div>
@@ -208,10 +209,10 @@ export default {
         { key: "fullName", label: "Full Name" },
         { key: "dob" },
         { key: "mobile" },
-        { key: "company.companyName", label: "Company", sortable: true },
+        { key: "company.name", label: "Company", sortable: true },
         { key: "startDate", sortable: true },
         {
-          key: "department.departmentName",
+          key: "department.name",
           label: "Department",
           sortable: true,
         },
@@ -228,8 +229,8 @@ export default {
         dob: "",
         mobile: "",
         startDate: "",
-        companyName: "",
-        departmentName: "",
+        companyId: "",
+        departmentId: "",
         licenseNumber: "",
         licenseIssueDate: "",
         licenseClass: "",
@@ -247,6 +248,8 @@ export default {
         .get("http://localhost:8000/api/people")
         .then(({ data }) => {
           this.people = data.people;
+          this.company = data.company;
+          this.departments = data.departments;
           this.loading = false;
         })
         .catch((error) => {
@@ -262,17 +265,17 @@ export default {
     submitPerson() {
       axios
         .post("http://localhost:8000/api/people", {
-          firstName: this.person.firstName,
-          middleName: this.person.middleName,
-          lastName: this.person.lastName,
-          dob: this.person.dob,
-          mobile: this.person.mobile,
-          startDate: this.person.startDate,
-          companyName: this.person.companyName,
-          departmentName: this.person.departmentName,
-          licenseNumber: this.person.licenseNumber,
-          licenseIssue_date: this.person.licenseIssueDate,
-          licenseClass: this.person.licenseClass,
+          firstName: this.newPerson.firstName,
+          middleName: this.newPerson.middleName,
+          lastName: this.newPerson.lastName,
+          dob: this.newPerson.dob,
+          mobile: this.newPerson.mobile,
+          startDate: this.newPerson.startDate,
+          companyId: this.newPerson.companyId,
+          departmentId: this.newPerson.departmentId,
+          licenseNumber: this.newPerson.licenseNumber,
+          licenseIssueDate: this.newPerson.licenseIssueDate,
+          licenseClass: this.newPerson.licenseClass,
         })
         .then((res) => console.log("Person added"))
         .catch((err) => console.log(err));

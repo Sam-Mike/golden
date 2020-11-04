@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cargo extends Model
 {
-    protected $table='cargo';
+    use HasFactory;
 
-    public function allocations(){
-        return $this->hasMany('App\Models\Allocations');
+    protected $table = 'cargo';
+
+    public function allocations()
+    {
+        return $this->hasMany('App\Models\Allocation');
     }
 }

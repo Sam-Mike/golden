@@ -10,52 +10,20 @@
         </div>
         <div class="card-body">
           <div class="table-responsive">
-            <table
-              class="table table-bordered table-sm table-striped table-hover"
-              id="dataTable"
-              width="100%"
-              cellspacing="0"
+            <b-table
+              class="table-list"
+              responsive
+              bordered
+              striped
+              hover
+              :small="true"
+              :items="allocations"
+              :fields="allocationFields"
+              :head-variant="tableHeadVariant"
+              :sticky-header="true"
+              :filter="tableFilter"
             >
-              <thead class="thead-dark">
-                <tr>
-                  <th>CLIENT</th>
-                  <th>CARGO</th>
-                  <th>TRUCK</th>
-                  <th>TRUCK COMPANY</th>
-                  <th>TRAILER</th>
-                  <th>DRIVER</th>
-                  <th>DESTINATION</th>
-                  <th>CURRENT LOCATION</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr
-                  v-for="allocation in allocations.allocations"
-                  :key="allocation.id"
-                >
-                  <td>{{ allocation.clients.client_name }}</td>
-                  <td>{{ allocation.cargo.cargo_name }}</td>
-                  <td>
-                    {{ allocation.truck_trailer_people.trucks.reg_number }}
-                  </td>
-                  <td>
-                    {{
-                      allocation.truck_trailer_people.trucks.company
-                        .company_name
-                    }}
-                  </td>
-                  <td>
-                    {{ allocation.truck_trailer_people.trailers.tl_number }}
-                  </td>
-                  <td>
-                    {{ allocation.truck_trailer_people.people.first_name }}
-                  </td>
-                  <td>{{ allocation.location.location_name }}</td>
-                  <td></td>
-                </tr>
-              </tbody>
-            </table>
+            </b-table>
           </div>
         </div>
       </div>
@@ -68,6 +36,16 @@ export default {
     return {
       loading: false,
       allocations: [],
+      allocationFields: [
+        { key: "client.name", label: "Client", sortable: true },
+        { key: "cargo.name", label: "Cargo", sortable: true },
+        { key: "truckTrailerDriver.truck.registrationNumber", label: "Truck", sortable: true },
+        { key: "truckTrailerDriver.trailer.tlNumber", label: "Trailer" },
+        { key: "tripStatus", label: "Status" },
+      ],
+      tableHeadVariant: "dark",
+      tableFilter: null,
+
       //when trip is declared ended we need to change the truck allocation status to free again
     };
   },
@@ -80,7 +58,7 @@ export default {
       axios
         .get("http://localhost:8000/api/allocations")
         .then(({ data }) => {
-          this.allocations = data;
+          this.allocations = data.allocations;
           this.loading = false;
         })
         .catch((error) => {

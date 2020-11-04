@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Cluster extends Model
 {
-    protected $table='cluster';
+    use HasFactory;
 
-    public function trucks(){
-        return $this->hasMany('App\Models\Trucks');
+    protected $table = 'cluster';
+
+    public function trucks()
+    {
+        return $this->hasMany('App\Models\Truck');
     }
 }

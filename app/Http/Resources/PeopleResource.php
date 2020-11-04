@@ -6,8 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PeopleResource extends JsonResource
 {
-    public static $wrap = 'people';
-
     /**
      * Transform the resource into an array.
      *
@@ -25,7 +23,7 @@ class PeopleResource extends JsonResource
             'mobile' => $this->mobile,
             'startDate' => $this->start_date,
             'company' => new CompanyResource($this->company),
-            'department' => new DepartmentResource($this->departments),
+            'department' => new DepartmentResource($this->department),
             'licenseNumber' => $this->license_number,
             'licenseIssueDate' => $this->license_issue_date
         ];

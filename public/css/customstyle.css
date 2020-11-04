@@ -25,3 +25,14 @@ nav>div>ul>li.active> a {
 .dropdown:hover .dropdown-menu{
     display:block;
 }
+
+/* table font */
+.table-list{
+    font-size: 14px;
+}
+/*table search*/
+.table-search{
+    width: 20%;
+    padding: 5px;
+    float: left;
+}

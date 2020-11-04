@@ -16,7 +16,7 @@ class TruckTypeResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'registrationNumber' =>$this->reg_number,
+            'name' => $this->name,
         ];
     }
 }

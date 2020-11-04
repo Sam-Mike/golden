@@ -2,16 +2,21 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $table='company';
+    use HasFactory;
 
-    public function people(){
+    protected $table = 'company';
+
+    public function people()
+    {
         return $this->hasMany('App\Models\People');
     }
-    public function trailers(){
-        return $this->hasMany('App\Models\Trailers');
+    public function trailers()
+    {
+        return $this->hasMany('App\Models\Trailer');
     }
 }

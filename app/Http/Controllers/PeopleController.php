@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CompanyResource;
-use App\Http\Resources\DepartmentResource;
-use App\Http\Resources\PeopleResource;
 use Illuminate\Http\Request;
-use App\Models\Departments;
 use App\Models\People;
 use App\Models\Company;
-use App\Models\LicenseClasses;
+use App\Models\Department;
+use App\Models\LicenseClass;
+use App\Http\Resources\PeopleResource;
+use App\Http\Resources\CompanyResource;
+use App\Http\Resources\DepartmentResource;
+use App\Http\Resources\LicenseClassResource;
 
 class PeopleController extends Controller
 {
@@ -20,33 +21,12 @@ class PeopleController extends Controller
      */
     public function index()
     {
-        //$people = People::with(['company', 'departments', 'license_classes'])->get();
-        // $company = Company::all();
-        // $departments = Departments::all();
-        // $license_classes = LicenseClasses::all();
-        return [
-            'people'=>PeopleResource::collection(People::all()),
-            'company'=>CompanyResource::collection(Company::all()),
-            'departments'=>DepartmentResource::collection(Departments::all()),
+        return[
+            'people' => PeopleResource::collection(People::all()),
+            'company' => CompanyResource::collection(Company::all()),
+            'departments' => DepartmentResource::collection(Department::all()),
             //'licenseClass'=>LicenseClasses::collection(Licence::all())
         ];
-
-        // return response()->json([
-        //     'people' => $people,
-        //     'company' => $company,
-        //     'departments' => $departments,
-        //     'license_classes' => $license_classes
-        // ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -64,8 +44,8 @@ class PeopleController extends Controller
         $people->dob = request('dob');
         $people->mobile = request('mobile');
         $people->start_date = request('startDate');
-        $people->company_id = request('companyName');
-        $people->department_id = request('departmentName');
+        $people->company_id = request('companyId');
+        $people->department_id = request('departmentId');
         $people->license_number = request('licenseNumber');
         $people->license_issue_date = request('licenseIssueDate');
         $people->license_class_id = request('licenseClass');
@@ -82,17 +62,6 @@ class PeopleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
     {
         //
     }

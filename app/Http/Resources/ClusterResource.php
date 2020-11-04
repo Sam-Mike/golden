@@ -16,7 +16,7 @@ class ClusterResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'clusterName' => $this->cluster_name,
+            'name' => $this->name,
         ];
     }
 }

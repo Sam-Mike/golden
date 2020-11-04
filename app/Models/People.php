@@ -2,24 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class People extends Model
 {
-    protected $table='people';
+    use HasFactory;
 
-    public function company(){
+    protected $table = 'people';
+
+    public function company()
+    {
         return $this->belongsTo('App\Models\Company');
     }
 
-    public function departments(){
-        return $this->belongsTo('App\Models\Departments', 'department_id', 'id');
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department');
     }
 
-    public function license_classes(){
-        return $this->belongsTo('App\Models\LicenseClasses');
+    public function license_class()
+    {
+        return $this->belongsTo('App\Models\LicenseClass');
     }
-    public function truck_trailer_driver(){
+    public function truck_trailer_driver()
+    {
         return $this->hasMany('App\Models\TruckTrailerDriver');
     }
 }

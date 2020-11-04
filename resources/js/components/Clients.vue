@@ -20,20 +20,29 @@
         </div>
         <div class="card-body">
           <div class="table-search">
-          <b-input placeholder="Search"></b-input>
+            <b-input-group size="sm">
+              <b-form-input
+                id="tableFilter"
+                type="search"
+                v-model="tableFilter"
+                placeholder="Search"
+              ></b-form-input>
+            </b-input-group>
           </div>
-            <b-table
-              responsive
-              bordered
-              striped
-              hover
-              :small="true"
-              :items="clients"
-              :fields="clientsFields"
-              :head-variant="tableHeadVariant"
-              :sticky-header="true"
-            >
-            </b-table>
+          <b-table
+            class="table-list"
+            responsive
+            bordered
+            striped
+            hover
+            :small="true"
+            :items="clients"
+            :fields="clientsFields"
+            :head-variant="tableHeadVariant"
+            :sticky-header="true"
+            :filter="tableFilter"
+          >
+          </b-table>
         </div>
       </div>
 
@@ -85,11 +94,11 @@
                   />
                 </div>
                 <div class="form-group">
-                  <label for="exampleInputEmail1">Contact Name</label>
+                  <label for="exampleInputEmail1">Contact Person</label>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="newClient.contactName"
+                    v-model="newClient.contactPersonName"
                     placeholder="Enter contact name"
                     required
                   />
@@ -144,15 +153,25 @@ export default {
         name: "",
         address: "",
         phoneNumber: "",
-        contactName: "",
+        contactPersonName: "",
         mobile: "",
         email: "",
       },
-      rerender: 0,
+      tableFilter: null,
     };
   },
   created() {
     this.getClients();
+  },
+  computed: {
+    sortOptions() {
+      // Create an options list from our fields
+      return this.clientsFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
+    },
   },
   methods: {
     getClients() {

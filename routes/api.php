@@ -2,14 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AllocationsController;
-use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\AllocationController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\PeopleController;
-use App\Http\Controllers\TrucksController;
-use App\Http\Controllers\TrailersController;
+use App\Http\Controllers\TruckController;
+use App\Http\Controllers\TrailerController;
 use App\Http\Controllers\TruckTrailerDriverController;
-
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,21 +23,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('allocation', [AllocationsController::class, 'setAllocation']);
 
 
-Route::apiResource('clients',ClientsController::class);
+Route::apiResources([
+    'clients'=> ClientController::class,
+    'people'=> PeopleController::class,
+    'trucks'=> TruckController::class,
+    'trailers'=> TrailerController::class,
+    'truckTrailerDriver'=> TruckTrailerDriverController::class,
+    'allocations'=> AllocationController::class,
+    ]);
 
-Route::get('people', [PeopleController::class,'index']);
-Route::post('people', [PeopleController::class,'store']);
+// Route::apiResource('people', [PeopleController::class]);
 
-Route::get('trucks', [TrucksController::class, 'index']);
-Route::post('trucks', [TrucksController::class, 'store']);
-
-Route::get('trailers', [TrailersController::class, 'index']);
-Route::post('trailers', [TrailersController::class, 'store']);
-
-Route::get('truck_trailer_driver', [TruckTrailerDriverController::class, 'index']);
-Route::post('truck_trailer_driver', [TruckTrailerDriverController::class, 'store']);
-
-Route::get('allocations', [AllocationsController::class, 'index'])->name('allocations');

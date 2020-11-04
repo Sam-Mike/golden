@@ -8,7 +8,7 @@
             type="button"
             style="float: right"
             class="btn btn-primary"
-            onclick="setAllocationData()"
+            @click="sendAllocationData()"
           >
             Create Allocation
           </button>
@@ -17,7 +17,7 @@
               <div class="col-md-8">
                 <v-select
                   v-model="newAllocation.clientId"
-                  label="client_name"
+                  label="name"
                   :options="clients"
                   :reduce="(clients) => clients.id"
                   placeholder="Choose Client"
@@ -28,7 +28,7 @@
               <div class="col-md-8">
                 <v-select
                   v-model="newAllocation.cargoId"
-                  label="cargo_name"
+                  label="name"
                   :options="cargo"
                   :reduce="(cargo) => cargo.id"
                   placeholder="Choose Cargo"
@@ -39,7 +39,7 @@
               <div class="col-md-8">
                 <v-select
                   v-model="newAllocation.destinationLocationId"
-                  label="location_name"
+                  label="name"
                   :options="locations"
                   :reduce="(locations) => locations.id"
                   placeholder="Choose Destination"
@@ -48,9 +48,7 @@
             </div>
           </div>
         </div>
-      </div>
-      <!-- Allocation Tabs -->
-      <b-card no-body>
+        <b-card no-body>
         <!-- COACH TAB -->
         <b-tabs content-class="mt-3">
           <b-tab title="Golden Coach" active>
@@ -71,46 +69,33 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table
-                    class="table table-bordered table-sm table-striped table-hover"
-                    id="dataTable"
-                    width="100%"
-                    cellspacing="0"
+                  <!-- dataTable -->
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="coachTruckTrailerDrivers()"
+                    :fields="truckTrailerDriversFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
                   >
-                    <thead class="thead-dark">
-                      <tr>
-                        <th></th>
-                        <th>TRUCK REGISTRATION</th>
-                        <th>TRAILER</th>
-                        <th>TL NUMBER</th>
-                        <th>DRIVER</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr
-                        v-for="ttp in coachTruckTrailerDriver()"
-                        :key="ttp.id"
-                      >
-                        <td>
-                          <input
-                            class="form-check-input ml-2"
-                            type="checkbox"
-                            :value="ttp.id"
-                            :id="ttp.id"
-                            v-model="newAllocation.checkedTruckTrailerDriver"
-                          />
-                        </td>
-                        <td>{{ ttp.trucks.reg_number }}</td>
-                        <td>{{ ttp.trailers.reg_number }}</td>
-                        <td>{{ ttp.trailers.tl_number }}</td>
-                        <td>
-                          {{ ttp.people.first_name }}
-                          {{ ttp.people.middle_name }}
-                          {{ ttp.people.last_name }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <template #cell(select)="methods"
+                      ><b-form-checkbox
+                        v-model="newAllocation.checkedTruckTrailerDrivers"
+                        :value="methods.item.id"
+                        unchecked-value=""
+
+                      ></b-form-checkbox
+                    ></template>
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.driver.firstName }}
+                      {{ methods.item.driver.middleName }}
+                      {{ methods.item.driver.lastName }}
+                    </template>
+                  </b-table>
                 </div>
               </div>
             </div>
@@ -134,47 +119,24 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table
-                    class="table table-bordered table-sm table-striped table-hover"
-                    id="dataTable"
-                    width="100%"
-                    cellspacing="0"
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="fleetTruckTrailerDrivers()"
+                    :fields="truckTrailerDriversFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
                   >
-                    <thead class="thead-dark">
-                      <tr>
-                        <th></th>
-                        <th>TRUCK REGISTRATION</th>
-                        <th>TRAILER</th>
-                        <th>TL NUMBER</th>
-                        <th>DRIVER</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      <tr
-                        v-for="ttp in fleetTruckTrailerDriver()"
-                        :key="ttp.id"
-                      >
-                        <td>
-                          <input
-                            class="form-check-input ml-2"
-                            type="checkbox"
-                            :value="ttp.id"
-                            :id="ttp.id"
-                            v-model="newAllocation.checkedTruckTrailerDriver"
-                          />
-                        </td>
-                        <td>{{ ttp.trucks.reg_number }}</td>
-                        <td>{{ ttp.trailers.reg_number }}</td>
-                        <td>{{ ttp.trailers.tl_number }}</td>
-                        <td>
-                          {{ ttp.people.first_name }}
-                          {{ ttp.people.middle_name }}
-                          {{ ttp.people.last_name }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.driver.firstName }}
+                      {{ methods.item.driver.middleName }}
+                      {{ methods.item.driver.lastName }}
+                    </template>
+                  </b-table>
                 </div>
               </div>
             </div>
@@ -198,53 +160,33 @@
               </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table
-                    class="table table-bordered table-sm table-striped table-hover"
-                    id="dataTable"
-                    width="100%"
-                    cellspacing="0"
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="wheelsTruckTrailerDrivers()"
+                    :fields="truckTrailerDriversFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
                   >
-                    <thead class="thead-dark">
-                      <tr>
-                        <th></th>
-                        <th>TRUCK REGISTRATION</th>
-                        <th>TRAILER</th>
-                        <th>TL NUMBER</th>
-                        <th>DRIVER</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      <tr
-                        v-for="ttp in wheelsTruckTrailerDriver()"
-                        :key="ttp.id"
-                      >
-                        <td>
-                          <input
-                            class="form-check-input ml-2"
-                            type="checkbox"
-                            :value="ttp.id"
-                            :id="ttp.id"
-                            v-model="newAllocation.checkedTruckTrailerDriver"
-                          />
-                        </td>
-                        <td>{{ ttp.trucks.reg_number }}</td>
-                        <td>{{ ttp.trailers.reg_number }}</td>
-                        <td>{{ ttp.trailers.tl_number }}</td>
-                        <td>
-                          {{ ttp.people.first_name }}
-                          {{ ttp.people.middle_name }}
-                          {{ ttp.people.last_name }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.driver.firstName }}
+                      {{ methods.item.driver.middleName }}
+                      {{ methods.item.driver.lastName }}
+                    </template>
+                  </b-table>
                 </div>
               </div>
             </div>
           </b-tab>
         </b-tabs>
       </b-card>
+      </div>
+      <!-- Allocation Tabs -->
+      
 
       <!-- Modal to create TruckTrailerDriver combination for COACH TRUCKS -->
       <b-modal
@@ -276,7 +218,7 @@
                       :key="coachTruck.id"
                       :value="coachTruck.id"
                     >
-                      {{ coachTruck.reg_number }}
+                      {{ coachTruck.registrationNumber }}
                     </option>
                   </select>
                 </div>
@@ -294,7 +236,7 @@
                       :key="trailer.id"
                       :value="trailer.id"
                     >
-                      {{ trailer.tl_number }}
+                      {{ trailer.tlNumber }}
                     </option>
                   </select>
                 </div>
@@ -312,8 +254,8 @@
                       :key="person.id"
                       :value="person.id"
                     >
-                      {{ person.first_name }} {{ person.middle_name }}
-                      {{ person.last_name }}
+                      {{ person.firstName }} {{ person.middleName }}
+                      {{ person.lastName }}
                     </option>
                   </select>
                 </div>
@@ -353,7 +295,7 @@
                       :key="fleetTruck.id"
                       :value="fleetTruck.id"
                     >
-                      {{ fleetTruck.reg_number }}
+                      {{ fleetTruck.registrationNumber }}
                     </option>
                   </select>
                 </div>
@@ -371,7 +313,7 @@
                       :key="trailer.id"
                       :value="trailer.id"
                     >
-                      {{ trailer.tl_number }}
+                      {{ trailer.tlNumber }}
                     </option>
                   </select>
                 </div>
@@ -389,8 +331,8 @@
                       :key="person.id"
                       :value="person.id"
                     >
-                      {{ person.first_name }} {{ person.middle_name }}
-                      {{ person.last_name }}
+                      {{ person.firstName }} {{ person.middleName }}
+                      {{ person.lastName }}
                     </option>
                   </select>
                 </div>
@@ -430,7 +372,7 @@
                       :key="wheelsTruck.id"
                       :value="wheelsTruck.id"
                     >
-                      {{ wheelsTruck.reg_number }}
+                      {{ wheelsTruck.registrationNumber }}
                     </option>
                   </select>
                 </div>
@@ -448,7 +390,7 @@
                       :key="trailer.id"
                       :value="trailer.id"
                     >
-                      {{ trailer.tl_number }}
+                      {{ trailer.tlNumber }}
                     </option>
                   </select>
                 </div>
@@ -466,8 +408,8 @@
                       :key="person.id"
                       :value="person.id"
                     >
-                      {{ person.first_name }} {{ person.middle_name }}
-                      {{ person.last_name }}
+                      {{ person.firstName }} {{ person.middleName }}
+                      {{ person.lastName }}
                     </option>
                   </select>
                 </div>
@@ -487,7 +429,10 @@ export default {
       isSuccess: false,
       truckTrailerDrivers: [],
       truckTrailerDriversFields: [
-        {},{}
+        { key: "select" },
+        { key: "truck.registrationNumber", label: "Truck" },
+        { key: "trailer.tlNumber", label: "Trailer" },
+        { key: "driverName", label: "Driver" },
       ],
       tableHeadVariant: "dark",
       company: [],
@@ -506,7 +451,7 @@ export default {
         clientId: "",
         cargoId: "",
         destinationLocationId: "",
-        checkedTruckTrailerDriver: [], //check with the controller accepting the arrays for allocation
+        checkedTruckTrailerDrivers: [], //check with the controller accepting the arrays for allocation
       },
     };
   },
@@ -518,9 +463,9 @@ export default {
       this.loading = true;
       this.isSuccess = false;
       axios
-        .get("http://localhost:8000/api/truck_trailer_driver")
+        .get("http://localhost:8000/api/truckTrailerDriver")
         .then(({ data }) => {
-          this.truckTrailerDrivers = data.truck_trailer_driver;
+          this.truckTrailerDrivers = data.truckTrailerDrivers;
           this.company = data.company;
           this.clients = data.clients;
           this.cargo = data.cargo;
@@ -543,7 +488,7 @@ export default {
 
     submitTruckTrailerPeople() {
       axios
-        .post("http://127.0.0.1:8000/api/truck_trailer_driver", {
+        .post("http://127.0.0.1:8000/api/truckTrailerDriver", {
           truckId: this.newTruckTrailerDriver.truckId,
           trailerId: this.newTruckTrailerDriver.trailerId,
           driverId: this.newTruckTrailerDriver.driverId,
@@ -557,54 +502,50 @@ export default {
         this.getTruckTrailerDrivers();
       });
     },
-    itemVisible(item) {
-      return item.client_name
-        .toLowerCase()
-        .includes(this.clients.toLowerCase());
-    },
+
     // compute TTP trucks by company and add render to ttp table for allocation process
-    coachTruckTrailerDriver() {
+    coachTruckTrailerDrivers() {
       return this.truckTrailerDrivers.filter(
-        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 1
+        (all) => all.truck.company.id === 1
       );
     },
-    fleetTruckTrailerDriver() {
+    fleetTruckTrailerDrivers() {
       return this.truckTrailerDrivers.filter(
-        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 2
+        (all) => all.truck.company.id === 2
       );
     },
-    wheelsTruckTrailerDriver() {
+    wheelsTruckTrailerDrivers() {
       return this.truckTrailerDrivers.filter(
-        (allTruckTrailerDriver) => allTruckTrailerDriver.trucks.company_id === 3
+        (all) => all.truck.company.id === 3
       );
     },
     //compute truck_trailer_driver by company name and render to company tabs to be selected during TTP allocation
     coachTrucks() {
       return this.trucks.filter(
         (allTrucks) =>
-          allTrucks.company_id === 1 && allTrucks.allocation_status_id === 1
+          allTrucks.company.id === 1 && allTrucks.allocationStatus.id === 1
       );
     },
     fleetTrucks() {
       return this.trucks.filter(
         (allTrucks) =>
-          allTrucks.company_id === 2 && allTrucks.allocation_status_id === 1
+          allTrucks.company.id === 2 && allTrucks.allocationStatus.id === 1
       );
     },
     wheelsTrucks() {
       return this.trucks.filter(
         (allTrucks) =>
-          allTrucks.company_id === 3 && allTrucks.allocation_status_id === 1
+          allTrucks.company.id === 3 && allTrucks.allocationStatus.id === 1
       );
     },
 
     sendAllocationData() {
       axios
-        .post("http://127.0.0.1:8000/api/allocation", {
+        .post("http://127.0.0.1:8000/api/allocations", {
           cargoId: this.newAllocation.cargoId,
-          clientId: this.newAllocation.clientlId,
+          clientId: this.newAllocation.clientId,
           destinationId: this.newAllocation.destinationLocationId,
-          truckTrailerDriverList: this.newAllocation.checkedTruckTrailerDriver,
+          truckTrailerDriverList: this.newAllocation.checkedTruckTrailerDrivers,
         })
         .then(function (response) {
           console.log(response);

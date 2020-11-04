@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TrailerType extends Model
 {
-    protected $table='trailer_type';
+    use HasFactory;
 
-    public function trailer(){
-        return $this->hasMany('App\Models\Trailers');
+    protected $table = 'trailer_type';
+
+    public function trailers()
+    {
+        return $this->hasMany('App\Models\Trailer');
     }
 }

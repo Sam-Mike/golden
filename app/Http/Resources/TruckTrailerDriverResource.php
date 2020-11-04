@@ -16,7 +16,9 @@ class TruckTrailerDriverResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'registrationNumber' =>$this->reg_number,
+            'truck' => new TruckResource($this->trucks),
+            'trailer' => new TrailerResource($this->trailers),
+            'driver' => new PeopleResource($this->people),
         ];
     }
 }
