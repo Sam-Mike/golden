@@ -42,10 +42,14 @@
             :sticky-header="true"
             :filter="tableFilter"
           >
+          <template #cell(actions)="row">
+            <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">DETAILS</b-button>
+          </template>
           </b-table>
         </div>
       </div>
-
+      <!-- Info Modal -->
+      
       <!-- Add Client Modal -->
 
       <b-modal
@@ -147,6 +151,7 @@ export default {
         { key: "contactPerson" },
         { key: "mobile" },
         { key: "email" },
+        {key:"actions"},
       ],
       tableHeadVariant: "dark",
       newClient: {

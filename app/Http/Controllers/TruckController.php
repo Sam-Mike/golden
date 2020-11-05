@@ -44,7 +44,7 @@ class TruckController extends Controller
         $truck->company_id = request('companyId');
         $truck->cluster_id = request('clusterId');
         $truck->truck_type_id = request('truckTypeId');
-        $truck->allocation_status_id = 1; //request('allocationStatusId');
+        $truck->assignment_status_id = 1; //assignment statuss is free on creation
 
         $truck->save();
         return  response()->json([

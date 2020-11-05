@@ -19,11 +19,11 @@ class CreateAllocationTable extends Migration
             $table->foreignId('cargo_id')->constrained('cargo');
             $table->foreignId('destination_id')->constrained('location');
             $table->foreignId('truck_trailer_driver_id')->constrained('truck_trailer_driver');
+            $table->foreignId('trip_status_id')->constrained('status')->nullable();
             $table->date('loading_date')->nullable();
             $table->date('dispatch_date')->nullable();
             $table->date('eta_site')->nullable();
             $table->string('route_code')->nullable();
-            $table->string('trip_status')->nullable();
             $table->string('current_location')->nullable();
             $table->integer('manifest_number')->nullable();
             $table->integer('file_number')->nullable();

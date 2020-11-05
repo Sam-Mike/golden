@@ -25,7 +25,8 @@ class PeopleResource extends JsonResource
             'company' => new CompanyResource($this->company),
             'department' => new DepartmentResource($this->department),
             'licenseNumber' => $this->license_number,
-            'licenseIssueDate' => $this->license_issue_date
+            'licenseIssueDate' => $this->license_issue_date,
+            'assignmentStatus' => new StatusResource($this->status),
         ];
     }
 }

@@ -24,7 +24,7 @@ class AllocationResource extends JsonResource
             'dispatchDate' => $this->dispatch_date,
             'etaSite' => $this->eta_site,
             'routeCode' => $this->route_code,
-            'tripStatus' => $this->trip_status,
+            'tripStatus' => new StatusResource($this->status),
             'currentLocation' => $this->current_location,
             'manifestNumber' => $this->manifest_number,
             'fileNumber' => $this->file_number,

@@ -50,16 +50,26 @@ class TruckTrailerDriverController extends Controller
     public function store(Request $request)
     {
         $truck_trailer_driver = new TruckTrailerDriver();
-
         $truck_trailer_driver->truck_id = request('truckId');
         $truck_trailer_driver->trailer_id = request('trailerId');
         $truck_trailer_driver->driver_id = request('driverId');
+        $truck_trailer_driver->assignment_status_id = 1; //assignment is initially free until allocation sent
         $truck_trailer_driver->save();
 
-        //Changing the truck status id to allocated
+        //Changing truck assignment status id to ASSIGNED
         $truck = Truck::find($truck_trailer_driver->truck_id);
-        $truck->allocation_status_id = 2;
+        $truck->assignment_status_id = 2;
         $truck->save();
+
+        //Changing trailer assignment status id to ASSIGNED
+        $trailer = Trailer::find($truck_trailer_driver->trailer_id);
+        $trailer->assignment_status_id = 2;
+        $trailer->save();
+
+        //Changing people assignment status id to ASSIGNED
+        $people = People::find($truck_trailer_driver->driver_id);
+        $people->assignment_status_id = 2;
+        $people->save();
         return  response()->json([
             'success'
         ], 200);

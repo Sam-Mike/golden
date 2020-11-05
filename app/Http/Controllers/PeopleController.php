@@ -49,6 +49,7 @@ class PeopleController extends Controller
         $people->license_number = request('licenseNumber');
         $people->license_issue_date = request('licenseIssueDate');
         $people->license_class_id = request('licenseClass');
+        $people->assignment_status_id = 1; //assignment status is free on creation
         $people->save();
         return  response()->json([
             'success'

@@ -16,7 +16,7 @@ class CreateCargoTable extends Migration
         Schema::create('cargo', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('cargo_type_id')->constrained('cargo_type');
+            $table->foreignId('cargo_type_id')->constrained('cargo_type')->nullable();
             $table->timestamps();
         });
     }

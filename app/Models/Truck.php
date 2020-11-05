@@ -26,7 +26,7 @@ class Truck extends Model
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'allocation_status_id');
+        return $this->belongsTo('App\Models\Status', 'assignment_status_id');
     }
     public function truck_trailer_people()
     {

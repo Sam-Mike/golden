@@ -39,7 +39,7 @@ class TrailerController extends Controller
         $trailer->registration_number = request('registrationNumber');
         $trailer->trailer_type_id = request('trailerTypeId');
         $trailer->company_id = request('companyId');
-        //$trailer->allocation_status_id = 1;
+        $trailer->assignment_status_id = 1; //assignment status is free on creation
 
         $trailer->save();
         return  response()->json([

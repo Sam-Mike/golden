@@ -39,12 +39,13 @@ class AllocationController extends Controller
         foreach ($ttds as $ttd) {
 
             $allocation = new Allocation();
-
             $allocation->client_id = request('clientId');
             $allocation->cargo_id = request('cargoId');
             $allocation->destination_id = request('destinationId');
             $allocation->truck_trailer_driver_id = $ttd;
             $allocation->save();
+
+            //when trip ends delete truckTrailerDriver record to free the assigned
         }
         return response()->json([
             'success'

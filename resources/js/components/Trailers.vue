@@ -125,7 +125,7 @@ export default {
       trailers: [],
       trailersFields: [
         { key: "registrationNumber" },
-        { key: "tlNumber", sortable: true },
+        { key: "tlNumber", label:"TL Number", sortable: true },
         { key: "company.name", label:"Company" },
       ],
       tableHeadVariant: "dark",

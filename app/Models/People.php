@@ -25,6 +25,10 @@ class People extends Model
     {
         return $this->belongsTo('App\Models\LicenseClass');
     }
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status', 'assignment_status_id');
+    }
     public function truck_trailer_driver()
     {
         return $this->hasMany('App\Models\TruckTrailerDriver');

@@ -433,6 +433,7 @@ export default {
         { key: "truck.registrationNumber", label: "Truck" },
         { key: "trailer.tlNumber", label: "Trailer" },
         { key: "driverName", label: "Driver" },
+        {label:"Assignment Status"}
       ],
       tableHeadVariant: "dark",
       company: [],
@@ -523,19 +524,19 @@ export default {
     coachTrucks() {
       return this.trucks.filter(
         (allTrucks) =>
-          allTrucks.company.id === 1 && allTrucks.allocationStatus.id === 1
+          allTrucks.company.id === 1 && allTrucks.assignmentStatus.id === 1
       );
     },
     fleetTrucks() {
       return this.trucks.filter(
         (allTrucks) =>
-          allTrucks.company.id === 2 && allTrucks.allocationStatus.id === 1
+          allTrucks.company.id === 2 && allTrucks.assignmentStatus.id === 1
       );
     },
     wheelsTrucks() {
       return this.trucks.filter(
         (allTrucks) =>
-          allTrucks.company.id === 3 && allTrucks.allocationStatus.id === 1
+          allTrucks.company.id === 3 && allTrucks.assignmentStatus.id === 1
       );
     },
 

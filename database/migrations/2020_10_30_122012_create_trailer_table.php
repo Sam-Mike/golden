@@ -19,6 +19,7 @@ class CreateTrailerTable extends Migration
             $table->string('registration_number');
             $table->foreignId('trailer_type_id')->constrained('trailer_type');
             $table->foreignId('company_id')->constrained('company');
+            $table->foreignId('assignment_status_id')->constrained('status')->nullable();
             $table->timestamps();
         });
     }

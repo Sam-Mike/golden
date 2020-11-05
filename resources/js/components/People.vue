@@ -122,7 +122,7 @@
                   <select
                     type="text"
                     class="form-control"
-                    v-model="newPerson.companyName"
+                    v-model="newPerson.companyId"
                     placeholder="Choose company"
                     required
                   >
@@ -140,7 +140,7 @@
                   <select
                     type="text"
                     class="form-control"
-                    v-model="newPerson.departmentName"
+                    v-model="newPerson.departmentId"
                     placeholder="Choose department"
                     required
                   >
@@ -178,7 +178,7 @@
                   <select
                     type="text"
                     class="form-control"
-                    v-model="newPerson.license_class"
+                    v-model="newPerson.licenseClass"
                     placeholder="Choose license class"
                     required
                   >

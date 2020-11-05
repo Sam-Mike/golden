@@ -19,6 +19,7 @@ class TruckTrailerDriverResource extends JsonResource
             'truck' => new TruckResource($this->trucks),
             'trailer' => new TrailerResource($this->trailers),
             'driver' => new PeopleResource($this->people),
+            'assignmentStatus' => new StatusResource($this->status),
         ];
     }
 }

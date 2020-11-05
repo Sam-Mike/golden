@@ -20,6 +20,7 @@ class TrailerResource extends JsonResource
             'registrationNumber' => $this->registration_number,
             'company' => new CompanyResource($this->company),
             'trailerType' => new TrailerTypeResource($this->trailer_type),
+            'assignmentStatus' => new StatusResource($this->status),
         ];
     }
 }

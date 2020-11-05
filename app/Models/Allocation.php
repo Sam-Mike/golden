@@ -27,4 +27,8 @@ class Allocation extends Model
     {
         return $this->belongsTo('App\Models\TruckTrailerDriver', 'truck_trailer_driver_id', 'id');
     }
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status', 'trip_status_id');
+    }
 }

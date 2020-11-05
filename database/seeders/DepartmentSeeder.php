@@ -15,6 +15,7 @@ class DepartmentSeeder extends Seeder
     public function run()
     {
         DB::table('department')->insert(['name' => 'OPERATIONS']);
+        DB::table('department')->insert(['name' => 'FINANCE']);
         DB::table('department')->insert(['name' => 'HR']);
         DB::table('department')->insert(['name' => 'HSE']);
         DB::table('department')->insert(['name' => 'TYRES']);

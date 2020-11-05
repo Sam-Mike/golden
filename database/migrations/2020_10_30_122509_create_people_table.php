@@ -23,10 +23,11 @@ class CreatePeopleTable extends Migration
             $table->date('start_date');
             $table->foreignId('company_id')->constrained('company');
             $table->foreignId('department_id')->constrained('department');
-            $table->Biginteger('license_number');
-            $table->string('passport');
-            $table->date('license_issue_date');
-            $table->foreignId('license_class_id')->constrained('license_class');
+            $table->Biginteger('license_number')->nullable();
+            $table->foreignId('license_class_id')->constrained('license_class')->nullable();
+            $table->string('passport')->nullable();
+            $table->date('license_issue_date')->nullable();
+            $table->foreignId('assignment_status_id')->constrained('status')->nullable();
             $table->timestamps();
         });
     }

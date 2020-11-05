@@ -23,4 +23,8 @@ class Trailer extends Model
     {
         return $this->belongsTo('App\Models\Company');
     }
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status', 'assignment_status_id');
+    }
 }

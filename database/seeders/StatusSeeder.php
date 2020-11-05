@@ -15,7 +15,7 @@ class StatusSeeder extends Seeder
     public function run()
     {
         DB::table('status')->insert(['name' => 'FREE']);
-        DB::table('status')->insert(['name' => 'ALLOCATED']);
+        DB::table('status')->insert(['name' => 'ASSIGNED']);
         DB::table('status')->insert(['name' => 'OFFLOADING']);
     }
 }
