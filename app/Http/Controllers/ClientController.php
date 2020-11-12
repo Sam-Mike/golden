@@ -67,7 +67,11 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::findOrFail($id);
+        $client->update($request->all());
+        return response()->json([
+            "Client updated Successfully"
+        ]);
     }
 
     /**
@@ -78,6 +82,11 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $client = Client:: findOrFail($id);
+        $client-> delete();
+        return response()->json([
+            "user deleted successfully"
+        ]);
+
     }
 }

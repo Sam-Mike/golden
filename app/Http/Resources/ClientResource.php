@@ -18,8 +18,8 @@ class ClientResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'address' => $this->address,
-            'phone' => $this->phone,
-            'contactPerson' => $this->contact_person_name,
+            'phoneNumber' => $this->phone,
+            'contactPersonName' => $this->contact_person_name,
             'mobile' => $this->mobile,
             'email' => $this->email
         ];

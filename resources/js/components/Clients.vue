@@ -42,96 +42,196 @@
             :sticky-header="true"
             :filter="tableFilter"
           >
-          <template #cell(actions)="row">
-            <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">DETAILS</b-button>
-          </template>
+            <template #cell(actions)="row">
+              <b-button size="sm" @click="info(row.item)" class="mr-1"
+                >DETAILS</b-button
+              >
+            </template>
           </b-table>
         </div>
       </div>
-      <!-- Info Modal -->
-      
-      <!-- Add Client Modal -->
 
+      <!-- Add Client Modal -->
       <b-modal
         ok-title="Save"
         title="Add Client"
         class="modal fade"
+        button-size="sm"
         id="addClient"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        @ok="handleOk"
+        @ok="handleCreateClient"
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="submitClient">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Name</label>
-                  <input
+              <form ref="form" @submit.stop.prevent="createClient">
+                <b-form-group label="Name" invalid-feedback="Name is required">
+                  <b-form-input
+                    id="client-name"
                     type="text"
                     class="form-control"
                     v-model="newClient.name"
                     placeholder="Enter client name"
                     required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Address</label>
-                  <input
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  label="Address"
+                  invalid-feedback="Address is required"
+                >
+                  <b-form-input
                     type="text"
                     class="form-control"
                     v-model="newClient.address"
                     placeholder="Enter client Address"
                     required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Phone Number</label>
-                  <input
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  label="Phone Number"
+                  invalid-feedback="Phone number is required"
+                >
+                  <b-form-input
                     type="number"
                     class="form-control"
                     v-model="newClient.phoneNumber"
                     placeholder="Enter client's phone number"
                     required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Contact Person</label>
-                  <input
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  label="Contact Person"
+                  invalid-feedback="Contact person is required"
+                >
+                  <b-form-input
                     type="text"
                     class="form-control"
                     v-model="newClient.contactPersonName"
-                    placeholder="Enter contact name"
+                    placeholder="Enter contact person's name"
                     required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Mobile Number</label>
-                  <input
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  label="Mobile Number"
+                  invalid-feedback="Mobile number is required"
+                >
+                  <b-form-input
                     type="number"
                     class="form-control"
                     v-model="newClient.mobile"
                     placeholder="Enter mobile number"
                     required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input
+                  ></b-form-input>
+                </b-form-group>
+                <b-form-group
+                  label="Email address"
+                  invalid-feedback="is required"
+                >
+                  <b-form-input
                     type="email"
                     class="form-control"
                     v-model="newClient.email"
                     aria-describedby="emailHelp"
                     placeholder="Enter client's email"
                     required
-                  />
-                </div>
+                  ></b-form-input>
+                </b-form-group>
               </form>
             </div>
           </div>
         </div>
+      </b-modal>
+
+      <!-- Edit Client Modal -->
+      <b-modal
+        scrollable
+        ok-title="Update"
+        title="Client Info"
+        class="modal fade"
+        button-size="sm"
+        id="editClient"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        @ok="handleUpdateClient"
+
+      >
+      <template #modal-footer="{ok, cancel, hide}">
+          <b-button size="sm" variant="danger" @click="hide(handleDeleteClient())">Delete</b-button>
+          <b-button size="sm" @click="cancel()">Cancel</b-button>
+          <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
+        </template>
+        <form ref="form" @submit.stop.prevent="editClient">
+          <b-form-group label="Name" invalid-feedback="Name is required">
+            <b-form-input
+              id="client-name"
+              type="text"
+              class="form-control"
+              v-model="editClient.content.name"
+              placeholder="Enter client name"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="Address" invalid-feedback="Address is required">
+            <b-form-input
+              type="text"
+              class="form-control"
+              v-model="editClient.content.address"
+              placeholder="Enter client Address"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Phone Number"
+            invalid-feedback="Phone number is required"
+          >
+            <b-form-input
+              type="tel"
+              class="form-control"
+              v-model="editClient.content.phoneNumber"
+              placeholder="Enter client's phone number"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Contact Person"
+            invalid-feedback="Contact person is required"
+          >
+            <b-form-input
+              type="text"
+              class="form-control"
+              v-model="editClient.content.contactPersonName"
+              placeholder="Enter contact person's name"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Mobile Number"
+            invalid-feedback="Mobile number is required"
+          >
+            <b-form-input
+              type="tel"
+              class="form-control"
+              v-model="editClient.content.mobile"
+              placeholder="Enter mobile number"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="Email address" invalid-feedback="is required">
+            <b-form-input
+              type="email"
+              class="form-control"
+              v-model="editClient.content.email"
+              aria-describedby="emailHelp"
+              placeholder="Enter client's email"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </form>
       </b-modal>
     </b-overlay>
   </div>
@@ -147,11 +247,11 @@ export default {
       clientsFields: [
         { key: "name", sortable: true },
         { key: "address" },
-        { key: "phone" },
-        { key: "contactPerson" },
+        { key: "phoneNumber" },
+        { key: "contactPersonName" },
         { key: "mobile" },
         { key: "email" },
-        {key:"actions"},
+        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       newClient: {
@@ -163,6 +263,10 @@ export default {
         email: "",
       },
       tableFilter: null,
+      editClient: {
+        id: "editClient",
+        content: "",
+      },
     };
   },
   created() {
@@ -192,13 +296,13 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
-    handleOk(bvModalEvt) {
+    handleCreateClient(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.submitClient();
+      this.createClient();
     },
-    submitClient() {
+    createClient() {
       axios
         .post("http://127.0.0.1:8000/api/clients", {
           clientName: this.newClient.name,
@@ -216,6 +320,55 @@ export default {
         this.getClients();
       });
     },
+    info(item, button) {
+      this.editClient.content = item;
+      this.$root.$emit("bv::show::modal", this.editClient.id, button);
+    },
+    handleUpdateClient(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.updateClient();
+    },
+    updateClient() {
+      axios
+        .patch(
+          "http://127.0.0.1:8000/api/clients/" + this.editClient.content.id,
+          {
+            clientName: this.editClient.content.name,
+            clientAddress: this.editClient.content.address,
+            clientPhoneNumber: this.editClient.content.phoneNumber,
+            clientContactPersonName: this.editClient.content.contactPersonName,
+            clientMobile: this.editClient.content.mobile,
+            clientEmail: this.editClient.content.email,
+          }
+        )
+        .then((res) => {
+          console.log("Client updated");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("editClient");
+        this.getClients();
+      });
+    },
+    handleDeleteClient() {
+      // Prevent modal from closing
+      this.deleteClient();
+    },
+    deleteClient() {
+      axios
+        .delete(
+          "http://127.0.0.1:8000/api/clients/" + this.editClient.content.id
+        )
+        .then((res) => {
+          console.log("Client Deleted");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("editClient");
+        this.getClients();
+      });
+    },
+    
   },
 };
 </script>

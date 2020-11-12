@@ -39,6 +39,7 @@
       </div>
       <!-- Add Trailer Modal -->
       <b-modal
+        scrollable
         title="Add Trailer"
         ok-title="Save"
         class="modal fade"
@@ -49,70 +50,64 @@
         aria-hidden="true"
         @ok="handleOk"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form ref="forms" @submit.stop.prevent="submitTrailer">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Reg Number</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="newTrailer.registrationNumber"
-                    placeholder="Enter trailer registration number"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">TL Number</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model="newTrailer.tlNumber"
-                    placeholder="Enter trailer TL number"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Trailer Type</label>
-                  <select
-                    type="email"
-                    class="form-control"
-                    v-model="newTrailer.trailerTypeId"
-                    placeholder="Choose Trailer Type"
-                    required
-                  >
-                    <option
-                      v-for="trailerType in trailerType"
-                      :key="trailerType.id"
-                      :value="trailerType.id"
-                    >
-                      {{ trailerType.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Company</label>
-                  <select
-                    type="email"
-                    class="form-control"
-                    v-model="newTrailer.companyId"
-                    placeholder="Choose company"
-                    required
-                  >
-                    <option
-                      v-for="company in company"
-                      :key="company.id"
-                      :value="company.id"
-                    >
-                      {{ company.name }}
-                    </option>
-                  </select>
-                </div>
-              </form>
-            </div>
+        <form ref="forms" @submit.stop.prevent="submitTrailer">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Reg Number</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTrailer.registrationNumber"
+              placeholder="Enter trailer registration number"
+              required
+            />
           </div>
-        </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">TL Number</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTrailer.tlNumber"
+              placeholder="Enter trailer TL number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Trailer Type</label>
+            <select
+              type="email"
+              class="form-control"
+              v-model="newTrailer.trailerTypeId"
+              placeholder="Choose Trailer Type"
+              required
+            >
+              <option
+                v-for="trailerType in trailerType"
+                :key="trailerType.id"
+                :value="trailerType.id"
+              >
+                {{ trailerType.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Company</label>
+            <select
+              type="email"
+              class="form-control"
+              v-model="newTrailer.companyId"
+              placeholder="Choose company"
+              required
+            >
+              <option
+                v-for="company in company"
+                :key="company.id"
+                :value="company.id"
+              >
+                {{ company.name }}
+              </option>
+            </select>
+          </div>
+        </form>
       </b-modal>
     </b-overlay>
   </div>
@@ -125,8 +120,8 @@ export default {
       trailers: [],
       trailersFields: [
         { key: "registrationNumber" },
-        { key: "tlNumber", label:"TL Number", sortable: true },
-        { key: "company.name", label:"Company" },
+        { key: "tlNumber", label: "TL Number", sortable: true },
+        { key: "company.name", label: "Company" },
       ],
       tableHeadVariant: "dark",
       trailerType: [],

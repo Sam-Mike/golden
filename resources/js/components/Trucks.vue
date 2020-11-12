@@ -40,6 +40,7 @@
 
       <!-- Add Truck Modal -->
       <b-modal
+        scrollable
         title="Add Truck"
         ok-title="Save"
         class="modal fade"
@@ -50,78 +51,72 @@
         aria-hidden="true"
         @ok="handleOk"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Reg Number</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="newTruck.registrationNumber"
-                    placeholder="Enter truck registration number"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Company</label>
-                  <select
-                    type="text"
-                    class="form-control"
-                    v-model="newTruck.companyId"
-                    placeholder="Choose company"
-                    required
-                  >
-                    <option
-                      v-for="company in company"
-                      :key="company.id"
-                      :value="company.id"
-                    >
-                      {{ company.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Cluster</label>
-                  <select
-                    type="text"
-                    class="form-control"
-                    v-model="newTruck.clusterId"
-                    placeholder="Choose Cluster"
-                    required
-                  >
-                    <option
-                      v-for="cluster in cluster"
-                      :key="cluster.id"
-                      :value="cluster.id"
-                    >
-                      {{ cluster.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Truck Type</label>
-                  <select
-                    type="text"
-                    class="form-control"
-                    v-model="newTruck.truckTypeId"
-                    placeholder="Choose Truck Type"
-                    required
-                  >
-                    <option
-                      v-for="truckType in truckType"
-                      :key="truckType.id"
-                      :value="truckType.id"
-                    >
-                      {{ truckType.name }}
-                    </option>
-                  </select>
-                </div>
-              </form>
-            </div>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Reg Number</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.registrationNumber"
+              placeholder="Enter truck registration number"
+              required
+            />
           </div>
-        </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Company</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="newTruck.companyId"
+              placeholder="Choose company"
+              required
+            >
+              <option
+                v-for="company in company"
+                :key="company.id"
+                :value="company.id"
+              >
+                {{ company.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Cluster</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="newTruck.clusterId"
+              placeholder="Choose Cluster"
+              required
+            >
+              <option
+                v-for="cluster in cluster"
+                :key="cluster.id"
+                :value="cluster.id"
+              >
+                {{ cluster.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Truck Type</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="newTruck.truckTypeId"
+              placeholder="Choose Truck Type"
+              required
+            >
+              <option
+                v-for="truckType in truckType"
+                :key="truckType.id"
+                :value="truckType.id"
+              >
+                {{ truckType.name }}
+              </option>
+            </select>
+          </div>
+        </form>
       </b-modal>
     </b-overlay>
   </div>
@@ -177,7 +172,7 @@ export default {
           companyId: this.newTruck.companyId,
           clusterId: this.newTruck.clusterId,
           truckTypeId: this.newTruck.truckTypeId,
-          allocationStatusId:1
+          allocationStatusId: 1,
         })
         .then((res) => console.log("truck added"));
 

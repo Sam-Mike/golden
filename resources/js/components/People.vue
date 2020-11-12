@@ -42,6 +42,7 @@
       </div>
       <!-- Add Person Modal -->
       <b-modal
+        scrollable
         class="modal fade"
         id="addPerson"
         tabindex="-1"
@@ -52,149 +53,143 @@
         @ok="handleOk"
         title="Add Person"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="submitPerson">
-                <div class="form-group">
-                  <label for="firstName">First Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="newPerson.firstName"
-                    placeholder="Enter your first name"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="middleName">Middle Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="newPerson.middleName"
-                    placeholder="Enter your middle name"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="lastName">Last Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="newPerson.lastName"
-                    placeholder="Enter your last name"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="dob">Date of Birth</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    v-model="newPerson.dob"
-                    placeholder="Enter date of birth"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="mobile">Mobile Number</label>
-                  <input
-                    type="tel"
-                    class="form-control"
-                    v-model="newPerson.mobile"
-                    placeholder="Enter Mobile Number"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="startDate">Start Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    v-model="newPerson.startDate"
-                    placeholder="Enter employment date"
-                    required
-                  />
-                </div>
-
-                <div class="form-group">
-                  <label for="company">Company</label>
-                  <select
-                    type="text"
-                    class="form-control"
-                    v-model="newPerson.companyId"
-                    placeholder="Choose company"
-                    required
-                  >
-                    <option
-                      v-for="company in company"
-                      :key="company.id"
-                      :value="company.id"
-                    >
-                      {{ company.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="department">Department</label>
-                  <select
-                    type="text"
-                    class="form-control"
-                    v-model="newPerson.departmentId"
-                    placeholder="Choose department"
-                    required
-                  >
-                    <option
-                      v-for="department in departments"
-                      :key="department.id"
-                      :value="department.id"
-                    >
-                      {{ department.name }}
-                    </option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="licenseNumber">License Number</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    v-model="newPerson.licenseNumber"
-                    placeholder="Enter License Number"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="licenseIssueDate">License Issue Date</label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    v-model="newPerson.licenseIssueDate"
-                    placeholder="Enter License Issue Date"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="licenseClass">License Class</label>
-                  <select
-                    type="text"
-                    class="form-control"
-                    v-model="newPerson.licenseClass"
-                    placeholder="Choose license class"
-                    required
-                  >
-                    <option
-                      v-for="licenseClass in licenseClasses"
-                      :key="licenseClass.id"
-                      :value="licenseClass.id"
-                    >
-                      {{ licenseClass.name }}
-                    </option>
-                  </select>
-                </div>
-              </form>
-            </div>
+        <form ref="form" @submit.stop.prevent="submitPerson">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newPerson.firstName"
+              placeholder="Enter your first name"
+              required
+            />
           </div>
-        </div>
+          <div class="form-group">
+            <label for="middleName">Middle Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newPerson.middleName"
+              placeholder="Enter your middle name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newPerson.lastName"
+              placeholder="Enter your last name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input
+              type="date"
+              class="form-control"
+              v-model="newPerson.dob"
+              placeholder="Enter date of birth"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="mobile">Mobile Number</label>
+            <input
+              type="tel"
+              class="form-control"
+              v-model="newPerson.mobile"
+              placeholder="Enter Mobile Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input
+              type="date"
+              class="form-control"
+              v-model="newPerson.startDate"
+              placeholder="Enter employment date"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="newPerson.companyId"
+              placeholder="Choose company"
+              required
+            >
+              <option
+                v-for="company in company"
+                :key="company.id"
+                :value="company.id"
+              >
+                {{ company.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="department">Department</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="newPerson.departmentId"
+              placeholder="Choose department"
+              required
+            >
+              <option
+                v-for="department in departments"
+                :key="department.id"
+                :value="department.id"
+              >
+                {{ department.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="licenseNumber">License Number</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newPerson.licenseNumber"
+              placeholder="Enter License Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="licenseIssueDate">License Issue Date</label>
+            <input
+              type="date"
+              class="form-control"
+              v-model="newPerson.licenseIssueDate"
+              placeholder="Enter License Issue Date"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="licenseClass">License Class</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="newPerson.licenseClass"
+              placeholder="Choose license class"
+              required
+            >
+              <option
+                v-for="licenseClass in licenseClasses"
+                :key="licenseClass.id"
+                :value="licenseClass.id"
+              >
+                {{ licenseClass.name }}
+              </option>
+            </select>
+          </div>
+        </form>
       </b-modal>
     </b-overlay>
   </div>
