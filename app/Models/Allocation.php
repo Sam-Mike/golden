@@ -10,6 +10,16 @@ class Allocation extends Model
     use HasFactory;
 
     protected $table = 'allocation';
+    protected $fillable = [
+        'loading_date',
+        'dispatch_date',
+        'eta_site',
+        'route_code',
+        'current_location',
+        'manifest_number',
+        'file_number',
+        'cargo_weight'
+    ];
 
     public function client()
     {

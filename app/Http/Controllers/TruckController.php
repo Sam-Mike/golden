@@ -44,12 +44,9 @@ class TruckController extends Controller
         $truck->company_id = request('companyId');
         $truck->cluster_id = request('clusterId');
         $truck->truck_type_id = request('truckTypeId');
-        $truck->assignment_status_id = 1; //assignment statuss is free on creation
-
+        $truck->assignment_status_id = 1; //setting assignment status to free on creation
         $truck->save();
-        return  response()->json([
-            'success'
-        ], 200);
+        return  response()->json(['success'], 200);
     }
 
     /**
@@ -72,7 +69,13 @@ class TruckController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $truck = Truck::findOrFail($id);
+        $truck->registration_number = request('registrationNumber');
+        $truck->company_id = request('companyId');
+        $truck->cluster_id = request('clusterId');
+        $truck->truck_type_id = request('truckTypeId');
+        $truck->save();
+        return  response()->json(['success'], 200);
     }
 
     /**
@@ -83,6 +86,8 @@ class TruckController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $truck = Truck::findOrFail($id);
+        $truck->delete();
+        return response()->json(["Truck deleted successfully"]);
     }
 }

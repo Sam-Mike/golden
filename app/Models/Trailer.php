@@ -10,6 +10,13 @@ class Trailer extends Model
     use HasFactory;
 
     protected $table = 'trailer';
+    protected $fillable = [
+        'tl_number',
+        'registration_number',
+        'company_id',
+        'trailer_type_id',
+        'assignment_status_id'
+    ];
 
     public function truck_trailer_people()
     {

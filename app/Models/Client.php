@@ -9,15 +9,8 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'id',
-        'name',
-        'address',
-        'phone_number',
-        'contact_person_name',
-        'mobile',
-        'email'
-    ];
+    protected $table = 'client';
+    protected $fillable = ['id', 'name', 'address', 'phone_number', 'contact_person_name', 'mobile', 'email'];
 
     public function allocations()
     {

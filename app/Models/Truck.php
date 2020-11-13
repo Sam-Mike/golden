@@ -10,7 +10,13 @@ class Truck extends Model
     use HasFactory;
 
     protected $table = 'truck';
-    protected $fillable=['allocation_status_id'];
+    protected $fillable = [
+        'registration_number',
+        'company_id',
+        'cluster_id',
+        'truck_type_id',
+        'assignment_status_id',
+    ];
 
     public function company()
     {
@@ -32,5 +38,4 @@ class Truck extends Model
     {
         return $this->hasMany('App\Models\TruckTrailerPeople');
     }
-    
 }

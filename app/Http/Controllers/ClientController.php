@@ -42,9 +42,7 @@ class ClientController extends Controller
         $client->mobile = request('clientMobile');
         $client->email = request('clientEmail');
         $client->save();
-        return response()->json([
-            'success'
-        ], 200);
+        return response()->json(['success'], 200);
     }
 
     /**
@@ -68,7 +66,13 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         $client = Client::findOrFail($id);
-        $client->update($request->all());
+        $client->name = request('clientName');
+        $client->address = request('clientAddress');
+        $client->phone = request('clientPhoneNumber');
+        $client->contact_person_name = request('clientContactPersonName');
+        $client->mobile = request('clientMobile');
+        $client->email = request('clientEmail');
+        $client->save();
         return response()->json([
             "Client updated Successfully"
         ]);

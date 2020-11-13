@@ -95,7 +95,11 @@ class TruckTrailerDriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $truck_trailer_driver = TruckTrailerDriver::findOrFail($id);
+        $truck_trailer_driver->truck_id = request('truckId');
+        $truck_trailer_driver->trailer_id = request('trailerId');
+        $truck_trailer_driver->driver_id = request('driverId');
+        return response()->json(["TruckTrailerDriver deleted successfully"]);
     }
 
     /**
@@ -106,6 +110,24 @@ class TruckTrailerDriverController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $truck_trailer_driver = TruckTrailerDriver::findOrFail($id);
+
+        //Changing truck assignment status id to FREE
+        $truck = Truck::find($truck_trailer_driver->truck_id);
+        $truck->assignment_status_id = 1;
+        $truck->save();
+
+        //Changing trailer assignment status id to FREE
+        $trailer = Trailer::find($truck_trailer_driver->trailer_id);
+        $trailer->assignment_status_id = 1;
+        $trailer->save();
+
+        //Changing people assignment status id to FREE
+        $people = People::find($truck_trailer_driver->driver_id);
+        $people->assignment_status_id = 1;
+        $people->save();
+        $truck_trailer_driver->delete();
+        
+        return response()->json(["TruckTrailerDriver deleted successfully"]);
     }
 }

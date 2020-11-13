@@ -21,7 +21,7 @@ class PeopleController extends Controller
      */
     public function index()
     {
-        return[
+        return [
             'people' => PeopleResource::collection(People::all()),
             'company' => CompanyResource::collection(Company::all()),
             'departments' => DepartmentResource::collection(Department::all()),
@@ -51,9 +51,7 @@ class PeopleController extends Controller
         $people->license_class_id = request('licenseClass');
         $people->assignment_status_id = 1; //assignment status is free on creation
         $people->save();
-        return  response()->json([
-            'success'
-        ], 200);
+        return  response()->json(['success'], 200);
     }
 
     /**
@@ -76,7 +74,21 @@ class PeopleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $people = People::findOrFail($id);
+        $people->first_name = request('firstName');
+        $people->middle_name = request('middleName');
+        $people->last_name = request('lastName');
+        $people->dob = request('dob');
+        $people->mobile = request('mobile');
+        $people->start_date = request('startDate');
+        $people->company_id = request('companyId');
+        $people->department_id = request('departmentId');
+        $people->license_number = request('licenseNumber');
+        $people->license_issue_date = request('licenseIssueDate');
+        $people->license_class_id = request('licenseClass');
+        $people->save();
+
+        return response()->json(["Person updated successfully"], 200);
     }
 
     /**
@@ -87,6 +99,8 @@ class PeopleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $people = People::findOrFail($id);
+        $people->delete();
+        return response()->json(["Person deleted successfully"]);
     }
 }

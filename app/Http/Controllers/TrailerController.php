@@ -19,10 +19,10 @@ class TrailerController extends Controller
      */
     public function index()
     {
-        return[
-        'trailers' => TrailerResource::collection(Trailer::all()),
-        'trailerType' => TrailerTypeResource::collection(TrailerType::all()),
-        'company' => CompanyResource::collection(Company::all()),
+        return [
+            'trailers' => TrailerResource::collection(Trailer::all()),
+            'trailerType' => TrailerTypeResource::collection(TrailerType::all()),
+            'company' => CompanyResource::collection(Company::all()),
         ];
     }
 
@@ -40,11 +40,8 @@ class TrailerController extends Controller
         $trailer->trailer_type_id = request('trailerTypeId');
         $trailer->company_id = request('companyId');
         $trailer->assignment_status_id = 1; //assignment status is free on creation
-
         $trailer->save();
-        return  response()->json([
-            'success'
-        ], 200);
+        return  response()->json(['success'], 200);
     }
 
     /**
@@ -67,7 +64,14 @@ class TrailerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $trailer = Trailer::findOrFail($id);
+        $trailer->tl_number = request('tlNumber');
+        $trailer->registration_number = request('registrationNumber');
+        $trailer->trailer_type_id = request('trailerTypeId');
+        $trailer->company_id = request('companyId');
+        $trailer->save();
+
+        return  response()->json(['success'], 200);
     }
 
     /**
@@ -78,6 +82,8 @@ class TrailerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $trialer = Trailer::findOrFail($id);
+        $trialer->delete();
+        return response()->json(["Trailer deleted successfully"]);
     }
 }
