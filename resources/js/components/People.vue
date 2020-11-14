@@ -50,10 +50,10 @@
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
-        @ok="handleOk"
+        @ok="handleCreatePerson"
         title="Add Person"
       >
-        <form ref="form" @submit.stop.prevent="submitPerson">
+        <form ref="form" @submit.stop.prevent="createPerson">
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
@@ -191,6 +191,157 @@
           </div>
         </form>
       </b-modal>
+
+      <!-- Update Person Modal -->
+      <b-modal
+        scrollable
+        class="modal fade"
+        id="updatePerson"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        ok-title="Save"
+        @ok="handleOk"
+        title="Person Info"
+      >
+        <form ref="form" @submit.stop.prevent="updatePerson">
+          <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="updatePerson.content.firstName"
+              placeholder="Enter your first name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="middleName">Middle Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="updatePerson.content.middleName"
+              placeholder="Enter your middle name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="updatePerson.content.lastName"
+              placeholder="Enter your last name"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth</label>
+            <input
+              type="date"
+              class="form-control"
+              v-model="updatePerson.content.dob"
+              placeholder="Enter date of birth"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="mobile">Mobile Number</label>
+            <input
+              type="tel"
+              class="form-control"
+              v-model="updatePerson.content.mobile"
+              placeholder="Enter Mobile Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input
+              type="date"
+              class="form-control"
+              v-model="updatePerson.content.startDate"
+              placeholder="Enter employment date"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="company">Company</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="updatePerson.content.companyId"
+              placeholder="Choose company"
+              required
+            >
+              <option
+                v-for="company in company"
+                :key="company.id"
+                :value="company.id"
+              >
+                {{ company.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="department">Department</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="updatePerson.content.departmentId"
+              placeholder="Choose department"
+              required
+            >
+              <option
+                v-for="department in departments"
+                :key="department.id"
+                :value="department.id"
+              >
+                {{ department.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="licenseNumber">License Number</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="updatePerson.content.licenseNumber"
+              placeholder="Enter License Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="licenseIssueDate">License Issue Date</label>
+            <input
+              type="date"
+              class="form-control"
+              v-model="updatePerson.content.licenseIssueDate"
+              placeholder="Enter License Issue Date"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="licenseClass">License Class</label>
+            <select
+              type="text"
+              class="form-control"
+              v-model="updatePerson.content.licenseClass"
+              placeholder="Choose license class"
+              required
+            >
+              <option
+                v-for="licenseClass in licenseClasses"
+                :key="licenseClass.id"
+                :value="licenseClass.id"
+              >
+                {{ licenseClass.name }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </b-modal>
     </b-overlay>
   </div>
 </template>
@@ -231,6 +382,10 @@ export default {
         licenseClass: "",
       },
       //remember to activate and deactivate people
+      updatePerson: {
+        id: "updateClient",
+        content: "",
+      },
     };
   },
   mounted() {
@@ -251,13 +406,13 @@ export default {
           return console.log(error);
         });
     },
-    handleOk(bvModalEvt) {
+    handleCreatePerson(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
       this.submitPerson();
     },
-    submitPerson() {
+    createPerson() {
       axios
         .post("http://localhost:8000/api/people", {
           firstName: this.newPerson.firstName,
@@ -279,6 +434,38 @@ export default {
         this.getPeople();
       });
     },
+  },
+  handleUpdatePerson(bvModalEvt) {
+    // Prevent modal from closing
+    bvModalEvt.preventDefault();
+    // Trigger submit handler
+    this.updatePerson();
+  },
+  updatePerson() {
+    axios
+      .patch(
+        "http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id,
+        {
+          firstName: this.newPerson.firstName,
+          middleName: this.newPerson.middleName,
+          lastName: this.newPerson.lastName,
+          dob: this.newPerson.dob,
+          mobile: this.newPerson.mobile,
+          startDate: this.newPerson.startDate,
+          companyId: this.newPerson.companyId,
+          departmentId: this.newPerson.departmentId,
+          licenseNumber: this.newPerson.licenseNumber,
+          licenseIssueDate: this.newPerson.licenseIssueDate,
+          licenseClass: this.newPerson.licenseClass,
+        }
+      )
+      .then((res) => {
+        console.log("Person updated");
+      });
+    this.$nextTick(() => {
+      this.$bvModal.hide("updatePerson");
+      this.getClients();
+    });
   },
 };
 </script>
