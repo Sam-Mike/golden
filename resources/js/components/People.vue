@@ -8,7 +8,7 @@
             <h6 class="m-0 font-weight-bold text-primary">People</h6>
             <!-- Button trigger Add Person modal -->
             <button
-              v-b-modal.addPerson
+              v-b-modal.addPersonModal
               type="button"
               class="btn btn-primary"
               data-toggle="modal"
@@ -36,6 +36,11 @@
                 {{ data.item.firstName }} {{ data.item.middleName }}
                 {{ data.item.lastName }}
               </template>
+              <template #cell(actions)="row">
+              <b-button size="sm" @click="info(row.item)" class="mr-1"
+                >DETAILS</b-button
+              >
+              </template>
             </b-table>
           </div>
         </div>
@@ -44,7 +49,7 @@
       <b-modal
         scrollable
         class="modal fade"
-        id="addPerson"
+        id="addPersonModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -196,12 +201,12 @@
       <b-modal
         scrollable
         class="modal fade"
-        id="updatePerson"
+        id="updatePersonModal"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
         ok-title="Save"
-        @ok="handleOk"
+        @ok="handleUpdatePerson"
         title="Person Info"
       >
         <form ref="form" @submit.stop.prevent="updatePerson">
@@ -363,6 +368,7 @@ export default {
           sortable: true,
         },
         { key: "licenseIssueDate" },
+        {key: "actions"}
       ],
       tableHeadVariant: "dark",
       company: [],
@@ -383,7 +389,7 @@ export default {
       },
       //remember to activate and deactivate people
       updatePerson: {
-        id: "updateClient",
+        id: "updatePerson",
         content: "",
       },
     };
@@ -430,10 +436,14 @@ export default {
         .then((res) => console.log("Person added"))
         .catch((err) => console.log(err));
       this.$nextTick(() => {
-        this.$bvModal.hide("addPerson");
+        this.$bvModal.hide("addPersonModal");
         this.getPeople();
       });
     },
+  },
+  info(item, button){
+    this.updatePerson.content = item;
+    this.$root.$emit("bv::show::modal", this.updatePerson.id, button);
   },
   handleUpdatePerson(bvModalEvt) {
     // Prevent modal from closing
@@ -446,25 +456,39 @@ export default {
       .patch(
         "http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id,
         {
-          firstName: this.newPerson.firstName,
-          middleName: this.newPerson.middleName,
-          lastName: this.newPerson.lastName,
-          dob: this.newPerson.dob,
-          mobile: this.newPerson.mobile,
-          startDate: this.newPerson.startDate,
-          companyId: this.newPerson.companyId,
-          departmentId: this.newPerson.departmentId,
-          licenseNumber: this.newPerson.licenseNumber,
-          licenseIssueDate: this.newPerson.licenseIssueDate,
-          licenseClass: this.newPerson.licenseClass,
+          firstName: this.updatePerson.content.firstName,
+          middleName: this.updatePerson.content.middleName,
+          lastName: this.updatePerson.content.lastName,
+          dob: this.updatePerson.content.dob,
+          mobile: this.updatePerson.content.mobile,
+          startDate: this.updatePerson.content.startDate,
+          companyId: this.updatePerson.content.companyId,
+          departmentId: this.updatePerson.content.departmentId,
+          licenseNumber: this.updatePerson.content.licenseNumber,
+          licenseIssueDate: this.updatePerson.content.licenseIssueDate,
+          licenseClass: this.updatePerson.content.licenseClass,
         }
       )
       .then((res) => {
         console.log("Person updated");
       });
     this.$nextTick(() => {
-      this.$bvModal.hide("updatePerson");
-      this.getClients();
+      this.$bvModal.hide("updatePersonModal");
+      this.getPeople();
+    });
+  },
+  handleDeletePerson(){
+    this.deletePerson();
+  },
+  deletePerson(){
+    axios
+    .delete("http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id)
+    .then((res)=>{
+      console.log("Person Deleted");
+    });
+    this.$nextTick(()=>{
+      this.$bvModal.hide('updatePersonModal');
+      this.getPeople();
     });
   },
 };

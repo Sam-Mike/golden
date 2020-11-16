@@ -57,7 +57,7 @@
         title="Add Client"
         class="modal fade"
         button-size="sm"
-        id="addClient"
+        id="addClientModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -152,7 +152,7 @@
         title="Client Info"
         class="modal fade"
         button-size="sm"
-        id="editClient"
+        id="updateClientModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -165,13 +165,13 @@
           <b-button size="sm" @click="cancel()">Cancel</b-button>
           <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
         </template>
-        <form ref="form" @submit.stop.prevent="editClient">
+        <form ref="form" @submit.stop.prevent="updateClient">
           <b-form-group label="Name" invalid-feedback="Name is required">
             <b-form-input
               id="client-name"
               type="text"
               class="form-control"
-              v-model="editClient.content.name"
+              v-model="updateClient.content.name"
               placeholder="Enter client name"
               required
             ></b-form-input>
@@ -180,7 +180,7 @@
             <b-form-input
               type="text"
               class="form-control"
-              v-model="editClient.content.address"
+              v-model="updateClient.content.address"
               placeholder="Enter client Address"
               required
             ></b-form-input>
@@ -192,7 +192,7 @@
             <b-form-input
               type="tel"
               class="form-control"
-              v-model="editClient.content.phoneNumber"
+              v-model="updateClient.content.phoneNumber"
               placeholder="Enter client's phone number"
               required
             ></b-form-input>
@@ -204,7 +204,7 @@
             <b-form-input
               type="text"
               class="form-control"
-              v-model="editClient.content.contactPersonName"
+              v-model="updateClient.content.contactPersonName"
               placeholder="Enter contact person's name"
               required
             ></b-form-input>
@@ -216,7 +216,7 @@
             <b-form-input
               type="tel"
               class="form-control"
-              v-model="editClient.content.mobile"
+              v-model="updateClient.content.mobile"
               placeholder="Enter mobile number"
               required
             ></b-form-input>
@@ -225,7 +225,7 @@
             <b-form-input
               type="email"
               class="form-control"
-              v-model="editClient.content.email"
+              v-model="updateClient.content.email"
               aria-describedby="emailHelp"
               placeholder="Enter client's email"
               required
@@ -263,8 +263,8 @@ export default {
         email: "",
       },
       tableFilter: null,
-      editClient: {
-        id: "editClient",
+      updateClient: {
+        id: "updateClientModal",
         content: "",
       },
     };
@@ -316,13 +316,13 @@ export default {
           console.log("Client added");
         });
       this.$nextTick(() => {
-        this.$bvModal.hide("addClient");
+        this.$bvModal.hide("addClientModal");
         this.getClients();
       });
     },
     info(item, button) {
-      this.editClient.content = item;
-      this.$root.$emit("bv::show::modal", this.editClient.id, button);
+      this.updateClient.content = item;
+      this.$root.$emit("bv::show::modal", this.updateClient.id, button);
     },
     handleUpdateClient(bvModalEvt) {
       // Prevent modal from closing
@@ -333,38 +333,37 @@ export default {
     updateClient() {
       axios
         .patch(
-          "http://127.0.0.1:8000/api/clients/" + this.editClient.content.id,
+          "http://127.0.0.1:8000/api/clients/" + this.updateClient.content.id,
           {
-            clientName: this.editClient.content.name,
-            clientAddress: this.editClient.content.address,
-            clientPhoneNumber: this.editClient.content.phoneNumber,
-            clientContactPersonName: this.editClient.content.contactPersonName,
-            clientMobile: this.editClient.content.mobile,
-            clientEmail: this.editClient.content.email,
+            clientName: this.updateClient.content.name,
+            clientAddress: this.updateClient.content.address,
+            clientPhoneNumber: this.updateClient.content.phoneNumber,
+            clientContactPersonName: this.updateClient.content.contactPersonName,
+            clientMobile: this.updateClient.content.mobile,
+            clientEmail: this.updateClient.content.email,
           }
         )
         .then((res) => {
           console.log("Client updated");
         });
       this.$nextTick(() => {
-        this.$bvModal.hide("editClient");
+        this.$bvModal.hide("updateClientModal");
         this.getClients();
       });
     },
     handleDeleteClient() {
-      // Prevent modal from closing
       this.deleteClient();
     },
     deleteClient() {
       axios
         .delete(
-          "http://127.0.0.1:8000/api/clients/" + this.editClient.content.id
+          "http://127.0.0.1:8000/api/clients/" + this.updateClient.content.id
         )
         .then((res) => {
           console.log("Client Deleted");
         });
       this.$nextTick(() => {
-        this.$bvModal.hide("editClient");
+        this.$bvModal.hide("updateClientModal");
         this.getClients();
       });
     },

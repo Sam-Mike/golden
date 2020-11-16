@@ -44,12 +44,11 @@
         title="Add Truck"
         ok-title="Save"
         class="modal fade"
-        id="addTruck"
+        id="addTruckModal"
         tabindex="-1"
         role="dialog"
-        aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        @ok="handleOk"
+        @ok="handleCreateTruck"
       >
         <form>
           <div class="form-group">
@@ -143,6 +142,10 @@ export default {
         clusterId: "",
         truckTypeId: "",
       },
+      updateTruck: {
+        id: "updateTruckModal",
+        content: "",
+      },
     };
   },
   mounted() {
@@ -159,13 +162,13 @@ export default {
         this.loading = false;
       });
     },
-    handleOk(bvModalEvt) {
+    handleCreateTruck(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.submitTruck();
+      this.createTruck();
     },
-    submitTruck() {
+    createTruck() {
       axios
         .post("http://localhost:8000/api/trucks", {
           registrationNumber: this.newTruck.registrationNumber,
@@ -177,10 +180,39 @@ export default {
         .then((res) => console.log("truck added"));
 
       this.$nextTick(() => {
-        this.$bvModal.hide("addTruck");
+        this.$bvModal.hide("addTruckModal");
         this.getTrucks();
       });
     },
+  },
+  handleUpdateTruck(bvModalEvt) {
+    bvModalEvt.preventDefault();
+    this.updateTruck();
+  },
+  updateTruck() {
+    axios
+      .patch(
+        "http://localhost:8000/api/trucks/" + this.updateTruck.content.id,
+        {
+          registrationNumber: this.updateTruck.content.registrationNumber,
+          companyId: this.updateTruck.content.companyId,
+          clusterId: this.updateTruck.content.clusterId,
+          truckTypeId: this.updateTruck.content.truckTypeId,
+        }
+      )
+      .then((res) => {
+        console.log("Truck updated");
+      });
+  },
+  handleDeleteTruck() {
+    this.deleteTruck();
+  },
+  deleteTruck() {
+    axios
+      .delete("http://localhost:8000/api/trucks/" + this.updateTruck.content.id)
+      .then((res) => {
+        console.log("Truck deleted");
+      });
   },
 };
 </script>

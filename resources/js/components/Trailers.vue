@@ -13,7 +13,7 @@
               class="btn btn-primary"
               data-toggle="modal"
               data-target="#exampleModal"
-              v-b-modal.addTrailer
+              v-b-modal.addTrailerModal
             >
               Add Trailer
             </button>
@@ -43,14 +43,14 @@
         title="Add Trailer"
         ok-title="Save"
         class="modal fade"
-        id="addTrailer"
+        id="addTrailerModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        @ok="handleOk"
+        @ok="handleCreateTrailer"
       >
-        <form ref="forms" @submit.stop.prevent="submitTrailer">
+        <form ref="forms" @submit.stop.prevent="createTrailer">
           <div class="form-group">
             <label for="exampleInputEmail1">Reg Number</label>
             <input
@@ -109,6 +109,78 @@
           </div>
         </form>
       </b-modal>
+
+      <!-- Updare Trailer Modal -->
+      <b-modal
+        scrollable
+        title="Trailer Info"
+        ok-title="Save"
+        class="modal fade"
+        id="updateTrailerModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        @ok="handleUpdateTrailer"
+      >
+        <form ref="forms" @submit.stop.prevent="updateTrailer">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Reg Number</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="updateTrailer.content.registrationNumber"
+              placeholder="Enter trailer registration number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">TL Number</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="updateTrailer.content.tlNumber"
+              placeholder="Enter trailer TL number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Trailer Type</label>
+            <select
+              type="email"
+              class="form-control"
+              v-model="updateTrailer.content.trailerTypeId"
+              placeholder="Choose Trailer Type"
+              required
+            >
+              <option
+                v-for="trailerType in trailerType"
+                :key="trailerType.id"
+                :value="trailerType.id"
+              >
+                {{ trailerType.name }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Company</label>
+            <select
+              type="email"
+              class="form-control"
+              v-model="updateTrailer.content.companyId"
+              placeholder="Choose company"
+              required
+            >
+              <option
+                v-for="company in company"
+                :key="company.id"
+                :value="company.id"
+              >
+                {{ company.name }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </b-modal>
     </b-overlay>
   </div>
 </template>
@@ -132,6 +204,10 @@ export default {
         trailerTypeId: "",
         companyId: "",
       },
+      updateTrailer: {
+        id: "updateTrailerModal",
+        content: "",
+      },
     };
   },
   mounted() {
@@ -152,13 +228,13 @@ export default {
           return console.log(error);
         });
     },
-    handleOk(bvModalEvt) {
+    handleCreateTrailer(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.submitTrailer();
+      this.createTrailer();
     },
-    submitTrailer() {
+    createTrailer() {
       axios
         .post("http://localhost:8000/api/trailers", {
           registrationNumber: this.newTrailer.registrationNumber,
@@ -168,10 +244,43 @@ export default {
         })
         .then((res) => console.log("trailer added"));
       this.$nextTick(() => {
-        this.$bvModal.hide("addTrailer");
+        this.$bvModal.hide("addTrailerModal");
         this.getTrailers();
       });
     },
+  },
+  handleUpdateTrailer(bvModalEvt) {
+    bvModalEvt.preventDefault();
+    this.updateTrailer();
+  },
+  updateTrailer() {
+    axios
+      .patch(
+        "http://localhost:8000/api/trailers/" + this.updateTrailer.content.id,
+        {
+          registrationNumber: this.updateTrailer.content.registrationNumber,
+          tlNumber: this.updateTrailer.content.tlNumber,
+          trailerTypeId: this.updateTrailer.content.trailerTypeId,
+          companyId: this.updateTrailer.content.companyId,
+        }
+      )
+      .then((res)=>{
+        console.log("Trailer updated");
+      });
+      this.$nextTick(()=>{
+        this.$bvModal.hide("updateTrailerModal");
+        this.getTrailers();
+      });
+  },
+  handleDeleteTrailer() {
+    this.deleteTrailer();
+  },
+  deleteTrailer() {
+    axios
+    .delete("http://localhost:8000/api/trailers/" + this.updateTrailer.content.id)
+    .then((res)=>{
+      console.log("Trailer deleted");
+    });
   },
 };
 </script>
