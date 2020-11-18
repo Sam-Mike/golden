@@ -23,6 +23,11 @@
               :sticky-header="true"
               :filter="tableFilter"
             >
+              <template #cell(actions)="row">
+                <b-button size="sm" @click="info(row.item)" class="mr-1"
+                  >DETAILS
+                </b-button>
+              </template>
             </b-table>
           </div>
         </div>
@@ -39,9 +44,14 @@ export default {
       allocationFields: [
         { key: "client.name", label: "Client", sortable: true },
         { key: "cargo.name", label: "Cargo", sortable: true },
-        { key: "truckTrailerDriver.truck.registrationNumber", label: "Truck", sortable: true },
+        {
+          key: "truckTrailerDriver.truck.registrationNumber",
+          label: "Truck",
+          sortable: true,
+        },
         { key: "truckTrailerDriver.trailer.tlNumber", label: "Trailer" },
         { key: "tripStatus", label: "Status" },
+        {key:"actions"},
       ],
       tableHeadVariant: "dark",
       tableFilter: null,

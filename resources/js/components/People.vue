@@ -37,9 +37,9 @@
                 {{ data.item.lastName }}
               </template>
               <template #cell(actions)="row">
-              <b-button size="sm" @click="info(row.item)" class="mr-1"
-                >DETAILS</b-button
-              >
+                <b-button size="sm" @click="info(row.item)" class="mr-1"
+                  >DETAILS</b-button
+                >
               </template>
             </b-table>
           </div>
@@ -208,6 +208,7 @@
         ok-title="Save"
         @ok="handleUpdatePerson"
         title="Person Info"
+        v-if="rowDetails == true"
       >
         <form ref="form" @submit.stop.prevent="updatePerson">
           <div class="form-group">
@@ -215,7 +216,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="updatePerson.content.firstName"
+              v-model="editPerson.content.firstName"
               placeholder="Enter your first name"
               required
             />
@@ -225,7 +226,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="updatePerson.content.middleName"
+              v-model="editPerson.content.middleName"
               placeholder="Enter your middle name"
               required
             />
@@ -235,7 +236,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="updatePerson.content.lastName"
+              v-model="editPerson.content.lastName"
               placeholder="Enter your last name"
               required
             />
@@ -245,7 +246,7 @@
             <input
               type="date"
               class="form-control"
-              v-model="updatePerson.content.dob"
+              v-model="editPerson.content.dob"
               placeholder="Enter date of birth"
               required
             />
@@ -255,7 +256,7 @@
             <input
               type="tel"
               class="form-control"
-              v-model="updatePerson.content.mobile"
+              v-model="editPerson.content.mobile"
               placeholder="Enter Mobile Number"
               required
             />
@@ -265,7 +266,7 @@
             <input
               type="date"
               class="form-control"
-              v-model="updatePerson.content.startDate"
+              v-model="editPerson.content.startDate"
               placeholder="Enter employment date"
               required
             />
@@ -276,7 +277,7 @@
             <select
               type="text"
               class="form-control"
-              v-model="updatePerson.content.companyId"
+              v-model="editPerson.content.companyId"
               placeholder="Choose company"
               required
             >
@@ -294,7 +295,7 @@
             <select
               type="text"
               class="form-control"
-              v-model="updatePerson.content.departmentId"
+              v-model="editPerson.content.departmentId"
               placeholder="Choose department"
               required
             >
@@ -312,7 +313,7 @@
             <input
               type="number"
               class="form-control"
-              v-model="updatePerson.content.licenseNumber"
+              v-model="editPerson.content.licenseNumber"
               placeholder="Enter License Number"
               required
             />
@@ -322,7 +323,7 @@
             <input
               type="date"
               class="form-control"
-              v-model="updatePerson.content.licenseIssueDate"
+              v-model="editPerson.content.licenseIssueDate"
               placeholder="Enter License Issue Date"
               required
             />
@@ -332,7 +333,7 @@
             <select
               type="text"
               class="form-control"
-              v-model="updatePerson.content.licenseClass"
+              v-model="editPerson.content.licenseClass"
               placeholder="Choose license class"
               required
             >
@@ -354,6 +355,7 @@
 export default {
   data() {
     return {
+      rowDetails: false,
       loading: false,
       people: [],
       peopleFields: [
@@ -368,7 +370,7 @@ export default {
           sortable: true,
         },
         { key: "licenseIssueDate" },
-        {key: "actions"}
+        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       company: [],
@@ -388,8 +390,8 @@ export default {
         licenseClass: "",
       },
       //remember to activate and deactivate people
-      updatePerson: {
-        id: "updatePerson",
+      editPerson: {
+        id: "updatePersonModal",
         content: "",
       },
     };
@@ -440,56 +442,59 @@ export default {
         this.getPeople();
       });
     },
-  },
-  info(item, button){
-    this.updatePerson.content = item;
-    this.$root.$emit("bv::show::modal", this.updatePerson.id, button);
-  },
-  handleUpdatePerson(bvModalEvt) {
-    // Prevent modal from closing
-    bvModalEvt.preventDefault();
-    // Trigger submit handler
-    this.updatePerson();
-  },
-  updatePerson() {
-    axios
-      .patch(
-        "http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id,
-        {
-          firstName: this.updatePerson.content.firstName,
-          middleName: this.updatePerson.content.middleName,
-          lastName: this.updatePerson.content.lastName,
-          dob: this.updatePerson.content.dob,
-          mobile: this.updatePerson.content.mobile,
-          startDate: this.updatePerson.content.startDate,
-          companyId: this.updatePerson.content.companyId,
-          departmentId: this.updatePerson.content.departmentId,
-          licenseNumber: this.updatePerson.content.licenseNumber,
-          licenseIssueDate: this.updatePerson.content.licenseIssueDate,
-          licenseClass: this.updatePerson.content.licenseClass,
-        }
-      )
-      .then((res) => {
-        console.log("Person updated");
+    info(item, button) {
+      this.editPerson.content = item;
+      this.rowDetails = true;
+      this.$root.$emit("bv::show::modal", this.editPerson.id, button);
+    },
+    handleUpdatePerson(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      // Trigger submit handler
+      this.updatePerson();
+    },
+    updatePerson() {
+      axios
+        .patch(
+          "http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id,
+          {
+            firstName: this.updatePerson.content.firstName,
+            middleName: this.updatePerson.content.middleName,
+            lastName: this.updatePerson.content.lastName,
+            dob: this.updatePerson.content.dob,
+            mobile: this.updatePerson.content.mobile,
+            startDate: this.updatePerson.content.startDate,
+            companyId: this.updatePerson.content.companyId,
+            departmentId: this.updatePerson.content.departmentId,
+            licenseNumber: this.updatePerson.content.licenseNumber,
+            licenseIssueDate: this.updatePerson.content.licenseIssueDate,
+            licenseClass: this.updatePerson.content.licenseClass,
+          }
+        )
+        .then((res) => {
+          console.log("Person updated");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("updatePersonModal");
+        this.getPeople();
       });
-    this.$nextTick(() => {
-      this.$bvModal.hide("updatePersonModal");
-      this.getPeople();
-    });
-  },
-  handleDeletePerson(){
-    this.deletePerson();
-  },
-  deletePerson(){
-    axios
-    .delete("http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id)
-    .then((res)=>{
-      console.log("Person Deleted");
-    });
-    this.$nextTick(()=>{
-      this.$bvModal.hide('updatePersonModal');
-      this.getPeople();
-    });
+    },
+    handleDeletePerson() {
+      this.deletePerson();
+    },
+    deletePerson() {
+      axios
+        .delete(
+          "http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id
+        )
+        .then((res) => {
+          console.log("Person Deleted");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("updatePersonModal");
+        this.getPeople();
+      });
+    },
   },
 };
 </script>
