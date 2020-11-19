@@ -7,15 +7,15 @@
           <div class="d-flex row justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">People</h6>
             <!-- Button trigger Add Person modal -->
-            <button
+            <b-button
+              size="sm"
+              variant="primary"
               v-b-modal.addPersonModal
-              type="button"
-              class="btn btn-primary"
               data-toggle="modal"
               data-target="#exampleModal"
             >
               Add Person
-            </button>
+            </b-button>
           </div>
         </div>
         <div class="card-body">
@@ -122,39 +122,23 @@
 
           <div class="form-group">
             <label for="company">Company</label>
-            <select
-              type="text"
-              class="form-control"
+            <v-select
               v-model="newPerson.companyId"
-              placeholder="Choose company"
-              required
-            >
-              <option
-                v-for="company in company"
-                :key="company.id"
-                :value="company.id"
-              >
-                {{ company.name }}
-              </option>
-            </select>
+              label="name"
+              :options="company"
+              :reduce="(company) => company.id"
+              placeholder="Choose Company"
+            ></v-select>
           </div>
           <div class="form-group">
             <label for="department">Department</label>
-            <select
-              type="text"
-              class="form-control"
+            <v-select
               v-model="newPerson.departmentId"
-              placeholder="Choose department"
-              required
-            >
-              <option
-                v-for="department in departments"
-                :key="department.id"
-                :value="department.id"
-              >
-                {{ department.name }}
-              </option>
-            </select>
+              label="name"
+              :options="departments"
+              :reduce="(departments) => department.id"
+              placeholder="Choose Department"
+            ></v-select>
           </div>
           <div class="form-group">
             <label for="licenseNumber">License Number</label>

@@ -7,15 +7,15 @@
           <div class="d-flex row justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
             <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-primary"
+            <b-button
+              size="sm"
+              variant="primary"
               data-toggle="modal"
               data-target="#exampleModal"
               v-b-modal.addClient
             >
               Add Client
-            </button>
+            </b-button>
           </div>
         </div>
         <div class="card-body">
@@ -295,7 +295,7 @@ export default {
           this.clients = data.clients;
           this.isSuccess = true;
         })
-        .catch(error => {
+        .catch((error) => {
           return console.log(error);
         })
         .finally(() => (this.loading = false));
@@ -316,7 +316,7 @@ export default {
           clientMobile: this.newClient.mobile,
           clientEmail: this.newClient.email,
         })
-        .then(res => {
+        .then((res) => {
           console.log("Client added");
         });
       this.$nextTick(() => {
@@ -342,13 +342,12 @@ export default {
             clientName: this.editClient.content.name,
             clientAddress: this.editClient.content.address,
             clientPhoneNumber: this.editClient.content.phoneNumber,
-            clientContactPersonName: this.editClient.content
-              .contactPersonName,
+            clientContactPersonName: this.editClient.content.contactPersonName,
             clientMobile: this.editClient.content.mobile,
             clientEmail: this.editClient.content.email,
           }
         )
-        .then(res => {
+        .then((res) => {
           console.log("Client updated");
         });
       this.$nextTick(() => {
@@ -364,7 +363,7 @@ export default {
         .delete(
           "http://127.0.0.1:8000/api/clients/" + this.updateClient.content.id
         )
-        .then(res => {
+        .then((res) => {
           console.log("Client Deleted");
         });
       this.$nextTick(() => {

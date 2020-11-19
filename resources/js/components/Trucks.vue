@@ -8,15 +8,15 @@
             <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
 
             <!-- Button trigger modal -->
-            <button
-              type="button"
-              class="btn btn-primary"
+            <b-button
+              size="sm"
+              variant="primary"
               data-toggle="modal"
               data-target="#exampleModal"
               v-b-modal.addTruck
             >
               Add Truck
-            </button>
+            </b-button>
           </div>
         </div>
         <div class="card-body">
@@ -133,7 +133,7 @@
         role="dialog"
         aria-hidden="true"
         @ok="handleUpdateTruck"
-        v-if="rowDetails ==true"
+        v-if="rowDetails == true"
       >
         <form>
           <div class="form-group">

@@ -4,14 +4,16 @@
       <div class="card shadow mb-4">
         <div style="padding: 20px">
           <!--inserting the list here-->
-          <button
+          <b-button
+            size="sm"
+            variant="primary"
             type="button"
             style="float: right"
             class="btn btn-primary"
             @click="sendAllocationData()"
           >
             Create Allocation
-          </button>
+          </b-button>
           <div class="row">
             <div class="input-group mb-1 col">
               <div class="col-md-8">
@@ -58,7 +60,9 @@
                     <h6 class="m-0 font-weight-bold text-primary">
                       Allocations
                     </h6>
-                    <button
+                    <b-button
+                      size="sm"
+                      variant="primary"
                       type="button"
                       class="btn btn-primary"
                       data-toggle="modal"
@@ -66,7 +70,7 @@
                       v-b-modal.addGoldenCoachTruckTrailerDriver
                     >
                       Add TruckTrailerDriver
-                    </button>
+                    </b-button>
                   </div>
                 </div>
                 <div class="card-body">
@@ -445,9 +449,9 @@
         ok-title="Save"
         title=" New Truck Trailer Driver"
         @ok="handleUpdateTruckTrailerDriver"
-        v-if="this.rowDetails ==true"
+        v-if="this.rowDetails == true"
       >
-      <template #modal-footer="{ ok, cancel, hide }">
+        <template #modal-footer="{ ok, cancel, hide }">
           <b-button
             size="sm"
             variant="danger"
@@ -533,9 +537,9 @@
         ok-title="Save"
         title=" New Truck Trailer Driver"
         @ok="handleUpdateTruckTrailerDriver"
-        v-if="this.rowDetails ==true"
+        v-if="this.rowDetails == true"
       >
-      <template #modal-footer="{ ok, cancel, hide }">
+        <template #modal-footer="{ ok, cancel, hide }">
           <b-button
             size="sm"
             variant="danger"
@@ -621,9 +625,9 @@
         ok-title="Save"
         title=" New Truck Trailer Driver"
         @ok="handleUpdateTruckTrailerDriver"
-        v-if="this.rowDetails ==true"
+        v-if="this.rowDetails == true"
       >
-      <template #modal-footer="{ ok, cancel, hide }">
+        <template #modal-footer="{ ok, cancel, hide }">
           <b-button
             size="sm"
             variant="danger"
@@ -855,17 +859,21 @@ export default {
         button
       );
     },
-    handleUpdateTruckTrailerDriver(bvModalEvt){
+    handleUpdateTruckTrailerDriver(bvModalEvt) {
       this.bvModalEvt.preventDefault();
       this.updateTruckTrailerDriver();
     },
     updateTruckTrailerDriver() {
       axios
-        .patch("http://127.0.0.1:8000/api/truckTrailerDriver/" + this.editTruckTrailerDriver.content.id, {
-          truckId: this.editTruckTrailerDriver.content.truck.id,
-          trailerId: this.editTruckTrailerDriver.content.trailer.id,
-          driverId: this.editTruckTrailerDriver.content.driver.id,
-        })
+        .patch(
+          "http://127.0.0.1:8000/api/truckTrailerDriver/" +
+            this.editTruckTrailerDriver.content.id,
+          {
+            truckId: this.editTruckTrailerDriver.content.truck.id,
+            trailerId: this.editTruckTrailerDriver.content.trailer.id,
+            driverId: this.editTruckTrailerDriver.content.driver.id,
+          }
+        )
         .then((res) => console.log("truck trailer driver updated"))
         .catch((err) => res.err);
       this.$nextTick(() => {
@@ -873,13 +881,17 @@ export default {
         this.getTruckTrailerDrivers();
       });
     },
-    handleDeleteTruckTrailerDriver(bvModalEvt){
+    handleDeleteTruckTrailerDriver(bvModalEvt) {
       this.bvModalEvt.preventDefault();
       this.deleteTruckTrailerDriver();
     },
-    deleteTruckTrailerDriver(){
-      axios.delete("http://127.0.0.1:8000/api/truckTrailerDriver/" +this.editTruckTrailerDriver.content.id)
-      .then();
+    deleteTruckTrailerDriver() {
+      axios
+        .delete(
+          "http://127.0.0.1:8000/api/truckTrailerDriver/" +
+            this.editTruckTrailerDriver.content.id
+        )
+        .then();
     },
   },
 };

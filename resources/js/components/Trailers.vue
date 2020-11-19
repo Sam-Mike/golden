@@ -8,15 +8,15 @@
             <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
 
             <!-- Button trigger Add Trailer Modal -->
-            <button
-              type="button"
-              class="btn btn-primary"
+            <b-button
+              size="sm"
+              variant="primary"
               data-toggle="modal"
               data-target="#exampleModal"
               v-b-modal.addTrailerModal
             >
               Add Trailer
-            </button>
+            </b-button>
           </div>
         </div>
         <div class="card-body">
@@ -78,39 +78,23 @@
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Trailer Type</label>
-            <select
-              type="email"
-              class="form-control"
+            <v-select
               v-model="newTrailer.trailerTypeId"
+              label="name"
+              :options="trailerType"
+              :reduce="(trailerType) => trailerType.id"
               placeholder="Choose Trailer Type"
-              required
-            >
-              <option
-                v-for="trailerType in trailerType"
-                :key="trailerType.id"
-                :value="trailerType.id"
-              >
-                {{ trailerType.name }}
-              </option>
-            </select>
+            ></v-select>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Company</label>
-            <select
-              type="email"
-              class="form-control"
+            <v-select
               v-model="newTrailer.companyId"
-              placeholder="Choose company"
-              required
-            >
-              <option
-                v-for="company in company"
-                :key="company.id"
-                :value="company.id"
-              >
-                {{ company.name }}
-              </option>
-            </select>
+              label="name"
+              :options="company"
+              :reduce="(company) => company.id"
+              placeholder="Choose Company"
+            ></v-select>
           </div>
         </form>
       </b-modal>
@@ -128,7 +112,7 @@
         @ok="handleUpdateTrailer"
         v-if="rowDetails == true"
       >
-      <template #modal-footer="{ ok, cancel, hide }">
+        <template #modal-footer="{ ok, cancel, hide }">
           <b-button
             size="sm"
             variant="danger"
@@ -161,39 +145,23 @@
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Trailer Type</label>
-            <select
-              type="email"
-              class="form-control"
+            <v-select
               v-model="editTrailer.content.trailerType.id"
+              label="name"
+              :options="trailerType"
+              :reduce="(trailerType) => trailerType.id"
               placeholder="Choose Trailer Type"
-              required
-            >
-              <option
-                v-for="trailerType in trailerType"
-                :key="trailerType.id"
-                :value="trailerType.id"
-              >
-                {{ trailerType.name }}
-              </option>
-            </select>
+            ></v-select>
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Company</label>
-            <select
-              type="email"
-              class="form-control"
+            <v-select
               v-model="editTrailer.content.company.id"
-              placeholder="Choose company"
-              required
-            >
-              <option
-                v-for="company in company"
-                :key="company.id"
-                :value="company.id"
-              >
-                {{ company.name }}
-              </option>
-            </select>
+              label="name"
+              :options="company"
+              :reduce="(company) => company.id"
+              placeholder="Choose Company"
+            ></v-select>
           </div>
         </form>
       </b-modal>
@@ -305,7 +273,7 @@ export default {
         .then((res) => {
           console.log("Trailer deleted");
         });
-        this.$nextTick(() => {
+      this.$nextTick(() => {
         this.$bvModal.hide("updateTrailerModal");
         this.getTrailers();
       });
