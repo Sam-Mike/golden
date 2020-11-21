@@ -12,7 +12,7 @@
               variant="primary"
               data-toggle="modal"
               data-target="#exampleModal"
-              v-b-modal.addClient
+              v-b-modal.addClientModal
             >
               Add Client
             </b-button>

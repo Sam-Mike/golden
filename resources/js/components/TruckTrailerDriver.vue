@@ -225,6 +225,13 @@
               <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
+                  <v-select
+                    v-model="newTruckTrailerDriver.truckId"
+                    label="registrationNumber"
+                    :options="coachTrucks()"
+                    :reduce="(coachTrucks) => coachTrucks.id"
+                    placeholder="Choose Truck"
+                  ></v-select>
                   <select
                     type="email"
                     class="form-control"
@@ -243,40 +250,28 @@
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Trailer</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.trailerId"
-                    placeholder="Choose trailer"
-                    required
-                  >
-                    <option
-                      v-for="trailer in trailers"
-                      :key="trailer.id"
-                      :value="trailer.id"
-                    >
-                      {{ trailer.tlNumber }}
-                    </option>
-                  </select>
+                    label="tlNumber"
+                    :options="trailers"
+                    :reduce="(trailers) => trailer.id"
+                    placeholder="Choose Trailer"
+                  ></v-select>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Driver</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.driverId"
-                    placeholder="Choose Person"
-                    required
+                    :options="people"
+                    :reduce="(people) => people.id"
+                    placeholder="Choose Driver"
                   >
-                    <option
-                      v-for="person in people"
-                      :key="person.id"
-                      :value="person.id"
-                    >
-                      {{ person.firstName }} {{ person.middleName }}
-                      {{ person.lastName }}
-                    </option>
-                  </select>
+                    <template v-slot:option="option">
+                      {{ option.firstName }}
+                      {{ option.middleName }}
+                      {{ option.lastName }}
+                    </template>
+                  </v-select>
                 </div>
               </form>
             </div>
