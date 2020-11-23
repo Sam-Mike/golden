@@ -63,8 +63,6 @@
                     <b-button
                       size="sm"
                       variant="primary"
-                      type="button"
-                      class="btn btn-primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
                       v-b-modal.addGoldenCoachTruckTrailerDriver
@@ -116,15 +114,14 @@
                 <div class="card-header py-3">
                   <div class="d-flex row justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
+                    <b-button
+                      size="sm"
+                      variant="primary"
                       data-toggle="modal"
-                      data-target="#exampleModal"
                       v-b-modal.addGoldenFleetTruckTrailerDriver
                     >
                       Add TruckTrailerDriver
-                    </button>
+                    </b-button>
                   </div>
                 </div>
                 <div class="card-body">
@@ -141,6 +138,13 @@
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
                     >
+                    <template #cell(select)="methods"
+                        ><b-form-checkbox
+                          v-model="newAllocation.checkedTruckTrailerDrivers"
+                          :value="methods.item.id"
+                          unchecked-value=""
+                        ></b-form-checkbox
+                      ></template>
                       <template #cell(driverName)="methods">
                         {{ methods.item.driver.firstName }}
                         {{ methods.item.driver.middleName }}
@@ -162,15 +166,14 @@
                 <div class="card-header py-3">
                   <div class="d-flex row justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
-                    <button
-                      type="button"
-                      class="btn btn-primary"
+                    <b-button
+                      size="sm"
+                      variant="primary"
                       data-toggle="modal"
-                      data-target="#exampleModal"
                       v-b-modal.addGoldenWheelsTruckTrailerDriver
                     >
                       Add TruckTrailerDriver
-                    </button>
+                    </b-button>
                   </div>
                 </div>
                 <div class="card-body">
@@ -187,6 +190,13 @@
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
                     >
+                    <template #cell(select)="methods"
+                        ><b-form-checkbox
+                          v-model="newAllocation.checkedTruckTrailerDrivers"
+                          :value="methods.item.id"
+                          unchecked-value=""
+                        ></b-form-checkbox
+                      ></template>
                       <template #cell(driverName)="methods">
                         {{ methods.item.driver.firstName }}
                         {{ methods.item.driver.middleName }}
@@ -232,21 +242,7 @@
                     :reduce="(coachTrucks) => coachTrucks.id"
                     placeholder="Choose Truck"
                   ></v-select>
-                  <select
-                    type="email"
-                    class="form-control"
-                    v-model="newTruckTrailerDriver.truckId"
-                    placeholder="Choose truck"
-                    required
-                  >
-                    <option
-                      v-for="coachTruck in coachTrucks()"
-                      :key="coachTruck.id"
-                      :value="coachTruck.id"
-                    >
-                      {{ coachTruck.registrationNumber }}
-                    </option>
-                  </select>
+                  
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Trailer</label>
@@ -254,7 +250,7 @@
                     v-model="newTruckTrailerDriver.trailerId"
                     label="tlNumber"
                     :options="trailers"
-                    :reduce="(trailers) => trailer.id"
+                    :reduce="(trailers) => trailers.id"
                     placeholder="Choose Trailer"
                   ></v-select>
                 </div>
@@ -263,6 +259,8 @@
                   <v-select
                     v-model="newTruckTrailerDriver.driverId"
                     :options="people"
+                    label="firstName"
+                    :filterBy="peopleSearch"
                     :reduce="(people) => people.id"
                     placeholder="Choose Driver"
                   >
@@ -297,58 +295,41 @@
               <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.truckId"
-                    placeholder="Choose truck"
-                    required
-                  >
-                    <option
-                      v-for="fleetTruck in fleetTrucks()"
-                      :key="fleetTruck.id"
-                      :value="fleetTruck.id"
-                    >
-                      {{ fleetTruck.registrationNumber }}
-                    </option>
-                  </select>
+                    label="registrationNumber"
+                    :options="fleetTrucks()"
+                    :reduce="(fleetTrucks) => fleetTrucks.id"
+                    placeholder="Choose Truck"
+                  ></v-select>
+                  
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Trailer</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.trailerId"
-                    placeholder="Choose trailer"
-                    required
-                  >
-                    <option
-                      v-for="trailer in trailers"
-                      :key="trailer.id"
-                      :value="trailer.id"
-                    >
-                      {{ trailer.tlNumber }}
-                    </option>
-                  </select>
+                    label="tlNumber"
+                    :options="trailers"
+                    :reduce="(trailers) => trailers.id"
+                    placeholder="Choose Trailer"
+                  ></v-select>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Driver</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.driverId"
-                    placeholder="Choose Person"
-                    required
+                    :options="people"
+                    label="firstName"
+                    :filterBy="peopleSearch"
+                    :reduce="(people) => people.id"
+                    placeholder="Choose Driver"
                   >
-                    <option
-                      v-for="person in people"
-                      :key="person.id"
-                      :value="person.id"
-                    >
-                      {{ person.firstName }} {{ person.middleName }}
-                      {{ person.lastName }}
-                    </option>
-                  </select>
+                    <template v-slot:option="option">
+                      {{ option.firstName }}
+                      {{ option.middleName }}
+                      {{ option.lastName }}
+                    </template>
+                  </v-select>
                 </div>
               </form>
             </div>
@@ -374,58 +355,40 @@
               <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.truckId"
-                    placeholder="Choose truck"
-                    required
-                  >
-                    <option
-                      v-for="wheelsTruck in wheelsTrucks()"
-                      :key="wheelsTruck.id"
-                      :value="wheelsTruck.id"
-                    >
-                      {{ wheelsTruck.registrationNumber }}
-                    </option>
-                  </select>
+                    label="registrationNumber"
+                    :options="fleetTrucks()"
+                    :reduce="(fleetTrucks) => fleetTrucks.id"
+                    placeholder="Choose Truck"
+                  ></v-select>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Trailer</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.trailerId"
-                    placeholder="Choose trailer"
-                    required
-                  >
-                    <option
-                      v-for="trailer in trailers"
-                      :key="trailer.id"
-                      :value="trailer.id"
-                    >
-                      {{ trailer.tlNumber }}
-                    </option>
-                  </select>
+                    label="tlNumber"
+                    :options="trailers"
+                    :reduce="(trailers) => trailers.id"
+                    placeholder="Choose Trailer"
+                  ></v-select>
                 </div>
                 <div class="form-group">
                   <label for="exampleInputEmail1">Driver</label>
-                  <select
-                    type="email"
-                    class="form-control"
+                  <v-select
                     v-model="newTruckTrailerDriver.driverId"
-                    placeholder="Choose Person"
-                    required
+                    :options="people"
+                    label="firstName"
+                    :filterBy="peopleSearch"
+                    :reduce="(people) => people.id"
+                    placeholder="Choose Driver"
                   >
-                    <option
-                      v-for="person in people"
-                      :key="person.id"
-                      :value="person.id"
-                    >
-                      {{ person.firstName }} {{ person.middleName }}
-                      {{ person.lastName }}
-                    </option>
-                  </select>
+                    <template v-slot:option="option">
+                      {{ option.firstName }}
+                      {{ option.middleName }}
+                      {{ option.lastName }}
+                    </template>
+                  </v-select>
                 </div>
               </form>
             </div>
@@ -712,7 +675,7 @@ export default {
         { key: "truck.registrationNumber", label: "Truck" },
         { key: "trailer.tlNumber", label: "Trailer" },
         { key: "driverName", label: "Driver" },
-        { label: "Assignment Status" },
+        { key: "truck.assignmentStatus.name", label: "Assignment Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -737,6 +700,13 @@ export default {
       editTruckTrailerDriver: {
         id: "updateTtpModal",
         content: "",
+      },
+      peopleSearch(option, label, search) {
+        return (
+          option.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+          option.middleName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
+          option.lastName.toLowerCase().indexOf(search.toLowerCase()) > -1
+        );
       },
     };
   },

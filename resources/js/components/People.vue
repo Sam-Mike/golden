@@ -136,7 +136,7 @@
               v-model="newPerson.departmentId"
               label="name"
               :options="departments"
-              :reduce="(departments) => department.id"
+              :reduce="(departments) => departments.id"
               placeholder="Choose Department"
             ></v-select>
           </div>
@@ -402,7 +402,7 @@ export default {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
-      this.submitPerson();
+      this.createPerson();
     },
     createPerson() {
       axios
