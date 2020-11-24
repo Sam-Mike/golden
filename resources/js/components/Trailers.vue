@@ -1,47 +1,89 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <!-- DataTales Example -->
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <div class="d-flex row justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
+      <b-card no-body>
+        <b-tabs>
+          <!-- ACTIVE TRAILERS -->
+          <b-tab title="Active">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
 
-            <!-- Button trigger Add Trailer Modal -->
-            <b-button
-              size="sm"
-              variant="primary"
-              data-toggle="modal"
-              data-target="#exampleModal"
-              v-b-modal.addTrailerModal
-            >
-              Add Trailer
-            </b-button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <b-table
-              class="table-list"
-              responsive
-              bordered
-              striped
-              hover
-              :small="true"
-              :items="trailers"
-              :fields="trailersFields"
-              :head-variant="tableHeadVariant"
-              :sticky-header="true"
-            >
-              <template #cell(actions)="row">
-                <b-button size="sm" @click="info(row.item)" class="mr-1"
-                  >DETAILS
-                </b-button>
-              </template>
-            </b-table>
-          </div>
-        </div>
-      </div>
+                  <!-- Button trigger Add Trailer Modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.addTrailerModal
+                  >
+                    Add Trailer
+                  </b-button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="activeTrailers()"
+                    :fields="trailersFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                  >
+                    <template #cell(actions)="row">
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                        >DETAILS
+                      </b-button>
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+          <b-tab title="In-Active">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
+
+                  <!-- Button trigger Add Trailer Modal -->
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="inactiveTrailers()"
+                    :fields="trailersFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                  >
+                    <template #cell(actions)="row">
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                        >DETAILS
+                      </b-button>
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+
       <!-- Add Trailer Modal -->
       <b-modal
         scrollable
@@ -179,6 +221,7 @@ export default {
         { key: "registrationNumber" },
         { key: "tlNumber", label: "TL Number", sortable: true },
         { key: "company.name", label: "Company" },
+        { key: "assignmentStatus.name", label: "Assignment Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -213,6 +256,12 @@ export default {
         .catch((error) => {
           return console.log(error);
         });
+    },
+    activeTrailers() {
+      return this.trailers.filter((trailers) => trailers.activityStatus.id === 3);
+    },
+    inactiveTrailers() {
+      return this.trailers.filter((trailers) => trailers.activityStatus.id === 4);
     },
     handleCreateTrailer(bvModalEvt) {
       // Prevent modal from closing

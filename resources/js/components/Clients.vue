@@ -1,55 +1,105 @@
 <template>
   <div>
     <b-overlay :show="loading">
+      <b-card no-body>
+        <b-tabs>
+          <b-tab title="ACTIVE">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
+                  <!-- Button trigger modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.addClientModal
+                  >
+                    Add Client
+                  </b-button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="activeClients()"
+                  :fields="clientsFields"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  :filter="tableFilter"
+                >
+                  <template #cell(actions)="row">
+                    <b-button size="sm" @click="info(row.item)" class="mr-1"
+                      >DETAILS
+                    </b-button>
+                  </template>
+                </b-table>
+              </div>
+            </div>
+          </b-tab>
+          <b-tab title="IN-ACTIVE">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
+                  <!-- Button trigger modal -->
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="inactiveClients()"
+                  :fields="clientsFields"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  :filter="tableFilter"
+                >
+                  <template #cell(actions)="row">
+                    <b-button size="sm" @click="info(row.item)" class="mr-1"
+                      >DETAILS
+                    </b-button>
+                  </template>
+                </b-table>
+              </div>
+            </div>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+
       <!-- DataTales Example -->
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <div class="d-flex row justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
-            <!-- Button trigger modal -->
-            <b-button
-              size="sm"
-              variant="primary"
-              data-toggle="modal"
-              data-target="#exampleModal"
-              v-b-modal.addClientModal
-            >
-              Add Client
-            </b-button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-search">
-            <b-input-group size="sm">
-              <b-form-input
-                id="tableFilter"
-                type="search"
-                v-model="tableFilter"
-                placeholder="Search"
-              ></b-form-input>
-            </b-input-group>
-          </div>
-          <b-table
-            class="table-list"
-            responsive
-            bordered
-            striped
-            hover
-            :small="true"
-            :items="clients"
-            :fields="clientsFields"
-            :head-variant="tableHeadVariant"
-            :sticky-header="true"
-            :filter="tableFilter"
-          >
-            <template #cell(actions)="row">
-              <b-button size="sm" @click="info(row.item)" class="mr-1"
-                >DETAILS
-              </b-button>
-            </template>
-          </b-table>
-        </div>
-      </div>
 
       <!-- Add Client Modal -->
       <b-modal
@@ -299,6 +349,12 @@ export default {
           return console.log(error);
         })
         .finally(() => (this.loading = false));
+    },
+    activeClients() {
+      return this.clients.filter((clients) => clients.activityStatus.id === 3);
+    },
+    inactiveClients() {
+      return this.clients.filter((clients) => clients.activityStatus.id === 4);
     },
     handleCreateClient(bvModalEvt) {
       // Prevent modal from closing

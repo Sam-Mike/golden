@@ -27,7 +27,7 @@ class CreatePeopleTable extends Migration
             $table->foreignId('license_class_id')->constrained('license_class')->nullable();
             $table->string('passport')->nullable();
             $table->date('license_issue_date')->nullable();
-            $table->foreignId('assignment_status_id')->constrained('status')->nullable();
+            $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });
     }

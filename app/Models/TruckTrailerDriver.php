@@ -23,6 +23,10 @@ class TruckTrailerDriver extends Model
     {
         return $this->belongsTo('App\Models\People', 'driver_id');
     }
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+    }
     public function allocations()
     {
         return $this->hasMany('App\Models\Allocation');

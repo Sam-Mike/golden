@@ -16,4 +16,8 @@ class Client extends Model
     {
         return $this->hasMany('App\Models\Allocation');
     }
+    public function status()
+    {
+        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+    }
 }

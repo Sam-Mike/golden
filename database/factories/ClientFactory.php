@@ -29,6 +29,7 @@ class ClientFactory extends Factory
             'contact_person_name' => $this->faker->name,
             'mobile' => $this->faker->phoneNumber,
             'email' => $this->faker->freeEmail,
+            'activity_status_id' => 3,
         ];
     }
 }

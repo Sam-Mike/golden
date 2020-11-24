@@ -675,7 +675,7 @@ export default {
         { key: "truck.registrationNumber", label: "Truck" },
         { key: "trailer.tlNumber", label: "Trailer" },
         { key: "driverName", label: "Driver" },
-        { key: "truck.assignmentStatus.name", label: "Assignment Status" },
+        { key: "assignmentStatus.name", label: "Assignment Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -761,17 +761,17 @@ export default {
     // compute TTP trucks by company and add render to ttp table for allocation process
     coachTruckTrailerDrivers() {
       return this.truckTrailerDrivers.filter(
-        (all) => all.truck.company.id === 1
+        (all) => all.truck.company.id === 1 && all.assignmentStatus.id ===1
       );
     },
     fleetTruckTrailerDrivers() {
       return this.truckTrailerDrivers.filter(
-        (all) => all.truck.company.id === 2
+        (all) => all.truck.company.id === 2 && all.assignmentStatus.id ===1
       );
     },
     wheelsTruckTrailerDrivers() {
       return this.truckTrailerDrivers.filter(
-        (all) => all.truck.company.id === 3
+        (all) => all.truck.company.id === 3 && all.assignmentStatus.id ===1
       );
     },
     //compute truck_trailer_driver by company name and render to company tabs to be selected during TTP allocation

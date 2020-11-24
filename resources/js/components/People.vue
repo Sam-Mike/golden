@@ -1,50 +1,94 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <!-- DataTales  -->
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <div class="d-flex row justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">People</h6>
-            <!-- Button trigger Add Person modal -->
-            <b-button
-              size="sm"
-              variant="primary"
-              v-b-modal.addPersonModal
-              data-toggle="modal"
-              data-target="#exampleModal"
-            >
-              Add Person
-            </b-button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <b-table
-              class="table-list"
-              responsive
-              bordered
-              striped
-              hover
-              :small="true"
-              :items="people"
-              :fields="peopleFields"
-              :head-variant="tableHeadVariant"
-              :sticky-header="true"
-            >
-              <template #cell(fullname)="data">
-                {{ data.item.firstName }} {{ data.item.middleName }}
-                {{ data.item.lastName }}
-              </template>
-              <template #cell(actions)="row">
-                <b-button size="sm" @click="info(row.item)" class="mr-1"
-                  >DETAILS</b-button
-                >
-              </template>
-            </b-table>
-          </div>
-        </div>
-      </div>
+      <b-card no-body>
+        <b-tabs>
+          <b-tab title="Active">
+            <!-- DataTales  -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">People</h6>
+                  <!-- Button trigger Add Person modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    v-b-modal.addPersonModal
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                  >
+                    Add Person
+                  </b-button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="activePeople()"
+                    :fields="peopleFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                  >
+                    <template #cell(fullname)="data">
+                      {{ data.item.firstName }} {{ data.item.middleName }}
+                      {{ data.item.lastName }}
+                    </template>
+                    <template #cell(actions)="row">
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                        >DETAILS</b-button
+                      >
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+          <b-tab title="In-active">
+            <!-- DataTales  -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">People</h6>
+                  <!-- Button trigger Add Person modal -->
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="inactivePeople()"
+                    :fields="peopleFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                  >
+                    <template #cell(fullname)="data">
+                      {{ data.item.firstName }} {{ data.item.middleName }}
+                      {{ data.item.lastName }}
+                    </template>
+                    <template #cell(actions)="row">
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                        >DETAILS</b-button
+                      >
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+
       <!-- Add Person Modal -->
       <b-modal
         scrollable
@@ -397,6 +441,12 @@ export default {
         .catch((error) => {
           return console.log(error);
         });
+    },
+    activePeople() {
+      return this.people.filter((people) => people.activityStatus.id === 3);
+    },
+    inactivePeople() {
+      return this.people.filter((people) => people.activityStatus.id === 4);
     },
     handleCreatePerson(bvModalEvt) {
       // Prevent modal from closing

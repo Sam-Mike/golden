@@ -72,6 +72,7 @@ class ClientController extends Controller
         $client->contact_person_name = request('clientContactPersonName');
         $client->mobile = request('clientMobile');
         $client->email = request('clientEmail');
+        $client->activity_status_id = request('activityStatusId');
         $client->save();
         return response()->json([
             "Client updated Successfully"

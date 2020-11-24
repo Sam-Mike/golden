@@ -18,7 +18,7 @@ class CreateTruckTrailerDriver extends Migration
             $table->foreignId('truck_id')->constrained('truck');
             $table->foreignId('trailer_id')->constrained('trailer');
             $table->foreignId('driver_id')->constrained('people');
-            $table->foreignId('assignment_status_id')->constrained('status')->nullable();
+            $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });
     }

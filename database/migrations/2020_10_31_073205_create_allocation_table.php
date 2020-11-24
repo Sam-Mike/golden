@@ -28,6 +28,7 @@ class CreateAllocationTable extends Migration
             $table->integer('manifest_number')->nullable();
             $table->integer('file_number')->nullable();
             $table->integer('cargo_weight')->nullable();
+            $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });
     }

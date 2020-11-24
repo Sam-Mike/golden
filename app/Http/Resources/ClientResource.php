@@ -21,7 +21,8 @@ class ClientResource extends JsonResource
             'phoneNumber' => $this->phone,
             'contactPersonName' => $this->contact_person_name,
             'mobile' => $this->mobile,
-            'email' => $this->email
+            'email' => $this->email,
+            'activityStatus' => new StatusResource($this->status)
         ];
     }
 }

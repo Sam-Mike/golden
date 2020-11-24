@@ -19,7 +19,7 @@ class CreateTruckTable extends Migration
             $table->foreignId('company_id')->constrained('company');
             $table->foreignId('cluster_id')->constrained('cluster');
             $table->foreignId('truck_type_id')->constrained('truck_type');
-            $table->foreignId('assignment_status_id')->constrained('status');
+            $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ class CreateClientTable extends Migration
             $table->string('contact_person_name');
             $table->text('mobile');
             $table->string('email');
+            $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });
     }

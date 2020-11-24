@@ -15,4 +15,16 @@ class Status extends Model
     {
         $this->hasMany('App\Models\Truck');
     }
+    public function trailers()
+    {
+        $this->hasMany('App\Models\Trailer');
+    }
+    public function people()
+    {
+        $this->hasMany('App\Models\People');
+    }
+    public function truck_trailer_driver()
+    {
+        $this->hasMany('App\Models\TruckTrailerDriver');
+    }
 }

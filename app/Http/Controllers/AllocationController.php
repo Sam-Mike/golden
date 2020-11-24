@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Allocation;
+use App\Models\TruckTrailerDriver;
 use App\Http\Resources\AllocationResource;
 
 
@@ -37,7 +38,6 @@ class AllocationController extends Controller
         $ttds = request('truckTrailerDriverList');
 
         foreach ($ttds as $ttd) {
-
             $allocation = new Allocation();
             $allocation->client_id = request('clientId');
             $allocation->cargo_id = request('cargoId');
@@ -45,6 +45,10 @@ class AllocationController extends Controller
             $allocation->truck_trailer_driver_id = $ttd;
             $allocation->save();
 
+            //setting ttp to allocated
+            $truck_trailer_driver = TruckTrailerDriver::find($ttd);
+            $truck_trailer_driver->activity_status_id = 2;
+            $truck_trailer_driver->save();
             //when trip ends delete truckTrailerDriver record to free the assigned
         }
         return response()->json([
@@ -83,6 +87,6 @@ class AllocationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // SET RESOURCE TO ARCHIVE WHEN TRIP ENDS
     }
 }

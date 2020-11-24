@@ -1,47 +1,87 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <!-- DataTales Example -->
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <div class="d-flex row justify-content-between">
-            <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
+      <b-card no-body>
+        <b-tabs>
+          <b-tab title="Active">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
 
-            <!-- Button trigger modal -->
-            <b-button
-              size="sm"
-              variant="primary"
-              data-toggle="modal"
-              data-target="#exampleModal"
-              v-b-modal.addTruck
-            >
-              Add Truck
-            </b-button>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <b-table
-              class="table-list"
-              responsive
-              bordered
-              striped
-              hover
-              :small="true"
-              :items="trucks"
-              :fields="trucksFields"
-              :head-variant="tableHeadVariant"
-              :sticky-header="true"
-            >
-              <template #cell(actions)="row">
-                <b-button size="sm" @click="info(row.item)" class="mr-1"
-                  >DETAILS
-                </b-button>
-              </template>
-            </b-table>
-          </div>
-        </div>
-      </div>
+                  <!-- Button trigger modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.addTruck
+                  >
+                    Add Truck
+                  </b-button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="trucks"
+                    :fields="trucksFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                  >
+                    <template #cell(actions)="row">
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                        >DETAILS
+                      </b-button>
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+          <b-tab title="In-Active">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
+
+                  <!-- Button trigger modal -->
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="trucks"
+                    :fields="trucksFields"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                  >
+                    <template #cell(actions)="row">
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                        >DETAILS
+                      </b-button>
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+        </b-tabs>
+      </b-card>
 
       <!-- Add Truck Modal -->
       <b-modal
@@ -220,6 +260,7 @@ export default {
         { key: "company.name", label: "Company" },
         { key: "cluster.name", label: "Cluster Name" },
         { key: "truckType.name", label: "Truck Type" },
+        { key: "assignmentStatus.name", label: "Assignment Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -248,6 +289,12 @@ export default {
         this.cluster = data.cluster;
         this.loading = false;
       });
+    },
+    activeTrucks() {
+      return this.trucks.filter((trucks) => trucks.activityStatus.id === 3);
+    },
+    inactiveTrucks() {
+      return this.trucks.filter((trucks) => trucks.activityStatus.id === 4);
     },
     handleCreateTruck(bvModalEvt) {
       // Prevent modal from closing
@@ -300,13 +347,16 @@ export default {
       });
     },
     handleDeleteTruck() {
-      this.deleteTruck();
+      this.deactivateTruck();
     },
-    deleteTruck() {
+    deactivateTruck() {
       axios
-        .delete("http://localhost:8000/api/trucks/" + this.editTruck.content.id)
+        .patch(
+          "http://localhost:8000/api/trucks/" + this.editTruck.content.id,
+          {}
+        )
         .then((res) => {
-          console.log("Truck deleted");
+          console.log("Truck deactivated");
         });
       this.$nextTick(() => {
         this.$bvModal.hide("updateTruckModal");

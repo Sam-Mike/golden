@@ -29,6 +29,7 @@ class AllocationResource extends JsonResource
             'manifestNumber' => $this->manifest_number,
             'fileNumber' => $this->file_number,
             'cargoWeight' => $this->cargo_weight,
+            'activityStatus' => new StatusResource($this->status),
         ];
     }
 }
