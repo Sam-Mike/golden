@@ -39,7 +39,7 @@ class TrailerController extends Controller
         $trailer->registration_number = request('registrationNumber');
         $trailer->trailer_type_id = request('trailerTypeId');
         $trailer->company_id = request('companyId');
-        $trailer->assignment_status_id = 1; //assignment status is free on creation
+        $trailer->activity_status_id = 1; //assignment status is free on creation
         $trailer->save();
         return  response()->json(['success'], 200);
     }
@@ -69,6 +69,7 @@ class TrailerController extends Controller
         $trailer->registration_number = request('registrationNumber');
         $trailer->trailer_type_id = request('trailerTypeId');
         $trailer->company_id = request('companyId');
+        $trailer->activity_status_id = request('activityStatusId');
         $trailer->save();
 
         return  response()->json(['success'], 200);

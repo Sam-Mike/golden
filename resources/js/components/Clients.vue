@@ -88,7 +88,7 @@
                   :filter="tableFilter"
                 >
                   <template #cell(actions)="row">
-                    <b-button size="sm" @click="info(row.item)" class="mr-1"
+                    <b-button size="sm" @click="activateInfo(row.item)" class="mr-1"
                       >DETAILS
                     </b-button>
                   </template>
@@ -195,7 +195,7 @@
         </div>
       </b-modal>
 
-      <!-- Edit Client Modal -->
+      <!-- Update/Deactivate Client Modal -->
       <b-modal
         scrollable
         ok-title="Update"
@@ -213,8 +213,8 @@
           <b-button
             size="sm"
             variant="danger"
-            @click="hide(handleDeleteClient())"
-            >Delete</b-button
+            @click="hide(handleDeactivateClient())"
+            >Deactivate</b-button
           >
           <b-button size="sm" @click="cancel()">Cancel</b-button>
           <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
@@ -286,6 +286,35 @@
             ></b-form-input>
           </b-form-group>
         </form>
+      </b-modal>
+      <!--  Activate Client Modal -->
+      <b-modal
+        scrollable
+        ok-title="Activate"
+        title="Client Info"
+        class="modal fade"
+        button-size="sm"
+        id="activateClientModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        @ok="handleActivateClient"
+      >
+        <div class="modal-body">
+          <h6>Name:</h6>
+          <p>{{this.editClient.content.name}}</p>
+          <h6>Address:</h6>
+          <p>{{this.editClient.content.address}}</p>
+          <h6>Phone Number:</h6>
+          <p>{{this.editClient.content.phoneNumber}}</p>
+          <h6>Contact Person:</h6>
+          <p>{{this.editClient.content.contactPersonName}}</p>
+          <h6>Mobile:</h6>
+          <p>{{this.editClient.content.mobile}}</p>
+          <h6>Email:</h6>
+          <p>{{this.editClient.content.email}}</p>
+        </div>
       </b-modal>
     </b-overlay>
   </div>
@@ -411,19 +440,57 @@ export default {
         this.getClients();
       });
     },
-    handleDeleteClient() {
-      this.deleteClient();
+    handleDeactivateClient() {
+      this.deactivateClient();
     },
-    deleteClient() {
+    deactivateClient() {
       axios
-        .delete(
-          "http://127.0.0.1:8000/api/clients/" + this.updateClient.content.id
+        .patch(
+          "http://127.0.0.1:8000/api/clients/" + this.editClient.content.id,
+          {
+            clientName: this.editClient.content.name,
+            clientAddress: this.editClient.content.address,
+            clientPhoneNumber: this.editClient.content.phoneNumber,
+            clientContactPersonName: this.editClient.content.contactPersonName,
+            clientMobile: this.editClient.content.mobile,
+            clientEmail: this.editClient.content.email,
+            clientActivityStatusId: 4,
+          }
         )
         .then((res) => {
-          console.log("Client Deleted");
+          console.log("Client deactivated");
         });
       this.$nextTick(() => {
         this.$bvModal.hide("updateClientModal");
+        this.getClients();
+      });
+    },
+    activateInfo(item, button) {
+      this.editClient.content = item;
+      this.$root.$emit("bv::show::modal","activateClientModal", button);
+    },
+    handleActivateClient() {
+      this.activateClient();
+    },
+    activateClient() {
+      axios
+        .patch(
+          "http://127.0.0.1:8000/api/clients/" + this.editClient.content.id,
+          {
+            clientName: this.editClient.content.name,
+            clientAddress: this.editClient.content.address,
+            clientPhoneNumber: this.editClient.content.phoneNumber,
+            clientContactPersonName: this.editClient.content.contactPersonName,
+            clientMobile: this.editClient.content.mobile,
+            clientEmail: this.editClient.content.email,
+            clientActivityStatusId: 3,
+          }
+        )
+        .then((res) => {
+          console.log("Client activated");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("activateClientModal");
         this.getClients();
       });
     },

@@ -158,8 +158,8 @@
           <b-button
             size="sm"
             variant="danger"
-            @click="hide(handleDeleteTrailer())"
-            >Delete</b-button
+            @click="hide(handleDeactivateTrailer())"
+            >Deactivate</b-button
           >
           <b-button size="sm" @click="cancel()">Cancel</b-button>
           <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
@@ -221,7 +221,7 @@ export default {
         { key: "registrationNumber" },
         { key: "tlNumber", label: "TL Number", sortable: true },
         { key: "company.name", label: "Company" },
-        { key: "assignmentStatus.name", label: "Assignment Status" },
+        { key: "activityStatus.name", label: "Assignment Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -258,10 +258,15 @@ export default {
         });
     },
     activeTrailers() {
-      return this.trailers.filter((trailers) => trailers.activityStatus.id === 3);
+      return this.trailers.filter(
+        (trailers) =>
+          trailers.activityStatus.id === 1 || trailers.activityStatus.id === 2
+      );
     },
     inactiveTrailers() {
-      return this.trailers.filter((trailers) => trailers.activityStatus.id === 4);
+      return this.trailers.filter(
+        (trailers) => trailers.activityStatus.id === 3
+      );
     },
     handleCreateTrailer(bvModalEvt) {
       // Prevent modal from closing
@@ -299,8 +304,9 @@ export default {
           {
             registrationNumber: this.editTrailer.content.registrationNumber,
             tlNumber: this.editTrailer.content.tlNumber,
-            trailerTypeId: this.editTrailer.content.trailerType.name,
-            companyId: this.editTrailer.content.company,
+            trailerTypeId: this.editTrailer.content.trailerType.id,
+            companyId: this.editTrailer.content.company.id,
+            activityStatusId: this.editTrailer.content.activityStatus.id,
           }
         )
         .then((res) => {
@@ -311,16 +317,23 @@ export default {
         this.getTrailers();
       });
     },
-    handleDeleteTrailer() {
-      this.deleteTrailer();
+    handleDeactivateTrailer() {
+      this.deactivateTrailer();
     },
-    deleteTrailer() {
+    deactivateTrailer() {
       axios
-        .delete(
-          "http://localhost:8000/api/trailers/" + this.editTrailer.content.id
+        .patch(
+          "http://localhost:8000/api/trailers/" + this.editTrailer.content.id,
+          {
+            registrationNumber: this.editTrailer.content.registrationNumber,
+            tlNumber: this.editTrailer.content.tlNumber,
+            trailerTypeId: this.editTrailer.content.trailerType.id,
+            companyId: this.editTrailer.content.company.id,
+            activityStatusId: 3,
+          }
         )
         .then((res) => {
-          console.log("Trailer deleted");
+          console.log("Trailer deactivated");
         });
       this.$nextTick(() => {
         this.$bvModal.hide("updateTrailerModal");

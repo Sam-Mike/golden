@@ -16,7 +16,7 @@
                     variant="primary"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    v-b-modal.addTruck
+                    v-b-modal.addTruckModal
                   >
                     Add Truck
                   </b-button>
@@ -31,7 +31,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="trucks"
+                    :items="activeTrucks()"
                     :fields="trucksFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -65,13 +65,13 @@
                     striped
                     hover
                     :small="true"
-                    :items="trucks"
+                    :items="inactiveTrucks()"
                     :fields="trucksFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                   >
                     <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                      <b-button size="sm" @click="inactiveInfo(row.item)" class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -97,7 +97,7 @@
       >
         <form>
           <div class="form-group">
-            <label for="exampleInputEmail1">Reg Number</label>
+            <label for="">Reg Number</label>
             <input
               type="text"
               class="form-control"
@@ -107,65 +107,41 @@
             />
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Company</label>
-            <select
-              type="text"
-              class="form-control"
+            <label for="">Company</label>
+            <v-select
               v-model="newTruck.companyId"
-              placeholder="Choose company"
-              required
-            >
-              <option
-                v-for="company in company"
-                :key="company.id"
-                :value="company.id"
-              >
-                {{ company.name }}
-              </option>
-            </select>
+              label="name"
+              :options="company"
+              :reduce="(company) => company.id"
+              placeholder="Choose Company"
+            ></v-select>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Cluster</label>
-            <select
-              type="text"
-              class="form-control"
+            <label for="">Cluster</label>
+            <v-select
               v-model="newTruck.clusterId"
+              label="name"
+              :options="cluster"
+              :reduce="(cluster) => cluster.id"
               placeholder="Choose Cluster"
-              required
-            >
-              <option
-                v-for="cluster in cluster"
-                :key="cluster.id"
-                :value="cluster.id"
-              >
-                {{ cluster.name }}
-              </option>
-            </select>
+            ></v-select>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Truck Type</label>
-            <select
-              type="text"
-              class="form-control"
+            <label for="">Truck Type</label>
+            <v-select
               v-model="newTruck.truckTypeId"
+              label="name"
+              :options="truckType"
+              :reduce="(truckType) => truckType.id"
               placeholder="Choose Truck Type"
-              required
-            >
-              <option
-                v-for="truckType in truckType"
-                :key="truckType.id"
-                :value="truckType.id"
-              >
-                {{ truckType.name }}
-              </option>
-            </select>
+            ></v-select>
           </div>
         </form>
       </b-modal>
       <!-- Update Truck Modal -->
       <b-modal
         scrollable
-        title="Add Truck"
+        title="Update Truck"
         ok-title="Save"
         class="modal fade"
         id="updateTruckModal"
@@ -175,9 +151,19 @@
         @ok="handleUpdateTruck"
         v-if="rowDetails == true"
       >
+        <template #modal-footer="{ ok, cancel, hide }">
+          <b-button
+            size="sm"
+            variant="danger"
+            @click="hide(handleDeactivateTruck())"
+            >Deactivate</b-button
+          >
+          <b-button size="sm" @click="cancel()">Cancel</b-button>
+          <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
+        </template>
         <form>
           <div class="form-group">
-            <label for="exampleInputEmail1">Reg Number</label>
+            <label for="">Reg Number</label>
             <input
               type="text"
               class="form-control"
@@ -187,60 +173,61 @@
             />
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Company</label>
-            <select
-              type="text"
-              class="form-control"
-              v-model="editTruck.content.companyId"
-              placeholder="Choose company"
-              required
-            >
-              <option
-                v-for="company in company"
-                :key="company.id"
-                :value="company.id"
-              >
-                {{ company.name }}
-              </option>
-            </select>
+            <label for="">Company</label>
+            <v-select
+              v-model="editTruck.content.company.id"
+              label="name"
+              :options="company"
+              :reduce="(company) => company.id"
+              placeholder="Choose Company"
+            ></v-select>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Cluster</label>
-            <select
-              type="text"
-              class="form-control"
-              v-model="editTruck.content.clusterId"
+            <label for="">Cluster</label>
+            <v-select
+              v-model="editTruck.content.cluster.id"
+              label="name"
+              :options="cluster"
+              :reduce="(cluster) => cluster.id"
               placeholder="Choose Cluster"
-              required
-            >
-              <option
-                v-for="cluster in cluster"
-                :key="cluster.id"
-                :value="cluster.id"
-              >
-                {{ cluster.name }}
-              </option>
-            </select>
+            ></v-select>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Truck Type</label>
-            <select
-              type="text"
-              class="form-control"
-              v-model="editTruck.content.truckType.name"
+            <label for="">Truck Type</label>
+            <v-select
+              v-model="editTruck.content.truckType.id"
+              label="name"
+              :options="truckType"
+              :reduce="(truckType) => truckType.id"
               placeholder="Choose Truck Type"
-              required
-            >
-              <option
-                v-for="truckType in truckType"
-                :key="truckType.id"
-                :value="truckType.id"
-              >
-                {{ truckType.name }}
-              </option>
-            </select>
+            ></v-select>
           </div>
         </form>
+      </b-modal>
+      <!-- Inactive Truck Modal -->
+      <b-modal
+        scrollable
+        title="Add Truck"
+        ok-title="Activate"
+        class="modal fade"
+        id="inactiveTruckModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        @ok="handleActivateTruck"
+        v-if="rowDetails == true"
+      >
+        <h6>Reg Number</h6>
+        <p>{{ editTruck.content.registrationNumber }}</p>
+
+        <h6>Company</h6>
+        <p>{{ editTruck.content.company.name }}</p>
+
+        <h6>Cluster</h6>
+        <p>{{ editTruck.content.cluster.name }}</p>
+
+        <h6>Truck Type</h6>
+        <p>{{ editTruck.content.truckType.name }}</p>
       </b-modal>
     </b-overlay>
   </div>
@@ -260,7 +247,7 @@ export default {
         { key: "company.name", label: "Company" },
         { key: "cluster.name", label: "Cluster Name" },
         { key: "truckType.name", label: "Truck Type" },
-        { key: "assignmentStatus.name", label: "Assignment Status" },
+        { key: "activityStatus.name", label: "Activity Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -291,10 +278,10 @@ export default {
       });
     },
     activeTrucks() {
-      return this.trucks.filter((trucks) => trucks.activityStatus.id === 3);
+      return this.trucks.filter((trucks) => trucks.activityStatus.id === 1||trucks.activityStatus.id ===2);
     },
     inactiveTrucks() {
-      return this.trucks.filter((trucks) => trucks.activityStatus.id === 4);
+      return this.trucks.filter((trucks) => trucks.activityStatus.id === 3);
     },
     handleCreateTruck(bvModalEvt) {
       // Prevent modal from closing
@@ -333,9 +320,10 @@ export default {
           "http://localhost:8000/api/trucks/" + this.editTruck.content.id,
           {
             registrationNumber: this.editTruck.content.registrationNumber,
-            companyId: this.editTruck.content.companyId,
-            clusterId: this.editTruck.content.clusterId,
-            truckTypeId: this.editTruck.content.truckTypeId,
+            companyId: this.editTruck.content.company.id,
+            clusterId: this.editTruck.content.cluster.id,
+            truckTypeId: this.editTruck.content.truckType.id,
+            activityStatusId: this.editTruck.content.activityStatus.id,
           }
         )
         .then((res) => {
@@ -346,20 +334,54 @@ export default {
         this.getTrucks();
       });
     },
-    handleDeleteTruck() {
+    handleDeactivateTruck() {
       this.deactivateTruck();
     },
     deactivateTruck() {
       axios
         .patch(
           "http://localhost:8000/api/trucks/" + this.editTruck.content.id,
-          {}
+          {
+            registrationNumber: this.editTruck.content.registrationNumber,
+            companyId: this.editTruck.content.company.id,
+            clusterId: this.editTruck.content.cluster.id,
+            truckTypeId: this.editTruck.content.truckType.id,
+            activityStatusId: 3,
+          }
         )
         .then((res) => {
           console.log("Truck deactivated");
         });
       this.$nextTick(() => {
         this.$bvModal.hide("updateTruckModal");
+        this.getTrucks();
+      });
+    },
+    inactiveInfo(item, button) {
+      this.editTruck.content = item;
+      this.rowDetails = true;
+      this.$root.$emit("bv::show::modal", "inactiveTruckModal", button);
+    },
+    handleActivateTruck() {
+      this.activateTruck();
+    },
+    activateTruck() {
+      axios
+        .patch(
+          "http://localhost:8000/api/trucks/" + this.editTruck.content.id,
+          {
+            registrationNumber: this.editTruck.content.registrationNumber,
+            companyId: this.editTruck.content.company.id,
+            clusterId: this.editTruck.content.cluster.id,
+            truckTypeId: this.editTruck.content.truckType.id,
+            activityStatusId: 1,
+          }
+        )
+        .then((res) => {
+          console.log("Truck activated");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("inactiveTruckModal");
         this.getTrucks();
       });
     },

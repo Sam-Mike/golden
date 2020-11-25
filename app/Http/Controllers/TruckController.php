@@ -44,7 +44,7 @@ class TruckController extends Controller
         $truck->company_id = request('companyId');
         $truck->cluster_id = request('clusterId');
         $truck->truck_type_id = request('truckTypeId');
-        $truck->assignment_status_id = 1; //setting assignment status to free on creation
+        $truck->activity_status_id = 1; //setting assignment status to free on creation
         $truck->save();
         return  response()->json(['success'], 200);
     }
@@ -74,6 +74,7 @@ class TruckController extends Controller
         $truck->company_id = request('companyId');
         $truck->cluster_id = request('clusterId');
         $truck->truck_type_id = request('truckTypeId');
+        $truck->activity_status_id = request('activityStatusId');
         $truck->save();
         return  response()->json(['success'], 200);
     }

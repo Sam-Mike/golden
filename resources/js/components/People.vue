@@ -224,21 +224,30 @@
           </div>
         </form>
       </b-modal>
-
-      <!-- Update Person Modal -->
+      <!-- Update/Deactivate Person Modal -->
       <b-modal
         scrollable
         class="modal fade"
         id="updatePersonModal"
         tabindex="-1"
         role="dialog"
+        aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        ok-title="Save"
         @ok="handleUpdatePerson"
-        title="Person Info"
+        title="Add Person"
         v-if="rowDetails == true"
       >
-        <form ref="form" @submit.stop.prevent="updatePerson">
+      <template #modal-footer="{ ok, cancel, hide }">
+          <b-button
+            size="sm"
+            variant="danger"
+            @click="hide(handleDeactivatePerson())"
+            >Deactivate</b-button
+          >
+          <b-button size="sm" @click="cancel()">Cancel</b-button>
+          <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
+        </template>
+        <form ref="form" @submit.stop.prevent="createPerson">
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
@@ -302,39 +311,23 @@
 
           <div class="form-group">
             <label for="company">Company</label>
-            <select
-              type="text"
-              class="form-control"
-              v-model="editPerson.content.companyId"
-              placeholder="Choose company"
-              required
-            >
-              <option
-                v-for="company in company"
-                :key="company.id"
-                :value="company.id"
-              >
-                {{ company.name }}
-              </option>
-            </select>
+            <v-select
+              v-model="editPerson.content.company.id"
+              label="name"
+              :options="company"
+              :reduce="(company) => company.id"
+              placeholder="Choose Company"
+            ></v-select>
           </div>
           <div class="form-group">
             <label for="department">Department</label>
-            <select
-              type="text"
-              class="form-control"
-              v-model="editPerson.content.departmentId"
-              placeholder="Choose department"
-              required
-            >
-              <option
-                v-for="department in departments"
-                :key="department.id"
-                :value="department.id"
-              >
-                {{ department.name }}
-              </option>
-            </select>
+            <v-select
+              v-model="editPerson.content.department.id"
+              label="name"
+              :options="departments"
+              :reduce="(departments) => departments.id"
+              placeholder="Choose Department"
+            ></v-select>
           </div>
           <div class="form-group">
             <label for="licenseNumber">License Number</label>
@@ -361,7 +354,7 @@
             <select
               type="text"
               class="form-control"
-              v-model="editPerson.content.licenseClass"
+              v-model="editPerson.content.licenseClass.id"
               placeholder="Choose license class"
               required
             >
@@ -375,6 +368,45 @@
             </select>
           </div>
         </form>
+      </b-modal>
+
+      <!-- Inactive Person Modal -->
+      <b-modal
+        scrollable
+        class="modal fade"
+        id="inactivePersonModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        ok-title="Activate"
+        @ok="handleActivatePerson"
+        title="Person Info"
+        v-if="rowDetails == true"
+      >
+        <div class="modal-body">
+          <h6>First Name</h6>
+          <p>{{ editPerson.content.firstName }}</p>
+          <h6>Middle Name</h6>
+          <p>{{ editPerson.content.middleName }}</p>
+          <h6>Last Name</h6>
+          <p>{{ editPerson.content.lastName }}</p>
+          <h6>Date of Birth</h6>
+          <p>{{ editPerson.content.dob }}</p>
+          <h6>Mobile Number</h6>
+          <p>{{ editPerson.content.mobile }}</p>
+          <h6>Start Date</h6>
+          <p>{{ editPerson.content.startDate }}</p>
+          <h6>Company</h6>
+          <p>{{ editPerson.content.company.name }}</p>
+          <h6>Department</h6>
+          <p>{{ editPerson.content.department.name }}</p>
+          <h6>License Number</h6>
+          <p>{{ editPerson.content.licenseNumber }}</p>
+          <h6>License Issue Date</h6>
+          <p>{{ editPerson.content.licenseIssueDate }}</p>
+          <h6>License Class</h6>
+          <p>{{ editPerson.content.licenseClass.name }}</p>
+        </div>
       </b-modal>
     </b-overlay>
   </div>
@@ -415,7 +447,7 @@ export default {
         departmentId: "",
         licenseNumber: "",
         licenseIssueDate: "",
-        licenseClass: "",
+        licenseClassId: "",
       },
       //remember to activate and deactivate people
       editPerson: {
@@ -443,10 +475,13 @@ export default {
         });
     },
     activePeople() {
-      return this.people.filter((people) => people.activityStatus.id === 3);
+      return this.people.filter(
+        (people) =>
+          people.activityStatus.id === 1 || people.activityStatus.id === 2
+      );
     },
     inactivePeople() {
-      return this.people.filter((people) => people.activityStatus.id === 4);
+      return this.people.filter((people) => people.activityStatus.id === 3);
     },
     handleCreatePerson(bvModalEvt) {
       // Prevent modal from closing
@@ -467,7 +502,7 @@ export default {
           departmentId: this.newPerson.departmentId,
           licenseNumber: this.newPerson.licenseNumber,
           licenseIssueDate: this.newPerson.licenseIssueDate,
-          licenseClass: this.newPerson.licenseClass,
+          licenseClassId: this.newPerson.licenseClassid,
         })
         .then((res) => console.log("Person added"))
         .catch((err) => console.log(err));
@@ -490,19 +525,20 @@ export default {
     updatePerson() {
       axios
         .patch(
-          "http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id,
+          "http://127.0.0.1:8000/api/people/" + this.editPerson.content.id,
           {
-            firstName: this.updatePerson.content.firstName,
-            middleName: this.updatePerson.content.middleName,
-            lastName: this.updatePerson.content.lastName,
-            dob: this.updatePerson.content.dob,
-            mobile: this.updatePerson.content.mobile,
-            startDate: this.updatePerson.content.startDate,
-            companyId: this.updatePerson.content.companyId,
-            departmentId: this.updatePerson.content.departmentId,
-            licenseNumber: this.updatePerson.content.licenseNumber,
-            licenseIssueDate: this.updatePerson.content.licenseIssueDate,
-            licenseClass: this.updatePerson.content.licenseClass,
+            firstName: this.editPerson.content.firstName,
+            middleName: this.editPerson.content.middleName,
+            lastName: this.editPerson.content.lastName,
+            dob: this.editPerson.content.dob,
+            mobile: this.editPerson.content.mobile,
+            startDate: this.editPerson.content.startDate,
+            companyId: this.editPerson.content.company.id,
+            departmentId: this.editPerson.content.department.id,
+            licenseNumber: this.editPerson.content.licenseNumber,
+            licenseIssueDate: this.editPerson.content.licenseIssueDate,
+            licenseClassId: this.editPerson.content.licenseClass.id,
+            activityStatus: this.editPerson.content.activityStatus.id,
           }
         )
         .then((res) => {
@@ -513,19 +549,68 @@ export default {
         this.getPeople();
       });
     },
-    handleDeletePerson() {
-      this.deletePerson();
+    handleDeactivatePerson() {
+      this.deactivatePerson();
     },
-    deletePerson() {
+    deactivatePerson() {
       axios
-        .delete(
-          "http://127.0.0.1:8000/api/people/" + this.updatePerson.content.id
+        .patch(
+          "http://127.0.0.1:8000/api/people/" + this.editPerson.content.id,
+          {
+            firstName: this.editPerson.content.firstName,
+            middleName: this.editPerson.content.middleName,
+            lastName: this.editPerson.content.lastName,
+            dob: this.editPerson.content.dob,
+            mobile: this.editPerson.content.mobile,
+            startDate: this.editPerson.content.startDate,
+            companyId: this.editPerson.content.company.id,
+            departmentId: this.editPerson.content.department.id,
+            licenseNumber: this.editPerson.content.licenseNumber,
+            licenseIssueDate: this.editPerson.content.licenseIssueDate,
+            licenseClassId: this.editPerson.content.licenseClass.id,
+            activityStatus: 3,
+          }
         )
         .then((res) => {
-          console.log("Person Deleted");
+          console.log("Person Deactivated");
         });
       this.$nextTick(() => {
         this.$bvModal.hide("updatePersonModal");
+        this.getPeople();
+      });
+    },
+    inactiveInfo(item, button) {
+      this.editPerson.content = item;
+      this.rowDetails = true;
+      this.$root.$emit("bv::show::modal", "inactivePersonModal", button);
+    },
+    handleActivatePerson() {
+      this.activatePerson();
+    },
+    activatePerson() {
+      axios
+        .patch(
+          "http://127.0.0.1:8000/api/people/" + this.editPerson.content.id,
+          {
+            firstName: this.editPerson.content.firstName,
+            middleName: this.editPerson.content.middleName,
+            lastName: this.editPerson.content.lastName,
+            dob: this.editPerson.content.dob,
+            mobile: this.editPerson.content.mobile,
+            startDate: this.editPerson.content.startDate,
+            companyId: this.editPerson.content.company.id,
+            departmentId: this.editPerson.content.department.id,
+            licenseNumber: this.editPerson.content.licenseNumber,
+            licenseIssueDate: this.editPerson.content.licenseIssueDate,
+            licenseClassId: this.editPerson.content.licenseClass.id,
+            activityStatus: 1,
+          }
+        )
+        .then((res) => {
+          console.log("Person Activated");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("inactivePersonModal");
         this.getPeople();
       });
     },

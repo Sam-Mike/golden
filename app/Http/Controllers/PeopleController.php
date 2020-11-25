@@ -48,8 +48,8 @@ class PeopleController extends Controller
         $people->department_id = request('departmentId');
         $people->license_number = request('licenseNumber');
         $people->license_issue_date = request('licenseIssueDate');
-        $people->license_class_id = request('licenseClass');
-        $people->assignment_status_id = 1; //assignment status is free on creation
+        $people->license_class_id = request('licenseClassId');
+        $people->activity_status_id = 1; //assignment status is active on creation
         $people->save();
         return  response()->json(['success'], 200);
     }
@@ -85,7 +85,8 @@ class PeopleController extends Controller
         $people->department_id = request('departmentId');
         $people->license_number = request('licenseNumber');
         $people->license_issue_date = request('licenseIssueDate');
-        $people->license_class_id = request('licenseClass');
+        $people->license_class_id = request('licenseClassId');
+        $people->activity_status_id = request('activityStatusId');
         $people->save();
 
         return response()->json(["Person updated successfully"], 200);
