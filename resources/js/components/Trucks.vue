@@ -71,7 +71,10 @@
                     :sticky-header="true"
                   >
                     <template #cell(actions)="row">
-                      <b-button size="sm" @click="inactiveInfo(row.item)" class="mr-1"
+                      <b-button
+                        size="sm"
+                        @click="inactiveInfo(row.item)"
+                        class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -87,12 +90,13 @@
       <b-modal
         scrollable
         title="Add Truck"
-        ok-title="Save"
+        button-size="sm"
         class="modal fade"
         id="addTruckModal"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
+        ok-title="Save"
         @ok="handleCreateTruck"
       >
         <form>
@@ -278,7 +282,10 @@ export default {
       });
     },
     activeTrucks() {
-      return this.trucks.filter((trucks) => trucks.activityStatus.id === 1||trucks.activityStatus.id ===2);
+      return this.trucks.filter(
+        (trucks) =>
+          trucks.activityStatus.id === 1 || trucks.activityStatus.id === 2 //or workshop
+      );
     },
     inactiveTrucks() {
       return this.trucks.filter((trucks) => trucks.activityStatus.id === 3);

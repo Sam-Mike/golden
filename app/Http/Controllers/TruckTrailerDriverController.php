@@ -53,22 +53,22 @@ class TruckTrailerDriverController extends Controller
         $truck_trailer_driver->truck_id = request('truckId');
         $truck_trailer_driver->trailer_id = request('trailerId');
         $truck_trailer_driver->driver_id = request('driverId');
-        $truck_trailer_driver->assignment_status_id = 1; //assignment is initially free until allocation sent
+        $truck_trailer_driver->activity_status_id = 1; //assignment is initially free until allocation sent
         $truck_trailer_driver->save();
 
         //Changing truck assignment status id to ASSIGNED
         $truck = Truck::find($truck_trailer_driver->truck_id);
-        $truck->assignment_status_id = 2;
+        $truck->activity_status_id = 2;
         $truck->save();
 
         //Changing trailer assignment status id to ASSIGNED
         $trailer = Trailer::find($truck_trailer_driver->trailer_id);
-        $trailer->assignment_status_id = 2;
+        $trailer->activity_status_id = 2;
         $trailer->save();
 
         //Changing people assignment status id to ASSIGNED
         $people = People::find($truck_trailer_driver->driver_id);
-        $people->assignment_status_id = 2;
+        $people->activity_status_id = 2;
         $people->save();
         return  response()->json([
             'success'
@@ -95,11 +95,7 @@ class TruckTrailerDriverController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $truck_trailer_driver = TruckTrailerDriver::findOrFail($id);
-        $truck_trailer_driver->truck_id = request('truckId');
-        $truck_trailer_driver->trailer_id = request('trailerId');
-        $truck_trailer_driver->driver_id = request('driverId');
-        return response()->json(["TruckTrailerDriver deleted successfully"]);
+        //
     }
 
     /**
@@ -111,22 +107,22 @@ class TruckTrailerDriverController extends Controller
     public function destroy($id)
     {
         $truck_trailer_driver = TruckTrailerDriver::findOrFail($id);
+        $truck_trailer_driver->delete();
 
-        //Changing truck assignment status id to FREE
+        //Changing truck activity status id to FREE
         $truck = Truck::find($truck_trailer_driver->truck_id);
-        $truck->assignment_status_id = 1;
+        $truck->activity_status_id = 1;
         $truck->save();
 
-        //Changing trailer assignment status id to FREE
+        //Changing trailer activity status id to FREE
         $trailer = Trailer::find($truck_trailer_driver->trailer_id);
-        $trailer->assignment_status_id = 1;
+        $trailer->activity_status_id = 1;
         $trailer->save();
 
-        //Changing people assignment status id to FREE
+        //Changing people activity status id to FREE
         $people = People::find($truck_trailer_driver->driver_id);
-        $people->assignment_status_id = 1;
+        $people->activity_status_id = 1;
         $people->save();
-        $truck_trailer_driver->delete();
         
         return response()->json(["TruckTrailerDriver deleted successfully"]);
     }

@@ -3,6 +3,7 @@
     <b-overlay :show="loading">
       <b-card no-body>
         <b-tabs>
+          <!-- Active People -->
           <b-tab title="Active">
             <!-- DataTales  -->
             <div class="card shadow mb-4">
@@ -14,8 +15,6 @@
                     size="sm"
                     variant="primary"
                     v-b-modal.addPersonModal
-                    data-toggle="modal"
-                    data-target="#exampleModal"
                   >
                     Add Person
                   </b-button>
@@ -35,20 +34,21 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                   >
-                    <template #cell(fullname)="data">
+                    <template #cell(Name)="data">
                       {{ data.item.firstName }} {{ data.item.middleName }}
                       {{ data.item.lastName }}
                     </template>
                     <template #cell(actions)="row">
                       <b-button size="sm" @click="info(row.item)" class="mr-1"
-                        >DETAILS</b-button
-                      >
+                        >DETAILS
+                      </b-button>
                     </template>
                   </b-table>
                 </div>
               </div>
             </div>
           </b-tab>
+          <!-- Inactive People -->
           <b-tab title="In-active">
             <!-- DataTales  -->
             <div class="card shadow mb-4">
@@ -72,12 +72,15 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                   >
-                    <template #cell(fullname)="data">
+                    <template #cell(Name)="data">
                       {{ data.item.firstName }} {{ data.item.middleName }}
                       {{ data.item.lastName }}
                     </template>
                     <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                      <b-button
+                        size="sm"
+                        @click="inactiveInfo(row.item)"
+                        class="mr-1"
                         >DETAILS</b-button
                       >
                     </template>
@@ -96,11 +99,11 @@
         id="addPersonModal"
         tabindex="-1"
         role="dialog"
-        aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
         @ok="handleCreatePerson"
         title="Add Person"
+        button-size="sm"
       >
         <form ref="form" @submit.stop.prevent="createPerson">
           <div class="form-group">
@@ -231,23 +234,17 @@
         id="updatePersonModal"
         tabindex="-1"
         role="dialog"
-        aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         @ok="handleUpdatePerson"
-        title="Add Person"
+        title="Update Person"
         v-if="rowDetails == true"
       >
-      <template #modal-footer="{ ok, cancel, hide }">
-          <b-button
-            size="sm"
-            variant="danger"
-            @click="hide(handleDeactivatePerson())"
-            >Deactivate</b-button
-          >
-          <b-button size="sm" @click="cancel()">Cancel</b-button>
-          <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
-        </template>
-        <form ref="form" @submit.stop.prevent="createPerson">
+      <template #modal-footer="{ok, cancel, hide}">
+        <b-button size="sm" variant="danger" @click="hide(handleDeactivatePerson())">Deactivate</b-button>
+        <b-button size="sm" variant="" @click="cancel">Cancel</b-button>
+        <b-button size="sm" variant="primary" @click="ok">Update</b-button>
+      </template>
+        <form ref="form" @submit.stop.prevent="updatePerson">
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
@@ -351,21 +348,7 @@
           </div>
           <div class="form-group">
             <label for="licenseClass">License Class</label>
-            <select
-              type="text"
-              class="form-control"
-              v-model="editPerson.content.licenseClass.id"
-              placeholder="Choose license class"
-              required
-            >
-              <option
-                v-for="licenseClass in licenseClasses"
-                :key="licenseClass.id"
-                :value="licenseClass.id"
-              >
-                {{ licenseClass.name }}
-              </option>
-            </select>
+            
           </div>
         </form>
       </b-modal>
@@ -373,6 +356,7 @@
       <!-- Inactive Person Modal -->
       <b-modal
         scrollable
+        button-size="sm"
         class="modal fade"
         id="inactivePersonModal"
         tabindex="-1"
@@ -405,7 +389,6 @@
           <h6>License Issue Date</h6>
           <p>{{ editPerson.content.licenseIssueDate }}</p>
           <h6>License Class</h6>
-          <p>{{ editPerson.content.licenseClass.name }}</p>
         </div>
       </b-modal>
     </b-overlay>
@@ -419,7 +402,7 @@ export default {
       loading: false,
       people: [],
       peopleFields: [
-        { key: "fullName", label: "Full Name" },
+        { key: "Name", label: "Name" },
         { key: "dob" },
         { key: "mobile" },
         { key: "company.name", label: "Company", sortable: true },
@@ -449,7 +432,6 @@ export default {
         licenseIssueDate: "",
         licenseClassId: "",
       },
-      //remember to activate and deactivate people
       editPerson: {
         id: "updatePersonModal",
         content: "",
@@ -502,7 +484,7 @@ export default {
           departmentId: this.newPerson.departmentId,
           licenseNumber: this.newPerson.licenseNumber,
           licenseIssueDate: this.newPerson.licenseIssueDate,
-          licenseClassId: this.newPerson.licenseClassid,
+          //licenseClassId: this.newPerson.licenseClassid,
         })
         .then((res) => console.log("Person added"))
         .catch((err) => console.log(err));
@@ -537,8 +519,8 @@ export default {
             departmentId: this.editPerson.content.department.id,
             licenseNumber: this.editPerson.content.licenseNumber,
             licenseIssueDate: this.editPerson.content.licenseIssueDate,
-            licenseClassId: this.editPerson.content.licenseClass.id,
-            activityStatus: this.editPerson.content.activityStatus.id,
+            //licenseClassId: this.editPerson.content.licenseClass.id,
+            activityStatusId: this.editPerson.content.activityStatus.id,
           }
         )
         .then((res) => {
@@ -567,7 +549,7 @@ export default {
             departmentId: this.editPerson.content.department.id,
             licenseNumber: this.editPerson.content.licenseNumber,
             licenseIssueDate: this.editPerson.content.licenseIssueDate,
-            licenseClassId: this.editPerson.content.licenseClass.id,
+            //licenseClassId: this.editPerson.content.licenseClass.id,
             activityStatus: 3,
           }
         )
@@ -602,7 +584,7 @@ export default {
             departmentId: this.editPerson.content.department.id,
             licenseNumber: this.editPerson.content.licenseNumber,
             licenseIssueDate: this.editPerson.content.licenseIssueDate,
-            licenseClassId: this.editPerson.content.licenseClass.id,
+            //licenseClassId: this.editPerson.content.licenseClass.id,
             activityStatus: 1,
           }
         )

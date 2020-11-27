@@ -3,7 +3,7 @@ import People from './components/People';
 import Trailers from './components/Trailers';
 import Trucks from './components/Trucks';
 import Allocations from './components/Allocations';
-import TruckTrailerDriver from './components/TruckTrailerDriver';
+import Trips from './components/Trips';
 
 export default {
     routes: [
@@ -25,11 +25,11 @@ export default {
         },
         {
             path: '/truck_trailer_driver',
-            component: TruckTrailerDriver
+            component: Allocations
         },
         {
             path: '/allocations',
-            component: Allocations
+            component: Trips
         }
     ]
 }

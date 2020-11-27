@@ -88,7 +88,10 @@
                   :filter="tableFilter"
                 >
                   <template #cell(actions)="row">
-                    <b-button size="sm" @click="activateInfo(row.item)" class="mr-1"
+                    <b-button
+                      size="sm"
+                      @click="inactiveInfo(row.item)"
+                      class="mr-1"
                       >DETAILS
                     </b-button>
                   </template>
@@ -145,7 +148,7 @@
                   invalid-feedback="Phone number is required"
                 >
                   <b-form-input
-                    type="number"
+                    type="tel"
                     class="form-control"
                     v-model="newClient.phoneNumber"
                     placeholder="Enter client's phone number"
@@ -169,7 +172,7 @@
                   invalid-feedback="Mobile number is required"
                 >
                   <b-form-input
-                    type="number"
+                    type="tel"
                     class="form-control"
                     v-model="newClient.mobile"
                     placeholder="Enter mobile number"
@@ -303,17 +306,17 @@
       >
         <div class="modal-body">
           <h6>Name:</h6>
-          <p>{{this.editClient.content.name}}</p>
+          <p>{{ this.editClient.content.name }}</p>
           <h6>Address:</h6>
-          <p>{{this.editClient.content.address}}</p>
+          <p>{{ this.editClient.content.address }}</p>
           <h6>Phone Number:</h6>
-          <p>{{this.editClient.content.phoneNumber}}</p>
+          <p>{{ this.editClient.content.phoneNumber }}</p>
           <h6>Contact Person:</h6>
-          <p>{{this.editClient.content.contactPersonName}}</p>
+          <p>{{ this.editClient.content.contactPersonName }}</p>
           <h6>Mobile:</h6>
-          <p>{{this.editClient.content.mobile}}</p>
+          <p>{{ this.editClient.content.mobile }}</p>
           <h6>Email:</h6>
-          <p>{{this.editClient.content.email}}</p>
+          <p>{{ this.editClient.content.email }}</p>
         </div>
       </b-modal>
     </b-overlay>
@@ -380,10 +383,13 @@ export default {
         .finally(() => (this.loading = false));
     },
     activeClients() {
-      return this.clients.filter((clients) => clients.activityStatus.id === 3);
+      return this.clients.filter(
+        (clients) =>
+          clients.activityStatus.id === 1 || clients.activityStatus.id === 2
+      );
     },
     inactiveClients() {
-      return this.clients.filter((clients) => clients.activityStatus.id === 4);
+      return this.clients.filter((clients) => clients.activityStatus.id === 3);
     },
     handleCreateClient(bvModalEvt) {
       // Prevent modal from closing
@@ -465,9 +471,9 @@ export default {
         this.getClients();
       });
     },
-    activateInfo(item, button) {
+    inactiveInfo(item, button) {
       this.editClient.content = item;
-      this.$root.$emit("bv::show::modal","activateClientModal", button);
+      this.$root.$emit("bv::show::modal", "activateClientModal", button);
     },
     handleActivateClient() {
       this.activateClient();

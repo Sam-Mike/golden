@@ -72,7 +72,10 @@
                     :sticky-header="true"
                   >
                     <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                      <b-button
+                        size="sm"
+                        @click="inactiveInfo(row.item)"
+                        class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -88,13 +91,14 @@
       <b-modal
         scrollable
         title="Add Trailer"
-        ok-title="Save"
         class="modal fade"
+        button-size="sm"
         id="addTrailerModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
+        ok-title="Save"
         @ok="handleCreateTrailer"
       >
         <form ref="forms" @submit.stop.prevent="createTrailer">
@@ -207,6 +211,31 @@
           </div>
         </form>
       </b-modal>
+      <!-- Inactive Trailer Modal -->
+      <b-modal
+        scrollable
+        title="Trailer Info"
+        ok-title="Activate"
+        class="modal fade"
+        id="inactiveTrailerModal"
+        tabindex="-1"
+        role="dialog"
+        aria-hidden="true"
+        @ok="handleActivateTrailer"
+        v-if="rowDetails == true"
+      >
+        <h6>Registration Number</h6>
+        <p>{{ editTrailer.content.registrationNumber }}</p>
+
+        <h6>TL Number</h6>
+        <p>{{ editTrailer.content.tlNumber }}</p>
+
+        <h6>Trailer Type</h6>
+        <p>{{ editTrailer.content.trailerType.name }}</p>
+
+        <h6>Company</h6>
+        <p>{{ editTrailer.content.company.name }}</p>
+      </b-modal>
     </b-overlay>
   </div>
 </template>
@@ -260,7 +289,7 @@ export default {
     activeTrailers() {
       return this.trailers.filter(
         (trailers) =>
-          trailers.activityStatus.id === 1 || trailers.activityStatus.id === 2
+          trailers.activityStatus.id === 1 || trailers.activityStatus.id === 2 //or workshop
       );
     },
     inactiveTrailers() {
@@ -337,6 +366,34 @@ export default {
         });
       this.$nextTick(() => {
         this.$bvModal.hide("updateTrailerModal");
+        this.getTrailers();
+      });
+    },
+    inactiveInfo(item, button) {
+      this.editTrailer.content = item;
+      this.rowDetails = true;
+      this.$root.$emit("bv::show::modal", "inactiveTrailerModal", button);
+    },
+    handleActivateTrailer() {
+      this.activateTrailer();
+    },
+    activateTrailer() {
+      axios
+        .patch(
+          "http://localhost:8000/api/trailers/" + this.editTrailer.content.id,
+          {
+            registrationNumber: this.editTrailer.content.registrationNumber,
+            tlNumber: this.editTrailer.content.tlNumber,
+            trailerTypeId: this.editTrailer.content.trailerType.id,
+            companyId: this.editTrailer.content.company.id,
+            activityStatusId: 1,
+          }
+        )
+        .then((res) => {
+          console.log("Trailer activated");
+        });
+      this.$nextTick(() => {
+        this.$bvModal.hide("inactiveTrailerModal");
         this.getTrailers();
       });
     },

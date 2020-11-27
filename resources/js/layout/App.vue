@@ -41,10 +41,10 @@
                         class="dropdown-item"
                         to="/truck_trailer_driver"
                       >
-                        TruckTrailerDrivers
+                        Allocations
                       </router-link>
                       <router-link class="dropdown-item" to="/allocations"
-                        >Allocations
+                        >Trips
                       </router-link>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Documents</a>
