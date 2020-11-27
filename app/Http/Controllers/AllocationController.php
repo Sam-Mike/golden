@@ -2,12 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AllocationResource;
 use Illuminate\Http\Request;
 use App\Models\Allocation;
-use App\Models\TruckTrailerDriver;
-use App\Http\Resources\AllocationResource;
-
-
+use App\Models\People;
+use App\Models\Truck;
+use App\Models\Trailer;
+use App\Models\Client;
+use App\Models\Company;
+use App\Models\Cargo;
+use App\Models\Location;
+use App\Http\Resources\PeopleResource;
+use App\Http\Resources\TruckResource;
+use App\Http\Resources\TrailerResource;
+use App\Http\Resources\CompanyResource;
+use App\Http\Resources\ClientResource;
+use App\Http\Resources\CargoResource;
+use App\Http\Resources\LocationResource;
 
 class AllocationController extends Controller
 {
@@ -18,7 +29,16 @@ class AllocationController extends Controller
      */
     public function index()
     {
-        return ['allocations' => AllocationResource::collection(Allocation::all())];
+        return [
+            "allocations" => AllocationResource::collection(Allocation::all()),
+            "trucks" => TruckResource::collection(Truck::all()),
+            "trailers" => TrailerResource::collection(Trailer::all()),
+            "drivers" => PeopleResource::collection(People::all()), //use where clause for drivers only among people
+            "clients" => ClientResource::collection(Client::all()),
+            "company" => CompanyResource::collection(Company::all()),
+            "cargo" => CargoResource::collection(Cargo::all()),
+            "locations" => LocationResource::collection(Location::all()),
+        ];
     }
 
     /**
@@ -30,30 +50,32 @@ class AllocationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'clientId' => 'required',
-            'cargoId' => 'required',
-            'destinationId' => 'required',
-            'truckTrailerDriverList' => 'required'
+            'truckId' => 'required',
+            'trailerId' => 'required',
+            'driverId' => 'required',
         ]);
-        $ttds = request('truckTrailerDriverList');
 
-        foreach ($ttds as $ttd) {
-            $allocation = new Allocation();
-            $allocation->client_id = request('clientId');
-            $allocation->cargo_id = request('cargoId');
-            $allocation->destination_id = request('destinationId');
-            $allocation->truck_trailer_driver_id = $ttd;
-            $allocation->save();
+        $allocation = new Allocation();
+        $allocation->truck_id = request('truckId');
+        $allocation->trailer_id = request('trialerId');
+        $allocation->driver_id = request('driverId');
+        $allocation->activity_status_id = 1;
+        $allocation->save();
 
-            //setting ttp to allocated
-            $truck_trailer_driver = TruckTrailerDriver::find($ttd);
-            $truck_trailer_driver->activity_status_id = 2;
-            $truck_trailer_driver->save();
-            //when trip ends delete truckTrailerDriver record to free the assigned
-        }
-        return response()->json([
-            'success'
-        ], 200);
+        //changing truck, trailer and driver activity status to ALLOCATED
+        $truck = Truck::find($allocation->truck_id);
+        $truck->activity_status_id = 2;
+        $truck->save();
+
+        $trailer = Trailer::find($allocation->trailer_id);
+        $trailer->activity_status_id = 2;
+        $trailer->save();
+
+        $driver = People::find($allocation->driver_id);
+        $driver->activity_status_id = 2;
+        $driver->save();
+
+        return response()->json(['allocation created successfully']);
     }
 
     /**
@@ -87,6 +109,22 @@ class AllocationController extends Controller
      */
     public function destroy($id)
     {
-        // SET RESOURCE TO ARCHIVE WHEN TRIP ENDS
+        $allocation = Allocation::findOrFail($id);
+        $allocation->delete();
+
+        //changing truck, trailer and driver activity status to FREE
+        $truck = Truck::find($allocation->truck_id);
+        $truck->activity_status_id = 1;
+        $truck->save();
+
+        $trailer = Trailer::find($allocation->trailer_id);
+        $trailer->activity_status_id = 1;
+        $trailer->save();
+
+        $driver = People::find($allocation->driver_id);
+        $driver->activity_status_id = 1;
+        $driver->save();
+
+        return response()->json(['allocation deleted successfully']);
     }
 }

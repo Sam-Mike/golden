@@ -16,19 +16,9 @@ class AllocationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'client' => new ClientResource($this->client),
-            'cargo' => new CargoResource($this->cargo),
-            'destination' => new LocationResource($this->location),
-            'truckTrailerDriver' => new TruckTrailerDriverResource($this->truck_trailer_driver),
-            'loadingDate' => $this->loading_date,
-            'dispatchDate' => $this->dispatch_date,
-            'etaSite' => $this->eta_site,
-            'routeCode' => $this->route_code,
-            'tripStatus' => new StatusResource($this->status),
-            'currentLocation' => $this->current_location,
-            'manifestNumber' => $this->manifest_number,
-            'fileNumber' => $this->file_number,
-            'cargoWeight' => $this->cargo_weight,
+            'truck' => new TruckResource($this->trucks),
+            'trailer' => new TrailerResource($this->trailers),
+            'driver' => new PeopleResource($this->people),
             'activityStatus' => new StatusResource($this->status),
         ];
     }

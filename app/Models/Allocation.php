@@ -9,36 +9,26 @@ class Allocation extends Model
 {
     use HasFactory;
 
-    protected $table = 'allocation';
-    protected $fillable = [
-        'loading_date',
-        'dispatch_date',
-        'eta_site',
-        'route_code',
-        'current_location',
-        'manifest_number',
-        'file_number',
-        'cargo_weight'
-    ];
+    protected $table = "allocation";
 
-    public function client()
+    public function trucks()
     {
-        return $this->belongsTo('App\Models\Client', 'client_id', 'id');
+        return $this->belongsTo('App\Models\Truck', 'truck_id', 'id');
     }
-    public function cargo()
+    public function trailers()
     {
-        return $this->belongsTo('App\Models\Cargo', 'cargo_id', 'id');
+        return $this->belongsTo('App\Models\Trailer', 'trailer_id', 'id');
     }
-    public function location()
+    public function people()
     {
-        return $this->belongsTo('App\Models\Location', 'destination_id', 'id');
-    }
-    public function truck_trailer_driver()
-    {
-        return $this->belongsTo('App\Models\TruckTrailerDriver', 'truck_trailer_driver_id', 'id');
+        return $this->belongsTo('App\Models\People', 'driver_id');
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'trip_status_id');
+        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+    }
+    public function trips()
+    {
+        return $this->hasMany('App\Models\Trips');
     }
 }

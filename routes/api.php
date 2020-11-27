@@ -2,12 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\ClientController;
-use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\TrailerController;
-use App\Http\Controllers\TruckTrailerDriverController;
+use App\Http\Controllers\PeopleController;
+use App\Http\Controllers\AllocationController;
+use App\Http\Controllers\TripController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -30,8 +30,8 @@ Route::apiResources([
     'people'=> PeopleController::class,
     'trucks'=> TruckController::class,
     'trailers'=> TrailerController::class,
-    'truckTrailerDriver'=> TruckTrailerDriverController::class,
     'allocations'=> AllocationController::class,
+    'trips'=> TripController::class,
     ]);
 
 // Route::apiResource('people', [PeopleController::class]);

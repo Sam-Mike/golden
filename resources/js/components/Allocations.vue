@@ -10,15 +10,15 @@
             type="button"
             style="float: right"
             class="btn btn-primary"
-            @click="sendAllocationData()"
+            @click="sendTripData()"
           >
-            Create Allocation
+            Create Trip
           </b-button>
           <div class="row">
             <div class="input-group mb-1 col">
               <div class="col-md-8">
                 <v-select
-                  v-model="newAllocation.clientId"
+                  v-model="newTrip.clientId"
                   label="name"
                   :options="clients"
                   :reduce="(clients) => clients.id"
@@ -29,7 +29,7 @@
             <div class="input-group mb-1 col">
               <div class="col-md-8">
                 <v-select
-                  v-model="newAllocation.cargoId"
+                  v-model="newTrip.cargoId"
                   label="name"
                   :options="cargo"
                   :reduce="(cargo) => cargo.id"
@@ -40,7 +40,7 @@
             <div class="input-group mb-1 col">
               <div class="col-md-8">
                 <v-select
-                  v-model="newAllocation.destinationLocationId"
+                  v-model="newTrip.destinationLocationId"
                   label="name"
                   :options="locations"
                   :reduce="(locations) => locations.id"
@@ -65,9 +65,9 @@
                       variant="primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
-                      v-b-modal.addCoachTruckTrailerDriverModal
+                      v-b-modal.addCoachAllocationModal
                     >
-                      Add TruckTrailerDriver
+                      Add Allocation
                     </b-button>
                   </div>
                 </div>
@@ -81,14 +81,14 @@
                       striped
                       hover
                       :small="true"
-                      :items="coachTruckTrailerDrivers()"
-                      :fields="truckTrailerDriversFields"
+                      :items="coachAllocations()"
+                      :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
                     >
                       <template #cell(select)="methods"
                         ><b-form-checkbox
-                          v-model="newAllocation.checkedTruckTrailerDrivers"
+                          v-model="newTrip.checkedAllocations"
                           :value="methods.item.id"
                           unchecked-value=""
                         ></b-form-checkbox
@@ -101,7 +101,7 @@
                       <template #cell(actions)="row">
                         <b-button
                           size="sm"
-                          @click="truckTrailerDriverInfo(row.item)"
+                          @click="allocationInfo(row.item)"
                           class="mr-1"
                           >DETAILS
                         </b-button>
@@ -123,9 +123,9 @@
                       size="sm"
                       variant="primary"
                       data-toggle="modal"
-                      v-b-modal.addFleetTruckTrailerDriverModal
+                      v-b-modal.addFleetAllocationModal
                     >
-                      Add TruckTrailerDriver
+                      Add Allocation
                     </b-button>
                   </div>
                 </div>
@@ -138,14 +138,14 @@
                       striped
                       hover
                       :small="true"
-                      :items="fleetTruckTrailerDrivers()"
-                      :fields="truckTrailerDriversFields"
+                      :items="fleetAllocations()"
+                      :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
                     >
                       <template #cell(select)="methods"
                         ><b-form-checkbox
-                          v-model="newAllocation.checkedTruckTrailerDrivers"
+                          v-model="newTrip.checkedAllocations"
                           :value="methods.item.id"
                           unchecked-value=""
                         ></b-form-checkbox
@@ -158,7 +158,7 @@
                       <template #cell(actions)="row">
                         <b-button
                           size="sm"
-                          @click="truckTrailerDriverInfo(row.item)"
+                          @click="allocationInfo(row.item)"
                           class="mr-1"
                           >DETAILS
                         </b-button>
@@ -180,9 +180,9 @@
                       size="sm"
                       variant="primary"
                       data-toggle="modal"
-                      v-b-modal.addWheelsTruckTrailerDriverModal
+                      v-b-modal.addWheelsAllocationModal
                     >
-                      Add TruckTrailerDriver
+                      Add Allocation
                     </b-button>
                   </div>
                 </div>
@@ -195,14 +195,14 @@
                       striped
                       hover
                       :small="true"
-                      :items="wheelsTruckTrailerDrivers()"
-                      :fields="truckTrailerDriversFields"
+                      :items="wheelsAllocations()"
+                      :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
                     >
                       <template #cell(select)="methods"
                         ><b-form-checkbox
-                          v-model="newAllocation.checkedTruckTrailerDrivers"
+                          v-model="newTrip.checkedAllocations"
                           :value="methods.item.id"
                           unchecked-value=""
                         ></b-form-checkbox
@@ -215,7 +215,7 @@
                       <template #cell(actions)="row">
                         <b-button
                           size="sm"
-                          @click="truckTrailerDriverInfo(row.item)"
+                          @click="allocationInfo(row.item)"
                           class="mr-1"
                           >DETAILS
                         </b-button>
@@ -230,27 +230,27 @@
       </div>
       <!-- Allocation Tabs -->
 
-      <!-- Modal to create TruckTrailerDriver combination for COACH TRUCKS -->
+      <!-- Modal to create Allocation combination for COACH TRUCKS -->
       <b-modal
         class="modal fade"
         button-size="sm"
-        id="addCoachTruckTrailerDriverModal"
+        id="addCoachAllocationModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
         title=" New Truck Trailer Driver"
-        @ok="handleCreateTruckTrailerDriver"
+        @ok="handleCreateAllocation"
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
+              <form ref="form" @submit.stop.prevent="submitAllocation">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.truckId"
+                    v-model="newAllocation.truckId"
                     label="registrationNumber"
                     :options="coachTrucks()"
                     :reduce="(coachTrucks) => coachTrucks.id"
@@ -260,7 +260,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Trailer</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.trailerId"
+                    v-model="newAllocation.trailerId"
                     label="tlNumber"
                     :options="trailers"
                     :reduce="(trailers) => trailers.id"
@@ -270,7 +270,7 @@
                 <div class="form-group">
                   <label for="search">Driver</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.driverId"
+                    v-model="newAllocation.driverId"
                     :options="people"
                     label="firstName"
                     :filterBy="peopleSearch"
@@ -290,27 +290,27 @@
         </div>
       </b-modal>
 
-      <!-- Modal to create TruckTrailerDriver combination for FLEET TRUCKS -->
+      <!-- Modal to create Allocation combination for FLEET TRUCKS -->
       <b-modal
         class="modal fade"
         button-size="sm"
-        id="addFleetTruckTrailerDriverModal"
+        id="addFleetAllocationModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
         title=" New Truck Trailer Driver"
-        @ok="handleCreateTruckTrailerDriver"
+        @ok="handleCreateAllocation"
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="submitTruckTrailerDriver">
+              <form ref="form" @submit.stop.prevent="submitAllocation">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.truckId"
+                    v-model="newAllocation.truckId"
                     label="registrationNumber"
                     :options="fleetTrucks()"
                     :reduce="(fleetTrucks) => fleetTrucks.id"
@@ -320,7 +320,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Trailer</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.trailerId"
+                    v-model="newAllocation.trailerId"
                     label="tlNumber"
                     :options="trailers"
                     :reduce="(trailers) => trailers.id"
@@ -330,7 +330,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Driver</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.driverId"
+                    v-model="newAllocation.driverId"
                     :options="people"
                     label="firstName"
                     :filterBy="peopleSearch"
@@ -350,27 +350,27 @@
         </div>
       </b-modal>
 
-      <!-- Modal to create TruckTrailerDriver combination for WHEELS TRUCKS -->
+      <!-- Modal to create Allocation combination for WHEELS TRUCKS -->
       <b-modal
         class="modal fade"
         button-size="sm"
-        id="addWheelsTruckTrailerDriverModal"
+        id="addWheelsAllocationModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
         title=" New Truck Trailer Driver"
-        @ok="handleCreateTruckTrailerDriver"
+        @ok="handleCreateAllocation"
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="createTruckTrailerDriver">
+              <form ref="form" @submit.stop.prevent="createAllocation">
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.truckId"
+                    v-model="newAllocation.truckId"
                     label="registrationNumber"
                     :options="wheelsTrucks()"
                     :reduce="(fleetTrucks) => fleetTrucks.id"
@@ -380,7 +380,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Trailer</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.trailerId"
+                    v-model="newAllocation.trailerId"
                     label="tlNumber"
                     :options="trailers"
                     :reduce="(trailers) => trailers.id"
@@ -390,7 +390,7 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Driver</label>
                   <v-select
-                    v-model="newTruckTrailerDriver.driverId"
+                    v-model="newAllocation.driverId"
                     :options="people"
                     label="firstName"
                     :filterBy="peopleSearch"
@@ -410,34 +410,34 @@
         </div>
       </b-modal>
 
-      <!-- Modal to update/delete truckTrailerDriver combinations-->
+      <!-- Modal to update/delete Allocation combinations-->
       <b-modal
         class="modal fade"
         button-size="sm"
-        id="updateTruckTrailerDriverModal"
+        id="updateAllocationModal"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
         title=" Update Truck Trailer Driver"
         ok-title="Delete"
         ok-variant="danger"
-        @ok="handleDeleteTruckTrailerDriver"
+        @ok="handleDeleteAllocation"
         v-if="this.rowDetails == true"
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-body">
               <h6>Truck</h6>
-              <p>{{ editTruckTrailerDriver.truck.registrationNumber }}</p>
+              <p>{{ editAllocation.truck.registrationNumber }}</p>
 
               <h6>Trailer</h6>
-              <p>{{ editTruckTrailerDriver.trailer.tlNumber }}</p>
+              <p>{{ editAllocation.trailer.tlNumber }}</p>
 
               <h6>Driver</h6>
               <p>
-                {{ editTruckTrailerDriver.driver.firstName }}
-                {{ editTruckTrailerDriver.driver.middleName }}
-                {{ editTruckTrailerDriver.driver.lastName }}
+                {{ editAllocation.driver.firstName }}
+                {{ editAllocation.driver.middleName }}
+                {{ editAllocation.driver.lastName }}
               </p>
             </div>
           </div>
@@ -453,8 +453,8 @@ export default {
       rowDetails: false,
       loading: false,
       isSuccess: false,
-      truckTrailerDrivers: [],
-      truckTrailerDriversFields: [
+      allocations: [],
+      allocationsFields: [
         { key: "select" },
         { key: "truck.registrationNumber", label: "Truck" },
         { key: "trailer.tlNumber", label: "Trailer" },
@@ -470,18 +470,18 @@ export default {
       trucks: [],
       trailers: [],
       people: [],
-      newTruckTrailerDriver: {
+      newAllocation: {
         truckId: "",
         trailerId: "",
         driverId: "",
       },
-      newAllocation: {
+      newTrip: {
         clientId: "",
         cargoId: "",
         destinationLocationId: "",
-        checkedTruckTrailerDrivers: [], //check with the controller accepting the arrays for allocation
+        checkedAllocations: [], 
       },
-      editTruckTrailerDriver: "",
+      editAllocation: "",
       peopleSearch(option, label, search) {
         return (
           option.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
@@ -492,17 +492,17 @@ export default {
     };
   },
   mounted() {
-    this.getTruckTrailerDrivers();
+    this.getAllocations();
   },
 
   methods: {
-    getTruckTrailerDrivers() {
+    getAllocations() {
       this.loading = true;
       this.isSuccess = false;
       axios
-        .get("http://localhost:8000/api/truckTrailerDriver")
+        .get("http://localhost:8000/api/allocations")
         .then(({ data }) => {
-          this.truckTrailerDrivers = data.truckTrailerDrivers;
+          this.allocations = data.allocations;
           this.company = data.company;
           this.clients = data.clients;
           this.cargo = data.cargo;
@@ -516,42 +516,42 @@ export default {
       console.log("allocations loaded");
     },
 
-    handleCreateTruckTrailerDriver(bvModalEvt) {
+    handleCreateAllocation(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
-      this.createTruckTrailerDriver();
+      this.createAllocation();
     },
 
-    createTruckTrailerDriver() {
+    createAllocation() {
       axios
-        .post("http://127.0.0.1:8000/api/truckTrailerDriver", {
-          truckId: this.newTruckTrailerDriver.truckId,
-          trailerId: this.newTruckTrailerDriver.trailerId,
-          driverId: this.newTruckTrailerDriver.driverId,
+        .post("http://127.0.0.1:8000/api/allocations", {
+          truckId: this.newAllocation.truckId,
+          trailerId: this.newAllocation.trailerId,
+          driverId: this.newAllocation.driverId,
         })
-        .then((res) => console.log("truck trailer driver added"))
+        .then((res) => console.log("allocation added"))
         .catch((err) => res.err);
       this.$nextTick(() => {
-        this.$bvModal.hide("addCoachTruckTrailerDriverModal");
-        this.$bvModal.hide("addFleetTruckTrailerDriverModal");
-        this.$bvModal.hide("addWheelsTruckTrailerDriverModal");
-        this.getTruckTrailerDrivers();
+        this.$bvModal.hide("addCoachAllocationModal");
+        this.$bvModal.hide("addFleetAllocationModal");
+        this.$bvModal.hide("addWheelsAllocationModal");
+        this.getAllocations();
       });
     },
 
     // compute allocation trucks by company and add render to ttp table for trip assignment
-    coachTruckTrailerDrivers() {
-      return this.truckTrailerDrivers.filter(
+    coachAllocations() {
+      return this.allocations.filter(
         (all) => all.truck.company.id === 1 && all.activityStatus.id === 1
       );
     },
-    fleetTruckTrailerDrivers() {
-      return this.truckTrailerDrivers.filter(
+    fleetAllocations() {
+      return this.allocations.filter(
         (all) => all.truck.company.id === 2 && all.activityStatus.id === 1
       );
     },
-    wheelsTruckTrailerDrivers() {
-      return this.truckTrailerDrivers.filter(
+    wheelsAllocations() {
+      return this.allocations.filter(
         (all) => all.truck.company.id === 3 && all.activityStatus.id === 1
       );
     },
@@ -576,13 +576,13 @@ export default {
     },
 
     //sending allocation
-    sendAllocationData() {
+    sendTripData() {
       axios
-        .post("http://127.0.0.1:8000/api/allocations", {
-          cargoId: this.newAllocation.cargoId,
-          clientId: this.newAllocation.clientId,
-          destinationId: this.newAllocation.destinationLocationId,
-          truckTrailerDriverList: this.newAllocation.checkedTruckTrailerDrivers,
+        .post("http://127.0.0.1:8000/api/trips", {
+          cargoId: this.newTrip.cargoId,
+          clientId: this.newTrip.clientId,
+          destinationId: this.newTrip.destinationLocationId,
+          allocationList: this.newTrip.checkedAllocations,
         })
         .then((response) => {
           console.log(response);
@@ -591,37 +591,37 @@ export default {
           console.log(error.response);
         });
       this.$nextTick(() => {
-        this.$bvModal.hide("addTruckTrailerDriverModal");
-        this.getTruckTrailerDrivers();
+        this.$bvModal.hide("addAllocationModal");
+        this.getAllocations();
       });
     },
     // deleting Truck Trailer Drivers
-    truckTrailerDriverInfo(item, button) {
-      this.editTruckTrailerDriver = item;
+    allocationInfo(item, button) {
+      this.editAllocation = item;
       this.rowDetails = true;
       this.$root.$emit(
         "bv::show::modal",
-        "updateTruckTrailerDriverModal",
+        "updateAllocationModal",
         button
       );
     },
-    handleDeleteTruckTrailerDriver(bvModalEvt) {
+    handleDeleteAllocation(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
-      this.deleteTruckTrailerDriver();
+      this.deleteAllocation();
     },
-    deleteTruckTrailerDriver() {
+    deleteAllocation() {
       axios
         .delete(
-          "http://127.0.0.1:8000/api/truckTrailerDriver/" +
-            this.editTruckTrailerDriver.id
+          "http://127.0.0.1:8000/api/allocations/" +
+            this.editAllocations.id
         )
         .then((res) => console.log("truck trailer driver deleted"))
         .catch((err) => res.err);
       this.$nextTick(() => {
-        this.$bvModal.hide("updateTruckTrailerDriverModal");
+        this.$bvModal.hide("updateAllocationsModal");
 
-        this.getTruckTrailerDrivers();
+        this.getAllocationss();
       });
     },
   },
