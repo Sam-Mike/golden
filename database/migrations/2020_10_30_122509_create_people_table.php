@@ -26,8 +26,9 @@ class CreatePeopleTable extends Migration
             $table->foreignId('role_position_id')->constrained('role_position');
             $table->Biginteger('license_number')->nullable();
             $table->foreignId('license_class_id')->constrained('license_class')->nullable();
-            $table->string('passport')->nullable();
             $table->date('license_issue_date')->nullable();
+            $table->date('license_expiry_date')->nullable();
+            $table->string('passport_number')->nullable();
             $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });

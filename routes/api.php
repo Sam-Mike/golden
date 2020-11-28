@@ -34,5 +34,3 @@ Route::apiResources([
     'trips'=> TripController::class,
     ]);
 
-// Route::apiResource('people', [PeopleController::class]);
-

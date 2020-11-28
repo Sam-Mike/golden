@@ -22,10 +22,10 @@ class TrailerFactory extends Factory
     public function definition()
     {
         return [
-            'registrationNumber' => $this->faker->bothify('T###???'),
+            'tl_number' => $this->faker->bothify('###'),
+            'registration_number' => $this->faker->bothify('T###???'),
             'company_id' => $this->faker->numberBetween($min = 1, $max = 3),
-            'cluster_id' => $this->faker->numberBetween($min = 1, $max = 2),
-            'truck_type_id' => $this->faker->numberBetween($min = 1, $max = 4),
+            'trailer_type_id' => $this->faker->numberBetween($min = 1, $max = 4),
             'activity_status_id' => 1,
         ];
     }
