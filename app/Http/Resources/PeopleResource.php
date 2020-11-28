@@ -23,7 +23,6 @@ class PeopleResource extends JsonResource
             'mobile' => $this->mobile,
             'startDate' => $this->start_date,
             'company' => new CompanyResource($this->company),
-            'department' => new DepartmentResource($this->department),
             'rolePosition' => new RolePositionResource($this->department),
             'licenseNumber' => $this->license_number,
             'licenseIssueDate' => $this->license_issue_date,

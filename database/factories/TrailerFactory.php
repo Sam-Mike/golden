@@ -22,8 +22,8 @@ class TrailerFactory extends Factory
     public function definition()
     {
         return [
-            'tl_number' => $this->faker->bothify('###'),
-            'registration_number' => $this->faker->bothify('T###???'),
+            'tl_number' => $this->faker->bothify('1##'),
+            'registration_number' => $this->faker->regexify('T[1-9]{3}[A-Z]{3}'),
             'company_id' => $this->faker->numberBetween($min = 1, $max = 3),
             'trailer_type_id' => $this->faker->numberBetween($min = 1, $max = 4),
             'activity_status_id' => 1,
