@@ -23,8 +23,8 @@ class Status extends Model
     {
         $this->hasMany('App\Models\People');
     }
-    public function truck_trailer_driver()
+    public function allocation()
     {
-        $this->hasMany('App\Models\TruckTrailerDriver');
+        $this->hasMany('App\Models\Allocation');
     }
 }

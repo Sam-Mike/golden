@@ -24,11 +24,11 @@ export default {
             component: Trucks
         },
         {
-            path: '/truck_trailer_driver',
+            path: '/allocations',
             component: Allocations
         },
         {
-            path: '/allocations',
+            path: '/trips',
             component: Trips
         }
     ]

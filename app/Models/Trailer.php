@@ -18,9 +18,9 @@ class Trailer extends Model
         'assignment_status_id'
     ];
 
-    public function truck_trailer_people()
+    public function allocation()
     {
-        return $this->hasMany('App\Models\TruckTrailerPeople');
+        return $this->hasMany('App\Models\Allocation');
     }
     public function trailer_type()
     {

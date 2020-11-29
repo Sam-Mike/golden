@@ -17,6 +17,5 @@ class TrailerTypeSeeder extends Seeder
         DB::table('trailer_type')->insert(['name' => 'FLAT BED', 'size'=>'12']);
         DB::table('trailer_type')->insert(['name' => 'HIGH SIDE', 'size'=>'12']);
         DB::table('trailer_type')->insert(['name' => 'EXTENDABLE', 'size'=>'12']);
-        DB::table('trailer_type')->insert(['name' => 'EXTENDABLE', 'size'=>'12']);
     }
 }

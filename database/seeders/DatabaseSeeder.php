@@ -2,9 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\TruckType;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,16 +15,16 @@ class DatabaseSeeder extends Seeder
     {
         //\App\Models\User::factory(10)->create()
         $this->call([
+            StatusSeeder::class,
+            CompanySeeder::class,
+            DepartmentSeeder::class,
+            LicenseClassSeeder::class,
             ClusterSeeder::class,
             TruckTypeSeeder::class,
             TrailerTypeSeeder::class,
-            LicenseClassSeeder::class,
-            StatusSeeder::class,
             CargoTypeSeeder::class,
             LocationSeeder::class,
-            DepartmentSeeder::class,
             RolePositionSeeder::class,
-            CompanySeeder::class,
             CargoSeeder::class,
         ]);
          \App\Models\Client::factory(5)->create();

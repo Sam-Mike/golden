@@ -32,7 +32,7 @@ class Trip extends Model
     {
         return $this->belongsTo('App\Models\Location', 'destination_id', 'id');
     }
-    public function truck_trailer_driver()
+    public function allocation()
     {
         return $this->belongsTo('App\Models\Allocation', 'allocation_id', 'id');
     }

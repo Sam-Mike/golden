@@ -19,9 +19,9 @@ class People extends Model
         return $this->belongsTo('App\Models\Company');
     }
 
-    public function department()
+    public function role_position()
     {
-        return $this->belongsTo('App\Models\Department');
+        return $this->belongsTo('App\Models\RolePosition');
     }
 
     public function license_class()
@@ -32,8 +32,8 @@ class People extends Model
     {
         return $this->belongsTo('App\Models\Status', 'activity_status_id');
     }
-    public function truck_trailer_driver()
+    public function allocation()
     {
-        return $this->hasMany('App\Models\TruckTrailerDriver');
+        return $this->hasMany('App\Models\Allocation');
     }
 }

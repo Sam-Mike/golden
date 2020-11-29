@@ -16,7 +16,7 @@ class Department extends Model
         return $this->hasMany('App\Models\People');
     }
 
-    public function role_positions()
+    public function role_position()
     {
         return $this->hasMany('App\RolePosition');
     }
