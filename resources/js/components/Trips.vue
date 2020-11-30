@@ -95,7 +95,7 @@ export default {
           sortable: true,
         },
         { key: "allocation.trailer.tlNumber", label: "Trailer" },
-        { key: "tripStatus", label: "Status" },
+        { key: "activityStatus.name", label: "Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -112,8 +112,8 @@ export default {
       this.loading = true;
       axios
         .get("http://localhost:8000/api/trips")
-        .then(({ data }) => {
-          this.trips = data.trips;
+        .then((response) => {
+          this.trips = response.data.trips;
           this.loading = false;
         })
         .catch((error) => {

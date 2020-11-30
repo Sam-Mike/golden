@@ -38,6 +38,6 @@ class Trip extends Model
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'trip_status_id');
+        return $this->belongsTo('App\Models\Status', 'activity_status_id');
     }
 }
