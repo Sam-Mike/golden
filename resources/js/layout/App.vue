@@ -39,11 +39,11 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <router-link
                         class="dropdown-item"
-                        to="/truck_trailer_driver"
+                        to="/allocations"
                       >
                         Allocations
                       </router-link>
-                      <router-link class="dropdown-item" to="/allocations"
+                      <router-link class="dropdown-item" to="/trips"
                         >Trips
                       </router-link>
                       <div class="dropdown-divider"></div>

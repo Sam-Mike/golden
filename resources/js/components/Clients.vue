@@ -54,7 +54,7 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="IN-ACTIVE">
+          <b-tab title="INACTIVE" nav-item-class>
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -373,8 +373,8 @@ export default {
       this.loading = true;
       axios
         .get("http://localhost:8000/api/clients")
-        .then(({ data }) => {
-          this.clients = data.clients;
+        .then((response) => {
+          this.clients = response.data.clients;
           this.isSuccess = true;
         })
         .catch((error) => {
@@ -412,6 +412,12 @@ export default {
         });
       this.$nextTick(() => {
         this.$bvModal.hide("addClientModal");
+        this.newClient.name = "";
+        this.newClient.address = "";
+        this.newClient.phoneNumber = "";
+        this.newClient.contactPersonName = "";
+        this.newClient.mobile = "";
+        this.newClient.email = "";
         this.getClients();
       });
     },

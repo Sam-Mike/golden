@@ -25,7 +25,7 @@ class TrailerFactory extends Factory
             'tl_number' => $this->faker->bothify('1##'),
             'registration_number' => $this->faker->regexify('T[1-9]{3}[A-Z]{3}'),
             'company_id' => $this->faker->numberBetween($min = 1, $max = 3),
-            'trailer_type_id' => $this->faker->numberBetween($min = 1, $max = 4),
+            'trailer_type_id' => $this->faker->numberBetween($min = 1, $max = 3),
             'activity_status_id' => 1,
         ];
     }

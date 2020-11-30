@@ -81,7 +81,7 @@
                       striped
                       hover
                       :small="true"
-                      :items="coachAllocations()"
+                      :items="coachAllocations"
                       :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
@@ -138,7 +138,7 @@
                       striped
                       hover
                       :small="true"
-                      :items="fleetAllocations()"
+                      :items="fleetAllocations"
                       :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
@@ -195,7 +195,7 @@
                       striped
                       hover
                       :small="true"
-                      :items="wheelsAllocations()"
+                      :items="wheelsAllocations"
                       :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
@@ -252,7 +252,7 @@
                   <v-select
                     v-model="newAllocation.truckId"
                     label="registrationNumber"
-                    :options="coachTrucks()"
+                    :options="coachTrucks"
                     :reduce="(coachTrucks) => coachTrucks.id"
                     placeholder="Choose Truck"
                   ></v-select>
@@ -271,10 +271,10 @@
                   <label for="search">Driver</label>
                   <v-select
                     v-model="newAllocation.driverId"
-                    :options="people"
+                    :options="drivers"
                     label="firstName"
-                    :filterBy="peopleSearch"
-                    :reduce="(people) => people.id"
+                    :filterBy="driverSearch"
+                    :reduce="(drivers) => drivers.id"
                     placeholder="Choose Driver"
                   >
                     <template v-slot:option="option">
@@ -312,7 +312,7 @@
                   <v-select
                     v-model="newAllocation.truckId"
                     label="registrationNumber"
-                    :options="fleetTrucks()"
+                    :options="fleetTrucks"
                     :reduce="(fleetTrucks) => fleetTrucks.id"
                     placeholder="Choose Truck"
                   ></v-select>
@@ -331,10 +331,10 @@
                   <label for="exampleInputEmail1">Driver</label>
                   <v-select
                     v-model="newAllocation.driverId"
-                    :options="people"
+                    :options="drivers"
                     label="firstName"
-                    :filterBy="peopleSearch"
-                    :reduce="(people) => people.id"
+                    :filterBy="driverSearch"
+                    :reduce="(drivers) => drivers.id"
                     placeholder="Choose Driver"
                   >
                     <template v-slot:option="option">
@@ -372,7 +372,7 @@
                   <v-select
                     v-model="newAllocation.truckId"
                     label="registrationNumber"
-                    :options="wheelsTrucks()"
+                    :options="wheelsTrucks"
                     :reduce="(fleetTrucks) => fleetTrucks.id"
                     placeholder="Choose Truck"
                   ></v-select>
@@ -391,10 +391,10 @@
                   <label for="exampleInputEmail1">Driver</label>
                   <v-select
                     v-model="newAllocation.driverId"
-                    :options="people"
+                    :options="drivers"
                     label="firstName"
-                    :filterBy="peopleSearch"
-                    :reduce="(people) => people.id"
+                    :filterBy="driverSearch"
+                    :reduce="(drivers) => drivers.id"
                     placeholder="Choose Driver"
                   >
                     <template v-slot:option="option">
@@ -469,7 +469,7 @@ export default {
       locations: [],
       trucks: [],
       trailers: [],
-      people: [],
+      drivers: [],
       newAllocation: {
         truckId: "",
         trailerId: "",
@@ -482,7 +482,7 @@ export default {
         checkedAllocations: [], 
       },
       editAllocation: "",
-      peopleSearch(option, label, search) {
+      driverSearch(option, label, search) {
         return (
           option.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
           option.middleName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
@@ -491,54 +491,7 @@ export default {
       },
     };
   },
-  mounted() {
-    this.getAllocations();
-  },
-
-  methods: {
-    getAllocations() {
-      this.loading = true;
-      this.isSuccess = false;
-      axios
-        .get("http://localhost:8000/api/allocations")
-        .then(({ data }) => {
-          this.allocations = data.allocations;
-          this.company = data.company;
-          this.clients = data.clients;
-          this.cargo = data.cargo;
-          this.locations = data.locations;
-          this.trucks = data.trucks;
-          this.trailers = data.trailers;
-          this.people = data.people;
-          this.isSuccess = true;
-        })
-        .finally(() => (this.loading = false));
-      console.log("allocations loaded");
-    },
-
-    handleCreateAllocation(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault();
-      this.createAllocation();
-    },
-
-    createAllocation() {
-      axios
-        .post("http://127.0.0.1:8000/api/allocations", {
-          truckId: this.newAllocation.truckId,
-          trailerId: this.newAllocation.trailerId,
-          driverId: this.newAllocation.driverId,
-        })
-        .then((res) => console.log("allocation added"))
-        .catch((err) => res.err);
-      this.$nextTick(() => {
-        this.$bvModal.hide("addCoachAllocationModal");
-        this.$bvModal.hide("addFleetAllocationModal");
-        this.$bvModal.hide("addWheelsAllocationModal");
-        this.getAllocations();
-      });
-    },
-
+  computed:{
     // compute allocation trucks by company and add render to ttp table for trip assignment
     coachAllocations() {
       return this.allocations.filter(
@@ -574,6 +527,60 @@ export default {
           allTrucks.company.id === 3 && allTrucks.activityStatus.id === 1
       );
     },
+  },
+  
+  mounted() {
+    this.getAllocations();
+  },
+
+  methods: {
+    getAllocations() {
+      this.loading = true;
+      this.isSuccess = false;
+      axios
+        .get("http://localhost:8000/api/allocations")
+        .then(({ data }) => {
+          this.allocations = data.allocations;
+          this.company = data.company;
+          this.clients = data.clients;
+          this.cargo = data.cargo;
+          this.locations = data.locations;
+          this.trucks = data.trucks;
+          this.trailers = data.trailers;
+          this.drivers = data.drivers;
+          this.isSuccess = true;
+        })
+        .finally(() => (this.loading = false));
+      console.log("allocations loaded");
+    },
+
+    handleCreateAllocation(bvModalEvt) {
+      // Prevent modal from closing
+      bvModalEvt.preventDefault();
+      this.createAllocation();
+    },
+
+    createAllocation() {
+      axios
+        .post("http://127.0.0.1:8000/api/allocations", {
+          truckId: this.newAllocation.truckId,
+          trailerId: this.newAllocation.trailerId,
+          driverId: this.newAllocation.driverId,
+        })
+        .then((res) => console.log("allocation added"))
+        .catch((err) => res.err);
+      this.$nextTick(() => {
+        this.$bvModal.hide("addCoachAllocationModal");
+        this.$bvModal.hide("addFleetAllocationModal");
+        this.$bvModal.hide("addWheelsAllocationModal");
+        this.newAllocation.truckId = "";
+        this.newAllocation.trailerId = "";
+        this.newAllocation.driverId = "";
+        this.getAllocations();
+      });
+    },
+
+    
 
     //sending allocation
     sendTripData() {
@@ -582,7 +589,7 @@ export default {
           cargoId: this.newTrip.cargoId,
           clientId: this.newTrip.clientId,
           destinationId: this.newTrip.destinationLocationId,
-          allocationList: this.newTrip.checkedAllocations,
+          allocationsList: this.newTrip.checkedAllocations,
         })
         .then((response) => {
           console.log(response);
@@ -614,14 +621,13 @@ export default {
       axios
         .delete(
           "http://127.0.0.1:8000/api/allocations/" +
-            this.editAllocations.id
+            this.editAllocation.id
         )
         .then((res) => console.log("truck trailer driver deleted"))
         .catch((err) => res.err);
       this.$nextTick(() => {
-        this.$bvModal.hide("updateAllocationsModal");
-
-        this.getAllocationss();
+        this.$bvModal.hide("updateAllocationModal");
+        this.getAllocations();
       });
     },
   },

@@ -19,7 +19,7 @@ class CreateTripTable extends Migration
             $table->foreignId('cargo_id')->constrained('cargo');
             $table->foreignId('destination_id')->constrained('location');
             $table->foreignId('allocation_id')->constrained('allocation');
-            $table->foreignId('trip_status_id')->constrained('status')->nullable();
+            $table->foreignId('activity_status_id')->constrained('status');
             $table->date('loading_date')->nullable();
             $table->date('dispatch_date')->nullable();
             $table->date('eta_site')->nullable();
@@ -28,7 +28,6 @@ class CreateTripTable extends Migration
             $table->integer('manifest_number')->nullable();
             $table->integer('file_number')->nullable();
             $table->integer('cargo_weight')->nullable();
-            $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });
     }

@@ -31,7 +31,7 @@ class TripController extends Controller
             'clientId' => 'required',
             'cargoId' => 'required',
             'destinationId' => 'required',
-            'truckTrailerDriverList' => 'required'
+            'allocationsList' => 'required'
         ]);
         $allocations = request("allocationsList");
         foreach ($allocations as $allocation) {
@@ -40,6 +40,7 @@ class TripController extends Controller
             $trip->cargo_id = request('cargoId');
             $trip->destination_id = request('destinationId');
             $trip->allocation_id = $allocation;
+            $trip->activity_status_id = 4; //maybe from api as activityStatusId
             $trip->save();
 
             //setting allocation to allocated

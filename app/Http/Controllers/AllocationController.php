@@ -57,7 +57,7 @@ class AllocationController extends Controller
 
         $allocation = new Allocation();
         $allocation->truck_id = request('truckId');
-        $allocation->trailer_id = request('trialerId');
+        $allocation->trailer_id = request('trailerId');
         $allocation->driver_id = request('driverId');
         $allocation->activity_status_id = 1;
         $allocation->save();

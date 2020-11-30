@@ -4,13 +4,13 @@
       <b-card no-body>
         <b-tabs content-class="mt-2">
           <b-tab title="ACTIVE">
-            <!-- ALLOCATIONS FOR ACTIVE TRIPS -->
+            <!-- TRIPS FOR ACTIVE TRIPS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">
-                    All Allocations
+                    All Trips
                   </h6>
                 </div>
               </div>
@@ -23,8 +23,8 @@
                     striped
                     hover
                     :small="true"
-                    :items="allocations"
-                    :fields="allocationFields"
+                    :items="trips"
+                    :fields="tripFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
@@ -46,7 +46,7 @@
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">
-                    All Allocations
+                    All Trips
                   </h6>
                 </div>
               </div>
@@ -59,14 +59,14 @@
                     striped
                     hover
                     :small="true"
-                    :items="allocations"
-                    :fields="allocationFields"
+                    :items="trips"
+                    :fields="tripFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
                     <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
+                      <b-button size="sm" @click="archiveInfo(row.item)" class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -85,16 +85,16 @@ export default {
   data() {
     return {
       loading: false,
-      allocations: [],
-      allocationFields: [
+      trips: [],
+      tripFields: [
         { key: "client.name", label: "Client", sortable: true },
         { key: "cargo.name", label: "Cargo", sortable: true },
         {
-          key: "truckTrailerDriver.truck.registrationNumber",
+          key: "allocation.truck.registrationNumber",
           label: "Truck",
           sortable: true,
         },
-        { key: "truckTrailerDriver.trailer.tlNumber", label: "Trailer" },
+        { key: "allocation.trailer.tlNumber", label: "Trailer" },
         { key: "tripStatus", label: "Status" },
         { key: "actions" },
       ],
@@ -105,15 +105,15 @@ export default {
     };
   },
   mounted() {
-    this.getAllocations();
+    this.getTrips();
   },
   methods: {
-    getAllocations() {
+    getTrips() {
       this.loading = true;
       axios
-        .get("http://localhost:8000/api/allocations")
+        .get("http://localhost:8000/api/trips")
         .then(({ data }) => {
-          this.allocations = data.allocations;
+          this.trips = data.trips;
           this.loading = false;
         })
         .catch((error) => {

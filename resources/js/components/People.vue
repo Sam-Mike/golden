@@ -178,13 +178,13 @@
             ></v-select>
           </div>
           <div class="form-group">
-            <label for="department">Department</label>
+            <label for="role">Role</label>
             <v-select
-              v-model="newPerson.departmentId"
+              v-model="newPerson.rolePositionId"
               label="name"
-              :options="departments"
-              :reduce="(departments) => departments.id"
-              placeholder="Choose Department"
+              :options="rolePositions"
+              :reduce="(rolePositions) => rolePositions.id"
+              placeholder="Choose Role"
             ></v-select>
           </div>
           <div class="form-group">
@@ -317,13 +317,13 @@
             ></v-select>
           </div>
           <div class="form-group">
-            <label for="department">Department</label>
+            <label for="role">Role</label>
             <v-select
-              v-model="editPerson.content.department.id"
+              v-model="editPerson.content.rolePosition.id"
               label="name"
-              :options="departments"
-              :reduce="(departments) => departments.id"
-              placeholder="Choose Department"
+              :options="rolePositions"
+              :reduce="(rolePositions) => rolePositions.id"
+              placeholder="Choose Role"
             ></v-select>
           </div>
           <div class="form-group">
@@ -382,8 +382,8 @@
           <p>{{ editPerson.content.startDate }}</p>
           <h6>Company</h6>
           <p>{{ editPerson.content.company.name }}</p>
-          <h6>Department</h6>
-          <p>{{ editPerson.content.department.name }}</p>
+          <h6>Role</h6>
+          <p>{{ editPerson.content.rolePosition.name }}</p>
           <h6>License Number</h6>
           <p>{{ editPerson.content.licenseNumber }}</p>
           <h6>License Issue Date</h6>
@@ -408,15 +408,17 @@ export default {
         { key: "company.name", label: "Company", sortable: true },
         { key: "startDate", sortable: true },
         {
-          key: "department.name",
+          key: "rolePosition.department.name",
           label: "Department",
           sortable: true,
         },
+        { key: "rolePosition.name", label:"Role"},
         { key: "licenseIssueDate" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
       company: [],
+      rolePositions: [],
       departments: [],
       licenseClasses: [],
       newPerson: {
@@ -427,7 +429,7 @@ export default {
         mobile: "",
         startDate: "",
         companyId: "",
-        departmentId: "",
+        rolePositionId: "",
         licenseNumber: "",
         licenseIssueDate: "",
         licenseClassId: "",
@@ -449,6 +451,7 @@ export default {
         .then(({ data }) => {
           this.people = data.people;
           this.company = data.company;
+          this.rolePositions = data.rolePositions;
           this.departments = data.departments;
           this.loading = false;
         })
@@ -481,7 +484,7 @@ export default {
           mobile: this.newPerson.mobile,
           startDate: this.newPerson.startDate,
           companyId: this.newPerson.companyId,
-          departmentId: this.newPerson.departmentId,
+          rolePositionId: this.newPerson.rolePositionId,
           licenseNumber: this.newPerson.licenseNumber,
           licenseIssueDate: this.newPerson.licenseIssueDate,
           //licenseClassId: this.newPerson.licenseClassid,
@@ -490,6 +493,16 @@ export default {
         .catch((err) => console.log(err));
       this.$nextTick(() => {
         this.$bvModal.hide("addPersonModal");
+        this.newPerson.firstName = "";
+        this.newPerson.middleName = "";
+        this.newPerson.dob = "";
+        this.newPerson.mobile = "";
+        this.newPerson.startDate = "";
+        this.newPerson.companyId = "";
+        this.newPerson.rolePositionId = "";
+        this.newPerson.licenseIssueDate = "";
+        this.newPerson.firstName = "";
+        this.newPerson.firstName = "";
         this.getPeople();
       });
     },
@@ -516,7 +529,8 @@ export default {
             mobile: this.editPerson.content.mobile,
             startDate: this.editPerson.content.startDate,
             companyId: this.editPerson.content.company.id,
-            departmentId: this.editPerson.content.department.id,
+            rolePositionId: this.editPerson.content.rolePosition.id,
+            //departmentId: this.editPerson.content.department.id,
             licenseNumber: this.editPerson.content.licenseNumber,
             licenseIssueDate: this.editPerson.content.licenseIssueDate,
             //licenseClassId: this.editPerson.content.licenseClass.id,

@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\People;
 use App\Models\Company;
+use App\Models\RolePosition;
 use App\Models\Department;
 use App\Models\LicenseClass;
 use App\Http\Resources\PeopleResource;
 use App\Http\Resources\CompanyResource;
+use App\Http\Resources\RolePositionResource;
 use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\LicenseClassResource;
 
@@ -24,6 +26,7 @@ class PeopleController extends Controller
         return [
             'people' => PeopleResource::collection(People::all()),
             'company' => CompanyResource::collection(Company::all()),
+            'rolePositions' => RolePositionResource::collection(RolePosition::all()),
             'departments' => DepartmentResource::collection(Department::all()),
             //'licenseClass'=>LicenseClasses::collection(Licence::all())
         ];
@@ -45,7 +48,8 @@ class PeopleController extends Controller
         $people->mobile = request('mobile');
         $people->start_date = request('startDate');
         $people->company_id = request('companyId');
-        $people->department_id = request('departmentId');
+        $people->role_position_id = request('rolePositionId');
+        //$people->department_id = request('departmentId');
         $people->license_number = request('licenseNumber');
         $people->license_issue_date = request('licenseIssueDate');
         $people->license_class_id = request('licenseClassId');
