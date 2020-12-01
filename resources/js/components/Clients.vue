@@ -359,6 +359,15 @@ export default {
     this.getClients();
   },
   computed: {
+    activeClients() {
+      return this.clients.filter(
+        (clients) =>
+          clients.activityStatus.id === 1 || clients.activityStatus.id === 2
+      );
+    },
+    inactiveClients() {
+      return this.clients.filter((clients) => clients.activityStatus.id === 3);
+    },
     sortOptions() {
       // Create an options list from our fields
       return this.clientsFields
@@ -382,15 +391,7 @@ export default {
         })
         .finally(() => (this.loading = false));
     },
-    activeClients() {
-      return this.clients.filter(
-        (clients) =>
-          clients.activityStatus.id === 1 || clients.activityStatus.id === 2
-      );
-    },
-    inactiveClients() {
-      return this.clients.filter((clients) => clients.activityStatus.id === 3);
-    },
+    
     handleCreateClient(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();

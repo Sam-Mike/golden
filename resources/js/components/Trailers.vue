@@ -32,7 +32,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="activeTrailers()"
+                    :items="activeTrailers"
                     :fields="trailersFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -66,7 +66,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="inactiveTrailers()"
+                    :items="inactiveTrailers"
                     :fields="trailersFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -268,6 +268,19 @@ export default {
       },
     };
   },
+  computed:{
+    activeTrailers() {
+      return this.trailers.filter(
+        (trailers) =>
+          trailers.activityStatus.id === 1 || trailers.activityStatus.id === 2 //or workshop
+      );
+    },
+    inactiveTrailers() {
+      return this.trailers.filter(
+        (trailers) => trailers.activityStatus.id === 3
+      );
+    },
+  },
   mounted() {
     this.getTrailers();
   },
@@ -286,17 +299,7 @@ export default {
           return console.log(error);
         });
     },
-    activeTrailers() {
-      return this.trailers.filter(
-        (trailers) =>
-          trailers.activityStatus.id === 1 || trailers.activityStatus.id === 2 //or workshop
-      );
-    },
-    inactiveTrailers() {
-      return this.trailers.filter(
-        (trailers) => trailers.activityStatus.id === 3
-      );
-    },
+    
     handleCreateTrailer(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();

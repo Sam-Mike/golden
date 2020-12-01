@@ -29,7 +29,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="activePeople()"
+                    :items="activePeople"
                     :fields="peopleFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -67,7 +67,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="inactivePeople()"
+                    :items="inactivePeople"
                     :fields="peopleFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -440,6 +440,17 @@ export default {
       },
     };
   },
+  computed:{
+    activePeople() {
+      return this.people.filter(
+        (people) =>
+          people.activityStatus.id === 1 || people.activityStatus.id === 2
+      );
+    },
+    inactivePeople() {
+      return this.people.filter((people) => people.activityStatus.id === 3);
+    },
+  },
   mounted() {
     this.getPeople();
   },
@@ -459,15 +470,7 @@ export default {
           return console.log(error);
         });
     },
-    activePeople() {
-      return this.people.filter(
-        (people) =>
-          people.activityStatus.id === 1 || people.activityStatus.id === 2
-      );
-    },
-    inactivePeople() {
-      return this.people.filter((people) => people.activityStatus.id === 3);
-    },
+    
     handleCreatePerson(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();

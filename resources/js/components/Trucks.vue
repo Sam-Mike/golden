@@ -31,7 +31,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="activeTrucks()"
+                    :items="activeTrucks"
                     :fields="trucksFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -65,7 +65,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="inactiveTrucks()"
+                    :items="inactiveTrucks"
                     :fields="trucksFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -267,6 +267,17 @@ export default {
       },
     };
   },
+  computed: {
+    activeTrucks() {
+      return this.trucks.filter(
+        (trucks) =>
+          trucks.activityStatus.id === 1 || trucks.activityStatus.id === 2 //or workshop
+      );
+    },
+    inactiveTrucks() {
+      return this.trucks.filter((trucks) => trucks.activityStatus.id === 3);
+    },
+  },
   mounted() {
     this.getTrucks();
   },
@@ -281,15 +292,7 @@ export default {
         this.loading = false;
       });
     },
-    activeTrucks() {
-      return this.trucks.filter(
-        (trucks) =>
-          trucks.activityStatus.id === 1 || trucks.activityStatus.id === 2 //or workshop
-      );
-    },
-    inactiveTrucks() {
-      return this.trucks.filter((trucks) => trucks.activityStatus.id === 3);
-    },
+
     handleCreateTruck(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
