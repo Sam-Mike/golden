@@ -39,7 +39,7 @@
                   striped
                   hover
                   :small="true"
-                  :items="activeClients()"
+                  :items="activeClients"
                   :fields="clientsFields"
                   :head-variant="tableHeadVariant"
                   :sticky-header="true"
@@ -81,7 +81,7 @@
                   striped
                   hover
                   :small="true"
-                  :items="inactiveClients()"
+                  :items="inactiveClients"
                   :fields="clientsFields"
                   :head-variant="tableHeadVariant"
                   :sticky-header="true"
