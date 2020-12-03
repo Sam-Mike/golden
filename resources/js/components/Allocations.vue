@@ -262,7 +262,7 @@
                   <v-select
                     v-model="newAllocation.trailerId"
                     label="tlNumber"
-                    :options="trailers"
+                    :options="unallocatedTrailers"
                     :reduce="(trailers) => trailers.id"
                     placeholder="Choose Trailer"
                   ></v-select>
@@ -271,7 +271,7 @@
                   <label for="search">Driver</label>
                   <v-select
                     v-model="newAllocation.driverId"
-                    :options="drivers"
+                    :options="unallocatedDrivers"
                     label="firstName"
                     :filterBy="driverSearch"
                     :reduce="(drivers) => drivers.id"
@@ -322,7 +322,7 @@
                   <v-select
                     v-model="newAllocation.trailerId"
                     label="tlNumber"
-                    :options="trailers"
+                    :options="unallocatedTrailers"
                     :reduce="(trailers) => trailers.id"
                     placeholder="Choose Trailer"
                   ></v-select>
@@ -331,7 +331,7 @@
                   <label for="exampleInputEmail1">Driver</label>
                   <v-select
                     v-model="newAllocation.driverId"
-                    :options="drivers"
+                    :options="unallocatedDrivers"
                     label="firstName"
                     :filterBy="driverSearch"
                     :reduce="(drivers) => drivers.id"
@@ -382,7 +382,7 @@
                   <v-select
                     v-model="newAllocation.trailerId"
                     label="tlNumber"
-                    :options="trailers"
+                    :options="unallocatedTrailers"
                     :reduce="(trailers) => trailers.id"
                     placeholder="Choose Trailer"
                   ></v-select>
@@ -391,7 +391,7 @@
                   <label for="exampleInputEmail1">Driver</label>
                   <v-select
                     v-model="newAllocation.driverId"
-                    :options="drivers"
+                    :options="unallocatedDrivers"
                     label="firstName"
                     :filterBy="driverSearch"
                     :reduce="(drivers) => drivers.id"
@@ -479,7 +479,7 @@ export default {
         clientId: "",
         cargoId: "",
         destinationLocationId: "",
-        checkedAllocations: [], 
+        checkedAllocations: [],
       },
       editAllocation: "",
       driverSearch(option, label, search) {
@@ -491,44 +491,53 @@ export default {
       },
     };
   },
-  computed:{
+  computed: {
     // compute allocation trucks by company and add render to ttp table for trip assignment
     coachAllocations() {
       return this.allocations.filter(
-        (all) => all.truck.company.id === 1 && all.activityStatus.id === 1
+        (allocation) =>
+          allocation.truck.company.id === 1 &&
+          allocation.activityStatus.id === 1
       );
     },
     fleetAllocations() {
       return this.allocations.filter(
-        (all) => all.truck.company.id === 2 && all.activityStatus.id === 1
+        (allocation) =>
+          allocation.truck.company.id === 2 &&
+          allocation.activityStatus.id === 1
       );
     },
     wheelsAllocations() {
       return this.allocations.filter(
-        (all) => all.truck.company.id === 3 && all.activityStatus.id === 1
+        (allocation) =>
+          allocation.truck.company.id === 3 &&
+          allocation.activityStatus.id === 1
       );
     },
     //compute truck_trailer_driver by company name and render to company tabs to be selected during TTP allocation
     coachTrucks() {
       return this.trucks.filter(
-        (allTrucks) =>
-          allTrucks.company.id === 1 && allTrucks.activityStatus.id === 1
+        (truck) => truck.company.id === 1 && truck.activityStatus.id === 1
       );
     },
     fleetTrucks() {
       return this.trucks.filter(
-        (allTrucks) =>
-          allTrucks.company.id === 2 && allTrucks.activityStatus.id === 1
+        (truck) => truck.company.id === 2 && truck.activityStatus.id === 1
       );
     },
     wheelsTrucks() {
       return this.trucks.filter(
-        (allTrucks) =>
-          allTrucks.company.id === 3 && allTrucks.activityStatus.id === 1
+        (truck) => truck.company.id === 3 && truck.activityStatus.id === 1
       );
     },
+    unallocatedDrivers() {
+      return this.drivers.filter((driver) => driver.activityStatus.id === 1);
+    },
+    unallocatedTrailers() {
+      return this.trailers.filter((trailer) => trailer.activityStatus.id === 1);
+    },
   },
-  
+
   mounted() {
     this.getAllocations();
   },
@@ -580,8 +589,6 @@ export default {
       });
     },
 
-    
-
     //sending allocation
     sendTripData() {
       axios
@@ -606,11 +613,7 @@ export default {
     allocationInfo(item, button) {
       this.editAllocation = item;
       this.rowDetails = true;
-      this.$root.$emit(
-        "bv::show::modal",
-        "updateAllocationModal",
-        button
-      );
+      this.$root.$emit("bv::show::modal", "updateAllocationModal", button);
     },
     handleDeleteAllocation(bvModalEvt) {
       // Prevent modal from closing
@@ -620,8 +623,7 @@ export default {
     deleteAllocation() {
       axios
         .delete(
-          "http://127.0.0.1:8000/api/allocations/" +
-            this.editAllocation.id
+          "http://127.0.0.1:8000/api/allocations/" + this.editAllocation.id
         )
         .then((res) => console.log("truck trailer driver deleted"))
         .catch((err) => res.err);

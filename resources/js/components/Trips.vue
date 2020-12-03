@@ -95,85 +95,143 @@
         <b-button size="sm" variant="primary" @click="ok()">Save</b-button>
       </template>
       <b-container fluid>
-        <b-row>
+        <!-- TRIP LOCATION INFORMATION -->
+        <b-row class="border rounded">
           <b-col class="border rounded">
-            <ul style="list-style-type: none">
-              <li><b>Truck</b></li>
-              <p>
-                {{ editTrip.content.allocation.truck.registrationNumber }}
-              </p>
-              <li><b>Trailer</b></li>
-              <p>
-                {{ editTrip.content.allocation.trailer.registrationNumber }}
-              </p>
-              <li><b>Driver</b></li>
-              <p>
-                {{ editTrip.content.allocation.driver.firstName }}
-                {{ editTrip.content.allocation.driver.middleName }}
-                {{ editTrip.content.allocation.driver.lastName }}
-              </p>
-            </ul>
+            <b>Trip No</b>
+            <p>
+              {{ editTrip.content.id }}
+            </p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>Current Location</b>
+            <p>
+              {{ editTrip.content.currentLocation }}
+            </p>
           </b-col>
           <b-col class="border rounded">
-            <ul style="list-style-type: none">
-              <li><b>Manifest</b></li>
+            <b>Destination</b>
+            <p>
+              {{ editTrip.content.destination.name }}
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>ETA</b>
+            <p>
+              {{ editTrip.content.etaSite }}
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>Trip Status</b>
+            <p>
+              {{ editTrip.content.activityStatus.name }}
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>Job Class</b>
+            <p>JOB CLASS INFO</p>
+          </b-col>
+        </b-row>
+        <!-- ALLOCATION INFORMATION -->
+        <b-row class="border rounded">
+          <b-col class="border rounded">
+            <b>Truck</b>
+            <p>
+              {{ editTrip.content.allocation.truck.registrationNumber }}
+            </p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>Trailer</b>
+            <p>
+              {{ editTrip.content.allocation.trailer.registrationNumber }}
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>Driver</b>
+            <p>
+              {{ editTrip.content.allocation.driver.firstName }}
+              {{ editTrip.content.allocation.driver.middleName }}
+              {{ editTrip.content.allocation.driver.lastName }}
+            </p>
+          </b-col>
+        </b-row>
+        <!-- DISPATCH INFORMATION -->
+        <b-row class="border rounded">
+          <b-col class="border rounded">
+            <b>Dispatch Date</b>
+            <p>
               <b-input
                 size="sm"
-                v-model="editTrip.content.manifestNumber"
-                placeholder="Enter Manifest Number"
+                type="date"
+                placeholder="Enter dispatch date"
               ></b-input>
-              <li><b>Client</b></li>
-              <p>{{ editTrip.content.client.name }}</p>
-              <b-form-group label="Client Ref. Number"
-                ><b-input
-                  size="sm"
-                  placeholder="Enter reference Number"
-                ></b-input
-              ></b-form-group>
-            </ul>
+            </p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>DISPATCHER</b>
+            <p>
+              <b-input
+                size="sm"
+                type="text"
+                placeholder="Enter Dispatcher Name"
+              ></b-input>
+            </p>
+          </b-col>
+        </b-row>
+        <!-- MANIFEST INFORMATION -->
+        <b-row class="border rounded">
+          <b-col class="border rounded">
+            <b>MANIFEST NO</b>
+            <p><b-input size="sm"></b-input></p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>MANIFEST DOC</b>
+            <p>
+              <b-form-file
+                size="sm"
+                v-model="file1"
+                :state="Boolean(file1)"
+                placeholder="Choose a file or drop it here..."
+                drop-placeholder="Drop file here..."
+              ></b-form-file>
+            </p>
+          </b-col>
+        </b-row>
+        <b-row class="border rounded">
+          <b-col class="border rounded">
+            <b>Client</b>
+            <p>{{ editTrip.content.client.name }}</p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>Client No</b>
+            <p>
+              {{ editTrip.content.client.id }}
+            </p>
+          </b-col>
+        </b-row>
+        <!-- CARGO INFORMATION -->
+        <b-row class="border rounded">
+          <b-col class="border rounded">
+            <b>Cargo Name</b>
+            <p>{{ editTrip.content.cargo.name }}</p>
           </b-col>
           <b-col class="border rounded">
-            <!-- location -->
-            <b-row class="border rounded"
-              ><ul style="list-style-type: none">
-                <li><b>Current Location</b></li>
-                <p>{{ editTrip.content.currentLocation }}</p>
-                <b-form-group label="Dispatch Date"
-                  ><b-input
-                    type="date"
-                    size="sm"
-                    placeholder="Enter Dispatch date"
-                  ></b-input
-                ></b-form-group>
-                <li><b>Destination</b></li>
-                <p>{{ editTrip.content.destination.name }}</p>
-                <b-form-group label="ETA"
-                  ><b-input
-                    type="number"
-                    size="sm"
-                    placeholder="Enter ETA"
-                  ></b-input
-                ></b-form-group>
-                <li><b>Trip Status</b></li>
-                <p>{{ editTrip.content.activityStatus.name }}</p>
-                <li><b>Job Class</b></li>
-                <p>{{ editTrip.content.activityStatus.name }}</p>
-              </ul>
-            </b-row>
-            <!-- CARGO -->
-            <b-row class="border rounded"
-              ><ul style="list-style-type: none">
-                <li><b>Cargo Name</b></li>
-                <p>{{ editTrip.content.cargo.name }}</p>
-                <li><b>Cargo Weight</b></li>
-                <p>{{ editTrip.content.cargoWeight }}</p>
-                <b-form-group label="Cargo Quantity"
-                  ><b-input
-                    size="sm"
-                    placeholder="Enter cargo Quantity"
-                  ></b-input
-                ></b-form-group></ul
-            ></b-row>
+            <b>Cargo Weight</b>
+            <p>
+              <b-input size="sm" placeholder="Enter cargo Weight"></b-input>
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>Cargo Quantity</b>
+            <b-input size="sm" placeholder="Enter cargo Quantity"></b-input>
+          </b-col>
+          <b-col class="border rounded">
+            <b>Seal No</b>
+            <b-input size="sm" placeholder="Enter seal Number"></b-input>
+          </b-col>
+          <b-col class="border rounded">
+            <b>Container No</b>
+            <b-input size="sm" placeholder="Enter container Number"></b-input>
           </b-col>
         </b-row>
       </b-container>

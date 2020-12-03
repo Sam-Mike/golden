@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Trip;
 use App\Models\Allocation;
+use App\Models\Truck;
+use App\Models\Trailer;
+use App\Models\People;
 use App\Http\Resources\TripResource;
 
 class TripController extends Controller
@@ -74,7 +77,11 @@ class TripController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $request->validate([]);
+
+        $trip = Trip::findOrFail($id);
+        
     }
 
     /**
@@ -86,5 +93,6 @@ class TripController extends Controller
     public function destroy($id)
     {
         //
+        //when trip ends we just set the truck trailer and driver free independently without the ttp
     }
 }
