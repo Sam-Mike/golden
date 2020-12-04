@@ -22,10 +22,6 @@ class Truck extends Model
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
-    public function cluster()
-    {
-        return $this->belongsTo('App\Models\Cluster', 'cluster_id');
-    }
     public function truck_type()
     {
         return $this->belongsTo('App\Models\TruckType', 'truck_type_id');

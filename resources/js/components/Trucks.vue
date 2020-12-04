@@ -121,16 +121,6 @@
             ></v-select>
           </div>
           <div class="form-group">
-            <label for="">Cluster</label>
-            <v-select
-              v-model="newTruck.clusterId"
-              label="name"
-              :options="cluster"
-              :reduce="(cluster) => cluster.id"
-              placeholder="Choose Cluster"
-            ></v-select>
-          </div>
-          <div class="form-group">
             <label for="">Truck Type</label>
             <v-select
               v-model="newTruck.truckTypeId"
@@ -187,16 +177,6 @@
             ></v-select>
           </div>
           <div class="form-group">
-            <label for="">Cluster</label>
-            <v-select
-              v-model="editTruck.content.cluster.id"
-              label="name"
-              :options="cluster"
-              :reduce="(cluster) => cluster.id"
-              placeholder="Choose Cluster"
-            ></v-select>
-          </div>
-          <div class="form-group">
             <label for="">Truck Type</label>
             <v-select
               v-model="editTruck.content.truckType.id"
@@ -227,9 +207,6 @@
         <h6>Company</h6>
         <p>{{ editTruck.content.company.name }}</p>
 
-        <h6>Cluster</h6>
-        <p>{{ editTruck.content.cluster.name }}</p>
-
         <h6>Truck Type</h6>
         <p>{{ editTruck.content.truckType.name }}</p>
       </b-modal>
@@ -245,11 +222,9 @@ export default {
       trucks: [],
       truckType: [],
       company: [],
-      cluster: [],
       trucksFields: [
         { key: "registrationNumber" },
         { key: "company.name", label: "Company" },
-        { key: "cluster.name", label: "Cluster Name" },
         { key: "truckType.name", label: "Truck Type" },
         { key: "activityStatus.name", label: "Activity Status" },
         { key: "actions" },
@@ -258,7 +233,6 @@ export default {
       newTruck: {
         registrationNumber: "",
         companyId: "",
-        clusterId: "",
         truckTypeId: "",
       },
       editTruck: {
@@ -288,7 +262,6 @@ export default {
         this.trucks = data.trucks;
         this.truckType = data.truckType;
         this.company = data.company;
-        this.cluster = data.cluster;
         this.loading = false;
       });
     },
@@ -304,7 +277,6 @@ export default {
         .post("http://localhost:8000/api/trucks", {
           registrationNumber: this.newTruck.registrationNumber,
           companyId: this.newTruck.companyId,
-          clusterId: this.newTruck.clusterId,
           truckTypeId: this.newTruck.truckTypeId,
           allocationStatusId: 1,
         })
@@ -331,7 +303,6 @@ export default {
           {
             registrationNumber: this.editTruck.content.registrationNumber,
             companyId: this.editTruck.content.company.id,
-            clusterId: this.editTruck.content.cluster.id,
             truckTypeId: this.editTruck.content.truckType.id,
             activityStatusId: this.editTruck.content.activityStatus.id,
           }
@@ -354,7 +325,6 @@ export default {
           {
             registrationNumber: this.editTruck.content.registrationNumber,
             companyId: this.editTruck.content.company.id,
-            clusterId: this.editTruck.content.cluster.id,
             truckTypeId: this.editTruck.content.truckType.id,
             activityStatusId: 3,
           }
@@ -382,7 +352,6 @@ export default {
           {
             registrationNumber: this.editTruck.content.registrationNumber,
             companyId: this.editTruck.content.company.id,
-            clusterId: this.editTruck.content.cluster.id,
             truckTypeId: this.editTruck.content.truckType.id,
             activityStatusId: 1,
           }

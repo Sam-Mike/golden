@@ -18,7 +18,6 @@ class TruckResource extends JsonResource
             'id' => $this->id,
             'registrationNumber' => $this->registration_number,
             'company' => new CompanyResource($this->company),
-            'cluster' => new ClusterResource($this->cluster),
             'truckType' => new TruckTypeResource($this->truck_type),
             'activityStatus' => new StatusResource($this->status),
         ];

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trip;
+use App\Models\TripClass;
 use App\Models\Allocation;
 use App\Models\Truck;
 use App\Models\Trailer;

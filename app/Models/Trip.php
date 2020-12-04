@@ -40,4 +40,12 @@ class Trip extends Model
     {
         return $this->belongsTo('App\Models\Status', 'activity_status_id');
     }
+    public function trip_class()
+    {
+        return $this->belongsTo('App\Models\TripClass', 'trip_class_id');
+    }
+    public function people()
+    {
+        return $this->belongsTo('App\Models\TripClass', 'dispatcher_id');
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClusterTable extends Migration
+class CreateTripClassTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateClusterTable extends Migration
      */
     public function up()
     {
-        Schema::create('cluster', function (Blueprint $table) {
+        Schema::create('trip_class', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateClusterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cluster');
+        Schema::dropIfExists('trip_class');
     }
 }

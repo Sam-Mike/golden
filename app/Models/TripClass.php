@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cluster extends Model
+class TripClass extends Model
 {
     use HasFactory;
+    protected $table = 'trip_class';
 
-    protected $table = 'cluster';
-
-    public function trucks()
+    public function trip()
     {
-        return $this->hasMany('App\Models\Truck');
+        return $this->hasMany('App\Models\Trip');
     }
 }

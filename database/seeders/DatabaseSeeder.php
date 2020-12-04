@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             CompanySeeder::class,
             DepartmentSeeder::class,
             LicenseClassSeeder::class,
-            ClusterSeeder::class,
+            TripClassSeeder::class,
             TruckTypeSeeder::class,
             TrailerTypeSeeder::class,
             CargoTypeSeeder::class,

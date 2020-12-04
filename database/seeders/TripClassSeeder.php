@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class ClusterSeeder extends Seeder
+class TripClassSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,8 +14,7 @@ class ClusterSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('cluster')->insert(['name' => 'LOCAL']);
-        DB::table('cluster')->insert(['name' => 'TRANSIT']);
-
+        DB::table('trip_class')->insert(['name' => 'LOCAL']);
+        DB::table('trip_class')->insert(['name' => 'TRANSIT']);
     }
 }

@@ -27,7 +27,6 @@ class TruckController extends Controller
             'trucks' => TruckResource::collection(Truck::all()),
             'truckType' => TruckTypeResource::collection(TruckType::all()),
             'company' => CompanyResource::collection(Company::all()),
-            'cluster' => ClusterResource::collection(Cluster::all()),
         ];
     }
 

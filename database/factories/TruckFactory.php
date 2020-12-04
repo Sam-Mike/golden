@@ -24,7 +24,6 @@ class TruckFactory extends Factory
         return [
             'registration_number' => $this->faker->regexify('T[1-9]{3}[A-Z]{3}'),
             'company_id' => $this->faker->numberBetween($min = 1, $max = 3),
-            'cluster_id' => $this->faker->numberBetween($min = 1, $max = 2),
             'truck_type_id' => $this->faker->numberBetween($min = 1, $max = 4),
             'activity_status_id' => 1,
         ];
