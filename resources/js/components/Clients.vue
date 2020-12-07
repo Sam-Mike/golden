@@ -201,7 +201,7 @@
       <!-- Update/Deactivate Client Modal -->
       <b-modal
         scrollable
-        ok-title="Update"
+        ok-title="Save"
         title="Client Info"
         class="modal fade"
         button-size="sm"
@@ -220,7 +220,7 @@
             >Deactivate</b-button
           >
           <b-button size="sm" @click="cancel()">Cancel</b-button>
-          <b-button size="sm" variant="primary" @click="ok()">Update</b-button>
+          <b-button size="sm" variant="primary" @click="ok()">Save</b-button>
         </template>
         <form ref="form" @submit.stop.prevent="updateClient">
           <b-form-group label="Name" invalid-feedback="Name is required">

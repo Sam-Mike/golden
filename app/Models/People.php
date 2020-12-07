@@ -18,12 +18,10 @@ class People extends Model
     {
         return $this->belongsTo('App\Models\Company');
     }
-
     public function role_position()
     {
         return $this->belongsTo('App\Models\RolePosition');
     }
-
     public function license_class()
     {
         return $this->belongsTo('App\Models\LicenseClass');
@@ -35,5 +33,9 @@ class People extends Model
     public function allocation()
     {
         return $this->hasMany('App\Models\Allocation');
+    }
+    public function trip()
+    {
+        return $this->hasMany('App\Models\Trip');
     }
 }

@@ -46,6 +46,6 @@ class Trip extends Model
     }
     public function people()
     {
-        return $this->belongsTo('App\Models\TripClass', 'dispatcher_id');
+        return $this->belongsTo('App\Models\People', 'dispatcher_id');
     }
 }

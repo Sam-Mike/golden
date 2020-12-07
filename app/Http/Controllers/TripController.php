@@ -9,7 +9,10 @@ use App\Models\Allocation;
 use App\Models\Truck;
 use App\Models\Trailer;
 use App\Models\People;
+use App\Models\Location;
 use App\Http\Resources\TripResource;
+use App\Http\Resources\LocationResource;
+use App\Http\Resources\PeopleResource;
 
 class TripController extends Controller
 {
@@ -20,7 +23,13 @@ class TripController extends Controller
      */
     public function index()
     {
-        return ["trips" =>  TripResource::collection(Trip::all())];
+        return [
+            "trips" =>  TripResource::collection(Trip::all()),
+            //local, transit, arrchive trips filtering
+            "locations" =>  LocationResource::collection(Location::all()),
+            "tripClass" =>  TripResource::collection(TripClass::all()),
+            "dispatcher" => PeopleResource::collection(People::where('role_position_id','=', '1')->get())
+        ];
     }
 
     /**
@@ -78,11 +87,52 @@ class TripController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
-        $request->validate([]);
+
+        $request->validate([
+            'manifestNumber' => "required"
+        ]);
 
         $trip = Trip::findOrFail($id);
-        
+        $trip->client_id = request('clientId');
+        $trip->cargo_id = request('cargoId');
+        $trip->destination_id = request('destinationId');
+        $trip->allocation_id = request('allocationId');
+        $trip->activity_status_id = request('activityStatusId');
+        $trip->trip_class_id = request('tripClassId');
+        $trip->dispatch_date = request('dispatchDate');
+        $trip->dispatcher_id = request('dispatcherId');
+        $trip->eta_site = request('etaSite');
+        $trip->route_code = request('routeCode');
+        $trip->current_location = request('currentLocation');
+        $trip->manifest_number = request('manifestNumber');
+        $trip->manifest_date = request('manifestDate');
+        $trip->manifest_doc = request('manifestDoc');
+        $trip->file_number = request('fileNumber');
+        $trip->cargo_order_number = request('cargoOrderNumber');
+        $trip->cargo_weight = request('cargoWeight');
+        $trip->cargo_quantity = request('cargoQuantity');
+        $trip->seal_number = request('sealNumber');
+        $trip->container_number = request('containerNumber');
+        $trip->loading_date = request('loadingDate');
+        $trip->loading_location_id = request('LoadingLocationId');
+        $trip->save();
+
+        //setting truck, trailer and driver free in case the trip ends
+        $truck = Truck::findOrFail($trip->allocation->truck_id);
+        $truck->activity_status_id = request('truckActivityStatus');
+        $truck->save();
+
+        $trailer = Trailer::findOrFail($trip->allocation->trailer_id);
+        $trailer->activity_status_id = request('trailerActivityStatus');
+        $trailer->save();
+
+
+        $driver = People::findOrFail($trip->allocation->driver_id);
+        $driver->activity_status_id = request('driverActivityStatus');
+        $driver->save();
+        return response()->json([
+            'success'
+        ], 200);
     }
 
     /**
@@ -94,6 +144,5 @@ class TripController extends Controller
     public function destroy($id)
     {
         //
-        //when trip ends we just set the truck trailer and driver free independently without the ttp
     }
 }

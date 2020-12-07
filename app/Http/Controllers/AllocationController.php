@@ -31,6 +31,7 @@ class AllocationController extends Controller
     {
         return [
             "allocations" => AllocationResource::collection(Allocation::all()),
+            //filter coach, fleet and wheels trucks here
             "trucks" => TruckResource::collection(Truck::all()),
             "trailers" => TrailerResource::collection(Trailer::all()),
             "drivers" => PeopleResource::collection(People::all()), //use where clause for drivers only among people
