@@ -143,7 +143,6 @@
         role="dialog"
         aria-hidden="true"
         @ok="handleUpdateTruck"
-        v-if="rowDetails == true"
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
@@ -161,7 +160,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="editTruck.content.registrationNumber"
+              v-model="editTruck.registrationNumber"
               placeholder="Enter truck registration number"
               required
             />
@@ -169,7 +168,7 @@
           <div class="form-group">
             <label for="">Company</label>
             <v-select
-              v-model="editTruck.content.company.id"
+              v-model="editTruck.company.id"
               label="name"
               :options="company"
               :reduce="(company) => company.id"
@@ -179,7 +178,7 @@
           <div class="form-group">
             <label for="">Truck Type</label>
             <v-select
-              v-model="editTruck.content.truckType.id"
+              v-model="editTruck.truckType.id"
               label="name"
               :options="truckType"
               :reduce="(truckType) => truckType.id"
@@ -202,13 +201,13 @@
         v-if="rowDetails == true"
       >
         <h6>Reg Number</h6>
-        <p>{{ editTruck.content.registrationNumber }}</p>
+        <p>{{ editTruck.registrationNumber }}</p>
 
         <h6>Company</h6>
-        <p>{{ editTruck.content.company.name }}</p>
+        <p>{{ editTruck.company.name }}</p>
 
         <h6>Truck Type</h6>
-        <p>{{ editTruck.content.truckType.name }}</p>
+        <p>{{ editTruck.truckType.name }}</p>
       </b-modal>
     </b-overlay>
   </div>
@@ -235,10 +234,7 @@ export default {
         companyId: "",
         truckTypeId: "",
       },
-      editTruck: {
-        id: "updateTruckModal",
-        content: [],
-      },
+      editTruck: "",
     };
   },
   computed: {
@@ -288,9 +284,9 @@ export default {
       });
     },
     info(item, button) {
-      this.editTruck.content = item;
+      this.editTruck = item;
       this.rowDetails = true;
-      this.$root.$emit("bv::show::modal", this.editTruck.id, button);
+      this.$root.$emit("bv::show::modal", "updateTruckModal", button);
     },
     handleUpdateTruck(bvModalEvt) {
       bvModalEvt.preventDefault();
