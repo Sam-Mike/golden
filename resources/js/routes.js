@@ -9,6 +9,10 @@ export default {
     routes: [
         {
             path: '/',
+            component: Allocations
+        },
+        {
+            path: '/clients',
             component: Clients
         },
         {
@@ -22,10 +26,6 @@ export default {
         {
             path: '/trucks',
             component: Trucks
-        },
-        {
-            path: '/allocations',
-            component: Allocations
         },
         {
             path: '/trips',

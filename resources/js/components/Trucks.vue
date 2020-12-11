@@ -143,6 +143,7 @@
         role="dialog"
         aria-hidden="true"
         @ok="handleUpdateTruck"
+        v-if="rowDetails == true"
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
