@@ -4,9 +4,14 @@ import Trailers from './components/Trailers';
 import Trucks from './components/Trucks';
 import Allocations from './components/Allocations';
 import Trips from './components/Trips';
+import Login from './components/Login';
 
 export default {
     routes: [
+        {
+            path: '/login',
+            component: Login
+        },
         {
             path: '/',
             component: Allocations
