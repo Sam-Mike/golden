@@ -5,6 +5,7 @@ import Trucks from './components/Trucks';
 import Allocations from './components/Allocations';
 import Trips from './components/Trips';
 import Login from './components/Login';
+import Users from './components/Users';
 
 export default {
     routes: [
@@ -14,7 +15,8 @@ export default {
         },
         {
             path: '/',
-            component: Allocations
+            component: Allocations,
+            name:'Allocations'
         },
         {
             path: '/clients',
@@ -35,6 +37,10 @@ export default {
         {
             path: '/trips',
             component: Trips
+        },
+        {
+            path: '/users',
+            component: Users
         }
     ]
 }

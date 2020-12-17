@@ -7,6 +7,7 @@ use App\Http\Controllers\TruckController;
 use App\Http\Controllers\TrailerController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\AllocationController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TripController;
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+Route::post('/login', [LoginController::class, 'authenticate']);
 
 Route::apiResources([
     'clients'=> ClientController::class,

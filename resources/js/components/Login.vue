@@ -1,34 +1,42 @@
 <template>
-  <div class="container-sm border rounded justify-center align-items-center">
-    <h3 class="">Login</h3>
-    <div class="">
-      <form ref="form" @submit.stop.prevent="loginUser">
-        <div class="">
-            <div class="">
+  <div class="container-fluid">
+    <div class="login-form mt-4">
+      <div class="m-3">
+        <!-- LOGO -->
+        <a class="text-center" href="#">image goes here</a>
+
+        <h1 class="my-4 text-center">Login</h1>
+        <div class="form-panel">
+          <form class="text-left" id="loginForm" @submit.prevent="handleLogin">
+            <span class="text-danger" v-if="errors.name">{{
+              errors.name[0]
+            }}</span>
+            <div class="field mt-3">
+              <label for="username">Username or Email</label><br />
               <b-input
+                size="sm"
                 type="email"
-                size="sm"
                 placeholder="username or email"
+                v-model="login.email"
               ></b-input>
-              <div class=""></div>
             </div>
-            <div class="">
+            <div class="field mt-3">
+              <label for="password">Password</label><br />
               <b-input
-                type="password"
                 size="sm"
-                placeholder="password"
+                type="password"
+                placeholder="username or email"
+                v-model="login.password"
               ></b-input>
             </div>
-          <div class="">
-            <b-button size="sm" variant="primary" class="" disabled="" type="submit">
-              <div class="">Log In</div>
-            </b-button>
-          </div>
+            <div class="field mt-3">
+              <b-button size="sm" variant="primary" type="submit"
+                >Sign in</b-button
+              >
+            </div>
+          </form>
         </div>
-        <a class="_2Lks6" href="/accounts/password/reset/" tabindex="0"
-          >Forgot password?</a
-        >
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -37,15 +45,20 @@ export default {
   data() {
     return {
       login: {
-        username: "",
+        email: "",
         password: "",
       },
       errors: [],
     };
   },
   methods: {
-    loginUser() {
-      axios.post().then().catch();
+    handleLogin() {
+      axios.get("/sanctum/csrf-cookie").then((res) => {
+        axios
+          .post("http://127.0.0.1:8000/api/login", this.login)
+          .then((response) => console.log(response))
+          .catch((error) => (this.errors = error.response.data.errors));
+      });
     },
   },
 };

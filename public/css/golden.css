@@ -1,0 +1,66 @@
+.doublenav {
+    overflow: hidden;
+}
+nav.navbar {
+    padding: 0px;
+    border-bottom: solid 3px #a67c00;
+}
+ul li a {
+    display: block;
+}
+nav > div > ul > li > a:hover {
+    background-color: #a67c00;
+    color: white;
+}
+nav > div > ul > li.active > a {
+    background-color: #a67c00;
+    color: white;
+}
+.allocations-list {
+    list-style-type: none;
+}
+.input-group-prepend {
+    display: inline-flex;
+}
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+/* table font */
+.table-list {
+    font-size: 14px;
+}
+/*table search*/
+.table-search {
+    width: 20%;
+    padding: 5px;
+    float: left;
+}
+
+/*login_form*/
+.login-form {
+    max-width: 310px;
+    margin: 0 auto;
+    border-style: solid;
+    border-color: grey;
+    border-radius: 10px;
+    
+}
+h1 {
+    font-weight: 300;
+    font-size: 26px;
+}
+#loginForm{
+    padding: 20px;
+}
+.field label{
+    font-weight: 600;
+    font-size: 13px;
+}
+.field button{
+    width: 100%;
+    background-color: #a67c00;
+}
+.field input{
+    padding: 0 5px;
+}

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <!-- v if on user login then show the dashboard -->
+  <div >
     <div id="wrapper">
       <!-- Content Wrapper -->
       <div id="content-wrapper" class="d-flex flex-column">
