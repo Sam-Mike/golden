@@ -42,6 +42,7 @@ nav > div > ul > li.active > a {
     max-width: 310px;
     margin: 0 auto;
     border-style: solid;
+    border-width: thin;
     border-color: grey;
     border-radius: 10px;
     

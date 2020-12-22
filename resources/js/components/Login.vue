@@ -8,9 +8,9 @@
         <h1 class="my-4 text-center">Login</h1>
         <div class="form-panel">
           <form class="text-left" id="loginForm" @submit.prevent="handleLogin">
-            <span class="text-danger" v-if="errors">{{
-              errors
-            }}</span>
+            <span class="text-danger" v-if="error.data">
+              {{ error.data }}</span
+            >
             <div class="field mt-3">
               <label for="username">Username or Email</label><br />
               <b-input
@@ -48,7 +48,7 @@ export default {
         email: "",
         password: "",
       },
-      errors: [],
+      error: [],
     };
   },
   methods: {
@@ -57,10 +57,10 @@ export default {
         axios
           .post("http://127.0.0.1:8000/api/login", this.login)
           .then((response) => {
-            this.$router.push({name:"Allocations"});
+            this.$router.push({ name: "Allocations" });
             console.log(response);
           })
-          .catch((error) => (this.errors = error.response.data));
+          .catch((error) => this.error = error.response);
       });
     },
   },

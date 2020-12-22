@@ -13,6 +13,7 @@ use App\Models\Location;
 use App\Http\Resources\TripResource;
 use App\Http\Resources\LocationResource;
 use App\Http\Resources\PeopleResource;
+use App\Http\Resources\TripClassResource;
 
 class TripController extends Controller
 {
@@ -27,7 +28,7 @@ class TripController extends Controller
             "trips" =>  TripResource::collection(Trip::all()),
             //local, transit, arrchive trips filtering
             "locations" =>  LocationResource::collection(Location::all()),
-            "tripClass" =>  TripResource::collection(TripClass::all()),
+            "tripClass" =>  TripClassResource::collection(TripClass::all()),
             "dispatcher" => PeopleResource::collection(People::where('role_position_id','=', '1')->get())
         ];
     }

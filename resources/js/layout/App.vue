@@ -23,7 +23,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Home</a>
+                    <router-link class="nav-link" to="/">Home</router-link>
                   </li>
                   <li class="nav-item dropdown">
                     <a
@@ -40,7 +40,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <router-link
                         class="dropdown-item"
-                        to="/allocations"
+                        to="/"
                       >
                         Allocations
                       </router-link>
@@ -100,6 +100,7 @@
               </div>
             </nav>
           </div>
+          <div class="justify-between"></div>
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
