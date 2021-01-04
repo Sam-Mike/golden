@@ -20,19 +20,19 @@ use App\Http\Controllers\TripController;
 |
 */
 
+Route::post('/login', [LoginController::class, 'authenticate']);
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+    Route::apiResources([
+        'clients' => ClientController::class,
+        'people' => PeopleController::class,
+        'trucks' => TruckController::class,
+        'trailers' => TrailerController::class,
+        'allocations' => AllocationController::class,
+        'trips' => TripController::class,
+    ]);
 });
 
 
-Route::post('/login', [LoginController::class, 'authenticate']);
-
-Route::apiResources([
-    'clients'=> ClientController::class,
-    'people'=> PeopleController::class,
-    'trucks'=> TruckController::class,
-    'trailers'=> TrailerController::class,
-    'allocations'=> AllocationController::class,
-    'trips'=> TripController::class,
-    ]);
 
