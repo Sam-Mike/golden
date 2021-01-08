@@ -537,6 +537,13 @@ export default {
       return this.trailers.filter((trailer) => trailer.activityStatus.id === 1);
     },
   },
+  //before the route is mounted we check if the user is logged in
+  // beforeRouteEnter(to, from, next) {
+  //   if (!window.Laravel.isLoggedin) {
+  //     return next("/allocations");
+  //   }
+  //   next();
+  // },
 
   mounted() {
     this.getAllocations();
@@ -558,6 +565,9 @@ export default {
           this.trailers = data.trailers;
           this.drivers = data.drivers;
           this.isSuccess = true;
+        })
+        .catch((error) => {
+          console.log(error);
         })
         .finally(() => (this.loading = false));
       console.log("allocations loaded");

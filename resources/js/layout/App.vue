@@ -140,5 +140,14 @@
   </div>
 </template>
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      loggedIn:true
+    }
+  },
+  methods:{
+    
+  }
+};
 </script>

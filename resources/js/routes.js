@@ -11,36 +11,46 @@ export default {
     routes: [
         {
             path: '/login',
-            component: Login
+            component: Login,
+            name: 'login'
         },
         {
             path: '/',
             component: Allocations,
-            name:'Allocations'
+            name: 'allocations',
+            meta: {
+                requiresAuth: true
+            }
         },
         {
             path: '/clients',
-            component: Clients
+            component: Clients,
+            name: 'clients'
         },
         {
             path: '/people',
-            component: People
+            component: People,
+            name: 'people'
         },
         {
             path: '/trailers',
-            component: Trailers
+            component: Trailers,
+            name: 'trailers'
         },
         {
             path: '/trucks',
-            component: Trucks
+            component: Trucks,
+            name: 'trucks'
         },
         {
             path: '/trips',
-            component: Trips
+            component: Trips,
+            name: 'trips'
         },
         {
             path: '/users',
-            component: Users
+            component: Users,
+            name: 'users'
         }
     ]
 }
