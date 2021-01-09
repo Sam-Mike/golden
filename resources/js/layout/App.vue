@@ -141,13 +141,15 @@
 </template>
 <script>
 export default {
-  data(){
-    return {
-      loggedIn:true
+  computed:{
+    isLoggedIn(){
+      return this.$store.getters.isLoggedIn;
     }
   },
   methods:{
-    
+    logout(){
+      //logout function enters here
+    }
   }
 };
 </script>
