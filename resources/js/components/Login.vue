@@ -57,7 +57,7 @@ export default {
         axios
           .post("http://127.0.0.1:8000/api/login", this.login)
           .then((response) => {
-            this.$router.push({ name: "Allocations" });
+            this.$router.push({ name: 'allocations' });
             console.log(response);
           })
           .catch((error) => this.error = error.response);

@@ -10,12 +10,12 @@ import Users from './components/Users';
 export default {
     routes: [
         {
-            path: '/login',
+            path: '/',
             component: Login,
             name: 'login'
         },
         {
-            path: '/',
+            path: '/allocations',
             component: Allocations,
             name: 'allocations',
             meta: {

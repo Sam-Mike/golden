@@ -29,10 +29,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
         'people' => PeopleController::class,
         'trucks' => TruckController::class,
         'trailers' => TrailerController::class,
-        'allocations' => AllocationController::class,
+        // 'allocations' => AllocationController::class,
         'trips' => TripController::class,
     ]);
 });
+
+Route::apiResource('allocations', AllocationController::class);
 
 
 
