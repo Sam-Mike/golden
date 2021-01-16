@@ -13,14 +13,13 @@ window.Vue = require('vue');
 // import Vuex from 'vuex'
 import 'es6-promise/auto'
 import { BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin } from 'bootstrap-vue';
-import routes from './routes';
+import router from './router';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
 // Vue.use(Vuex);
-Vue.use(VueRouter);
 Vue.use(BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin);
 
 Vue.component('v-select', vSelect);
@@ -51,5 +50,5 @@ const app = new Vue({
     components: {
         App
     },
-    router: new VueRouter(routes)
+    router
 });

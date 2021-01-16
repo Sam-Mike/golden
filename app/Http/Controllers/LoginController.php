@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function authenticate(Request $request)
+    public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
@@ -15,5 +15,9 @@ class LoginController extends Controller
             return response()->json(Auth::user(), 200);
         }
         return response()->json('The provided credentials are incorrect', 400);
+    }
+    public function logout()
+    {
+        Auth::logout();
     }
 }

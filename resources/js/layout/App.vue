@@ -1,6 +1,6 @@
 <template>
   <!-- v if on user login then show the dashboard -->
-  <div >
+  <div>
     <div id="wrapper">
       <!-- Content Wrapper -->
       <div id="content-wrapper" class="d-flex flex-column">
@@ -38,10 +38,7 @@
                       Operations
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <router-link
-                        class="dropdown-item"
-                        to="/"
-                      >
+                      <router-link class="dropdown-item" to="/">
                         Allocations
                       </router-link>
                       <router-link class="dropdown-item" to="/trips"
@@ -111,6 +108,11 @@
                   </li>
                 </ul>
               </div>
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                  <a class="nav-link" @click.prevent="logout()">Logout</a>
+                </li>
+              </ul>
             </nav>
           </div>
           <div class="justify-between"></div>
@@ -141,15 +143,40 @@
 </template>
 <script>
 export default {
-  computed:{
-    isLoggedIn(){
-      return this.$store.getters.isLoggedIn;
+  data(){
+    return{
+      user:null
     }
   },
-  methods:{
-    logout(){
-      //logout function enters here
-    }
-  }
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters.isLoggedIn;
+    },
+  },
+  mounted(){
+    this.userInfo
+  },
+  methods: {
+    userInfo(){
+      axios
+          .get("http://127.0.0.1:8000/api/user")
+          .then((response) => {
+            this.user = response.data;
+          })
+          .catch((error) => this.error = error.response);
+    },
+    logout() {
+      axios.get("/sanctum/csrf-cookie").then((res) => {
+        axios
+          .post("http://127.0.0.1:8000/api/logout")
+          .then((response) => {
+            localStorage.removeItem("auth");
+            this.$router.push({ name: 'login' });
+            console.log(response);
+          })
+          .catch((error) => this.error = error.response);
+      });
+    },
+  },
 };
 </script>

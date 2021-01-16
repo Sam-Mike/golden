@@ -57,6 +57,7 @@ export default {
         axios
           .post("http://127.0.0.1:8000/api/login", this.login)
           .then((response) => {
+            localStorage.setItem("auth", "true")
             this.$router.push({ name: 'allocations' });
             console.log(response);
           })
