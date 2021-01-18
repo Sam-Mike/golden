@@ -4,13 +4,11 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-const { default: VueRouter } = require('vue-router');
-
 require('./bootstrap');
 
 window.Vue = require('vue');
 
-// import Vuex from 'vuex'
+import store from './store';
 import 'es6-promise/auto'
 import { BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin } from 'bootstrap-vue';
 import router from './router';
@@ -19,7 +17,6 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
-// Vue.use(Vuex);
 Vue.use(BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin);
 
 Vue.component('v-select', vSelect);
@@ -46,6 +43,7 @@ Vue.component('v-select', vSelect);
 import App from './layout/App.vue';
 
 const app = new Vue({
+    store,
     el: '#app',
     components: {
         App

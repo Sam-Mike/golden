@@ -145,16 +145,15 @@
 export default {
   data(){
     return{
-      user:null
+      user:null,
+      isLoggedIn: false
     }
   },
   computed: {
-    isLoggedIn() {
-      return this.$store.getters.isLoggedIn;
-    },
+    
   },
   mounted(){
-    this.userInfo
+    this.isLoggedIn = !!localStorage.getItem("auth");
   },
   methods: {
     userInfo(){
