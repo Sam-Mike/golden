@@ -8,9 +8,7 @@
         <h1 class="my-4 text-center">Login</h1>
         <div class="form-panel">
           <form class="text-left" id="loginForm" @submit.prevent="handleLogin">
-            <span class="text-danger" v-if="error.data">
-              {{ error.data }}</span
-            >
+            <span class="text-danger" v-if="error.data"> {{ error.data }}</span>
             <div class="field mt-3">
               <label for="username">Username or Email</label><br />
               <b-input
@@ -53,15 +51,10 @@ export default {
   },
   methods: {
     handleLogin() {
-      axios.get("/sanctum/csrf-cookie").then((res) => {
-        axios
-          .post("http://127.0.0.1:8000/api/login", this.login)
-          .then((response) => {
-            localStorage.setItem("auth", "true")
-            this.$router.push({ name: 'allocations' });
-            console.log(response);
-          })
-          .catch((error) => this.error = error.response);
+      this.$store.dispatch("auth/handleLogin", this.login).then(() => {
+        this.$router.push({ name: "allocations" }).catch((error) => {
+          console.log(error);
+        });
       });
     },
   },
