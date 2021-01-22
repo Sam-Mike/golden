@@ -51,11 +51,16 @@ export default {
   },
   methods: {
     handleLogin() {
-      this.$store.dispatch("auth/handleLogin", this.login).then(() => {
-        this.$router.push({ name: "allocations" }).catch((error) => {
-          console.log(error);
+      this.$store
+        .dispatch("auth/login", this.login)
+        .then(() => {
+          this.$router.push({ name: "allocations" }).catch((error) => {
+            console.log(error);
+          });
+        })
+        .catch((error) => {
+          error.data = this.error;
         });
-      });
     },
   },
 };

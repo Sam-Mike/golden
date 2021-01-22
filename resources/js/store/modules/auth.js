@@ -1,15 +1,22 @@
 export default {
     namespaced: true,
     state: {
-        user: null
+        user: null,
+        error: null
+    },
+    getters: {
+        loggedIn: state => state.user !== null
     },
     mutations: {
-        setUser(state, data){
+        setUser(state, data) {
             state.user = data;
         },
+        error(state, error){
+            state.error = error
+        }
     },
     actions: {
-        handleLogin({commit }, user) {
+        login({ commit }, user) {
             axios.get("/sanctum/csrf-cookie").then(() => {
                 axios
                     .post("http://127.0.0.1:8000/api/login", {
@@ -20,8 +27,10 @@ export default {
                         localStorage.setItem("auth", "true");
                         commit("setUser", response)
                     })
-                    .catch((error) => this.error = error.response);
+                    .catch((error) => commit("error", error));
             });
         },
+
+        logout() { }
     },
 };

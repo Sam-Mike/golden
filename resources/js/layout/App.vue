@@ -38,7 +38,7 @@
                       Operations
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <router-link class="dropdown-item" to="/">
+                      <router-link class="dropdown-item" to="/allocations">
                         Allocations
                       </router-link>
                       <router-link class="dropdown-item" to="/trips"
