@@ -143,38 +143,35 @@
 </template>
 <script>
 export default {
-  data(){
-    return{
-      user:null,
-      isLoggedIn: false
-    }
+  data() {
+    return {
+      user: null,
+      isLoggedIn: false,
+    };
   },
-  computed: {
-    
-  },
-  mounted(){
+  computed: {},
+  mounted() {
     this.isLoggedIn = !!localStorage.getItem("auth");
   },
   methods: {
-    userInfo(){
+    userInfo() {
       axios
-          .get("http://127.0.0.1:8000/api/user")
-          .then((response) => {
-            this.user = response.data;
-          })
-          .catch((error) => this.error = error.response);
+        .get("http://127.0.0.1:8000/api/user")
+        .then((response) => {
+          this.user = response.data;
+        })
+        .catch((error) => (this.error = error.response));
     },
     logout() {
-      axios.get("/sanctum/csrf-cookie").then((res) => {
-        axios
-          .post("http://127.0.0.1:8000/api/logout")
-          .then((response) => {
-            localStorage.removeItem("auth");
-            this.$router.push({ name: 'login' });
-            console.log(response);
-          })
-          .catch((error) => this.error = error.response);
-      });
+      this.$store
+        .dispatch("auth/logout")
+        .then((response) => {
+          localStorage.removeItem("auth");
+          //this.$store.dispatch();
+          this.$router.push({ name: "login" });
+          console.log(response);
+        })
+        .catch((error) => (this.error = error.response));
     },
   },
 };

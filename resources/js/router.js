@@ -82,17 +82,6 @@ router.beforeEach((to, from, next) => {
     } else {
       next()
     }
-  } else if (to.matched.some(record => record.meta.guest)) {
-    // this route requires auth, check if logged in
-    // if not, redirect to login page.
-    if (store.getters["auth/loggedIn"]) {
-      next({
-        path: '/allocations',
-        query: { redirect: to.fullPath }
-      })
-    } else {
-      next()
-    }
   } else {
     next() // make sure to always call next()!
   }

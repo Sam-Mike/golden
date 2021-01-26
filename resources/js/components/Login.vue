@@ -33,6 +33,9 @@
               >
             </div>
           </form>
+          <b-button size="sm" variant="primary" @click="checkAuth"
+            >check auth</b-button
+          >
         </div>
       </div>
     </div>
@@ -49,18 +52,27 @@ export default {
       error: [],
     };
   },
+  computed:{
+    authStatus(){return this.$store.getters(["auth/loggedIn"])}
+  },
   methods: {
     handleLogin() {
       this.$store
         .dispatch("auth/login", this.login)
         .then(() => {
+          //add login credential error to the error variable from store
           this.$router.push({ name: "allocations" }).catch((error) => {
             console.log(error);
           });
         })
         .catch((error) => {
-          error.data = this.error;
+          console.log(error);
+          //error.data = this.error;
         });
+    },
+    checkAuth() {
+      console.log("login status is "+this.$store.getters["auth/loggedIn"]);
+      console.log("user is "+this.$store.state["auth/user"]);
     },
   },
 };
