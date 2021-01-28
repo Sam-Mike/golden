@@ -23,7 +23,7 @@
               <b-input
                 size="sm"
                 type="password"
-                placeholder="username or email"
+                placeholder="password"
                 v-model="login.password"
               ></b-input>
             </div>
@@ -52,8 +52,8 @@ export default {
       error: [],
     };
   },
-  computed:{
-    authStatus(){return this.$store.getters(["auth/loggedIn"])}
+  computed: {
+    
   },
   methods: {
     handleLogin() {
@@ -71,8 +71,8 @@ export default {
         });
     },
     checkAuth() {
-      console.log("login status is "+this.$store.getters["auth/loggedIn"]);
-      console.log("user is "+this.$store.state["auth/user"]);
+      console.log("login status is " + this.$store.getters["auth/loggedIn"]);
+      console.log("user is " + this.$store.state["auth/user"]);
     },
   },
 };

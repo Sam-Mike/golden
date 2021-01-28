@@ -17,7 +17,8 @@ const routes = [
     path: '/',
     component: Login,
     name: 'login',
-    meta: { guest: true }
+    meta: { guest: true },
+    //can use BEFORE ENTER here to check the roles or the username
   },
   {
     path: '/allocations',
@@ -69,12 +70,14 @@ const router = new VueRouter({
   routes
 });
 
-
+function auth(){
+  return localStorage.getItem("authStatus");
+}
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    if (!store.getters["auth/loggedIn"]) {
+    if (!auth) {
       next({
         path: '/',
         query: { redirect: to.fullPath }

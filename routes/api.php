@@ -25,17 +25,17 @@ Route::post('/logout', [LoginController::class, 'logout']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
-    Route::apiResources([
-        'clients' => ClientController::class,
-        'people' => PeopleController::class,
-        'trucks' => TruckController::class,
-        'trailers' => TrailerController::class,
-        // 'allocations' => AllocationController::class,
-        'trips' => TripController::class,
-    ]);
 });
 
-Route::apiResource('allocations', AllocationController::class);
+//Route::apiResource('allocations', AllocationController::class)-> middleware('auth:sanctum');
 
+Route::apiResources([
+    'clients' => ClientController::class,
+    'people' => PeopleController::class,
+    'trucks' => TruckController::class,
+    'trailers' => TrailerController::class,
+    'allocations' => AllocationController::class,
+    'trips' => TripController::class,
+]);
 
 

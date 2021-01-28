@@ -108,9 +108,12 @@
                   </li>
                 </ul>
               </div>
-              <ul class="navbar-nav mr-auto">
+              <ul v-if="authStatus" class="navbar-nav mr-auto">
                 <li class="nav-item">
                   <a class="nav-link" @click.prevent="logout()">Logout</a>
+                </li>
+                <li class="nav-item">
+                  <p class="nav-link">{{user}}</p>
                 </li>
               </ul>
             </nav>
@@ -145,28 +148,23 @@
 export default {
   data() {
     return {
-      user: null,
-      isLoggedIn: false,
     };
   },
-  computed: {},
+  computed: {
+    user(){
+      return JSON.parse(localStorage.getItem("user"))
+    },
+    authStatus(){
+      return JSON.parse(localStorage.getItem("authStatus"))
+    }
+  },
   mounted() {
-    this.isLoggedIn = !!localStorage.getItem("auth");
   },
   methods: {
-    userInfo() {
-      axios
-        .get("http://127.0.0.1:8000/api/user")
-        .then((response) => {
-          this.user = response.data;
-        })
-        .catch((error) => (this.error = error.response));
-    },
     logout() {
       this.$store
         .dispatch("auth/logout")
         .then((response) => {
-          localStorage.removeItem("auth");
           //this.$store.dispatch();
           this.$router.push({ name: "login" });
           console.log(response);

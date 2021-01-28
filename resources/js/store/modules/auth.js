@@ -1,25 +1,15 @@
 export default {
     namespaced: true,
     state: {
-        user: null,
-        authStatus:false,
         error: null,
     },
-    getters: {
-        user: state => state.user,
-        loggedIn: state => state.user !==null
-    },
     mutations: {
-        setUser(state, data) {
-            state.user = data;
-            //state.authStatus = true;
-        },
-        error(state, error){
+        error(state, error) {
             state.error = error
         }
     },
     actions: {
-        login({ commit, getters}, user) {
+        login({ commit }, user) {
             axios.get("/sanctum/csrf-cookie").then(() => {
                 axios
                     .post("http://127.0.0.1:8000/api/login", {
@@ -27,24 +17,30 @@ export default {
                         password: user.password
                     })
                     .then((response) => {
-                        localStorage.setItem("auth", "true");
-                        commit("setUser", response);
-                        console.log("user is "+getters.user);
-                        console.log("login status is "+getters.isloggedIn);
+                        localStorage.setItem("authStatus", "true");
+                        localStorage.setItem("user", JSON.stringify(response.data.name));
+                        console.log("user is " + getters.currrentUser);
+                        console.log("login status is " + getters.isloggedIn);
                     })
                     .catch((error) => commit("error", error));
             });
         },
+        // getUserInfo(commit, state) {
+        //     axios
+        //         .get("http://127.0.0.1:8000/api/user")
+        //         .then((response) => {
+        //             commit("setUser", response.date);
+        //         })
+        //         .catch((error) => (this.error = error.response));
+        // },
 
-        logout({ commit, state, getters}) {
+        logout() {
             axios.get("/sanctum/csrf-cookie").then(() => {
                 axios
                     .post("http://127.0.0.1:8000/api/logout")
-                    .then((response) => {
-                        localStorage.removeItem("auth");
-                        commit("setUser", response);
-                        console.log(getters.user);
-                        console.log(state.authStatus);
+                    .then(() => {
+                        localStorage.removeItem("authStatus");
+                        localStorage.removeItem("user");
                     })
                     .catch((error) => commit("error", error));
             });
