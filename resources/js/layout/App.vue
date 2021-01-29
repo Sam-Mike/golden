@@ -113,7 +113,7 @@
                   <a class="nav-link" @click.prevent="logout()">Logout</a>
                 </li>
                 <li class="nav-item">
-                  <p class="nav-link">{{user}}</p>
+                  <p class="nav-item">{{user}}</p>
                 </li>
               </ul>
             </nav>
