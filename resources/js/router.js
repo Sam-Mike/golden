@@ -14,14 +14,14 @@ Vue.use(VueRouter);
 
 const routes = [
   {
-    path: '/',
+    path: '/login',
     component: Login,
     name: 'login',
-    meta: { guest: true },
+    meta: { guestOnly: true },
     //can use BEFORE ENTER here to check the roles or the username
   },
   {
-    path: '/allocations',
+    path: '/',
     component: Allocations,
     name: 'allocations',
     meta: { requiresAuth: true }
@@ -70,25 +70,11 @@ const router = new VueRouter({
   routes
 });
 
-function auth(){
-  return localStorage.getItem("authStatus");
+function auth() {
+  return sessionStorage.getItem("authStatus");
 }
-// router.beforeEach((to, from, next) => {
-//   if (to.matched.some(record => record.meta.requiresAuth)) {
-//     // this route requires auth, check if logged in
-//     // if not, redirect to login page.
-//     if (!auth()) {
-//       next({
-//         path: '/',
-//         query: { redirect: to.fullPath }
-//       })
-//     } else {
-//       next()
-//     }
-//   } else {
-//     next() // make sure to always call next()!
-//   }
-// });
+
+
 
 export default router;
 

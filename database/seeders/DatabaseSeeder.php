@@ -26,11 +26,10 @@ class DatabaseSeeder extends Seeder
             LocationSeeder::class,
             RolePositionSeeder::class,
             CargoSeeder::class,
-        ]);
-         \App\Models\Client::factory(5)->create();
-         \App\Models\People::factory(5)->create();
-         \App\Models\Truck::factory(5)->create();
-         \App\Models\Trailer::factory(5)->create();
-        
+            ClientSeeder::class,
+            PeopleSeeder::class,
+            TrailerSeeder::class,
+            TruckSeeder::class,
+        ]); 
     }
 }

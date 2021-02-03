@@ -61,7 +61,7 @@ export default {
         .dispatch("auth/login", this.login)
         .then(() => {
           //add login credential error to the error variable from store
-          this.$router.push({ name: "allocations" }).catch((error) => {
+          this.$router.push('/allocations').catch((error) => {
             console.log(error);
           });
         })

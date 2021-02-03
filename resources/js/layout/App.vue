@@ -107,15 +107,18 @@
                     </div>
                   </li>
                 </ul>
+                <ul
+                  v-if="authStatus"
+                  class="navbar-nav ml-auto"
+                >
+                  <li class="nav-item">
+                    <a class="nav-link" @click.prevent="logout()">Logout</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled">{{ user }}</a>
+                  </li>
+                </ul>
               </div>
-              <ul v-if="authStatus" class="navbar-nav mr-auto">
-                <li class="nav-item">
-                  <a class="nav-link" @click.prevent="logout()">Logout</a>
-                </li>
-                <li class="nav-item">
-                  <p class="nav-item">{{user}}</p>
-                </li>
-              </ul>
             </nav>
           </div>
           <div class="justify-between"></div>
@@ -134,7 +137,7 @@
         <footer class="sticky-footer bg-white">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
-              <span>Copyright &copy; Golden Group 2020</span>
+              <span>Copyright &copy; Golden Group 2021</span>
             </div>
           </div>
         </footer>
@@ -147,19 +150,17 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    user(){
-      return JSON.parse(localStorage.getItem("user"))
+    user() {
+      return JSON.parse(sessionStorage.getItem("user"));
     },
-    authStatus(){
-      return JSON.parse(localStorage.getItem("authStatus"))
-    }
+    authStatus() {
+      return JSON.parse(sessionStorage.getItem("authStatus"));
+    },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     logout() {
       this.$store

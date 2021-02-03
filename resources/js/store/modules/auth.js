@@ -5,19 +5,19 @@ export default {
         user: null,
         error: null,
     },
-    getters:{
-        authenticated(state){
+    getters: {
+        authenticated(state) {
             return state.authenticated
         },
-        user(state){
+        user(state) {
             return state.user
         }
     },
     mutations: {
-        setAuthenticated(state, value){
+        setAuthenticated(state, value) {
             state.authenticated = value;
         },
-        setUser(state, user){
+        setUser(state, user) {
             state.user = user;
         },
         error(state, error) {
@@ -33,8 +33,8 @@ export default {
                         password: user.password
                     })
                     .then((response) => {
-                        localStorage.setItem("authStatus", "true");
-                        localStorage.setItem("user", JSON.stringify(response.data.name));
+                        sessionStorage.setItem("authStatus", "true");
+                        sessionStorage.setItem("user", JSON.stringify(response.data.name));
                         console.log("user is " + getters.currrentUser);
                         console.log("login status is " + getters.isloggedIn);
                     })
@@ -55,8 +55,8 @@ export default {
                 axios
                     .post("http://127.0.0.1:8000/api/logout")
                     .then(() => {
-                        localStorage.removeItem("authStatus");
-                        localStorage.removeItem("user");
+                        sessionStorage.removeItem("authStatus");
+                        sessionStorage.removeItem("user");
                     })
                     .catch((error) => commit("error", error));
             });
