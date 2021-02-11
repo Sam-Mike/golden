@@ -22,7 +22,7 @@
                   label="name"
                   :options="clients"
                   :reduce="(clients) => clients.id"
-                  placeholder="Choose Client"
+                  placeholder="Select Client"
                 ></v-select>
               </div>
             </div>
@@ -33,7 +33,7 @@
                   label="name"
                   :options="cargo"
                   :reduce="(cargo) => cargo.id"
-                  placeholder="Choose Cargo"
+                  placeholder="Select Cargo"
                 ></v-select>
               </div>
             </div>
@@ -44,7 +44,7 @@
                   label="name"
                   :options="locations"
                   :reduce="(locations) => locations.id"
-                  placeholder="Choose Destination"
+                  placeholder="Select Destination"
                 ></v-select>
               </div>
             </div>
@@ -53,7 +53,7 @@
         <b-card no-body>
           <!-- COACH TAB -->
           <b-tabs content-class="mt-3">
-            <b-tab title="Golden Coach" active>
+            <b-tab title="Coach" active>
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <div class="d-flex row justify-content-between">
@@ -112,7 +112,7 @@
               </div>
             </b-tab>
             <!-- FLEET TAB -->
-            <b-tab title="Golden Fleet">
+            <b-tab title="Fleet">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <div class="d-flex row justify-content-between">
@@ -169,7 +169,7 @@
               </div>
             </b-tab>
             <!-- WHEELS TAB -->
-            <b-tab title="Golden Wheels">
+            <b-tab title="Wheels">
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
                   <div class="d-flex row justify-content-between">
@@ -240,7 +240,7 @@
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
-        title=" New Truck Trailer Driver"
+        title=" New Allocation"
         @ok="handleCreateAllocation"
       >
         <div class="modal-dialog" role="document">
@@ -300,7 +300,7 @@
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
-        title=" New Truck Trailer Driver"
+        title=" New Allocation"
         @ok="handleCreateAllocation"
       >
         <div class="modal-dialog" role="document">
@@ -360,7 +360,7 @@
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
         ok-title="Save"
-        title=" New Truck Trailer Driver"
+        title=" New Allocation"
         @ok="handleCreateAllocation"
       >
         <div class="modal-dialog" role="document">
@@ -418,7 +418,7 @@
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
-        title=" Update Truck Trailer Driver"
+        title=" Update Allocation"
         ok-title="Delete"
         ok-variant="danger"
         @ok="handleDeleteAllocation"
