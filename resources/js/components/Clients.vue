@@ -381,7 +381,7 @@ export default {
     getClients() {
       this.loading = true;
       axios
-        .get("http://localhost:8000/api/clients")
+        .get("http://localhost:80/api/clients")
         .then((response) => {
           this.clients = response.data.clients;
           this.isSuccess = true;
