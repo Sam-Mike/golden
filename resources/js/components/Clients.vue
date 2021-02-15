@@ -381,7 +381,7 @@ export default {
     getClients() {
       this.loading = true;
       axios
-        .get("http://localhost:81/api/clients")
+        .get("http://10.1.1.50:81/api/clients")
         .then((response) => {
           this.clients = response.data.clients;
           this.isSuccess = true;
@@ -400,7 +400,7 @@ export default {
     },
     createClient() {
       axios
-        .post("http://127.0.0.1:81/api/clients", {
+        .post("http://10.1.1.50:81/api/clients", {
           clientName: this.newClient.name,
           clientAddress: this.newClient.address,
           clientPhoneNumber: this.newClient.phoneNumber,
@@ -435,7 +435,7 @@ export default {
     updateClient() {
       axios
         .patch(
-          "http://127.0.0.1:81/api/clients/" + this.editClient.content.id,
+          "http://10.1.1.50:81/api/clients/" + this.editClient.content.id,
           {
             clientName: this.editClient.content.name,
             clientAddress: this.editClient.content.address,
@@ -459,7 +459,7 @@ export default {
     deactivateClient() {
       axios
         .patch(
-          "http://127.0.0.1:81/api/clients/" + this.editClient.content.id,
+          "http://10.1.1.50:81/api/clients/" + this.editClient.content.id,
           {
             clientName: this.editClient.content.name,
             clientAddress: this.editClient.content.address,
@@ -488,7 +488,7 @@ export default {
     activateClient() {
       axios
         .patch(
-          "http://127.0.0.1:81/api/clients/" + this.editClient.content.id,
+          "http://10.1.1.50:81/api/clients/" + this.editClient.content.id,
           {
             clientName: this.editClient.content.name,
             clientAddress: this.editClient.content.address,
