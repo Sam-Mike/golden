@@ -459,7 +459,7 @@ export default {
     deactivateClient() {
       axios
         .patch(
-          "http://127.0.0.1:8000/api/clients/" + this.editClient.content.id,
+          "http://127.0.0.1:81/api/clients/" + this.editClient.content.id,
           {
             clientName: this.editClient.content.name,
             clientAddress: this.editClient.content.address,
