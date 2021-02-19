@@ -240,6 +240,7 @@
   </div>
 </template>
 <script>
+import api from "../apis/api";
 export default {
   data() {
     return {
@@ -287,8 +288,8 @@ export default {
   methods: {
     getTrailers() {
       this.loading = true;
-      axios
-        .get("http://localhost:8000/api/trailers")
+      api
+        .get("trailers")
         .then(({ data }) => {
           this.trailers = data.trailers;
           this.trailerType = data.trailerType;
@@ -307,8 +308,8 @@ export default {
       this.createTrailer();
     },
     createTrailer() {
-      axios
-        .post("http://localhost:8000/api/trailers", {
+      api
+        .post("trailers", {
           registrationNumber: this.newTrailer.registrationNumber,
           tlNumber: this.newTrailer.tlNumber,
           trailerTypeId: this.newTrailer.trailerTypeId,
@@ -330,9 +331,9 @@ export default {
       this.updateTrailer();
     },
     updateTrailer() {
-      axios
+      api
         .patch(
-          "http://localhost:8000/api/trailers/" + this.editTrailer.content.id,
+          "trailers/" + this.editTrailer.content.id,
           {
             registrationNumber: this.editTrailer.content.registrationNumber,
             tlNumber: this.editTrailer.content.tlNumber,
@@ -353,9 +354,9 @@ export default {
       this.deactivateTrailer();
     },
     deactivateTrailer() {
-      axios
+      api
         .patch(
-          "http://localhost:8000/api/trailers/" + this.editTrailer.content.id,
+          "trailers/" + this.editTrailer.content.id,
           {
             registrationNumber: this.editTrailer.content.registrationNumber,
             tlNumber: this.editTrailer.content.tlNumber,
@@ -381,9 +382,9 @@ export default {
       this.activateTrailer();
     },
     activateTrailer() {
-      axios
+      api
         .patch(
-          "http://localhost:8000/api/trailers/" + this.editTrailer.content.id,
+          "trailers/" + this.editTrailer.content.id,
           {
             registrationNumber: this.editTrailer.content.registrationNumber,
             tlNumber: this.editTrailer.content.tlNumber,

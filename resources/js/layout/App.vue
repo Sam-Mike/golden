@@ -45,7 +45,14 @@
                         >Trips
                       </router-link>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Documents</a>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      >
+                        <router-link class="dropdown-item" to="/clients"
+                          >Clients</router-link
+                        >
+                      </div>
                     </div>
                   </li>
                   <li class="nav-item dropdown">
@@ -100,17 +107,9 @@
                     >
                       Admin
                     </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                      <router-link class="dropdown-item" to="/clients"
-                        >Clients</router-link
-                      >
-                    </div>
                   </li>
                 </ul>
-                <ul
-                  v-if="authStatus"
-                  class="navbar-nav ml-auto"
-                >
+                <ul v-if="authStatus" class="navbar-nav ml-auto">
                   <li class="nav-item">
                     <a class="nav-link" @click.prevent="logout()">Logout</a>
                   </li>

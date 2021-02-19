@@ -324,6 +324,7 @@
 </template>
 
 <script>
+import api from "../apis/api";
 export default {
   data() {
     return {
@@ -360,10 +361,7 @@ export default {
   },
   computed: {
     activeClients() {
-      return this.clients.filter(
-        (clients) =>
-          clients.activityStatus.id === 1 || clients.activityStatus.id === 2
-      );
+      return this.$store.getters['client/activeClients'];
     },
     inactiveClients() {
       return this.clients.filter((clients) => clients.activityStatus.id === 3);
@@ -378,20 +376,17 @@ export default {
     },
   },
   methods: {
-    getClients() {
+    async getClients() {
       this.loading = true;
-      axios
-        .get("http://10.1.1.50:81/api/clients")
-        .then((response) => {
-          this.clients = response.data.clients;
-          this.isSuccess = true;
-        })
-        .catch((error) => {
-          return console.log(error);
-        })
-        .finally(() => (this.loading = false));
+      try {
+        await this.$store.dispatch("client/getClients");
+        this.isSuccess = true;
+        this.loading = false;
+      } catch (error) {
+        console.log(error.error);
+      }
     },
-    
+
     handleCreateClient(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
@@ -399,8 +394,8 @@ export default {
       this.createClient();
     },
     createClient() {
-      axios
-        .post("http://10.1.1.50:81/api/clients", {
+      api
+        .post("clients", {
           clientName: this.newClient.name,
           clientAddress: this.newClient.address,
           clientPhoneNumber: this.newClient.phoneNumber,
@@ -433,18 +428,15 @@ export default {
       this.updateClient();
     },
     updateClient() {
-      axios
-        .patch(
-          "http://10.1.1.50:81/api/clients/" + this.editClient.content.id,
-          {
-            clientName: this.editClient.content.name,
-            clientAddress: this.editClient.content.address,
-            clientPhoneNumber: this.editClient.content.phoneNumber,
-            clientContactPersonName: this.editClient.content.contactPersonName,
-            clientMobile: this.editClient.content.mobile,
-            clientEmail: this.editClient.content.email,
-          }
-        )
+      api
+        .patch("clients/" + this.editClient.content.id, {
+          clientName: this.editClient.content.name,
+          clientAddress: this.editClient.content.address,
+          clientPhoneNumber: this.editClient.content.phoneNumber,
+          clientContactPersonName: this.editClient.content.contactPersonName,
+          clientMobile: this.editClient.content.mobile,
+          clientEmail: this.editClient.content.email,
+        })
         .then((res) => {
           console.log("Client updated");
         });
@@ -457,19 +449,16 @@ export default {
       this.deactivateClient();
     },
     deactivateClient() {
-      axios
-        .patch(
-          "http://10.1.1.50:81/api/clients/" + this.editClient.content.id,
-          {
-            clientName: this.editClient.content.name,
-            clientAddress: this.editClient.content.address,
-            clientPhoneNumber: this.editClient.content.phoneNumber,
-            clientContactPersonName: this.editClient.content.contactPersonName,
-            clientMobile: this.editClient.content.mobile,
-            clientEmail: this.editClient.content.email,
-            clientActivityStatusId: 4,
-          }
-        )
+      api
+        .patch("clients/" + this.editClient.content.id, {
+          clientName: this.editClient.content.name,
+          clientAddress: this.editClient.content.address,
+          clientPhoneNumber: this.editClient.content.phoneNumber,
+          clientContactPersonName: this.editClient.content.contactPersonName,
+          clientMobile: this.editClient.content.mobile,
+          clientEmail: this.editClient.content.email,
+          clientActivityStatusId: 4,
+        })
         .then((res) => {
           console.log("Client deactivated");
         });
@@ -486,19 +475,16 @@ export default {
       this.activateClient();
     },
     activateClient() {
-      axios
-        .patch(
-          "http://10.1.1.50:81/api/clients/" + this.editClient.content.id,
-          {
-            clientName: this.editClient.content.name,
-            clientAddress: this.editClient.content.address,
-            clientPhoneNumber: this.editClient.content.phoneNumber,
-            clientContactPersonName: this.editClient.content.contactPersonName,
-            clientMobile: this.editClient.content.mobile,
-            clientEmail: this.editClient.content.email,
-            clientActivityStatusId: 3,
-          }
-        )
+      api
+        .patch("clients/" + this.editClient.content.id, {
+          clientName: this.editClient.content.name,
+          clientAddress: this.editClient.content.address,
+          clientPhoneNumber: this.editClient.content.phoneNumber,
+          clientContactPersonName: this.editClient.content.contactPersonName,
+          clientMobile: this.editClient.content.mobile,
+          clientEmail: this.editClient.content.email,
+          clientActivityStatusId: 3,
+        })
         .then((res) => {
           console.log("Client activated");
         });

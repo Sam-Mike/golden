@@ -447,6 +447,7 @@
   </div>
 </template>
 <script>
+import api from "../apis/api";
 export default {
   data() {
     return {

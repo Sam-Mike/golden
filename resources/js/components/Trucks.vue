@@ -214,6 +214,7 @@
   </div>
 </template>
 <script>
+import api from "../apis/api";
 export default {
   data() {
     return {
@@ -255,7 +256,7 @@ export default {
   methods: {
     getTrucks() {
       this.loading = true;
-      axios.get("http://localhost:8000/api/trucks").then(({ data }) => {
+      api.get("trucks").then(({ data }) => {
         this.trucks = data.trucks;
         this.truckType = data.truckType;
         this.company = data.company;
@@ -270,8 +271,8 @@ export default {
       this.createTruck();
     },
     createTruck() {
-      axios
-        .post("http://localhost:8000/api/trucks", {
+      api
+        .post("trucks", {
           registrationNumber: this.newTruck.registrationNumber,
           companyId: this.newTruck.companyId,
           truckTypeId: this.newTruck.truckTypeId,
@@ -294,9 +295,9 @@ export default {
       this.updateTruck();
     },
     updateTruck() {
-      axios
+      api
         .patch(
-          "http://localhost:8000/api/trucks/" + this.editTruck.content.id,
+          "trucks/" + this.editTruck.content.id,
           {
             registrationNumber: this.editTruck.content.registrationNumber,
             companyId: this.editTruck.content.company.id,
@@ -316,9 +317,9 @@ export default {
       this.deactivateTruck();
     },
     deactivateTruck() {
-      axios
+      api
         .patch(
-          "http://localhost:8000/api/trucks/" + this.editTruck.content.id,
+          "trucks/" + this.editTruck.content.id,
           {
             registrationNumber: this.editTruck.content.registrationNumber,
             companyId: this.editTruck.content.company.id,
@@ -343,9 +344,9 @@ export default {
       this.activateTruck();
     },
     activateTruck() {
-      axios
+      api
         .patch(
-          "http://localhost:8000/api/trucks/" + this.editTruck.content.id,
+          "trucks/" + this.editTruck.content.id,
           {
             registrationNumber: this.editTruck.content.registrationNumber,
             companyId: this.editTruck.content.company.id,

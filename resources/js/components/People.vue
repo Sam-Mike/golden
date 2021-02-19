@@ -395,6 +395,7 @@
   </div>
 </template>
 <script>
+import api from "../apis/api";
 export default {
   data() {
     return {
@@ -457,8 +458,8 @@ export default {
   methods: {
     getPeople() {
       this.loading = true;
-      axios
-        .get("http://localhost:8000/api/people")
+      api
+        .get("people")
         .then(({ data }) => {
           this.people = data.people;
           this.company = data.company;
@@ -478,8 +479,8 @@ export default {
       this.createPerson();
     },
     createPerson() {
-      axios
-        .post("http://localhost:8000/api/people", {
+      api
+        .post("people", {
           firstName: this.newPerson.firstName,
           middleName: this.newPerson.middleName,
           lastName: this.newPerson.lastName,
@@ -521,9 +522,9 @@ export default {
       this.updatePerson();
     },
     updatePerson() {
-      axios
+      api
         .patch(
-          "http://127.0.0.1:8000/api/people/" + this.editPerson.content.id,
+          "people/" + this.editPerson.content.id,
           {
             firstName: this.editPerson.content.firstName,
             middleName: this.editPerson.content.middleName,
@@ -552,9 +553,9 @@ export default {
       this.deactivatePerson();
     },
     deactivatePerson() {
-      axios
+      api
         .patch(
-          "http://127.0.0.1:8000/api/people/" + this.editPerson.content.id,
+          "people/" + this.editPerson.content.id,
           {
             firstName: this.editPerson.content.firstName,
             middleName: this.editPerson.content.middleName,
@@ -587,9 +588,9 @@ export default {
       this.activatePerson();
     },
     activatePerson() {
-      axios
+      api
         .patch(
-          "http://127.0.0.1:8000/api/people/" + this.editPerson.content.id,
+          "people/" + this.editPerson.content.id,
           {
             firstName: this.editPerson.content.firstName,
             middleName: this.editPerson.content.middleName,

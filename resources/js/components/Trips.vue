@@ -346,6 +346,7 @@
   </div>
 </template>
 <script>
+import api from "../apis/api";
 export default {
   data() {
     return {
@@ -382,8 +383,8 @@ export default {
   methods: {
     getTrips() {
       this.loading = true;
-      axios
-        .get("http://localhost:8000/api/trips")
+      api
+        .get("trips")
         .then((response) => {
           this.trips = response.data.trips;
           this.people = response.data.people;
@@ -406,8 +407,8 @@ export default {
       this.updateTrip();
     },
     updateTrip() {
-      axios
-        .patch("http://localhost:8000/api/trips/" + this.editTrip.content.id, {
+      api
+        .patch("/trips/" + this.editTrip.content.id, {
           clientId: this.editTrip.content.client.id,
           cargoId: this.editTrip.content.client.id,
           destinationId: this.editTrip.content.destination.id,
@@ -446,8 +447,8 @@ export default {
       this.endTrip();
     },
     endTrip() {
-      axios
-        .patch("http://localhost:8000/api/trips/" + this.editTrip.content.id, {
+      api
+        .patch("trips/" + this.editTrip.content.id, {
           clientId: this.editTrip.content.client.id,
           cargoId: this.editTrip.content.client.id,
           destinationId: this.editTrip.content.destination.id,

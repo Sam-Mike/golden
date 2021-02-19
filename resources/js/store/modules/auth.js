@@ -27,8 +27,8 @@ export default {
     actions: {
         login({ commit }, user) {
             axios.get("/sanctum/csrf-cookie").then(() => {
-                axios
-                    .post("http://127.0.0.1:8000/api/login", {
+                api
+                    .post("login", {
                         email: user.email,
                         password: user.password
                     })
@@ -42,8 +42,8 @@ export default {
             });
         },
         // getUserInfo(commit, state) {
-        //     axios
-        //         .get("http://127.0.0.1:8000/api/user")
+        //     api
+        //         .get("user")
         //         .then((response) => {
         //             commit("setUser", response.date);
         //         })
@@ -52,8 +52,8 @@ export default {
 
         logout() {
             axios.get("/sanctum/csrf-cookie").then(() => {
-                axios
-                    .post("http://127.0.0.1:8000/api/logout")
+                api
+                    .post("logout")
                     .then(() => {
                         sessionStorage.removeItem("authStatus");
                         sessionStorage.removeItem("user");
