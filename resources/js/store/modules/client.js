@@ -6,15 +6,15 @@ const state = () => ({
         id: "updateClientModal",
         content: {}
     }
-})
+});
 const getters = {
     activeClients(state) {
-        return state.clients.filter((client) => client.activityStatus.id === 1);
+        return state.clients.filter(client => client.activityStatus.id === 1);
     },
     inactiveClients(state) {
-        return state.clients.filter((client) => client.activityStatus.id === 3);
+        return state.clients.filter(client => client.activityStatus.id === 3);
     }
-}
+};
 const mutations = {
     setClients(state, clients) {
         state.clients = clients;
@@ -22,15 +22,14 @@ const mutations = {
     setEditClient(state, item) {
         state.editClient.content = item;
     }
-}
+};
 const actions = {
     async getClients({ commit }) {
         try {
             const response = await api.get("clients");
-            await commit('setClients', response.data.clients);
-        }
-        catch (error) {
-            console.error(error)
+            await commit("setClients", response.data.clients);
+        } catch (error) {
+            console.error(error);
         }
     },
     async createClient({ dispatch }, newClient) {
@@ -41,31 +40,39 @@ const actions = {
                 clientPhoneNumber: newClient.phoneNumber,
                 clientContactPersonName: newClient.contactPersonName,
                 clientMobile: newClient.mobile,
-                clientEmail: newClient.email,
+                clientEmail: newClient.email
             });
             dispatch("getClients");
         } catch (error) {
-
-            console.log(error)
+            console.log(error);
         }
     },
-    async updateClients({ dispatch },) {
+    async updateClient({ dispatch }, client) {
         try {
-            await api.patch("clients/");
+            await api.patch("clients/" + client.content.id, {
+                clientName: client.content.name,
+                clientAddress: client.content.address,
+                clientPhoneNumber: client.content.phoneNumber,
+                clientContactPersonName: client.content.contactPersonName,
+                clientMobile: client.content.mobile,
+                clientEmail: client.content.email
+            });
             dispatch("getClients");
-        } catch { }
+        } catch (error) {
+            console.log(error);
+        }
     },
-    async deactivateClients({ dispatch },) {
+    async deactivateClients({ dispatch }) {
         try {
             await api.patch();
             dispatch("getClients");
-        } catch { }
+        } catch {}
     },
-    async activateClients({ dispatch },) {
+    async activateClients({ dispatch }) {
         await api.patch();
         dispatch("getClients");
-    },
-}
+    }
+};
 
 export default {
     namespaced: true,

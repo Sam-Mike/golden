@@ -368,6 +368,7 @@ export default {
     },
     ...mapState("client", {
       editClient: (state) => state.editClient,
+      //using set and get for v-model to edit client
     }),
     sortOptions() {
       // Create an options list from our fields
@@ -421,8 +422,10 @@ export default {
     },
     async updateClient(){
       try{
-        await this.$store.dispatch("client/updateClient")
-      }catch{};
+        await this.$store.dispatch("client/updateClient", this.editClient)
+      }catch(error){
+        console.log(error);
+      };
     },
     // updateClient() {
     //   api
