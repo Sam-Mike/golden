@@ -25,12 +25,12 @@ export default {
         }
     },
     actions: {
-        login({ commit }, user) {
+        login({ commit }, login) {
             axios.get("/sanctum/csrf-cookie").then(() => {
                 api
                     .post("login", {
-                        email: user.email,
-                        password: user.password
+                        email: login.email,
+                        password: login.password
                     })
                     .then((response) => {
                         sessionStorage.setItem("authStatus", "true");

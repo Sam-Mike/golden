@@ -325,12 +325,12 @@
 
 <script>
 import api from "../apis/api";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       loading: null,
       isSuccess: false,
-      clients: [],
       clientsFields: [
         { key: "name", sortable: true },
         { key: "address" },
@@ -350,10 +350,10 @@ export default {
         email: "",
       },
       tableFilter: null,
-      editClient: {
-        id: "updateClientModal",
-        content: "",
-      },
+      // editClient: {
+      //   id: "updateClientModal",
+      //   content: "",
+      // },
     };
   },
   created() {
@@ -361,11 +361,14 @@ export default {
   },
   computed: {
     activeClients() {
-      return this.$store.getters['client/activeClients'];
+      return this.$store.getters["client/activeClients"];
     },
     inactiveClients() {
-      return this.clients.filter((clients) => clients.activityStatus.id === 3);
+      return this.$store.getters["client/inactiveClients"];
     },
+    ...mapState("client", {
+      editClient: (state) => state.editClient,
+    }),
     sortOptions() {
       // Create an options list from our fields
       return this.clientsFields
@@ -388,63 +391,58 @@ export default {
     },
 
     handleCreateClient(bvModalEvt) {
-      // Prevent modal from closing
       bvModalEvt.preventDefault();
-      // Trigger submit handler
       this.createClient();
     },
-    createClient() {
-      api
-        .post("clients", {
-          clientName: this.newClient.name,
-          clientAddress: this.newClient.address,
-          clientPhoneNumber: this.newClient.phoneNumber,
-          clientContactPersonName: this.newClient.contactPersonName,
-          clientMobile: this.newClient.mobile,
-          clientEmail: this.newClient.email,
-        })
-        .then((res) => {
-          console.log("Client added");
+    async createClient() {
+      try {
+        await this.$store.dispatch("client/createClient", this.newClient);
+        this.$nextTick(() => {
+          this.$bvModal.hide("addClientModal");
+          this.newClient.name = "";
+          this.newClient.address = "";
+          this.newClient.phoneNumber = "";
+          this.newClient.contactPersonName = "";
+          this.newClient.mobile = "";
+          this.newClient.email = "";
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("addClientModal");
-        this.newClient.name = "";
-        this.newClient.address = "";
-        this.newClient.phoneNumber = "";
-        this.newClient.contactPersonName = "";
-        this.newClient.mobile = "";
-        this.newClient.email = "";
-        this.getClients();
-      });
+      } catch (error) {
+        console.log(error);
+      }
     },
+
     info(item, button) {
-      this.editClient.content = item;
+      this.$store.commit("client/setEditClient", item);
       this.$root.$emit("bv::show::modal", this.editClient.id, button);
     },
     handleUpdateClient(bvModalEvt) {
-      // Prevent modal from closing
       bvModalEvt.preventDefault();
-      // Trigger submit handler
       this.updateClient();
     },
-    updateClient() {
-      api
-        .patch("clients/" + this.editClient.content.id, {
-          clientName: this.editClient.content.name,
-          clientAddress: this.editClient.content.address,
-          clientPhoneNumber: this.editClient.content.phoneNumber,
-          clientContactPersonName: this.editClient.content.contactPersonName,
-          clientMobile: this.editClient.content.mobile,
-          clientEmail: this.editClient.content.email,
-        })
-        .then((res) => {
-          console.log("Client updated");
-        });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateClientModal");
-        this.getClients();
-      });
+    async updateClient(){
+      try{
+        await this.$store.dispatch("client/updateClient")
+      }catch{};
     },
+    // updateClient() {
+    //   api
+    //     .patch("clients/" + this.editClient.content.id, {
+    //       clientName: this.editClient.content.name,
+    //       clientAddress: this.editClient.content.address,
+    //       clientPhoneNumber: this.editClient.content.phoneNumber,
+    //       clientContactPersonName: this.editClient.content.contactPersonName,
+    //       clientMobile: this.editClient.content.mobile,
+    //       clientEmail: this.editClient.content.email,
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //       console.log("Client updated");
+    //     });
+    //   this.$nextTick(() => {
+    //     this.$bvModal.hide("updateClientModal");
+    //     this.getClients();
+    //   });
+    // },
     handleDeactivateClient() {
       this.deactivateClient();
     },
@@ -460,6 +458,7 @@ export default {
           clientActivityStatusId: 4,
         })
         .then((res) => {
+          console.log(res);
           console.log("Client deactivated");
         });
       this.$nextTick(() => {
@@ -486,6 +485,7 @@ export default {
           clientActivityStatusId: 3,
         })
         .then((res) => {
+          console.log(res);
           console.log("Client activated");
         });
       this.$nextTick(() => {
