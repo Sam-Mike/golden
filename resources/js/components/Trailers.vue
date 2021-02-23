@@ -156,7 +156,6 @@
         role="dialog"
         aria-hidden="true"
         @ok="handleUpdateTrailer"
-        v-if="rowDetails == true"
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
@@ -174,7 +173,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="editTrailer.content.registrationNumber"
+              v-model="editTrailer.registrationNumber"
               placeholder="Enter trailer registration number"
               required
             />
@@ -184,7 +183,7 @@
             <input
               type="number"
               class="form-control"
-              v-model="editTrailer.content.tlNumber"
+              v-model="editTrailer.tlNumber"
               placeholder="Enter trailer TL number"
               required
             />
@@ -192,7 +191,7 @@
           <div class="form-group">
             <label for="exampleInputEmail1">Trailer Type</label>
             <v-select
-              v-model="editTrailer.content.trailerType.id"
+              v-model="editTrailer.trailerType.id"
               label="name"
               :options="trailerType"
               :reduce="(trailerType) => trailerType.id"
@@ -202,7 +201,7 @@
           <div class="form-group">
             <label for="exampleInputEmail1">Company</label>
             <v-select
-              v-model="editTrailer.content.company.id"
+              v-model="editTrailer.company.id"
               label="name"
               :options="company"
               :reduce="(company) => company.id"
@@ -222,29 +221,28 @@
         role="dialog"
         aria-hidden="true"
         @ok="handleActivateTrailer"
-        v-if="rowDetails == true"
       >
         <h6>Registration Number</h6>
-        <p>{{ editTrailer.content.registrationNumber }}</p>
+        <p>{{ editTrailer.registrationNumber }}</p>
 
         <h6>TL Number</h6>
-        <p>{{ editTrailer.content.tlNumber }}</p>
+        <p>{{ editTrailer.tlNumber }}</p>
 
         <h6>Trailer Type</h6>
-        <p>{{ editTrailer.content.trailerType.name }}</p>
+        <p>{{ editTrailer.trailerType.name }}</p>
 
         <h6>Company</h6>
-        <p>{{ editTrailer.content.company.name }}</p>
+        <p>{{ editTrailer.company.name }}</p>
       </b-modal>
     </b-overlay>
   </div>
 </template>
 <script>
 import api from "../apis/api";
+import {  mapState } from "vuex";
 export default {
   data() {
     return {
-      rowDetails: false,
       loading: null,
       trailers: [],
       trailersFields: [
@@ -264,8 +262,12 @@ export default {
         companyId: "",
       },
       editTrailer: {
-        id: "updateTrailerModal",
-        content: "",
+        id: "",
+        registrationNumber: "",
+        tlNumber: "",
+        trailerType: "",
+        company: "",
+        activityStatus:""
       },
     };
   },
@@ -286,45 +288,42 @@ export default {
     this.getTrailers();
   },
   methods: {
-    getTrailers() {
-      this.loading = true;
-      api
-        .get("trailers")
-        .then(({ data }) => {
-          this.trailers = data.trailers;
-          this.trailerType = data.trailerType;
-          this.company = data.company;
-          this.loading = false;
-        })
-        .catch((error) => {
-          return console.log(error);
-        });
+    async getTrailers() {
+      try {
+        this.loading = true;
+        const response = await api.get("trailers");
+        this.trailers = response.data.trailers;
+        this.trailerType = response.data.trailerType;
+        this.company = response.data.company;
+        //await this.$store.dispatch("trailer/getTrailers");
+        this.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
     },
-    
+
     handleCreateTrailer(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
       this.createTrailer();
     },
-    createTrailer() {
-      api
-        .post("trailers", {
-          registrationNumber: this.newTrailer.registrationNumber,
-          tlNumber: this.newTrailer.tlNumber,
-          trailerTypeId: this.newTrailer.trailerTypeId,
-          companyId: this.newTrailer.companyId,
-        })
-        .then((res) => console.log("trailer added"));
+    async createTrailer() {
+      await this.$store.dispatch("trailer/createTrailer", this.newTrailer);
       this.$nextTick(() => {
         this.$bvModal.hide("addTrailerModal");
         this.getTrailers();
       });
     },
     info(item, button) {
-      this.editTrailer.content = item;
-      this.rowDetails = true;
-      this.$root.$emit("bv::show::modal", this.editTrailer.id, button);
+      console.log(item)
+      this.editTrailer.id = item.id;
+      this.editTrailer.registrationNumber = item.registrationNumber;
+      this.editTrailer.tlNumber = item.tlNumber;
+      this.editTrailer.trailerType = item.trailerType;
+      this.editTrailer.company = item.company;
+      this.editTrailer.activityStatus = item.activityStatus;
+      this.$root.$emit("bv::show::modal", "updateTrailerModal", button);
     },
     handleUpdateTrailer(bvModalEvt) {
       bvModalEvt.preventDefault();
@@ -332,22 +331,19 @@ export default {
     },
     updateTrailer() {
       api
-        .patch(
-          "trailers/" + this.editTrailer.content.id,
-          {
-            registrationNumber: this.editTrailer.content.registrationNumber,
-            tlNumber: this.editTrailer.content.tlNumber,
-            trailerTypeId: this.editTrailer.content.trailerType.id,
-            companyId: this.editTrailer.content.company.id,
-            activityStatusId: this.editTrailer.content.activityStatus.id,
-          }
-        )
+        .patch("trailers/" + this.editTrailer.id, {
+          registrationNumber: this.editTrailer.registrationNumber,
+          tlNumber: this.editTrailer.tlNumber,
+          trailerTypeId: this.editTrailer.trailerType.id,
+          companyId: this.editTrailer.company.id,
+          activityStatusId: this.editTrailer.activityStatus.id,
+        })
         .then((res) => {
           console.log("Trailer updated");
         });
       this.$nextTick(() => {
         this.$bvModal.hide("updateTrailerModal");
-        this.getTrailers();
+        //code to set the vmodel empty
       });
     },
     handleDeactivateTrailer() {
@@ -355,16 +351,13 @@ export default {
     },
     deactivateTrailer() {
       api
-        .patch(
-          "trailers/" + this.editTrailer.content.id,
-          {
-            registrationNumber: this.editTrailer.content.registrationNumber,
-            tlNumber: this.editTrailer.content.tlNumber,
-            trailerTypeId: this.editTrailer.content.trailerType.id,
-            companyId: this.editTrailer.content.company.id,
-            activityStatusId: 3,
-          }
-        )
+        .patch("trailers/" + this.editTrailer.id, {
+          registrationNumber: this.editTrailer.registrationNumber,
+          tlNumber: this.editTrailer.tlNumber,
+          trailerTypeId: this.editTrailer.trailerType.id,
+          companyId: this.editTrailer.company.id,
+          activityStatusId: 3,
+        })
         .then((res) => {
           console.log("Trailer deactivated");
         });
@@ -374,8 +367,11 @@ export default {
       });
     },
     inactiveInfo(item, button) {
-      this.editTrailer.content = item;
-      this.rowDetails = true;
+      this.editTrailer.id = item.id;
+      this.editTrailer.registrationNumber = item.registrationNumber;
+      this.editTrailer.tlNumber = item.tlNumber;
+      this.editTrailer.trailerType = item.trailerType;
+      this.editTrailer.company = item.company;
       this.$root.$emit("bv::show::modal", "inactiveTrailerModal", button);
     },
     handleActivateTrailer() {
@@ -383,16 +379,13 @@ export default {
     },
     activateTrailer() {
       api
-        .patch(
-          "trailers/" + this.editTrailer.content.id,
-          {
-            registrationNumber: this.editTrailer.content.registrationNumber,
-            tlNumber: this.editTrailer.content.tlNumber,
-            trailerTypeId: this.editTrailer.content.trailerType.id,
-            companyId: this.editTrailer.content.company.id,
-            activityStatusId: 1,
-          }
-        )
+        .patch("trailers/" + this.editTrailer.id, {
+          registrationNumber: this.editTrailer.registrationNumber,
+          tlNumber: this.editTrailer.tlNumber,
+          trailerTypeId: this.editTrailer.trailerType.id,
+          companyId: this.editTrailer.company.id,
+          activityStatusId: 1,
+        })
         .then((res) => {
           console.log("Trailer activated");
         });

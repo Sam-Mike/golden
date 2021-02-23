@@ -52,23 +52,15 @@ export default {
       error: [],
     };
   },
-  computed: {
-    
-  },
+  computed: {},
   methods: {
-    handleLogin() {
-      this.$store
-        .dispatch("auth/login", this.login)
-        .then(() => {
-          //add login credential error to the error variable from store
-          this.$router.push('/allocations').catch((error) => {
-            console.log(error);
-          });
-        })
-        .catch((error) => {
-          console.log(error);
-          //error.data = this.error;
-        });
+    async handleLogin() {
+      try {
+        await this.$store.dispatch("auth/login", this.login);
+        await this.$router.push("/allocations");
+      } catch (error) {
+        console.log(error)
+      }
     },
     checkAuth() {
       console.log("login status is " + this.$store.getters["auth/loggedIn"]);

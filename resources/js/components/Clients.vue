@@ -331,6 +331,7 @@ export default {
     return {
       loading: null,
       isSuccess: false,
+      clients: [],
       clientsFields: [
         { key: "name", sortable: true },
         { key: "address" },
@@ -350,10 +351,10 @@ export default {
         email: "",
       },
       tableFilter: null,
-      // editClient: {
-      //   id: "updateClientModal",
-      //   content: "",
-      // },
+      editClient: {
+        modalId: "updateClientModal",
+        content: "",
+      },
     };
   },
   created() {
@@ -361,15 +362,11 @@ export default {
   },
   computed: {
     activeClients() {
-      return this.$store.getters["client/activeClients"];
+      return this.clients.filter((client) => client.activityStatus.id === 1);
     },
     inactiveClients() {
-      return this.$store.getters["client/inactiveClients"];
+      return this.clients.filter((client) => client.activityStatus.id === 3);
     },
-    ...mapState("client", {
-      editClient: (state) => state.editClient,
-      //using set and get for v-model to edit client
-    }),
     sortOptions() {
       // Create an options list from our fields
       return this.clientsFields
@@ -383,7 +380,8 @@ export default {
     async getClients() {
       this.loading = true;
       try {
-        await this.$store.dispatch("client/getClients");
+        const response = await api.get("clients");
+        this.clients = response.data.clients;
         this.isSuccess = true;
         this.loading = false;
       } catch (error) {
@@ -397,7 +395,14 @@ export default {
     },
     async createClient() {
       try {
-        await this.$store.dispatch("client/createClient", this.newClient);
+        await api.post("clients", {
+          clientName: this.newClient.name,
+          clientAddress: this.newClient.address,
+          clientPhoneNumber: this.newClient.phoneNumber,
+          clientContactPersonName: this.newClient.contactPersonName,
+          clientMobile: this.newClient.mobile,
+          clientEmail: this.newClient.email,
+        });
         this.$nextTick(() => {
           this.$bvModal.hide("addClientModal");
           this.newClient.name = "";
@@ -406,6 +411,7 @@ export default {
           this.newClient.contactPersonName = "";
           this.newClient.mobile = "";
           this.newClient.email = "";
+          this.getClients();
         });
       } catch (error) {
         console.log(error);
@@ -413,39 +419,33 @@ export default {
     },
 
     info(item, button) {
-      this.$store.commit("client/setEditClient", item);
-      this.$root.$emit("bv::show::modal", this.editClient.id, button);
+      this.editClient.content = item;
+      this.$root.$emit("bv::show::modal", this.editClient.modalId, button);
     },
     handleUpdateClient(bvModalEvt) {
       bvModalEvt.preventDefault();
       this.updateClient();
     },
-    async updateClient(){
-      try{
-        await this.$store.dispatch("client/updateClient", this.editClient)
-      }catch(error){
+    async updateClient() {
+      try {
+        await api.patch("clients/" + this.editClient.content.id, {
+          clientName: this.editClient.content.name,
+          clientAddress: this.editClient.content.address,
+          clientPhoneNumber: this.editClient.content.phoneNumber,
+          clientContactPersonName: this.editClient.content.contactPersonName,
+          clientMobile: this.editClient.content.mobile,
+          clientEmail: this.editClient.content.email,
+          clientActivityStatusId: this.editClient.content.activityStatus.id,
+        });
+        console.log("client added");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateClientModal");
+          this.getClients();
+        });
+      } catch (error) {
         console.log(error);
-      };
+      }
     },
-    // updateClient() {
-    //   api
-    //     .patch("clients/" + this.editClient.content.id, {
-    //       clientName: this.editClient.content.name,
-    //       clientAddress: this.editClient.content.address,
-    //       clientPhoneNumber: this.editClient.content.phoneNumber,
-    //       clientContactPersonName: this.editClient.content.contactPersonName,
-    //       clientMobile: this.editClient.content.mobile,
-    //       clientEmail: this.editClient.content.email,
-    //     })
-    //     .then((res) => {
-    //       console.log(res);
-    //       console.log("Client updated");
-    //     });
-    //   this.$nextTick(() => {
-    //     this.$bvModal.hide("updateClientModal");
-    //     this.getClients();
-    //   });
-    // },
     handleDeactivateClient() {
       this.deactivateClient();
     },
