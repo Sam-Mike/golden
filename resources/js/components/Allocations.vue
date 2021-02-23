@@ -632,11 +632,12 @@ export default {
       this.deleteAllocation();
     },
     deleteAllocation() {
+      //allocation should be archived and not deleted
       axios
         .delete(
           "http://127.0.0.1:8000/api/allocations/" + this.editAllocation.id
         )
-        .then((res) => console.log("truck trailer driver deleted"))
+        .then((res) => console.log("allocation deleted"))
         .catch((err) => res.err);
       this.$nextTick(() => {
         this.$bvModal.hide("updateAllocationModal");
