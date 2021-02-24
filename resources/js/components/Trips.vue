@@ -27,6 +27,11 @@
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.allocation.driver.firstName }}
+                      {{ methods.item.allocation.driver.middleName }}
+                      {{ methods.item.allocation.driver.lastName }}
+                    </template>
                     <template #cell(actions)="row">
                       <b-button size="sm" @click="info(row.item)" class="mr-1"
                         >DETAILS
@@ -157,7 +162,6 @@
       id="updateTripModal"
       size="xl"
       title="Update Trip Info"
-      v-if="rowDetails"
       @ok="handleUpdateTrip"
       ><template #modal-footer="{ ok, cancel, hide }">
         <b-button
@@ -176,31 +180,31 @@
           <b-col class="border rounded">
             <b>Trip No</b>
             <p>
-              {{ editTrip.content.id }}
+              {{ editTrip.id }}
             </p>
           </b-col>
           <b-col class="border rouded">
             <b>Current Location</b>
             <p>
-              {{ editTrip.content.currentLocation }}
+              {{ editTrip.currentLocation }}
             </p>
           </b-col>
           <b-col class="border rounded">
             <b>Destination</b>
             <p>
-              {{ editTrip.content.destination.name }}
+              {{ editTrip.destination.name }}
             </p>
           </b-col>
           <b-col class="border rounded">
             <b>ETA</b>
             <p>
-              {{ editTrip.content.etaSite }}
+              {{ editTrip.etaSite }}
             </p>
           </b-col>
           <b-col class="border rounded">
             <b>Trip Status</b>
             <p>
-              {{ editTrip.content.activityStatus.name }}
+              {{ editTrip.activityStatus.name }}
             </p>
           </b-col>
           <b-col class="border rounded">
@@ -213,21 +217,21 @@
           <b-col class="border rounded">
             <b>Truck</b>
             <p>
-              {{ editTrip.content.allocation.truck.registrationNumber }}
+              {{ editTrip.allocation.truck.registrationNumber }}
             </p>
           </b-col>
           <b-col class="border rouded">
             <b>Trailer</b>
             <p>
-              {{ editTrip.content.allocation.trailer.registrationNumber }}
+              {{ editTrip.allocation.trailer.registrationNumber }}
             </p>
           </b-col>
           <b-col class="border rounded">
             <b>Driver</b>
             <p>
-              {{ editTrip.content.allocation.driver.firstName }}
-              {{ editTrip.content.allocation.driver.middleName }}
-              {{ editTrip.content.allocation.driver.lastName }}
+              {{ editTrip.allocation.driver.firstName }}
+              {{ editTrip.allocation.driver.middleName }}
+              {{ editTrip.allocation.driver.lastName }}
             </p>
           </b-col>
         </b-row>
@@ -247,7 +251,7 @@
             <b>DISPATCHER</b>
             <p>
               <v-select
-                v-model="editTrip.content.dispatcher"
+                v-model="editTrip.dispatcher"
                 label="name"
                 :options="dispatcher"
                 :reduce="(dispatcher) => dispatcher.id"
@@ -263,7 +267,7 @@
             <p>
               <b-input
                 size="sm"
-                v-model="editTrip.content.manifestNumber"
+                v-model="editTrip.manifestNumber"
                 placeholder="Enter manifest number"
               ></b-input>
             </p>
@@ -284,12 +288,12 @@
         <b-row class="border rounded">
           <b-col class="border rounded">
             <b>Client</b>
-            <p>{{ editTrip.content.client.name }}</p>
+            <p>{{ editTrip.client.name }}</p>
           </b-col>
           <b-col class="border rouded">
             <b>Client No</b>
             <p>
-              {{ editTrip.content.client.id }}
+              {{ editTrip.client.id }}
             </p>
           </b-col>
         </b-row>
@@ -297,13 +301,13 @@
         <b-row class="border rounded">
           <b-col class="border rounded">
             <b>Cargo Name</b>
-            <p>{{ editTrip.content.cargo.name }}</p>
+            <p>{{ editTrip.cargo.name }}</p>
           </b-col>
           <b-col class="border rounded">
             <b>Cargo Weight</b>
             <b-input
               size="sm"
-              v-model="editTrip.content.cargoWeight"
+              v-model="editTrip.cargoWeight"
               placeholder="Enter cargo Weight"
             ></b-input>
           </b-col>
@@ -311,7 +315,7 @@
             <b>Cargo Quantity</b>
             <b-input
               size="sm"
-              v-model="editTrip.content.cargoQuantity"
+              v-model="editTrip.cargoQuantity"
               placeholder="Enter cargo Quantity"
             ></b-input>
           </b-col>
@@ -319,7 +323,7 @@
             <b>Seal No</b>
             <b-input
               size="sm"
-              v-model="editTrip.content.sealNumber"
+              v-model="editTrip.sealNumber"
               placeholder="Enter seal Number"
             ></b-input>
           </b-col>
@@ -327,14 +331,14 @@
             <b>Container No</b>
             <b-input
               size="sm"
-              v-model="editTrip.content.containerNumber"
+              v-model="editTrip.containerNumber"
               placeholder="Enter container Number"
             ></b-input>
           </b-col>
           <b-col class="border rounded">
             <b>Loading Location</b>
             <v-select
-              v-model="editTrip.content.loadingLocation"
+              v-model="editTrip.loadingLocation"
               label="name"
               :options="locations"
               :reduce="(locations) => locations.id"
@@ -351,13 +355,14 @@ export default {
   data() {
     return {
       loading: false,
-      rowDetails: false,
       trips: [],
       people: [],
       locations: [],
+      dispatcher: [{ id: 1, name: "to be filtered from people and roles" }],
       tripFields: [
         { key: "client.name", label: "Client", sortable: true },
         { key: "cargo.name", label: "Cargo", sortable: true },
+        { key: "driverName", label: "Driver" },
         {
           key: "allocation.truck.registrationNumber",
           label: "Truck",
@@ -372,7 +377,28 @@ export default {
 
       //when trip is declared ended we need to change the truck allocation status to free again
       editTrip: {
-        content: "",
+        client: "",
+        cargo: "",
+        destination: "",
+        allocation: { truck: "", trailer: "", driver: "" },
+        activityStatus: "",
+        tripClass: "",
+        dispatchDate: "",
+        dispatcher: "",
+        etaSite: "",
+        routeCode: "",
+        currentLocation: "",
+        manifestNumber: "",
+        manifestDate: "",
+        manifestDoc: "",
+        fileNumber: "",
+        cargoOrderNumber: "",
+        cargoWeight: "",
+        cargoQuantity: "",
+        sealNumber: "",
+        containerNumber: "",
+        loadingDate: "",
+        loadingLocation: "",
       },
     };
   },
@@ -397,8 +423,30 @@ export default {
       console.log("trips loaded");
     },
     info(item, button) {
-      this.editTrip.content = item;
-      this.rowDetails = true;
+      console.log(item);
+      this.editTrip.id = item.id;
+      this.editTrip.client = item.client;
+      this.editTrip.cargo = item.cargo;
+      this.editTrip.destination = item.destination;
+      this.editTrip.allocation = item.allocation;
+      this.editTrip.activityStatus = item.activityStatus;
+      this.editTrip.tripClass = item.tripClass;
+      this.editTrip.dispatchDate = item.dispatchDate;
+      this.editTrip.dispatcher = item.dispatcher;
+      this.editTrip.etaSite = item.etaSite;
+      this.editTrip.routeCode = item.routeCode;
+      this.editTrip.currentLocation = item.currentLocation;
+      this.editTrip.manifestNumber = item.manifestNumber;
+      this.editTrip.manifestDate = item.manifestDate;
+      this.editTrip.manifestDoc = item.manifestDoc;
+      this.editTrip.fileNumber = item.fileNumber;
+      this.editTrip.cargoOrderNumber = item.cargoOrderNumber;
+      this.editTrip.cargoWeight = item.cargoWeight;
+      this.editTrip.cargoQuantity = item.cargoQuantity;
+      this.editTrip.sealNumber = item.sealNumber;
+      this.editTrip.containerNumber = item.containerNumber;
+      this.editTrip.loadingDate = item.loadingDate;
+      this.editTrip.loadingLocation = item.loadingLocation;
       this.$root.$emit("bv::show::modal", "updateTripModal", button);
     },
     //UPDATE TRIP INFORMATION
@@ -431,9 +479,9 @@ export default {
           containerNumber: this.editTrip.content.containerNumber,
           loadingDate: this.editTrip.content.loadingDate,
           loadingLocationId: this.editTrip.content.loadingLocation,
-          truckActivityStatus: 2,
-          trailerActivityStatus: 2,
-          driverActivityStatus: 2,
+          // truckActivityStatus: 2,
+          // trailerActivityStatus: 2,
+          // driverActivityStatus: 2,
         })
         .then((response) => console.log("trip updated successfully"))
         .catch((error) => console.error(error));
@@ -471,10 +519,7 @@ export default {
           containerNumber: this.editTrip.content.containerNumber,
           loadingDate: this.editTrip.content.loadingDate,
           loadingLocationId: this.editTrip.content.loadingLocation.id,
-          // setting truck, trailer and driver activity status to free again
-          truckActivityStatus: 1,
-          trailerActivityStatus: 1,
-          driverActivityStatus: 1,
+          // set truck, trailer and driver activity status to free again
         })
         .then((response) => console.log("trip archived successfully"))
         .catch((error) => console.error(error));

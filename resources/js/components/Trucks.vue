@@ -143,10 +143,10 @@
         role="dialog"
         aria-hidden="true"
         @ok="handleUpdateTruck"
-        v-if="rowDetails == true"
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
+            v-if="editTruck.activityStatus.id == 1"
             size="sm"
             variant="danger"
             @click="hide(handleDeactivateTruck())"
@@ -199,7 +199,6 @@
         role="dialog"
         aria-hidden="true"
         @ok="handleActivateTruck"
-        v-if="rowDetails == true"
       >
         <h6>Reg Number</h6>
         <p>{{ editTruck.registrationNumber }}</p>
@@ -218,7 +217,6 @@ import api from "../apis/api";
 export default {
   data() {
     return {
-      rowDetails: false,
       loading: false,
       trucks: [],
       truckType: [],
@@ -236,7 +234,12 @@ export default {
         companyId: "",
         truckTypeId: "",
       },
-      editTruck: "",
+      editTruck: {
+        registrationNumber: "",
+        company: "",
+        truckType: "",
+        activityStatus: "",
+      },
     };
   },
   computed: {
@@ -286,8 +289,12 @@ export default {
       });
     },
     info(item, button) {
-      this.editTruck = item;
-      this.rowDetails = true;
+      console.log(item);
+      this.editTruck.id = item.id;
+      this.editTruck.registrationNumber = item.registrationNumber;
+      this.editTruck.company = item.company;
+      this.editTruck.truckType = item.truckType;
+      this.editTruck.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "updateTruckModal", button);
     },
     handleUpdateTruck(bvModalEvt) {
@@ -296,15 +303,12 @@ export default {
     },
     updateTruck() {
       api
-        .patch(
-          "trucks/" + this.editTruck.content.id,
-          {
-            registrationNumber: this.editTruck.content.registrationNumber,
-            companyId: this.editTruck.content.company.id,
-            truckTypeId: this.editTruck.content.truckType.id,
-            activityStatusId: this.editTruck.content.activityStatus.id,
-          }
-        )
+        .patch("trucks/" + this.editTruck.content.id, {
+          registrationNumber: this.editTruck.content.registrationNumber,
+          companyId: this.editTruck.content.company.id,
+          truckTypeId: this.editTruck.content.truckType.id,
+          activityStatusId: this.editTruck.content.activityStatus.id,
+        })
         .then((res) => {
           console.log("Truck updated");
         });
@@ -318,15 +322,12 @@ export default {
     },
     deactivateTruck() {
       api
-        .patch(
-          "trucks/" + this.editTruck.content.id,
-          {
-            registrationNumber: this.editTruck.content.registrationNumber,
-            companyId: this.editTruck.content.company.id,
-            truckTypeId: this.editTruck.content.truckType.id,
-            activityStatusId: 3,
-          }
-        )
+        .patch("trucks/" + this.editTruck.content.id, {
+          registrationNumber: this.editTruck.content.registrationNumber,
+          companyId: this.editTruck.content.company.id,
+          truckTypeId: this.editTruck.content.truckType.id,
+          activityStatusId: 3,
+        })
         .then((res) => {
           console.log("Truck deactivated");
         });
@@ -337,7 +338,6 @@ export default {
     },
     inactiveInfo(item, button) {
       this.editTruck.content = item;
-      this.rowDetails = true;
       this.$root.$emit("bv::show::modal", "inactiveTruckModal", button);
     },
     handleActivateTruck() {
@@ -345,15 +345,12 @@ export default {
     },
     activateTruck() {
       api
-        .patch(
-          "trucks/" + this.editTruck.content.id,
-          {
-            registrationNumber: this.editTruck.content.registrationNumber,
-            companyId: this.editTruck.content.company.id,
-            truckTypeId: this.editTruck.content.truckType.id,
-            activityStatusId: 1,
-          }
-        )
+        .patch("trucks/" + this.editTruck.content.id, {
+          registrationNumber: this.editTruck.content.registrationNumber,
+          companyId: this.editTruck.content.company.id,
+          truckTypeId: this.editTruck.content.truckType.id,
+          activityStatusId: 1,
+        })
         .then((res) => {
           console.log("Truck activated");
         });

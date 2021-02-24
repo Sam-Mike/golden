@@ -159,6 +159,7 @@
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
+            v-if="editTrailer.activityStatus.id == 1"
             size="sm"
             variant="danger"
             @click="hide(handleDeactivateTrailer())"
@@ -239,7 +240,7 @@
 </template>
 <script>
 import api from "../apis/api";
-import {  mapState } from "vuex";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -267,11 +268,11 @@ export default {
         tlNumber: "",
         trailerType: "",
         company: "",
-        activityStatus:""
+        activityStatus: "",
       },
     };
   },
-  computed:{
+  computed: {
     activeTrailers() {
       return this.trailers.filter(
         (trailers) =>
@@ -309,14 +310,14 @@ export default {
       this.createTrailer();
     },
     async createTrailer() {
-      await this.$store.dispatch("trailer/createTrailer", this.newTrailer);
+      await api.post("trailers", this.newTrailer);
       this.$nextTick(() => {
         this.$bvModal.hide("addTrailerModal");
         this.getTrailers();
       });
     },
     info(item, button) {
-      console.log(item)
+      console.log(item);
       this.editTrailer.id = item.id;
       this.editTrailer.registrationNumber = item.registrationNumber;
       this.editTrailer.tlNumber = item.tlNumber;

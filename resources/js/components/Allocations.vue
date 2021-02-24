@@ -422,7 +422,6 @@
         ok-title="Delete"
         ok-variant="danger"
         @ok="handleDeleteAllocation"
-        v-if="this.rowDetails == true"
       >
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -451,7 +450,6 @@ import api from "../apis/api";
 export default {
   data() {
     return {
-      rowDetails: false,
       loading: false,
       isSuccess: false,
       allocations: [],
@@ -482,7 +480,11 @@ export default {
         destinationLocationId: "",
         checkedAllocations: [],
       },
-      editAllocation: "",
+      editAllocation: {
+        truck: "",
+        trailer: "",
+        driver: "",
+      },
       driverSearch(option, label, search) {
         return (
           option.firstName.toLowerCase().indexOf(search.toLowerCase()) > -1 ||
@@ -551,27 +553,25 @@ export default {
   },
 
   methods: {
-    getAllocations() {
-      this.loading = true;
-      this.isSuccess = false;
-      axios
-        .get("http://localhost:8000/api/allocations")
-        .then(({ data }) => {
-          this.allocations = data.allocations;
-          this.company = data.company;
-          this.clients = data.clients;
-          this.cargo = data.cargo;
-          this.locations = data.locations;
-          this.trucks = data.trucks;
-          this.trailers = data.trailers;
-          this.drivers = data.drivers;
-          this.isSuccess = true;
-        })
-        .catch((error) => {
-          console.log(error);
-        })
-        .finally(() => (this.loading = false));
-      console.log("allocations loaded");
+    async getAllocations() {
+      try {
+        this.loading = true;
+        this.isSuccess = false;
+        const response = await api.get("allocations");
+        this.allocations = response.data.allocations;
+        this.company = response.data.company;
+        this.clients = response.data.clients;
+        this.cargo = response.data.cargo;
+        this.locations = response.data.locations;
+        this.trucks = response.data.trucks;
+        this.trailers = response.data.trailers;
+        this.drivers = response.data.drivers;
+        this.isSuccess = true;
+        this.loading = false;
+        console.log("allocations loaded");
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     handleCreateAllocation(bvModalEvt) {
@@ -580,50 +580,45 @@ export default {
       this.createAllocation();
     },
 
-    createAllocation() {
-      axios
-        .post("http://127.0.0.1:8000/api/allocations", {
+    async createAllocation() {
+      try {
+        await api.post("/allocations", {
           truckId: this.newAllocation.truckId,
           trailerId: this.newAllocation.trailerId,
           driverId: this.newAllocation.driverId,
-        })
-        .then((res) => console.log("allocation added"))
-        .catch((err) => res.err);
-      this.$nextTick(() => {
-        this.$bvModal.hide("addCoachAllocationModal");
-        this.$bvModal.hide("addFleetAllocationModal");
-        this.$bvModal.hide("addWheelsAllocationModal");
-        this.newAllocation.truckId = "";
-        this.newAllocation.trailerId = "";
-        this.newAllocation.driverId = "";
-        this.getAllocations();
-      });
+        });
+        this.$nextTick(() => {
+          this.$bvModal.hide("addCoachAllocationModal");
+          this.$bvModal.hide("addFleetAllocationModal");
+          this.$bvModal.hide("addWheelsAllocationModal");
+          this.newAllocation.truckId = "";
+          this.newAllocation.trailerId = "";
+          this.newAllocation.driverId = "";
+          this.getAllocations();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
 
-    //sending allocation
-    sendTripData() {
-      axios
-        .post("http://127.0.0.1:8000/api/trips", {
+    //creating trips
+    async sendTripData() {
+      try {
+        await api.post("trips", {
           cargoId: this.newTrip.cargoId,
           clientId: this.newTrip.clientId,
           destinationId: this.newTrip.destinationLocationId,
           allocationsList: this.newTrip.checkedAllocations,
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((error) => {
-          console.log(error.response);
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("addAllocationModal");
-        this.getAllocations();
-      });
+        this.$nextTick(() => {
+          this.$bvModal.hide("addAllocationModal");
+          this.getAllocations();
+        });
+      } catch (error) {}
     },
     // deleting Truck Trailer Drivers
     allocationInfo(item, button) {
       this.editAllocation = item;
-      this.rowDetails = true;
       this.$root.$emit("bv::show::modal", "updateAllocationModal", button);
     },
     handleDeleteAllocation(bvModalEvt) {
@@ -631,19 +626,17 @@ export default {
       bvModalEvt.preventDefault();
       this.deleteAllocation();
     },
-    deleteAllocation() {
-      //allocation should be archived and not deleted
-      axios
-        .delete(
-          "http://127.0.0.1:8000/api/allocations/" + this.editAllocation.id
-        )
-        .then((res) => console.log("allocation deleted"))
-        .catch((err) => res.err);
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateAllocationModal");
-        this.getAllocations();
-      });
-    },
+    // deleteFreeAllocation() {
+    //   //allocation should be archived and not deleted
+    //   api
+    //     .delete("allocations/" + this.editAllocation.id)
+    //     .then((res) => console.log("allocation deleted"))
+    //     .catch((err) => res.err);
+    //   this.$nextTick(() => {
+    //     this.$bvModal.hide("updateAllocationModal");
+    //     this.getAllocations();
+    //   });
+    // },
   },
 };
 </script>

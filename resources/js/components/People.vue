@@ -237,20 +237,24 @@
         aria-hidden="true"
         @ok="handleUpdatePerson"
         title="Update Person"
-        v-if="rowDetails == true"
       >
-      <template #modal-footer="{ok, cancel, hide}">
-        <b-button size="sm" variant="danger" @click="hide(handleDeactivatePerson())">Deactivate</b-button>
-        <b-button size="sm" variant="" @click="cancel">Cancel</b-button>
-        <b-button size="sm" variant="primary" @click="ok">Update</b-button>
-      </template>
+        <template #modal-footer="{ ok, cancel, hide }">
+          <b-button
+            size="sm"
+            variant="danger"
+            @click="hide(handleDeactivatePerson())"
+            >Deactivate</b-button
+          >
+          <b-button size="sm" variant="" @click="cancel">Cancel</b-button>
+          <b-button size="sm" variant="primary" @click="ok">Update</b-button>
+        </template>
         <form ref="form" @submit.stop.prevent="updatePerson">
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
               type="text"
               class="form-control"
-              v-model="editPerson.content.firstName"
+              v-model="editPerson.firstName"
               placeholder="Enter your first name"
               required
             />
@@ -260,7 +264,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="editPerson.content.middleName"
+              v-model="editPerson.middleName"
               placeholder="Enter your middle name"
               required
             />
@@ -270,7 +274,7 @@
             <input
               type="text"
               class="form-control"
-              v-model="editPerson.content.lastName"
+              v-model="editPerson.lastName"
               placeholder="Enter your last name"
               required
             />
@@ -280,7 +284,7 @@
             <input
               type="date"
               class="form-control"
-              v-model="editPerson.content.dob"
+              v-model="editPerson.dob"
               placeholder="Enter date of birth"
               required
             />
@@ -290,7 +294,7 @@
             <input
               type="tel"
               class="form-control"
-              v-model="editPerson.content.mobile"
+              v-model="editPerson.mobile"
               placeholder="Enter Mobile Number"
               required
             />
@@ -300,7 +304,7 @@
             <input
               type="date"
               class="form-control"
-              v-model="editPerson.content.startDate"
+              v-model="editPerson.startDate"
               placeholder="Enter employment date"
               required
             />
@@ -309,7 +313,7 @@
           <div class="form-group">
             <label for="company">Company</label>
             <v-select
-              v-model="editPerson.content.company.id"
+              v-model="editPerson.company.id"
               label="name"
               :options="company"
               :reduce="(company) => company.id"
@@ -319,7 +323,7 @@
           <div class="form-group">
             <label for="role">Role</label>
             <v-select
-              v-model="editPerson.content.rolePosition.id"
+              v-model="editPerson.rolePosition.id"
               label="name"
               :options="rolePositions"
               :reduce="(rolePositions) => rolePositions.id"
@@ -331,7 +335,7 @@
             <input
               type="number"
               class="form-control"
-              v-model="editPerson.content.licenseNumber"
+              v-model="editPerson.licenseNumber"
               placeholder="Enter License Number"
               required
             />
@@ -341,14 +345,13 @@
             <input
               type="date"
               class="form-control"
-              v-model="editPerson.content.licenseIssueDate"
+              v-model="editPerson.licenseIssueDate"
               placeholder="Enter License Issue Date"
               required
             />
           </div>
           <div class="form-group">
             <label for="licenseClass">License Class</label>
-            
           </div>
         </form>
       </b-modal>
@@ -369,25 +372,25 @@
       >
         <div class="modal-body">
           <h6>First Name</h6>
-          <p>{{ editPerson.content.firstName }}</p>
+          <p>{{ editPerson.firstName }}</p>
           <h6>Middle Name</h6>
-          <p>{{ editPerson.content.middleName }}</p>
+          <p>{{ editPerson.middleName }}</p>
           <h6>Last Name</h6>
-          <p>{{ editPerson.content.lastName }}</p>
+          <p>{{ editPerson.lastName }}</p>
           <h6>Date of Birth</h6>
-          <p>{{ editPerson.content.dob }}</p>
+          <p>{{ editPerson.dob }}</p>
           <h6>Mobile Number</h6>
-          <p>{{ editPerson.content.mobile }}</p>
+          <p>{{ editPerson.mobile }}</p>
           <h6>Start Date</h6>
-          <p>{{ editPerson.content.startDate }}</p>
+          <p>{{ editPerson.startDate }}</p>
           <h6>Company</h6>
-          <p>{{ editPerson.content.company.name }}</p>
+          <p>{{ editPerson.company.name }}</p>
           <h6>Role</h6>
-          <p>{{ editPerson.content.rolePosition.name }}</p>
+          <p>{{ editPerson.rolePosition.name }}</p>
           <h6>License Number</h6>
-          <p>{{ editPerson.content.licenseNumber }}</p>
+          <p>{{ editPerson.licenseNumber }}</p>
           <h6>License Issue Date</h6>
-          <p>{{ editPerson.content.licenseIssueDate }}</p>
+          <p>{{ editPerson.licenseIssueDate }}</p>
           <h6>License Class</h6>
         </div>
       </b-modal>
@@ -413,8 +416,10 @@ export default {
           label: "Department",
           sortable: true,
         },
-        { key: "rolePosition.name", label:"Role"},
+        { key: "rolePosition.name", label: "Role" },
         { key: "licenseIssueDate" },
+        { key: "licenseExpiryDate" },
+        { key: "activityStatus.name", label: "Assignment Status" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -436,12 +441,23 @@ export default {
         licenseClassId: "",
       },
       editPerson: {
-        id: "updatePersonModal",
-        content: "",
+        id: "",
+        firstName: "",
+        middleName: "",
+        lastName: "",
+        dob: "",
+        mobile: "",
+        startDate: "",
+        company: "",
+        rolePosition: "",
+        licenseNumber: "",
+        licenseIssueDate: "",
+        licenseExpiryDate: "",
+        licenseClass: "",
       },
     };
   },
-  computed:{
+  computed: {
     activePeople() {
       return this.people.filter(
         (people) =>
@@ -456,31 +472,28 @@ export default {
     this.getPeople();
   },
   methods: {
-    getPeople() {
-      this.loading = true;
-      api
-        .get("people")
-        .then(({ data }) => {
-          this.people = data.people;
-          this.company = data.company;
-          this.rolePositions = data.rolePositions;
-          this.departments = data.departments;
-          this.loading = false;
-        })
-        .catch((error) => {
-          return console.log(error);
-        });
+    async getPeople() {
+      try {
+        this.loading = true;
+        const response = await api.get("people");
+        this.people = response.data.people;
+        this.company = response.data.company;
+        this.rolePositions = response.data.rolePositions;
+        this.departments = response.data.departments;
+        this.loading = false;
+      } catch (error) {
+        console.log(error);
+      }
     },
-    
     handleCreatePerson(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
       // Trigger submit handler
       this.createPerson();
     },
-    createPerson() {
-      api
-        .post("people", {
+    async createPerson() {
+      try {
+        await api.post("people", {
           firstName: this.newPerson.firstName,
           middleName: this.newPerson.middleName,
           lastName: this.newPerson.lastName,
@@ -492,28 +505,40 @@ export default {
           licenseNumber: this.newPerson.licenseNumber,
           licenseIssueDate: this.newPerson.licenseIssueDate,
           //licenseClassId: this.newPerson.licenseClassid,
-        })
-        .then((res) => console.log("Person added"))
-        .catch((err) => console.log(err));
-      this.$nextTick(() => {
-        this.$bvModal.hide("addPersonModal");
-        this.newPerson.firstName = "";
-        this.newPerson.middleName = "";
-        this.newPerson.dob = "";
-        this.newPerson.mobile = "";
-        this.newPerson.startDate = "";
-        this.newPerson.companyId = "";
-        this.newPerson.rolePositionId = "";
-        this.newPerson.licenseIssueDate = "";
-        this.newPerson.firstName = "";
-        this.newPerson.firstName = "";
-        this.getPeople();
-      });
+        });
+        this.$nextTick(() => {
+          this.$bvModal.hide("addPersonModal");
+          this.newPerson.firstName = "";
+          this.newPerson.middleName = "";
+          this.newPerson.dob = "";
+          this.newPerson.mobile = "";
+          this.newPerson.startDate = "";
+          this.newPerson.companyId = "";
+          this.newPerson.rolePositionId = "";
+          this.newPerson.licenseIssueDate = "";
+          this.newPerson.firstName = "";
+          this.newPerson.firstName = "";
+          this.getPeople();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     info(item, button) {
-      this.editPerson.content = item;
-      this.rowDetails = true;
-      this.$root.$emit("bv::show::modal", this.editPerson.id, button);
+      console.log(item);
+      this.editPerson.id = item.id;
+      this.editPerson.firstName = item.firstName;
+      this.editPerson.middleName = item.middleName;
+      this.editPerson.lastName = item.lastName;
+      this.editPerson.dob = item.dob;
+      this.editPerson.mobile = item.mobile;
+      this.editPerson.startDate = item.startDate;
+      this.editPerson.company = item.company;
+      this.editPerson.rolePosition = item.rolePosition;
+      this.editPerson.licenseNumber = item.licenseNumber;
+      this.editPerson.licenseIssueDate = item.licenseIssueDate;
+      this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
+      this.$root.$emit("bv::show::modal", "updatePersonModal", button);
     },
     handleUpdatePerson(bvModalEvt) {
       // Prevent modal from closing
@@ -521,98 +546,90 @@ export default {
       // Trigger submit handler
       this.updatePerson();
     },
-    updatePerson() {
-      api
-        .patch(
-          "people/" + this.editPerson.content.id,
-          {
-            firstName: this.editPerson.content.firstName,
-            middleName: this.editPerson.content.middleName,
-            lastName: this.editPerson.content.lastName,
-            dob: this.editPerson.content.dob,
-            mobile: this.editPerson.content.mobile,
-            startDate: this.editPerson.content.startDate,
-            companyId: this.editPerson.content.company.id,
-            rolePositionId: this.editPerson.content.rolePosition.id,
-            //departmentId: this.editPerson.content.department.id,
-            licenseNumber: this.editPerson.content.licenseNumber,
-            licenseIssueDate: this.editPerson.content.licenseIssueDate,
-            //licenseClassId: this.editPerson.content.licenseClass.id,
-            activityStatusId: this.editPerson.content.activityStatus.id,
-          }
-        )
-        .then((res) => {
-          console.log("Person updated");
+    async updatePerson() {
+      try {
+        await api.patch("people/" + this.editPerson.content.id, {
+          firstName: this.editPerson.content.firstName,
+          middleName: this.editPerson.content.middleName,
+          lastName: this.editPerson.content.lastName,
+          dob: this.editPerson.content.dob,
+          mobile: this.editPerson.content.mobile,
+          startDate: this.editPerson.content.startDate,
+          companyId: this.editPerson.content.company.id,
+          rolePositionId: this.editPerson.content.rolePosition.id,
+          //departmentId: this.editPerson.content.department.id,
+          licenseNumber: this.editPerson.content.licenseNumber,
+          licenseIssueDate: this.editPerson.content.licenseIssueDate,
+          //licenseClassId: this.editPerson.content.licenseClass.id,
+          activityStatusId: this.editPerson.content.activityStatus.id,
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updatePersonModal");
-        this.getPeople();
-      });
+        this.$nextTick(() => {
+          this.$bvModal.hide("updatePersonModal");
+          this.getPeople();
+        });
+        console.log("Person updated");
+      } catch (error) {}
     },
     handleDeactivatePerson() {
       this.deactivatePerson();
     },
-    deactivatePerson() {
-      api
-        .patch(
-          "people/" + this.editPerson.content.id,
-          {
-            firstName: this.editPerson.content.firstName,
-            middleName: this.editPerson.content.middleName,
-            lastName: this.editPerson.content.lastName,
-            dob: this.editPerson.content.dob,
-            mobile: this.editPerson.content.mobile,
-            startDate: this.editPerson.content.startDate,
-            companyId: this.editPerson.content.company.id,
-            departmentId: this.editPerson.content.department.id,
-            licenseNumber: this.editPerson.content.licenseNumber,
-            licenseIssueDate: this.editPerson.content.licenseIssueDate,
-            //licenseClassId: this.editPerson.content.licenseClass.id,
-            activityStatus: 3,
-          }
-        )
-        .then((res) => {
-          console.log("Person Deactivated");
+    async deactivatePerson() {
+      try {
+        await api.patch("people/" + this.editPerson.id, {
+          firstName: this.editPerson.firstName,
+          middleName: this.editPerson.middleName,
+          lastName: this.editPerson.lastName,
+          dob: this.editPerson.dob,
+          mobile: this.editPerson.mobile,
+          startDate: this.editPerson.startDate,
+          companyId: this.editPerson.company.id,
+          departmentId: this.editPerson.department.id,
+          licenseNumber: this.editPerson.licenseNumber,
+          licenseIssueDate: this.editPerson.licenseIssueDate,
+          //licenseClassId: this.editPerson.licenseClass.id,
+          activityStatus: 3,
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updatePersonModal");
-        this.getPeople();
-      });
+        console.log("Person Deactivated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updatePersonModal");
+          this.getPeople();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     inactiveInfo(item, button) {
-      this.editPerson.content = item;
+      this.editPerson = item;
       this.rowDetails = true;
       this.$root.$emit("bv::show::modal", "inactivePersonModal", button);
     },
     handleActivatePerson() {
       this.activatePerson();
     },
-    activatePerson() {
-      api
-        .patch(
-          "people/" + this.editPerson.content.id,
-          {
-            firstName: this.editPerson.content.firstName,
-            middleName: this.editPerson.content.middleName,
-            lastName: this.editPerson.content.lastName,
-            dob: this.editPerson.content.dob,
-            mobile: this.editPerson.content.mobile,
-            startDate: this.editPerson.content.startDate,
-            companyId: this.editPerson.content.company.id,
-            departmentId: this.editPerson.content.department.id,
-            licenseNumber: this.editPerson.content.licenseNumber,
-            licenseIssueDate: this.editPerson.content.licenseIssueDate,
-            //licenseClassId: this.editPerson.content.licenseClass.id,
-            activityStatus: 1,
-          }
-        )
-        .then((res) => {
-          console.log("Person Activated");
+    async activatePerson() {
+      try {
+        await api.patch("people/" + this.editPerson.id, {
+          firstName: this.editPerson.firstName,
+          middleName: this.editPerson.middleName,
+          lastName: this.editPerson.lastName,
+          dob: this.editPerson.dob,
+          mobile: this.editPerson.mobile,
+          startDate: this.editPerson.startDate,
+          companyId: this.editPerson.company.id,
+          departmentId: this.editPerson.department.id,
+          licenseNumber: this.editPerson.licenseNumber,
+          licenseIssueDate: this.editPerson.licenseIssueDate,
+          //licenseClassId: this.editPerson.licenseClass.id,
+          activityStatus: 1,
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("inactivePersonModal");
-        this.getPeople();
-      });
+        console.log("Person Activated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("inactivePersonModal");
+          this.getPeople();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
