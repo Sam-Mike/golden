@@ -240,6 +240,7 @@
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
+            v-if="editPerson.activityStatus.id == 1"
             size="sm"
             variant="danger"
             @click="hide(handleDeactivatePerson())"
@@ -454,6 +455,7 @@ export default {
         licenseIssueDate: "",
         licenseExpiryDate: "",
         licenseClass: "",
+        activityStatus:"",
       },
     };
   },
@@ -538,6 +540,7 @@ export default {
       this.editPerson.licenseNumber = item.licenseNumber;
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
       this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
+      this.editPerson.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "updatePersonModal", button);
     },
     handleUpdatePerson(bvModalEvt) {

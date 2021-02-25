@@ -369,6 +369,7 @@ export default {
           sortable: true,
         },
         { key: "allocation.trailer.tlNumber", label: "Trailer" },
+        { key: "currentLocation", label: "Current Location" },
         { key: "activityStatus.name", label: "Status" },
         { key: "actions" },
       ],
@@ -407,20 +408,18 @@ export default {
     this.getTrips();
   },
   methods: {
-    getTrips() {
-      this.loading = true;
-      api
-        .get("trips")
-        .then((response) => {
-          this.trips = response.data.trips;
-          this.people = response.data.people;
-          this.locations = response.data.locations;
-          this.loading = false;
-        })
-        .catch((error) => {
-          return console.log(error);
-        });
-      console.log("trips loaded");
+    async getTrips() {
+      try {
+        this.loading = true;
+        const response = await api.get("trips");
+        this.trips = response.data.trips;
+        this.people = response.data.people;
+        this.locations = response.data.locations;
+        this.loading = false;
+        console.log("trips loaded");
+      } catch (error) {
+        console.log(error);
+      }
     },
     info(item, button) {
       console.log(item);
@@ -454,9 +453,9 @@ export default {
       bvModalEvt.preventDefault();
       this.updateTrip();
     },
-    updateTrip() {
-      api
-        .patch("/trips/" + this.editTrip.content.id, {
+    async updateTrip() {
+      try {
+        await api.patch("/trips/" + this.editTrip.content.id, {
           clientId: this.editTrip.content.client.id,
           cargoId: this.editTrip.content.client.id,
           destinationId: this.editTrip.content.destination.id,
@@ -479,24 +478,23 @@ export default {
           containerNumber: this.editTrip.content.containerNumber,
           loadingDate: this.editTrip.content.loadingDate,
           loadingLocationId: this.editTrip.content.loadingLocation,
-          // truckActivityStatus: 2,
-          // trailerActivityStatus: 2,
-          // driverActivityStatus: 2,
-        })
-        .then((response) => console.log("trip updated successfully"))
-        .catch((error) => console.error(error));
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateTripModal");
-        this.getTrips();
-      });
+        });
+        console.log("trip updated successfully");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateTripModal");
+          this.getTrips();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleEndTrip(bvModalEvt) {
       bvModalEvt.preventDefault();
       this.endTrip();
     },
-    endTrip() {
-      api
-        .patch("trips/" + this.editTrip.content.id, {
+    async endTrip() {
+      try {
+        await api.patch("trips/" + this.editTrip.content.id, {
           clientId: this.editTrip.content.client.id,
           cargoId: this.editTrip.content.client.id,
           destinationId: this.editTrip.content.destination.id,
@@ -520,13 +518,15 @@ export default {
           loadingDate: this.editTrip.content.loadingDate,
           loadingLocationId: this.editTrip.content.loadingLocation.id,
           // set truck, trailer and driver activity status to free again
-        })
-        .then((response) => console.log("trip archived successfully"))
-        .catch((error) => console.error(error));
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateTripModal");
-        this.getTrips();
-      });
+        });
+        console.log("trip archived successfully");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateTripModal");
+          this.getTrips();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

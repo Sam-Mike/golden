@@ -289,7 +289,7 @@ export default {
       });
     },
     info(item, button) {
-      console.log(item);
+      //console.log(item);
       this.editTruck.id = item.id;
       this.editTruck.registrationNumber = item.registrationNumber;
       this.editTruck.company = item.company;
@@ -320,44 +320,48 @@ export default {
     handleDeactivateTruck() {
       this.deactivateTruck();
     },
-    deactivateTruck() {
-      api
-        .patch("trucks/" + this.editTruck.content.id, {
+    async deactivateTruck() {
+      try {
+        await api.patch("trucks/" + this.editTruck.content.id, {
           registrationNumber: this.editTruck.content.registrationNumber,
           companyId: this.editTruck.content.company.id,
           truckTypeId: this.editTruck.content.truckType.id,
           activityStatusId: 3,
-        })
-        .then((res) => {
-          console.log("Truck deactivated");
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateTruckModal");
-        this.getTrucks();
-      });
+        console.log("Truck deactivated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateTruckModal");
+          this.getTrucks();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     inactiveInfo(item, button) {
-      this.editTruck.content = item;
+      this.editTruck.id = item.id;
+      this.editTruck.registrationNumber = item.registrationNumber;
+      this.editTruck.company = item.company;
+      this.editTruck.truckType = item.truckType;
+      this.editTruck.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "inactiveTruckModal", button);
     },
     handleActivateTruck() {
       this.activateTruck();
     },
-    activateTruck() {
-      api
-        .patch("trucks/" + this.editTruck.content.id, {
+    async activateTruck() {
+      try {
+        await api.patch("trucks/" + this.editTruck.content.id, {
           registrationNumber: this.editTruck.content.registrationNumber,
           companyId: this.editTruck.content.company.id,
           truckTypeId: this.editTruck.content.truckType.id,
           activityStatusId: 1,
-        })
-        .then((res) => {
-          console.log("Truck activated");
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("inactiveTruckModal");
-        this.getTrucks();
-      });
+        console.log("Truck activated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("inactiveTruckModal");
+          this.getTrucks();
+        });
+      } catch (error) {}
     },
   },
 };

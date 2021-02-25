@@ -106,6 +106,11 @@
                     >
                       Admin
                     </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <router-link class="dropdown-item" to="/users"
+                        >Users</router-link
+                      >
+                    </div>
                   </li>
                 </ul>
                 <ul v-if="authStatus" class="navbar-nav ml-auto">

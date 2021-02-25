@@ -330,42 +330,44 @@ export default {
       bvModalEvt.preventDefault();
       this.updateTrailer();
     },
-    updateTrailer() {
-      api
-        .patch("trailers/" + this.editTrailer.id, {
+    async updateTrailer() {
+      try {
+        await api.patch("trailers/" + this.editTrailer.id, {
           registrationNumber: this.editTrailer.registrationNumber,
           tlNumber: this.editTrailer.tlNumber,
           trailerTypeId: this.editTrailer.trailerType.id,
           companyId: this.editTrailer.company.id,
           activityStatusId: this.editTrailer.activityStatus.id,
-        })
-        .then((res) => {
-          console.log("Trailer updated");
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateTrailerModal");
-        //code to set the vmodel empty
-      });
+        console.log("Trailer updated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateTrailerModal");
+          //code to set the vmodel empty
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleDeactivateTrailer() {
       this.deactivateTrailer();
     },
-    deactivateTrailer() {
-      api
-        .patch("trailers/" + this.editTrailer.id, {
+    async deactivateTrailer() {
+      try {
+        await api.patch("trailers/" + this.editTrailer.id, {
           registrationNumber: this.editTrailer.registrationNumber,
           tlNumber: this.editTrailer.tlNumber,
           trailerTypeId: this.editTrailer.trailerType.id,
           companyId: this.editTrailer.company.id,
           activityStatusId: 3,
-        })
-        .then((res) => {
-          console.log("Trailer deactivated");
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateTrailerModal");
-        this.getTrailers();
-      });
+        console.log("Trailer deactivated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateTrailerModal");
+          this.getTrailers();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     inactiveInfo(item, button) {
       this.editTrailer.id = item.id;
@@ -378,22 +380,23 @@ export default {
     handleActivateTrailer() {
       this.activateTrailer();
     },
-    activateTrailer() {
-      api
-        .patch("trailers/" + this.editTrailer.id, {
+    async activateTrailer() {
+      try {
+        await api.patch("trailers/" + this.editTrailer.id, {
           registrationNumber: this.editTrailer.registrationNumber,
           tlNumber: this.editTrailer.tlNumber,
           trailerTypeId: this.editTrailer.trailerType.id,
           companyId: this.editTrailer.company.id,
           activityStatusId: 1,
-        })
-        .then((res) => {
-          console.log("Trailer activated");
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("inactiveTrailerModal");
-        this.getTrailers();
-      });
+        console.log("Trailer activated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("inactiveTrailerModal");
+          this.getTrailers();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

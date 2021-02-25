@@ -614,7 +614,9 @@ export default {
           this.$bvModal.hide("addAllocationModal");
           this.getAllocations();
         });
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
     // deleting Truck Trailer Drivers
     allocationInfo(item, button) {

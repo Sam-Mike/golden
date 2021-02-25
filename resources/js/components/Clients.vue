@@ -214,6 +214,7 @@
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
+          v-if="editClient.activityStatus.id == 1"
             size="sm"
             variant="danger"
             @click="hide(handleDeactivateClient())"
@@ -228,7 +229,7 @@
               id="client-name"
               type="text"
               class="form-control"
-              v-model="editClient.content.name"
+              v-model="editClient.name"
               placeholder="Enter client name"
               required
             ></b-form-input>
@@ -237,7 +238,7 @@
             <b-form-input
               type="text"
               class="form-control"
-              v-model="editClient.content.address"
+              v-model="editClient.address"
               placeholder="Enter client Address"
               required
             ></b-form-input>
@@ -249,7 +250,7 @@
             <b-form-input
               type="tel"
               class="form-control"
-              v-model="editClient.content.phoneNumber"
+              v-model="editClient.phoneNumber"
               placeholder="Enter client's phone number"
               required
             ></b-form-input>
@@ -261,7 +262,7 @@
             <b-form-input
               type="text"
               class="form-control"
-              v-model="editClient.content.contactPersonName"
+              v-model="editClient.contactPersonName"
               placeholder="Enter contact person's name"
               required
             ></b-form-input>
@@ -273,7 +274,7 @@
             <b-form-input
               type="tel"
               class="form-control"
-              v-model="editClient.content.mobile"
+              v-model="editClient.mobile"
               placeholder="Enter mobile number"
               required
             ></b-form-input>
@@ -282,7 +283,7 @@
             <b-form-input
               type="email"
               class="form-control"
-              v-model="editClient.content.email"
+              v-model="editClient.email"
               aria-describedby="emailHelp"
               placeholder="Enter client's email"
               required
@@ -306,17 +307,17 @@
       >
         <div class="modal-body">
           <h6>Name:</h6>
-          <p>{{ this.editClient.content.name }}</p>
+          <p>{{ this.editClient.name }}</p>
           <h6>Address:</h6>
-          <p>{{ this.editClient.content.address }}</p>
+          <p>{{ this.editClient.address }}</p>
           <h6>Phone Number:</h6>
-          <p>{{ this.editClient.content.phoneNumber }}</p>
+          <p>{{ this.editClient.phoneNumber }}</p>
           <h6>Contact Person:</h6>
-          <p>{{ this.editClient.content.contactPersonName }}</p>
+          <p>{{ this.editClient.contactPersonName }}</p>
           <h6>Mobile:</h6>
-          <p>{{ this.editClient.content.mobile }}</p>
+          <p>{{ this.editClient.mobile }}</p>
           <h6>Email:</h6>
-          <p>{{ this.editClient.content.email }}</p>
+          <p>{{ this.editClient.email }}</p>
         </div>
       </b-modal>
     </b-overlay>
@@ -352,8 +353,15 @@ export default {
       },
       tableFilter: null,
       editClient: {
-        modalId: "updateClientModal",
-        content: "",
+        //content: "",
+        id: "",
+        name: "",
+        address: "",
+        phoneNumber: "",
+        contactPersonName: "",
+        mobile: "",
+        email: "",
+        activityStatus: "",
       },
     };
   },
@@ -419,8 +427,16 @@ export default {
     },
 
     info(item, button) {
-      this.editClient.content = item;
-      this.$root.$emit("bv::show::modal", this.editClient.modalId, button);
+      console.log(item);
+      this.editClient.id = item.id;
+      this.editClient.name = item.name;
+      this.editClient.address = item.address;
+      this.editClient.phoneNumber = item.phoneNumber;
+      this.editClient.contactPersonName = item.contactPersonName;
+      this.editClient.mobile = item.mobile;
+      this.editClient.email = item.email;
+      this.editClient.activityStatus = item.activityStatus;
+      this.$root.$emit("bv::show::modal", "updateClientModal", button);
     },
     handleUpdateClient(bvModalEvt) {
       bvModalEvt.preventDefault();
@@ -449,25 +465,25 @@ export default {
     handleDeactivateClient() {
       this.deactivateClient();
     },
-    deactivateClient() {
-      api
-        .patch("clients/" + this.editClient.content.id, {
+    async deactivateClient() {
+      try {
+        await api.patch("clients/" + this.editClient.content.id, {
           clientName: this.editClient.content.name,
           clientAddress: this.editClient.content.address,
           clientPhoneNumber: this.editClient.content.phoneNumber,
           clientContactPersonName: this.editClient.content.contactPersonName,
           clientMobile: this.editClient.content.mobile,
           clientEmail: this.editClient.content.email,
-          clientActivityStatusId: 4,
-        })
-        .then((res) => {
-          console.log(res);
-          console.log("Client deactivated");
+          clientActivityStatusId: 3,
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateClientModal");
-        this.getClients();
-      });
+        console.log("Client deactivated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateClientModal");
+          this.getClients();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     inactiveInfo(item, button) {
       this.editClient.content = item;
@@ -476,9 +492,9 @@ export default {
     handleActivateClient() {
       this.activateClient();
     },
-    activateClient() {
-      api
-        .patch("clients/" + this.editClient.content.id, {
+    async activateClient() {
+      try {
+        await api.patch("clients/" + this.editClient.content.id, {
           clientName: this.editClient.content.name,
           clientAddress: this.editClient.content.address,
           clientPhoneNumber: this.editClient.content.phoneNumber,
@@ -486,15 +502,15 @@ export default {
           clientMobile: this.editClient.content.mobile,
           clientEmail: this.editClient.content.email,
           clientActivityStatusId: 3,
-        })
-        .then((res) => {
-          console.log(res);
-          console.log("Client activated");
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("activateClientModal");
-        this.getClients();
-      });
+        console.log("Client activated");
+        this.$nextTick(() => {
+          this.$bvModal.hide("activateClientModal");
+          this.getClients();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
