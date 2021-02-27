@@ -1,3 +1,4 @@
+import api from "../../apis/api"
 export default {
     namespaced: true,
     state: {
@@ -25,41 +26,39 @@ export default {
         }
     },
     actions: {
-        login({ commit }, login) {
-            axios.get("/sanctum/csrf-cookie").then(() => {
-                api
-                    .post("login", {
-                        email: login.email,
-                        password: login.password
-                    })
-                    .then((response) => {
-                        sessionStorage.setItem("authStatus", "true");
-                        sessionStorage.setItem("user", JSON.stringify(response.data.name));
-                        console.log("user is " + getters.currrentUser);
-                        console.log("login status is " + getters.isloggedIn);
-                    })
-                    .catch((error) => commit("error", error));
-            });
-        },
-        // getUserInfo(commit, state) {
-        //     api
-        //         .get("user")
-        //         .then((response) => {
-        //             commit("setUser", response.date);
-        //         })
-        //         .catch((error) => (this.error = error.response));
-        // },
+        async login({ dispatch }, login) {
+            try {
+                await axios.get("/sanctum/csrf-cookie");
+                const response = await api.post("login", {
+                    email: login.email,
+                    password: login.password
+                });
+                return dispatch("getUserInfo");
 
-        logout() {
-            axios.get("/sanctum/csrf-cookie").then(() => {
-                api
-                    .post("logout")
-                    .then(() => {
-                        sessionStorage.removeItem("authStatus");
-                        sessionStorage.removeItem("user");
-                    })
-                    .catch((error) => commit("error", error));
-            });
+            } catch (error) {
+                console.log(error)
+            }
+
+        },
+        async getUserInfo({commit}) {
+            try {
+                const response = await api.get("user");
+                commit("setAuthenticated", true);
+                commit("setUser", response.data);
+            } catch (error) {
+                console.log(error);
+                commit("setAuthenticated", false);
+                commit("setUser", null);
+            }
+        },
+
+        async logout({dispatch}) {
+            try {
+                await api.post("logout");
+                return dispatch("getUserInfo");
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
 };

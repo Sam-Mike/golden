@@ -33,9 +33,6 @@
               >
             </div>
           </form>
-          <b-button size="sm" variant="primary" @click="checkAuth"
-            >check auth</b-button
-          >
         </div>
       </div>
     </div>
@@ -57,14 +54,10 @@ export default {
     async handleLogin() {
       try {
         await this.$store.dispatch("auth/login", this.login);
-        await this.$router.push("/allocations");
+        await this.$router.push("/");
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    },
-    checkAuth() {
-      console.log("login status is " + this.$store.getters["auth/loggedIn"]);
-      console.log("user is " + this.$store.state["auth/user"]);
     },
   },
 };

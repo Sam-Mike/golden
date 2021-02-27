@@ -113,12 +113,12 @@
                     </div>
                   </li>
                 </ul>
-                <ul v-if="authStatus" class="navbar-nav ml-auto">
+                <ul v-if="authenticated" class="navbar-nav ml-auto">
                   <li class="nav-item">
                     <a class="nav-link" @click.prevent="logout()">Logout</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link disabled">{{ user }}</a>
+                    <a class="nav-link disabled">{{ user.name }}</a>
                   </li>
                 </ul>
               </div>
@@ -151,29 +151,29 @@
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {};
   },
   computed: {
-    user() {
-      return JSON.parse(sessionStorage.getItem("user"));
-    },
-    authStatus() {
-      return JSON.parse(sessionStorage.getItem("authStatus"));
-    },
+    ...mapGetters({
+      authenticated: "auth/authenticated",
+      user: "auth/user",
+    }),
   },
   mounted() {},
   methods: {
-    logout() {
-      this.$store
-        .dispatch("auth/logout")
-        .then((response) => {
-          //this.$store.dispatch();
-          this.$router.push({ name: "login" });
-          console.log(response);
-        })
-        .catch((error) => (this.error = error.response));
+    ...mapActions({
+      logout: "auth/logout",
+    }),
+    async logout() {
+      try {
+        await this.logout();
+        this.$router.push({ name: "login" });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
