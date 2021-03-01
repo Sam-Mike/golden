@@ -42,11 +42,25 @@ Vue.component('v-select', vSelect);
 
 import App from './layout/App.vue';
 
-const app = new Vue({
-    store,
-    el: '#app',
-    components: {
-        App
-    },
-    router
-});
+async function myApp() {
+    try {
+        await store.dispatch("auth/getUserInfo");
+        const app = new Vue({
+            store,
+            el: '#app',
+            components: {
+                App
+            },
+            router
+        });
+        /*can call dispatch
+        load all cross component data
+        to vuex getters
+         */
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+myApp();
