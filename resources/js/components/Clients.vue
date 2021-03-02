@@ -107,6 +107,7 @@
       <!-- Add Client Modal -->
       <b-modal
         ok-title="Save"
+        scrollable
         title="Add Client"
         class="modal fade"
         button-size="sm"
@@ -122,14 +123,14 @@
             <div class="modal-body">
               <form ref="form" @submit.stop.prevent="createClient">
                 <b-form-group label="Name" invalid-feedback="Name is required">
-                  <b-form-input
+                  <input
                     id="client-name"
                     type="text"
                     class="form-control"
                     v-model="newClient.name"
                     placeholder="Enter client name"
                     required
-                  ></b-form-input>
+                  >
                 </b-form-group>
                 <b-form-group
                   label="Address"

@@ -13,6 +13,6 @@ class TruckSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Truck::factory(5)->create();
+        \App\Models\Truck::factory(10)->create();
     }
 }

@@ -430,13 +430,12 @@ export default {
   data() {
     return {
       loading: false,
-      trips: [],
+      claims: [],
+      claimType: [],//load also trucks, trailers, goods, fidelity
       people: [],
-      locations: [],
-      dispatcher: [{ id: 1, name: "to be filtered from people and roles" }],
-      tripFields: [
+      ClaimFields: [
         { key: "client.name", label: "Client", sortable: true },
-        { key: "cargo.name", label: "Cargo", sortable: true },
+        { key: "claimType.name", label: "Claim Type", sortable: true },
         { key: "driverName", label: "Driver" },
         {
           key: "allocation.truck.registrationNumber",

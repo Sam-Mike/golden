@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             PeopleSeeder::class,
             TrailerSeeder::class,
             TruckSeeder::class,
+            ClaimTypeSeeder::class,
         ]); 
     }
 }
