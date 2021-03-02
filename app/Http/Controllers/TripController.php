@@ -94,11 +94,11 @@ class TripController extends Controller
         ]);
 
         $trip = Trip::findOrFail($id);
-        $trip->client_id = request('clientId');
-        $trip->cargo_id = request('cargoId');
-        $trip->destination_id = request('destinationId');
-        $trip->allocation_id = request('allocationId');
-        $trip->activity_status_id = request('activityStatusId');
+        //$trip->client_id = request('clientId');
+        //$trip->cargo_id = request('cargoId');
+        //$trip->destination_id = request('destinationId');
+        //$trip->allocation_id = request('allocationId');
+        //$trip->activity_status_id = request('activityStatusId');
         $trip->trip_class_id = request('tripClassId');
         $trip->dispatch_date = request('dispatchDate');
         $trip->dispatcher_id = request('dispatcherId');

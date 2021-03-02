@@ -342,6 +342,7 @@ export default {
         console.log("Trailer updated");
         this.$nextTick(() => {
           this.$bvModal.hide("updateTrailerModal");
+          this.getTrailers();
           //code to set the vmodel empty
         });
       } catch (error) {

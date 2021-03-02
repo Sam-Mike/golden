@@ -244,6 +244,7 @@
                 size="sm"
                 type="date"
                 placeholder="Enter dispatch date"
+                v-model="editTrip.dispatchDate"
               ></b-input>
             </p>
           </b-col>
@@ -251,7 +252,7 @@
             <b>DISPATCHER</b>
             <p>
               <v-select
-                v-model="editTrip.dispatcher"
+                v-model="editTrip.dispatcherId"
                 label="name"
                 :options="dispatcher"
                 :reduce="(dispatcher) => dispatcher.id"
@@ -338,7 +339,7 @@
           <b-col class="border rounded">
             <b>Loading Location</b>
             <v-select
-              v-model="editTrip.loadingLocation"
+              v-model="editTrip.loadingLocationId"
               label="name"
               :options="locations"
               :reduce="(locations) => locations.id"
@@ -358,7 +359,7 @@ export default {
       trips: [],
       people: [],
       locations: [],
-      dispatcher: [{ id: 1, name: "to be filtered from people and roles" }],
+      dispatcher: [{id: 1, name: "dispatch_name"}],
       tripFields: [
         { key: "client.name", label: "Client", sortable: true },
         { key: "cargo.name", label: "Cargo", sortable: true },
@@ -386,7 +387,7 @@ export default {
         activityStatus: "",
         tripClass: "",
         dispatchDate: "",
-        dispatcher: "",
+        dispatcherId: "",
         etaSite: "",
         routeCode: "",
         currentLocation: "",
@@ -400,7 +401,7 @@ export default {
         sealNumber: "",
         containerNumber: "",
         loadingDate: "",
-        loadingLocation: "",
+        loadingLocationId: "",
       },
     };
   },
@@ -414,7 +415,7 @@ export default {
         this.loading = true;
         const response = await api.get("trips");
         this.trips = response.data.trips;
-        this.people = response.data.people;
+        this.people = response.data.dispatcher;
         this.locations = response.data.locations;
         this.loading = false;
         console.log("trips loaded");
@@ -430,7 +431,7 @@ export default {
       this.editTrip.destination = item.destination;
       this.editTrip.allocation = item.allocation;
       this.editTrip.activityStatus = item.activityStatus;
-      this.editTrip.tripClass = item.tripClass;
+      this.editTrip.tripClassId = item.tripClass;
       this.editTrip.dispatchDate = item.dispatchDate;
       this.editTrip.dispatcher = item.dispatcher;
       this.editTrip.etaSite = item.etaSite;
@@ -457,14 +458,14 @@ export default {
     async updateTrip() {
       try {
         await api.patch("/trips/" + this.editTrip.id, {
-          clientId: this.editTrip.client.id,
-          cargoId: this.editTrip.client.id,
-          destinationId: this.editTrip.destination.id,
-          allocationId: this.editTrip.allocation.id,
-          activityStatusId: this.editTrip.activityStatus.id,
-          tripClassId: this.editTrip.tripClass,
+          // clientId: this.editTrip.client.id,
+          // cargoId: this.editTrip.cargo.id,
+          // destinationId: this.editTrip.destination.id,
+          // allocationId: this.editTrip.allocation.id,
+          // activityStatusId: this.editTrip.activityStatus.id,
+          tripClassId: this.editTrip.tripClassId,
           dispatchDate: this.editTrip.dispatchDate,
-          dispatcherId: this.editTrip.dispatcher,
+          dispatcherId: this.editTrip.dispatcherId,
           etaSite: this.editTrip.etaSite,
           routeCode: this.editTrip.routeCode,
           currentLocation: this.editTrip.currentLocation,
@@ -478,7 +479,7 @@ export default {
           sealNumber: this.editTrip.sealNumber,
           containerNumber: this.editTrip.containerNumber,
           loadingDate: this.editTrip.loadingDate,
-          loadingLocationId: this.editTrip.loadingLocation,
+          loadingLocationId: this.editTrip.loadingLocationId,
         });
         console.log("trip updated successfully");
         this.$nextTick(() => {
@@ -496,14 +497,14 @@ export default {
     async endTrip() {
       try {
         await api.patch("trips/" + this.editTrip.id, {
-          clientId: this.editTrip.client.id,
-          cargoId: this.editTrip.client.id,
-          destinationId: this.editTrip.destination.id,
-          allocationId: this.editTrip.allocation.id,
-          activityStatusId: this.editTrip.activativityStatus.id,
+          // clientId: this.editTrip.client.id,
+          // cargoId: this.editTrip.client.id,
+          // destinationId: this.editTrip.destination.id,
+          // allocationId: this.editTrip.allocation.id,
+          // activityStatusId: this.editTrip.activativityStatus.id,
           tripClassId: this.editTrip.tripClass.id,
           dispatchDate: this.editTrip.dispatchDate,
-          dispatcherId: this.editTrip.dispatcher.id,
+          dispatcherId: this.editTrip.dispatcherId,
           etaSite: this.editTrip.etaSite,
           routeCode: this.editTrip.routeCode,
           currentLocation: this.editTrip.location.id,
@@ -517,7 +518,7 @@ export default {
           sealNumber: this.editTrip.sealNumber,
           containerNumber: this.editTrip.containerNumber,
           loadingDate: this.editTrip.loadingDate,
-          loadingLocationId: this.editTrip.loadingLocation.id,
+          loadingLocationId: this.editTrip.loadingLocationId,
           // set truck, trailer and driver activity status to free again
         });
         console.log("trip archived successfully");
