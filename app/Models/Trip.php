@@ -28,9 +28,13 @@ class Trip extends Model
     {
         return $this->belongsTo('App\Models\Cargo', 'cargo_id', 'id');
     }
-    public function location()
+    public function destination()
     {
         return $this->belongsTo('App\Models\Location', 'destination_id', 'id');
+    }
+    public function loadingLocation()
+    {
+        return $this->belongsTo('App\Models\Location', 'loading_location_id', 'id');
     }
     public function allocation()
     {

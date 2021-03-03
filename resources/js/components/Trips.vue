@@ -248,18 +248,7 @@
               ></b-input>
             </p>
           </b-col>
-          <b-col class="border rouded">
-            <b>DISPATCHER</b>
-            <p>
-              <v-select
-                v-model="editTrip.dispatcherId"
-                label="name"
-                :options="dispatcher"
-                :reduce="(dispatcher) => dispatcher.id"
-                placeholder="Enter dispatcher name"
-              ></v-select>
-            </p>
-          </b-col>
+          
         </b-row>
         <!-- MANIFEST INFORMATION -->
         <b-row class="border rounded">
@@ -269,6 +258,17 @@
               <b-input
                 size="sm"
                 v-model="editTrip.manifestNumber"
+                placeholder="Enter manifest number"
+              ></b-input>
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>MANIFEST DATE</b>
+            <p>
+              <b-input
+                size="sm"
+                type="date"
+                v-model="editTrip.manifestDate"
                 placeholder="Enter manifest number"
               ></b-input>
             </p>
@@ -339,7 +339,7 @@
           <b-col class="border rounded">
             <b>Loading Location</b>
             <v-select
-              v-model="editTrip.loadingLocationId"
+              v-model="editTrip.loadingLocation"
               label="name"
               :options="locations"
               :reduce="(locations) => locations.id"
@@ -359,7 +359,6 @@ export default {
       trips: [],
       people: [],
       locations: [],
-      dispatcher: [{id: 1, name: "dispatch_name"}],
       tripFields: [
         { key: "client.name", label: "Client", sortable: true },
         { key: "cargo.name", label: "Cargo", sortable: true },
@@ -387,7 +386,6 @@ export default {
         activityStatus: "",
         tripClass: "",
         dispatchDate: "",
-        dispatcherId: "",
         etaSite: "",
         routeCode: "",
         currentLocation: "",
@@ -401,7 +399,7 @@ export default {
         sealNumber: "",
         containerNumber: "",
         loadingDate: "",
-        loadingLocationId: "",
+        loadingLocation: "",
       },
     };
   },
@@ -433,7 +431,6 @@ export default {
       this.editTrip.activityStatus = item.activityStatus;
       this.editTrip.tripClassId = item.tripClass;
       this.editTrip.dispatchDate = item.dispatchDate;
-      this.editTrip.dispatcher = item.dispatcher;
       this.editTrip.etaSite = item.etaSite;
       this.editTrip.routeCode = item.routeCode;
       this.editTrip.currentLocation = item.currentLocation;
@@ -465,7 +462,6 @@ export default {
           // activityStatusId: this.editTrip.activityStatus.id,
           tripClassId: this.editTrip.tripClassId,
           dispatchDate: this.editTrip.dispatchDate,
-          dispatcherId: this.editTrip.dispatcherId,
           etaSite: this.editTrip.etaSite,
           routeCode: this.editTrip.routeCode,
           currentLocation: this.editTrip.currentLocation,
@@ -479,7 +475,7 @@ export default {
           sealNumber: this.editTrip.sealNumber,
           containerNumber: this.editTrip.containerNumber,
           loadingDate: this.editTrip.loadingDate,
-          loadingLocationId: this.editTrip.loadingLocationId,
+          loadingLocation: this.editTrip.loadingLocationId,
         });
         console.log("trip updated successfully");
         this.$nextTick(() => {
@@ -497,29 +493,11 @@ export default {
     async endTrip() {
       try {
         await api.patch("trips/" + this.editTrip.id, {
-          // clientId: this.editTrip.client.id,
-          // cargoId: this.editTrip.client.id,
-          // destinationId: this.editTrip.destination.id,
-          // allocationId: this.editTrip.allocation.id,
-          // activityStatusId: this.editTrip.activativityStatus.id,
-          tripClassId: this.editTrip.tripClass.id,
-          dispatchDate: this.editTrip.dispatchDate,
-          dispatcherId: this.editTrip.dispatcherId,
-          etaSite: this.editTrip.etaSite,
-          routeCode: this.editTrip.routeCode,
-          currentLocation: this.editTrip.location.id,
-          manifestNumber: this.editTrip.manifestNumber,
-          manifestDate: this.editTrip.manifestDate,
-          manifestDoc: this.editTrip.manifestDoc,
-          fileNumber: this.editTrip.fileNumber,
-          cargoOrderNumber: this.editTrip.cargoOrderNumber,
-          cargoWeight: this.editTrip.cargoWeight,
-          cargoQuantity: this.editTrip.cargoQuantity,
-          sealNumber: this.editTrip.sealNumber,
-          containerNumber: this.editTrip.containerNumber,
-          loadingDate: this.editTrip.loadingDate,
-          loadingLocationId: this.editTrip.loadingLocationId,
           // set truck, trailer and driver activity status to free again
+          activityStatusId:3,
+          truckActivityStatus:1,
+          trailerActivityStatus:1,
+          driverActivityStatus:1,
         });
         console.log("trip archived successfully");
         this.$nextTick(() => {

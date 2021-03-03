@@ -44,14 +44,15 @@
                       <router-link class="dropdown-item" to="/trips"
                         >Trips
                       </router-link>
+                      
+                      <div class="dropdown-divider"></div>
                       <router-link class="dropdown-item" to="/clients"
                         >Clients</router-link
                       >
-                      <div class="dropdown-divider"></div>
-                      <div
-                        class="dropdown-menu"
-                        aria-labelledby="navbarDropdown"
-                      ></div>
+                      <router-link class="dropdown-item" to="/claims"
+                        >Claims</router-link
+                      >
+                      
                     </div>
                   </li>
                   <li class="nav-item dropdown">
@@ -70,7 +71,6 @@
                       <router-link class="dropdown-item" to="/trucks"
                         >All Trucks</router-link
                       >
-                      <div class="dropdown-divider"></div>
                     </div>
                   </li>
                   <li class="nav-item">

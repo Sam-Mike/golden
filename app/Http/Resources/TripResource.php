@@ -18,7 +18,7 @@ class TripResource extends JsonResource
             'id' => $this->id,
             'client' => new ClientResource($this->client),
             'cargo' => new CargoResource($this->cargo),
-            'destination' => new LocationResource($this->location),
+            'destination' => new LocationResource($this->destination),
             'allocation' => new AllocationResource($this->allocation),
             'activityStatus' => new StatusResource($this->status),
             'tripClass' => new TripClassResource($this->trip_class),
@@ -37,7 +37,7 @@ class TripResource extends JsonResource
             'sealNumber' => $this->seal_number,
             'containerNumber' => $this->container_number,
             'loadingDate' => $this->loading_date,
-            'loadingLocation' => new LocationResource($this->loading_date),
+            'loadingLocation' => new LocationResource($this->loadingLocation),
         ];
     }
 }

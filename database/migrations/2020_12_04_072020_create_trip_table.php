@@ -27,7 +27,7 @@ class CreateTripTable extends Migration
             $table->string('route_code')->nullable();
             $table->string('current_location')->nullable();
             $table->integer('manifest_number')->nullable();
-            $table->integer('manifest_date')->nullable();
+            $table->date('manifest_date')->nullable();
             $table->string('manifest_doc')->nullable();
             $table->integer('file_number')->nullable();
             $table->integer('cargo_order_number')->nullable();

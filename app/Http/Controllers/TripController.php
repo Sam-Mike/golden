@@ -88,11 +88,6 @@ class TripController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        $request->validate([
-            'manifestNumber' => "required"
-        ]);
-
         $trip = Trip::findOrFail($id);
         //$trip->client_id = request('clientId');
         //$trip->cargo_id = request('cargoId');
@@ -115,21 +110,20 @@ class TripController extends Controller
         $trip->seal_number = request('sealNumber');
         $trip->container_number = request('containerNumber');
         $trip->loading_date = request('loadingDate');
-        $trip->loading_location_id = request('LoadingLocationId');
+        $trip->loading_location_id = request('loadingLocation');
         $trip->save();
 
         //setting truck, trailer and driver free in case the trip ends
         $truck = Truck::findOrFail($trip->allocation->truck_id);
-        $truck->activity_status_id = request('truckActivityStatus');
+        $truck->activity_status_id = request('truckActivityStatusId');
         $truck->save();
 
         $trailer = Trailer::findOrFail($trip->allocation->trailer_id);
-        $trailer->activity_status_id = request('trailerActivityStatus');
+        $trailer->activity_status_id = request('trailerActivityStatusId');
         $trailer->save();
 
-
         $driver = People::findOrFail($trip->allocation->driver_id);
-        $driver->activity_status_id = request('driverActivityStatus');
+        $driver->activity_status_id = request('driverActivityStatusId');
         $driver->save();
         return response()->json([
             'success'
