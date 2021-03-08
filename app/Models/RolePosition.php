@@ -13,10 +13,10 @@ class RolePosition extends Model
 
     public function people()
     {
-        return $this->hasMany('App\Models\People');
+        return $this->hasMany(People::class);
     }
     public function department()
     {
-        return $this->belongsTo('App\Models\Department');
+        return $this->belongsTo(Department::class);
     }
 }

@@ -21,6 +21,6 @@ class Claim extends Model
         'payment_document',
     ];
     public function claim_type(){
-        return $this->belongsTo('App\Models\ClaimType');
+        return $this->belongsTo(ClaimType::class);
     }
 }

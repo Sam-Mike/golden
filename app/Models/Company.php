@@ -13,10 +13,10 @@ class Company extends Model
 
     public function people()
     {
-        return $this->hasMany('App\Models\People');
+        return $this->hasMany(People::class);
     }
     public function trailers()
     {
-        return $this->hasMany('App\Models\Trailer');
+        return $this->hasMany(Trailer::class);
     }
 }

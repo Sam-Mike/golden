@@ -10,8 +10,8 @@ class TripClass extends Model
     use HasFactory;
     protected $table = 'trip_class';
 
-    public function trip()
+    public function trips()
     {
-        return $this->hasMany('App\Models\Trip');
+        return $this->hasMany(Trip::class);
     }
 }

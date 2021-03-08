@@ -13,6 +13,6 @@ class Location extends Model
 
     public function allocations()
     {
-        return $this->hasMany('App\Models\Allocation');
+        return $this->hasMany(Allocation::class);
     }
 }

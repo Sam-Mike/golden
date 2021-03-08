@@ -13,18 +13,18 @@ class Status extends Model
 
     public function trucks()
     {
-        $this->hasMany('App\Models\Truck');
+        $this->hasMany(Truck::class);
     }
     public function trailers()
     {
-        $this->hasMany('App\Models\Trailer');
+        $this->hasMany(Trailer::class);
     }
     public function people()
     {
-        $this->hasMany('App\Models\People');
+        $this->hasMany(People::class);
     }
-    public function allocation()
+    public function allocations()
     {
-        $this->hasMany('App\Models\Allocation');
+        $this->hasMany(Allocation::class);
     }
 }

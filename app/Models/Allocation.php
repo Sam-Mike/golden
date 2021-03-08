@@ -11,24 +11,24 @@ class Allocation extends Model
 
     protected $table = "allocation";
 
-    public function trucks()
+    public function truck()
     {
-        return $this->belongsTo('App\Models\Truck', 'truck_id', 'id');
+        return $this->belongsTo(Truck::class, 'truck_id', 'id');
     }
-    public function trailers()
+    public function trailer()
     {
-        return $this->belongsTo('App\Models\Trailer', 'trailer_id', 'id');
+        return $this->belongsTo(Trailer::class, 'trailer_id', 'id');
     }
-    public function people()
+    public function driver()
     {
-        return $this->belongsTo('App\Models\People', 'driver_id');
+        return $this->belongsTo(People::class, 'driver_id');
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+        return $this->belongsTo(Status::class, 'activity_status_id');
     }
     public function trips()
     {
-        return $this->hasMany('App\Models\Trips');
+        return $this->hasMany(Trip::class);
     }
 }

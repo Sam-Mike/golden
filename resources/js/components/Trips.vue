@@ -168,7 +168,7 @@
           class="float-left"
           size="sm"
           variant="danger"
-          @click="hide(handleEndtrip())"
+          @click="hide(handleEndTrip())"
           >End Trip</b-button
         >
         <b-button size="sm" @click="cancel()">Cancel</b-button>
@@ -391,7 +391,7 @@ export default {
         currentLocation: "",
         manifestNumber: "",
         manifestDate: "",
-        manifestDoc: "",
+        manifestDocument: "",
         fileNumber: "",
         cargoOrderNumber: "",
         cargoWeight: "",
@@ -413,7 +413,6 @@ export default {
         this.loading = true;
         const response = await api.get("trips");
         this.trips = response.data.trips;
-        this.people = response.data.dispatcher;
         this.locations = response.data.locations;
         this.loading = false;
         console.log("trips loaded");
@@ -436,7 +435,7 @@ export default {
       this.editTrip.currentLocation = item.currentLocation;
       this.editTrip.manifestNumber = item.manifestNumber;
       this.editTrip.manifestDate = item.manifestDate;
-      this.editTrip.manifestDoc = item.manifestDoc;
+      this.editTrip.manifestDocument = item.manifestDocument;
       this.editTrip.fileNumber = item.fileNumber;
       this.editTrip.cargoOrderNumber = item.cargoOrderNumber;
       this.editTrip.cargoWeight = item.cargoWeight;
@@ -455,10 +454,6 @@ export default {
     async updateTrip() {
       try {
         await api.patch("/trips/" + this.editTrip.id, {
-          // clientId: this.editTrip.client.id,
-          // cargoId: this.editTrip.cargo.id,
-          // destinationId: this.editTrip.destination.id,
-          // allocationId: this.editTrip.allocation.id,
           // activityStatusId: this.editTrip.activityStatus.id,
           tripClassId: this.editTrip.tripClassId,
           dispatchDate: this.editTrip.dispatchDate,
@@ -467,7 +462,7 @@ export default {
           currentLocation: this.editTrip.currentLocation,
           manifestNumber: this.editTrip.manifestNumber,
           manifestDate: this.editTrip.manifestDate,
-          manifestDoc: this.editTrip.manifestDoc,
+          manifestDocument: this.editTrip.manifestDocument,
           fileNumber: this.editTrip.fileNumber,
           cargoOrderNumber: this.editTrip.cargoOrderNumber,
           cargoWeight: this.editTrip.cargoWeight,

@@ -18,20 +18,20 @@ class Trailer extends Model
         'assignment_status_id'
     ];
 
-    public function allocation()
+    public function allocations()
     {
-        return $this->hasMany('App\Models\Allocation');
+        return $this->hasMany(Allocation::class);
     }
     public function trailer_type()
     {
-        return $this->belongsTo('App\Models\TrailerType');
+        return $this->belongsTo(TrailerType::class);
     }
     public function company()
     {
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo(Company::class);
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+        return $this->belongsTo(Status::class, 'activity_status_id');
     }
 }

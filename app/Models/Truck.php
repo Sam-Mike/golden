@@ -20,18 +20,18 @@ class Truck extends Model
 
     public function company()
     {
-        return $this->belongsTo('App\Models\Company', 'company_id');
+        return $this->belongsTo(Company::class, 'company_id');
     }
     public function truck_type()
     {
-        return $this->belongsTo('App\Models\TruckType', 'truck_type_id');
+        return $this->belongsTo(TruckType::class, 'truck_type_id');
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+        return $this->belongsTo(Status::class, 'activity_status_id');
     }
-    public function allocation()
+    public function allocations()
     {
-        return $this->hasMany('App\Models\Allocation');
+        return $this->hasMany(Allocation::class);
     }
 }

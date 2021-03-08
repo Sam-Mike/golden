@@ -16,26 +16,26 @@ class People extends Model
 
     public function company()
     {
-        return $this->belongsTo('App\Models\Company');
+        return $this->belongsTo(Company::class);
     }
     public function role_position()
     {
-        return $this->belongsTo('App\Models\RolePosition');
+        return $this->belongsTo(RolePosition::class);
     }
     public function license_class()
     {
-        return $this->belongsTo('App\Models\LicenseClass');
+        return $this->belongsTo(LicenseClass::class);
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+        return $this->belongsTo(Status::class, 'activity_status_id');
     }
-    public function allocation()
+    public function allocations()
     {
-        return $this->hasMany('App\Models\Allocation');
+        return $this->hasMany(App\Models\Allocation::class);
     }
-    public function trip()
+    public function trips()
     {
-        return $this->hasMany('App\Models\Trip');
+        return $this->hasMany(Trip::class);
     }
 }

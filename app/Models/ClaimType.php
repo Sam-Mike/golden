@@ -10,7 +10,7 @@ class ClaimType extends Model
     use HasFactory;
     protected $table = 'claim_type';
 
-    public function claim(){
-        return $this->hasMany('App\Models\Claim');
+    public function claims(){
+        return $this->hasMany(Claim::class);
     }
 }

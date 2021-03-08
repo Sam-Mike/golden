@@ -4,12 +4,23 @@
       <b-card no-body>
         <b-tabs content-class="mt-2">
           <b-tab title="INTIMATED">
-            <!-- TRIPS FOR TRIPS WITH PENDING INFORMATION -->
+            <!-- CLAIMS WITH PENDING INFORMATION -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">
+                    Intimated Claims
+                  </h6>
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.createClaimModal
+                  >
+                    New Claim
+                  </b-button>
                 </div>
               </div>
               <div class="card-body">
@@ -21,17 +32,12 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
-                    :fields="tripFields"
+                    :items="claims"
+                    :fields="claimFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
-                    <template #cell(driverName)="methods">
-                      {{ methods.item.allocation.driver.firstName }}
-                      {{ methods.item.allocation.driver.middleName }}
-                      {{ methods.item.allocation.driver.lastName }}
-                    </template>
                     <template #cell(actions)="row">
                       <b-button size="sm" @click="info(row.item)" class="mr-1"
                         >DETAILS
@@ -48,7 +54,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
                 </div>
               </div>
               <div class="card-body">
@@ -60,17 +66,14 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
-                    :fields="tripFields"
+                    :items="claims"
+                    :fields="claimFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
                     <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -85,7 +88,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
                 </div>
               </div>
               <div class="card-body">
@@ -97,17 +100,14 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
-                    :fields="tripFields"
+                    :items="claims"
+                    :fields="claimFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
                     <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -122,7 +122,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
                 </div>
               </div>
               <div class="card-body">
@@ -134,17 +134,14 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
-                    :fields="tripFields"
+                    :items="claims"
+                    :fields="claimFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
                     <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -159,7 +156,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
                 </div>
               </div>
               <div class="card-body">
@@ -171,17 +168,14 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
-                    :fields="tripFields"
+                    :items="claims"
+                    :fields="claimFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
                     <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -191,12 +185,11 @@
             </div>
           </b-tab>
           <b-tab title="DECLINED">
-            <!-- ARCHIVE TRIPS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
                 </div>
               </div>
               <div class="card-body">
@@ -208,17 +201,14 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
-                    :fields="tripFields"
+                    :items="claims"
+                    :fields="claimFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
                     <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
+                      <b-button size="sm" @click="info(row.item)" class="mr-1"
                         >DETAILS
                       </b-button>
                     </template>
@@ -227,128 +217,154 @@
               </div>
             </div>
           </b-tab>
-
         </b-tabs>
       </b-card>
     </b-overlay>
-    <!-- MODAL TO UPDATE TRIP INFORMATION -->
+    <!-- MODAL TO CREATE CLAIM -->
     <b-modal
       scrollable
-      id="updateTripModal"
+      ok-title="Save"
+      id="createClaimModal"
+      size="lg"
+      title="Create Claim"
+      @ok="handleCreateClaim"
+    >
+      <form ref="forms" @submit.stop.prevent="createTrailer">
+        <div class="form-group">
+          <label for="">Claim Type</label>
+          <v-select
+            v-model="newClaim.claimTypeId"
+            :options="claimType"
+            label="name"
+            placeholder="Choose Claim Type"
+            :reduce="(claimType) => claimType.id"
+          ></v-select>
+        </div>
+        <div class="form-group">
+          <label for="">Claim Subject</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="newClaim.claimSubject"
+            placeholder="Enter Claim Subject eg. Truck Number"
+            required
+          />
+        </div></form
+    ></b-modal>
+    <!-- MODAL TO UPDATE CLAIM INFORMATION -->
+    <b-modal
+      scrollable
+      id="updateClaimModal"
       size="xl"
-      title="Update Trip Info"
-      @ok="handleUpdateTrip"
+      title="Update Claim Info"
+      @ok="handleUpdateClaim"
       ><template #modal-footer="{ ok, cancel, hide }">
         <b-button
           class="float-left"
           size="sm"
           variant="danger"
-          @click="hide(handleEndtrip())"
+          @click="hide(handleEndClaim())"
           >End Trip</b-button
         >
         <b-button size="sm" @click="cancel()">Cancel</b-button>
         <b-button size="sm" variant="primary" @click="ok()">Save</b-button>
       </template>
       <b-container fluid>
-        <!-- TRIP LOCATION INFORMATION -->
+        <!-- CLAIM INFORMATION -->
         <b-row class="border rounded">
           <b-col class="border rounded">
-            <b>Trip No</b>
+            <b>CLAIM NO.</b>
             <p>
-              {{ editTrip.id }}
+              {{ editClaim.id }}
             </p>
           </b-col>
           <b-col class="border rouded">
-            <b>Current Location</b>
+            <b>CLAIM TYPE</b>
             <p>
-              {{ editTrip.currentLocation }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Destination</b>
-            <p>
-              {{ editTrip.destination.name }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>ETA</b>
-            <p>
-              {{ editTrip.etaSite }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Trip Status</b>
-            <p>
-              {{ editTrip.activityStatus.name }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Job Class</b>
-            <p>JOB CLASS INFO</p>
-          </b-col>
-        </b-row>
-        <!-- ALLOCATION INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Truck</b>
-            <p>
-              {{ editTrip.allocation.truck.registrationNumber }}
+              {{ editClaim.claimType.id }}
             </p>
           </b-col>
           <b-col class="border rouded">
-            <b>Trailer</b>
+            <b>CLAIM SUBJECT</b>
             <p>
-              {{ editTrip.allocation.trailer.registrationNumber }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Driver</b>
-            <p>
-              {{ editTrip.allocation.driver.firstName }}
-              {{ editTrip.allocation.driver.middleName }}
-              {{ editTrip.allocation.driver.lastName }}
+              {{ editClaim.claimSubject }}
             </p>
           </b-col>
         </b-row>
-        <!-- DISPATCH INFORMATION -->
+        <!-- INCIDENT ASSESSMENT -->
         <b-row class="border rounded">
           <b-col class="border rounded">
-            <b>Dispatch Date</b>
+            <b>ASSESSOR</b>
+            <p>
+              {{ editClaim.incidentAssessorName }}
+            </p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>ASSESS COMPANY</b>
+            <p>
+              {{ editClaim.incidentAssessorCompany }}
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>COMMENT</b>
+            <p>
+              {{ editClaim.incidentAssessComment }}
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>DATE</b>
+            <p>
+              {{ editClaim.incidentAssessDate }}
+            </p>
+          </b-col>
+        </b-row>
+        <!-- DISCHARGE VOUCHER INFORMATION -->
+        <b-row class="border rounded">
+          <b-col class="border rounded">
+            <b>DISCHARGE VOUCHER DOCUMENT</b>
             <p>
               <b-input
                 size="sm"
                 type="date"
-                placeholder="Enter dispatch date"
+                placeholder="Enter discharge date"
               ></b-input>
             </p>
           </b-col>
           <b-col class="border rouded">
-            <b>DISPATCHER</b>
-            <p>
-              <v-select
-                v-model="editTrip.dispatcher"
-                label="name"
-                :options="dispatcher"
-                :reduce="(dispatcher) => dispatcher.id"
-                placeholder="Enter dispatcher name"
-              ></v-select>
-            </p>
-          </b-col>
-        </b-row>
-        <!-- MANIFEST INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>MANIFEST NO</b>
+            <b>COMMENT</b>
             <p>
               <b-input
                 size="sm"
-                v-model="editTrip.manifestNumber"
-                placeholder="Enter manifest number"
+                type="date"
+                placeholder="Enter comment"
+              ></b-input>
+            </p>
+          </b-col>
+        </b-row>
+        <!-- PAYMENT INFORMATION -->
+        <b-row class="border rounded">
+          <b-col class="border rounded">
+            <b>PAYMENT DOCUMENT</b>
+            <p>
+              <b-input
+                size="sm"
+                v-model="editClaim.paymentDocument"
+                placeholder="select payment document"
+              ></b-input>
+            </p>
+          </b-col>
+          <b-col class="border rounded">
+            <b>PAYMENT COMMENT</b>
+            <p>
+              <b-input
+                size="sm"
+                v-model="editClaim.paymentComment"
+                placeholder="enter payment comment"
               ></b-input>
             </p>
           </b-col>
           <b-col class="border rouded">
-            <b>MANIFEST DOC</b>
+            <b>MANIFEST DOCUMENT</b>
             <p>
               <!-- <b-form-file
                 size="sm"
@@ -358,66 +374,6 @@
                 drop-placeholder="Drop file here..."
               ></b-form-file> -->
             </p>
-          </b-col>
-        </b-row>
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Client</b>
-            <p>{{ editTrip.client.name }}</p>
-          </b-col>
-          <b-col class="border rouded">
-            <b>Client No</b>
-            <p>
-              {{ editTrip.client.id }}
-            </p>
-          </b-col>
-        </b-row>
-        <!-- CARGO INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Cargo Name</b>
-            <p>{{ editTrip.cargo.name }}</p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Cargo Weight</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.cargoWeight"
-              placeholder="Enter cargo Weight"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Cargo Quantity</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.cargoQuantity"
-              placeholder="Enter cargo Quantity"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Seal No</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.sealNumber"
-              placeholder="Enter seal Number"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Container No</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.containerNumber"
-              placeholder="Enter container Number"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Loading Location</b>
-            <v-select
-              v-model="editTrip.loadingLocation"
-              label="name"
-              :options="locations"
-              :reduce="(locations) => locations.id"
-            ></v-select>
           </b-col>
         </b-row>
       </b-container>
@@ -431,172 +387,154 @@ export default {
     return {
       loading: false,
       claims: [],
-      claimType: [],//load also trucks, trailers, goods, fidelity
-      people: [],
-      ClaimFields: [
-        { key: "client.name", label: "Client", sortable: true },
+      claimType: [], //load also trucks, trailers, goods, fidelity
+      claimFields: [
+        { key: "claimSubject.name", label: "Subject", sortable: true },
         { key: "claimType.name", label: "Claim Type", sortable: true },
-        { key: "driverName", label: "Driver" },
+        { key: "incidentAssessorName", label: "Incindent Assessor" },
         {
-          key: "allocation.truck.registrationNumber",
-          label: "Truck",
+          key: "incidentAssessorCompany",
+          label: "Assess Company",
           sortable: true,
         },
-        { key: "allocation.trailer.tlNumber", label: "Trailer" },
-        { key: "currentLocation", label: "Current Location" },
-        { key: "activityStatus.name", label: "Status" },
+        { key: "incidentAssessDate", label: "Assessment Date" },
+        { key: "incidentAssessComment", label: "Assessment Comment" },
+        { key: "dischargeVoucher", label: "" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
       tableFilter: null,
-
-      //when trip is declared ended we need to change the truck allocation status to free again
-      editTrip: {
-        client: "",
-        cargo: "",
-        destination: "",
-        allocation: { truck: "", trailer: "", driver: "" },
-        activityStatus: "",
-        tripClass: "",
-        dispatchDate: "",
-        dispatcher: "",
-        etaSite: "",
-        routeCode: "",
-        currentLocation: "",
-        manifestNumber: "",
-        manifestDate: "",
-        manifestDoc: "",
-        fileNumber: "",
-        cargoOrderNumber: "",
-        cargoWeight: "",
-        cargoQuantity: "",
-        sealNumber: "",
-        containerNumber: "",
-        loadingDate: "",
-        loadingLocation: "",
+      newClaim: {
+        claimTypeId: "",
+        claimSubject: "",
+      },
+      editClaim: {
+        claimType: "",
+        claimSubject: "",
+        claimDocument: "",
+        claimDocumentStatus: "",
+        incidentAssessorName: "",
+        incidentAssessorCompany: "",
+        incidentAssessDate: "",
+        incidentAssessComment: "",
+        incidentAssessDocument: "",
+        assessStatus: "",
+        dischargeVoucherDocument: "",
+        dischargeVoucherComment: "",
+        dischargeVoucherStatus: "",
+        paymentDocument: "",
+        paymentComment: "",
+        paymentStatus: "",
       },
     };
   },
 
   mounted() {
-    this.getTrips();
+    this.getClaims();
   },
   methods: {
-    async getTrips() {
+    async getClaims() {
       try {
         this.loading = true;
-        const response = await api.get("trips");
-        this.trips = response.data.trips;
-        this.people = response.data.people;
-        this.locations = response.data.locations;
+        const response = await api.get("claims");
+        this.claims = response.data.claims;
+        this.claimType = response.data.claimType;
         this.loading = false;
-        console.log("trips loaded");
+        console.log("claims loaded");
       } catch (error) {
         console.log(error);
+      }
+    },
+    handleCreateClaim(bvModalEvt){
+      bvModalEvt.preventDefault();
+      this.createClaim();
+    },
+    async createClaim(){
+      try {
+        await api.post("claims", this.newClaim);
+        console.log('claim created');
+        this.$nextTick(()=>{
+          this.$bvModal.hide("createClaimModal");
+          this.getClaims();
+        })
+      } catch (error) {
+        console.log(error)
       }
     },
     info(item, button) {
       console.log(item);
-      this.editTrip.id = item.id;
-      this.editTrip.client = item.client;
-      this.editTrip.cargo = item.cargo;
-      this.editTrip.destination = item.destination;
-      this.editTrip.allocation = item.allocation;
-      this.editTrip.activityStatus = item.activityStatus;
-      this.editTrip.tripClass = item.tripClass;
-      this.editTrip.dispatchDate = item.dispatchDate;
-      this.editTrip.dispatcher = item.dispatcher;
-      this.editTrip.etaSite = item.etaSite;
-      this.editTrip.routeCode = item.routeCode;
-      this.editTrip.currentLocation = item.currentLocation;
-      this.editTrip.manifestNumber = item.manifestNumber;
-      this.editTrip.manifestDate = item.manifestDate;
-      this.editTrip.manifestDoc = item.manifestDoc;
-      this.editTrip.fileNumber = item.fileNumber;
-      this.editTrip.cargoOrderNumber = item.cargoOrderNumber;
-      this.editTrip.cargoWeight = item.cargoWeight;
-      this.editTrip.cargoQuantity = item.cargoQuantity;
-      this.editTrip.sealNumber = item.sealNumber;
-      this.editTrip.containerNumber = item.containerNumber;
-      this.editTrip.loadingDate = item.loadingDate;
-      this.editTrip.loadingLocation = item.loadingLocation;
-      this.$root.$emit("bv::show::modal", "updateTripModal", button);
+      this.editClaim.id = item.id;
+      this.editClaim.claimType = item.claimType;
+      this.editClaim.claimSubject = item.claimSubject;
+      this.editClaim.claimDocument = item.claimDocument;
+      this.editClaim.claimDocumentStatus = item.claimDocumentStatus;
+      this.editClaim.incidentAssessorName = item.incidentAssessorName;
+      this.editClaim.incidentAssessorCompany = item.incidentAssessorCompany;
+      this.editClaim.incidentAssessComment = item.incidentAssessComment;
+      this.editClaim.incidentAssessDate = item.incidentAssessDate;
+      this.editClaim.incidentAssessDocument = item.incidentAssessDocument;
+      this.editClaim.assessStatus = item.assessStatus;
+      this.editClaim.dischargeVoucherDocument = item.dischargeVoucherDocument;
+      this.editClaim.dischargeVoucherComment = item.dischargeVoucherComment;
+      this.editClaim.dischargeVoucherStatus = item.dischargeVoucherStatus;
+      this.editClaim.paymentDocument = item.paymentDocument;
+      this.editClaim.paymentComment = item.paymentComment;
+      this.editClaim.paymentStatus = item.paymentStatus;
+
+      this.$root.$emit("bv::show::modal", "updateClaimModal", button);
     },
     //UPDATE TRIP INFORMATION
-    handleUpdateTrip(bvModalEvt) {
+    handleUpdateClaim(bvModalEvt) {
       bvModalEvt.preventDefault();
-      this.updateTrip();
+      this.updateClaim();
     },
-    async updateTrip() {
+    async updateClaim() {
       try {
-        await api.patch("/trips/" + this.editTrip.content.id, {
-          clientId: this.editTrip.content.client.id,
-          cargoId: this.editTrip.content.client.id,
-          destinationId: this.editTrip.content.destination.id,
-          allocationId: this.editTrip.content.allocation.id,
-          activityStatusId: this.editTrip.content.activityStatus.id,
-          tripClassId: this.editTrip.content.tripClass,
-          dispatchDate: this.editTrip.content.dispatchDate,
-          dispatcherId: this.editTrip.content.dispatcher,
-          etaSite: this.editTrip.content.etaSite,
-          routeCode: this.editTrip.content.routeCode,
-          currentLocation: this.editTrip.content.currentLocation,
-          manifestNumber: this.editTrip.content.manifestNumber,
-          manifestDate: this.editTrip.content.manifestDate,
-          manifestDoc: this.editTrip.content.manifestDoc,
-          fileNumber: this.editTrip.content.fileNumber,
-          cargoOrderNumber: this.editTrip.content.cargoOrderNumber,
-          cargoWeight: this.editTrip.content.cargoWeight,
-          cargoQuantity: this.editTrip.content.cargoQuantity,
-          sealNumber: this.editTrip.content.sealNumber,
-          containerNumber: this.editTrip.content.containerNumber,
-          loadingDate: this.editTrip.content.loadingDate,
-          loadingLocationId: this.editTrip.content.loadingLocation,
+        await api.patch("/claims/" + this.editClaim.id, {
+          claimTypeId: this.editClaim.claimType.id,
+          claimSubject: this.editClaim.claimSubject,
+          claimDocument: this.editClaim.claimDocument,
+          claimDocumentStatus: this.editClaim.claimDocumentStatus,
+          incidentAssessorName: this.editClaim.incidentAssessorName,
+          incidentAssessorCompany: this.editClaim.incidentAssessorCompany,
+          incidentAssessorComment: this.editClaim.incidentAssessorComment,
+          incidentAssessorDate: this.editClaim.incidentAssessorDate,
+          incidentAssessDocument: this.editClaim.incidentAssessDocument,
+          assessStatus: this.editClaim.assessStatus,
+          dischargeVoucherDocument: this.editClaim.dischargeVoucherDocument,
+          dischargeVoucherComment: this.editClaim.dischargeVoucherComment,
+          dischargeVoucherStatus: this.editClaim.dischargeVoucherStatus,
+          paymentDocument: this.editClaim.paymentDocument,
+          paymentComment: this.editClaim.paymentComment,
+          paymentStatus: this.editClaim.paymentStatus,
         });
-        console.log("trip updated successfully");
+        console.log("claim updated successfully");
         this.$nextTick(() => {
-          this.$bvModal.hide("updateTripModal");
-          this.getTrips();
+          this.$bvModal.hide("updateClaimModal");
+          this.getClaims();
         });
       } catch (error) {
         console.log(error);
       }
     },
-    handleEndTrip(bvModalEvt) {
+    handleEndClaim(bvModalEvt) {
       bvModalEvt.preventDefault();
-      this.endTrip();
+      this.endClaim();
     },
-    async endTrip() {
+    async endClaim() {
+      //need to check if all status are filled before end claim
       try {
-        await api.patch("trips/" + this.editTrip.content.id, {
-          clientId: this.editTrip.content.client.id,
-          cargoId: this.editTrip.content.client.id,
-          destinationId: this.editTrip.content.destination.id,
-          allocationId: this.editTrip.content.allocation.id,
-          activityStatusId: this.editTrip.content.activativityStatus.id,
-          tripClassId: this.editTrip.content.tripClass.id,
-          dispatchDate: this.editTrip.content.dispatchDate,
-          dispatcherId: this.editTrip.content.dispatcher.id,
-          etaSite: this.editTrip.content.etaSite,
-          routeCode: this.editTrip.content.routeCode,
-          currentLocation: this.editTrip.content.location.id,
-          manifestNumber: this.editTrip.content.manifestNumber,
-          manifestDate: this.editTrip.content.manifestDate,
-          manifestDoc: this.editTrip.content.manifestDoc,
-          fileNumber: this.editTrip.content.fileNumber,
-          cargoOrderNumber: this.editTrip.content.cargoOrderNumber,
-          cargoWeight: this.editTrip.content.cargoWeight,
-          cargoQuantity: this.editTrip.content.cargoQuantity,
-          sealNumber: this.editTrip.content.sealNumber,
-          containerNumber: this.editTrip.content.containerNumber,
-          loadingDate: this.editTrip.content.loadingDate,
-          loadingLocationId: this.editTrip.content.loadingLocation.id,
+        await api.patch("claims/" + this.editClaim.id, {
+          claimStatus: this.editClaim.claimStatus,
+          clientId: this.editClaim.client.id,
+          cargoId: this.editClaim.client.id,
+
           // set truck, trailer and driver activity status to free again
         });
-        console.log("trip archived successfully");
+        console.log("claim archived successfully");
         this.$nextTick(() => {
-          this.$bvModal.hide("updateTripModal");
-          this.getTrips();
+          this.$bvModal.hide("updateClaimModal");
+          this.getClaims();
         });
       } catch (error) {
         console.log(error);

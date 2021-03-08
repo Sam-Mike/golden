@@ -114,6 +114,8 @@ class AllocationController extends Controller
         $allocation->delete();
 
         //changing truck, trailer and driver activity status to FREE
+       
+        //$truck = Truck::where('id', $allocation->truck_id);
         $truck = Truck::find($allocation->truck_id);
         $truck->activity_status_id = 1;
         $truck->save();

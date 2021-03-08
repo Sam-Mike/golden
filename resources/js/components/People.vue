@@ -455,7 +455,7 @@ export default {
         licenseIssueDate: "",
         licenseExpiryDate: "",
         licenseClass: "",
-        activityStatus:"",
+        activityStatus: "",
       },
     };
   },

@@ -89,20 +89,15 @@ class TripController extends Controller
     public function update(Request $request, $id)
     {
         $trip = Trip::findOrFail($id);
-        //$trip->client_id = request('clientId');
-        //$trip->cargo_id = request('cargoId');
-        //$trip->destination_id = request('destinationId');
-        //$trip->allocation_id = request('allocationId');
         //$trip->activity_status_id = request('activityStatusId');
         $trip->trip_class_id = request('tripClassId');
         $trip->dispatch_date = request('dispatchDate');
-        $trip->dispatcher_id = request('dispatcherId');
         $trip->eta_site = request('etaSite');
         $trip->route_code = request('routeCode');
         $trip->current_location = request('currentLocation');
         $trip->manifest_number = request('manifestNumber');
         $trip->manifest_date = request('manifestDate');
-        $trip->manifest_doc = request('manifestDoc');
+        $trip->manifest_document = request('manifestDocument');
         $trip->file_number = request('fileNumber');
         $trip->cargo_order_number = request('cargoOrderNumber');
         $trip->cargo_weight = request('cargoWeight');
@@ -114,19 +109,21 @@ class TripController extends Controller
         $trip->save();
 
         //setting truck, trailer and driver free in case the trip ends
-        $truck = Truck::findOrFail($trip->allocation->truck_id);
+        $allocation = Allocation::find($trip->allocation_id);
+        $truck = Truck::find($allocation->truck_id);
         $truck->activity_status_id = request('truckActivityStatusId');
         $truck->save();
 
-        $trailer = Trailer::findOrFail($trip->allocation->trailer_id);
+        $trailer = Trailer::find($allocation->trailer_id);
         $trailer->activity_status_id = request('trailerActivityStatusId');
         $trailer->save();
 
-        $driver = People::findOrFail($trip->allocation->driver_id);
+        $driver = People::find($allocation->driver_id);
         $driver->activity_status_id = request('driverActivityStatusId');
         $driver->save();
+
         return response()->json([
-            'success'
+            'success',
         ], 200);
     }
 

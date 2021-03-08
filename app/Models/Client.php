@@ -14,10 +14,10 @@ class Client extends Model
 
     public function allocations()
     {
-        return $this->hasMany('App\Models\Allocation');
+        return $this->hasMany(Allocation::class);
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+        return $this->belongsTo(Status::class, 'activity_status_id');
     }
 }

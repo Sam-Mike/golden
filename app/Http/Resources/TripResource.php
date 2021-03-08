@@ -29,7 +29,7 @@ class TripResource extends JsonResource
             'currentLocation' => $this->current_location,
             'manifestNumber' => $this->manifest_number,
             'manifestDate' => $this->manifest_date,
-            'manifestDoc' => $this->manifest_doc,
+            'manifestDocument' => $this->manifest_document,
             'fileNumber' => $this->file_number,
             'cargoOrderNumber' => $this->cargo_order_number,
             'cargoWeight' => $this->cargo_weight,

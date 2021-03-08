@@ -13,11 +13,11 @@ class Department extends Model
 
     public function people()
     {
-        return $this->hasMany('App\Models\People');
+        return $this->hasMany(People::class);
     }
 
-    public function role_position()
+    public function role_positions()
     {
-        return $this->hasMany('App\RolePosition');
+        return $this->hasMany(RolePosition::class);
     }
 }

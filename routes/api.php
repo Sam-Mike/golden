@@ -9,6 +9,7 @@ use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TripController;
+use App\Http\Controllers\ClaimController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +37,7 @@ Route::apiResources([
     'trailers' => TrailerController::class,
     'allocations' => AllocationController::class,
     'trips' => TripController::class,
+    'claims' =>ClaimController::class,
 ]);
 
 

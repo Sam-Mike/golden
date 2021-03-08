@@ -22,34 +22,34 @@ class Trip extends Model
 
     public function client()
     {
-        return $this->belongsTo('App\Models\Client', 'client_id', 'id');
+        return $this->belongsTo(Client::class, 'client_id', 'id');
     }
     public function cargo()
     {
-        return $this->belongsTo('App\Models\Cargo', 'cargo_id', 'id');
+        return $this->belongsTo(Cargo::class, 'cargo_id', 'id');
     }
     public function destination()
     {
-        return $this->belongsTo('App\Models\Location', 'destination_id', 'id');
+        return $this->belongsTo(Location::class, 'destination_id', 'id');
     }
     public function loadingLocation()
     {
-        return $this->belongsTo('App\Models\Location', 'loading_location_id', 'id');
+        return $this->belongsTo(Location::class, 'loading_location_id', 'id');
     }
     public function allocation()
     {
-        return $this->belongsTo('App\Models\Allocation', 'allocation_id', 'id');
+        return $this->belongsTo(Allocation::class, 'allocation_id', 'id');
     }
     public function status()
     {
-        return $this->belongsTo('App\Models\Status', 'activity_status_id');
+        return $this->belongsTo(Status::class, 'activity_status_id');
     }
     public function trip_class()
     {
-        return $this->belongsTo('App\Models\TripClass', 'trip_class_id');
+        return $this->belongsTo(TripClass::class, 'trip_class_id');
     }
     public function people()
     {
-        return $this->belongsTo('App\Models\People', 'dispatcher_id');
+        return $this->belongsTo(People::class, 'dispatcher_id');
     }
 }

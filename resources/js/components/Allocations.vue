@@ -626,19 +626,22 @@ export default {
     handleDeleteAllocation(bvModalEvt) {
       // Prevent modal from closing
       bvModalEvt.preventDefault();
-      this.deleteAllocation();
+      this.deleteFreeAllocation();
     },
-    // deleteFreeAllocation() {
-    //   //allocation should be archived and not deleted
-    //   api
-    //     .delete("allocations/" + this.editAllocation.id)
-    //     .then((res) => console.log("allocation deleted"))
-    //     .catch((err) => res.err);
-    //   this.$nextTick(() => {
-    //     this.$bvModal.hide("updateAllocationModal");
-    //     this.getAllocations();
-    //   });
-    // },
+    deleteFreeAllocation() {
+      //allocation should be archived and not deleted
+      api
+        .delete("allocations/" + this.editAllocation.id)
+        .then((response) => {
+          console.log(response)
+          console.log('allocation deleted')
+          })
+        .catch((error) => console.log(error));
+      this.$nextTick(() => {
+        this.$bvModal.hide("updateAllocationModal");
+        this.getAllocations();
+      });
+    },
   },
 };
 </script>
