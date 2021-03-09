@@ -36,6 +36,6 @@ class People extends Model
     }
     public function trips()
     {
-        return $this->hasMany(Trip::class);
+        return $this->hasManyThrough(Trip::class, Allocation::class, 'driver_id', 'allocation_id');
     }
 }

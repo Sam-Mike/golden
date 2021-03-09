@@ -49,10 +49,10 @@ class TripController extends Controller
         ]);
         $allocations = request("allocationsList");
         foreach ($allocations as $allocation) {
-            $trip = new Trip();
-            $trip->client_id = request('clientId');
-            $trip->cargo_id = request('cargoId');
-            $trip->destination_id = request('destinationId');
+            $trip = new Trip;
+            $trip->client_id = $request->input('clientId');
+            $trip->cargo_id = $request->input('cargoId');
+            $trip->destination_id = $request->input('destinationId');
             $trip->allocation_id = $allocation;
             $trip->activity_status_id = 4; //maybe from api as activityStatusId
             $trip->save();
@@ -90,38 +90,38 @@ class TripController extends Controller
     {
         $trip = Trip::findOrFail($id);
         //$trip->activity_status_id = request('activityStatusId');
-        $trip->trip_class_id = request('tripClassId');
-        $trip->dispatch_date = request('dispatchDate');
-        $trip->eta_site = request('etaSite');
-        $trip->route_code = request('routeCode');
-        $trip->current_location = request('currentLocation');
-        $trip->manifest_number = request('manifestNumber');
-        $trip->manifest_date = request('manifestDate');
-        $trip->manifest_document = request('manifestDocument');
-        $trip->file_number = request('fileNumber');
-        $trip->cargo_order_number = request('cargoOrderNumber');
-        $trip->cargo_weight = request('cargoWeight');
-        $trip->cargo_quantity = request('cargoQuantity');
-        $trip->seal_number = request('sealNumber');
-        $trip->container_number = request('containerNumber');
-        $trip->loading_date = request('loadingDate');
-        $trip->loading_location_id = request('loadingLocation');
+        $trip->trip_class_id = $request->input('tripClassId');
+        $trip->dispatch_date = $request->input('dispatchDate');
+        $trip->eta_site = $request->input('etaSite');
+        $trip->route_code = $request->input('routeCode');
+        $trip->current_location = $request->input('currentLocation');
+        $trip->manifest_number = $request->input('manifestNumber');
+        $trip->manifest_date = $request->input('manifestDate');
+        $trip->manifest_document = $request->input('manifestDocument');
+        $trip->file_number = $request->input('fileNumber');
+        $trip->cargo_order_number = $request->input('cargoOrderNumber');
+        $trip->cargo_weight = $request->input('cargoWeight');
+        $trip->cargo_quantity = $request->input('cargoQuantity');
+        $trip->seal_number = $request->input('sealNumber');
+        $trip->container_number = $request->input('containerNumber');
+        $trip->loading_date = $request->input('loadingDate');
+        $trip->loading_location_id = $request->input('loadingLocation');
         $trip->save();
 
         //setting truck, trailer and driver free in case the trip ends
-        $allocation = Allocation::find($trip->allocation_id);
+        $allocation = Allocation::findOrFail($trip->allocation_id);
+
         $truck = Truck::find($allocation->truck_id);
-        $truck->activity_status_id = request('truckActivityStatusId');
-        $truck->save();
+        $truck->activity_status_id = $request->input('truckActivityStatusId');
+        //$truck->save();
 
         $trailer = Trailer::find($allocation->trailer_id);
-        $trailer->activity_status_id = request('trailerActivityStatusId');
-        $trailer->save();
+        $trailer->activity_status_id = $request->input('trailerActivityStatusId');
+        // $trailer->save();
 
         $driver = People::find($allocation->driver_id);
-        $driver->activity_status_id = request('driverActivityStatusId');
-        $driver->save();
-
+        $driver->activity_status_id = $request->input('driverActivityStatusId');
+        // $driver->save();
         return response()->json([
             'success',
         ], 200);
@@ -135,6 +135,24 @@ class TripController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //archiving trip
+        $trip = Trip::find($id);
+        $trip->activity_status_id = $request->input('activityStatusId');
+
+        //making hte allocation entities free again
+        $allocation = Allocation::find($trip->allocation_id);
+
+        $truck = Truck::find($allocation->truck_id);
+        $truck->activity_status_id = $request->input('truckActivityStatusId');
+        $truck->save();
+
+        $trailer = Trailer::find($allocation->trailer_id);
+        $trailer->activity_status_id = $request->input('trailerActivityStatusId');
+        $trailer->save();
+
+        $driver = Driver::find($allocation->driver_id);
+        $driver->activity_status_id = $request->input('driverActivityStatusId');
+        $driver->save();
+
     }
 }

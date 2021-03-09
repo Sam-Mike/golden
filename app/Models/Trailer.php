@@ -22,6 +22,10 @@ class Trailer extends Model
     {
         return $this->hasMany(Allocation::class);
     }
+    public function trips()
+    {
+        return $this->hasManyThrough(Trip::class, Allocation::class, 'trailer_id', 'allocation_id');
+    }
     public function trailer_type()
     {
         return $this->belongsTo(TrailerType::class);

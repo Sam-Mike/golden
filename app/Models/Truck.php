@@ -32,6 +32,10 @@ class Truck extends Model
     }
     public function allocations()
     {
-        return $this->hasMany(Allocation::class);
+        return $this->hasMany(Allocation::class, );
+    }
+    public function trips()
+    {
+        return $this->hasManyThrough(Trip::class, Allocation::class, 'truck_id', 'allocation_id');
     }
 }

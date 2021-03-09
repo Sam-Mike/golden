@@ -471,6 +471,9 @@ export default {
           containerNumber: this.editTrip.containerNumber,
           loadingDate: this.editTrip.loadingDate,
           loadingLocation: this.editTrip.loadingLocationId,
+          truckActivityStatusId:2,
+          trailerActivityStatusId:2,
+          driverActivityStatusId:2,
         });
         console.log("trip updated successfully");
         this.$nextTick(() => {
@@ -490,9 +493,9 @@ export default {
         await api.patch("trips/" + this.editTrip.id, {
           // set truck, trailer and driver activity status to free again
           activityStatusId:3,
-          truckActivityStatus:1,
-          trailerActivityStatus:1,
-          driverActivityStatus:1,
+          truckActivityStatusId:1,
+          trailerActivityStatusId:1,
+          driverActivityStatusId:1,
         });
         console.log("trip archived successfully");
         this.$nextTick(() => {

@@ -56,10 +56,10 @@ class AllocationController extends Controller
             'driverId' => 'required',
         ]);
 
-        $allocation = new Allocation();
-        $allocation->truck_id = request('truckId');
-        $allocation->trailer_id = request('trailerId');
-        $allocation->driver_id = request('driverId');
+        $allocation = new Allocation;
+        $allocation->truck_id = $request->input('truckId');
+        $allocation->trailer_id = $request->input('trailerId');
+        $allocation->driver_id = $request->input('driverId');
         $allocation->activity_status_id = 1;
         $allocation->save();
 
@@ -114,8 +114,6 @@ class AllocationController extends Controller
         $allocation->delete();
 
         //changing truck, trailer and driver activity status to FREE
-       
-        //$truck = Truck::where('id', $allocation->truck_id);
         $truck = Truck::find($allocation->truck_id);
         $truck->activity_status_id = 1;
         $truck->save();
