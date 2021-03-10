@@ -35,10 +35,10 @@ class TrailerController extends Controller
     public function store(Request $request)
     {
         $trailer = new Trailer;
-        $trailer->tl_number = request('tlNumber');
-        $trailer->registration_number = request('registrationNumber');
-        $trailer->trailer_type_id = request('trailerTypeId');
-        $trailer->company_id = request('companyId');
+        $trailer->tl_number = $request->input('tlNumber');
+        $trailer->registration_number = $request->input('registrationNumber');
+        $trailer->trailer_type_id = $request->input('trailerTypeId');
+        $trailer->company_id = $request->input('companyId');
         $trailer->activity_status_id = 1; //assignment status is free on creation
         $trailer->save();
         return  response()->json(['success'], 200);
@@ -65,11 +65,11 @@ class TrailerController extends Controller
     public function update(Request $request, $id)
     {
         $trailer = Trailer::findOrFail($id);
-        $trailer->tl_number = request('tlNumber');
-        $trailer->registration_number = request('registrationNumber');
-        $trailer->trailer_type_id = request('trailerTypeId');
-        $trailer->company_id = request('companyId');
-        $trailer->activity_status_id = request('activityStatusId');
+        $trailer->tl_number = $request->input('tlNumber');
+        $trailer->registration_number = $request->input('registrationNumber');
+        $trailer->trailer_type_id = $request->input('trailerTypeId');
+        $trailer->company_id = $request->input('companyId');
+        $trailer->activity_status_id = $request->input('activityStatusId');
         $trailer->save();
 
         return  response()->json(['success'], 200);

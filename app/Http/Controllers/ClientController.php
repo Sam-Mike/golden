@@ -35,12 +35,12 @@ class ClientController extends Controller
 
         $client = new Client();
 
-        $client->name = request('clientName');
-        $client->address = request('clientAddress');
-        $client->phone = request('clientPhoneNumber');
-        $client->contact_person_name = request('clientContactPersonName');
-        $client->mobile = request('clientMobile');
-        $client->email = request('clientEmail');
+        $client->name = $request->input('clientName');
+        $client->address = $request->input('clientAddress');
+        $client->phone = $request->input('clientPhoneNumber');
+        $client->contact_person_name = $request->input('clientContactPersonName');
+        $client->mobile = $request->input('clientMobile');
+        $client->email = $request->input('clientEmail');
         $client->activity_status_id = 1;
         $client->save();
         return response()->json(['success'], 200);
@@ -67,13 +67,13 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         $client = Client::findOrFail($id);
-        $client->name = request('clientName');
-        $client->address = request('clientAddress');
-        $client->phone = request('clientPhoneNumber');
-        $client->contact_person_name = request('clientContactPersonName');
-        $client->mobile = request('clientMobile');
-        $client->email = request('clientEmail');
-        $client->activity_status_id = request('clientActivityStatusId');
+        $client->name = $request->input('clientName');
+        $client->address = $request->input('clientAddress');
+        $client->phone = $request->input('clientPhoneNumber');
+        $client->contact_person_name = $request->input('clientContactPersonName');
+        $client->mobile = $request->input('clientMobile');
+        $client->email = $request->input('clientEmail');
+        $client->activity_status_id = $request->input('clientActivityStatusId');
         $client->save();
         return response()->json([
             "Client updated Successfully"

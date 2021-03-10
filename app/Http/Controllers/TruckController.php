@@ -39,10 +39,10 @@ class TruckController extends Controller
     public function store(Request $request)
     {
         $truck = new Truck;
-        $truck->registration_number = request('registrationNumber');
-        $truck->company_id = request('companyId');
-        $truck->cluster_id = request('clusterId');
-        $truck->truck_type_id = request('truckTypeId');
+        $truck->registration_number = $request->input('registrationNumber');
+        $truck->company_id = $request->input('companyId');
+        $truck->cluster_id = $request->input('clusterId');
+        $truck->truck_type_id = $request->input('truckTypeId');
         $truck->activity_status_id = 1; //setting assignment status to free on creation
         $truck->save();
         return  response()->json(['success'], 200);
@@ -69,11 +69,11 @@ class TruckController extends Controller
     public function update(Request $request, $id)
     {
         $truck = Truck::findOrFail($id);
-        $truck->registration_number = request('registrationNumber');
-        $truck->company_id = request('companyId');
-        $truck->cluster_id = request('clusterId');
-        $truck->truck_type_id = request('truckTypeId');
-        $truck->activity_status_id = request('activityStatusId');
+        $truck->registration_number = $request->input('registrationNumber');
+        $truck->company_id = $request->input('companyId');
+        $truck->cluster_id = $request->input('clusterId');
+        $truck->truck_type_id = $request->input('truckTypeId');
+        $truck->activity_status_id = $request->input('activityStatusId');
         $truck->save();
         return  response()->json(['success'], 200);
     }

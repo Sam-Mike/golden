@@ -248,7 +248,6 @@
               ></b-input>
             </p>
           </b-col>
-          
         </b-row>
         <!-- MANIFEST INFORMATION -->
         <b-row class="border rounded">
@@ -275,15 +274,24 @@
           </b-col>
           <b-col class="border rouded">
             <b>MANIFEST DOC</b>
-            <p>
-              <!-- <b-form-file
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input class="custom-file-input" size="sm" id="inputGroupFile" type="file" />
+                <label
+                  class="custom-file-label"
+                  for="inputGroupFile"
+                  aria-describedby="inputGroupFileAddon02"
+                  >Choose file</label
+                >
+              </div>
+            </div>
+            <!-- <b-form-file
                 size="sm"
-                v-model="file1"
-                :state="Boolean(file1)"
+                v-model="editTrip.manifestDocument"
+                :state="Boolean(editTrip.manifestDocument)"
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
               ></b-form-file> -->
-            </p>
           </b-col>
         </b-row>
         <b-row class="border rounded">
@@ -471,9 +479,9 @@ export default {
           containerNumber: this.editTrip.containerNumber,
           loadingDate: this.editTrip.loadingDate,
           loadingLocation: this.editTrip.loadingLocationId,
-          truckActivityStatusId:2,
-          trailerActivityStatusId:2,
-          driverActivityStatusId:2,
+          truckActivityStatusId: 2,
+          trailerActivityStatusId: 2,
+          driverActivityStatusId: 2,
         });
         console.log("trip updated successfully");
         this.$nextTick(() => {
@@ -484,6 +492,7 @@ export default {
         console.log(error);
       }
     },
+    async updateTruckLocation() {},
     handleEndTrip(bvModalEvt) {
       bvModalEvt.preventDefault();
       this.endTrip();
@@ -492,10 +501,10 @@ export default {
       try {
         await api.patch("trips/" + this.editTrip.id, {
           // set truck, trailer and driver activity status to free again
-          activityStatusId:3,
-          truckActivityStatusId:1,
-          trailerActivityStatusId:1,
-          driverActivityStatusId:1,
+          activityStatusId: 3,
+          truckActivityStatusId: 1,
+          trailerActivityStatusId: 1,
+          driverActivityStatusId: 1,
         });
         console.log("trip archived successfully");
         this.$nextTick(() => {

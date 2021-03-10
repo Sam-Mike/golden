@@ -109,19 +109,19 @@ class TripController extends Controller
         $trip->save();
 
         //setting truck, trailer and driver free in case the trip ends
-        $allocation = Allocation::findOrFail($trip->allocation_id);
+        $allocation = Allocation::find($trip->allocation_id);
 
         $truck = Truck::find($allocation->truck_id);
         $truck->activity_status_id = $request->input('truckActivityStatusId');
-        //$truck->save();
+        $truck->save();
 
         $trailer = Trailer::find($allocation->trailer_id);
         $trailer->activity_status_id = $request->input('trailerActivityStatusId');
-        // $trailer->save();
+        $trailer->save();
 
         $driver = People::find($allocation->driver_id);
         $driver->activity_status_id = $request->input('driverActivityStatusId');
-        // $driver->save();
+        $driver->save();
         return response()->json([
             'success',
         ], 200);
@@ -138,6 +138,7 @@ class TripController extends Controller
         //archiving trip
         $trip = Trip::find($id);
         $trip->activity_status_id = $request->input('activityStatusId');
+        $trip->save();
 
         //making hte allocation entities free again
         $allocation = Allocation::find($trip->allocation_id);

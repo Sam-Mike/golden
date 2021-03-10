@@ -41,18 +41,18 @@ class PeopleController extends Controller
     public function store(Request $request)
     {
         $people = new People();
-        $people->first_name = request('firstName');
-        $people->middle_name = request('middleName');
-        $people->last_name = request('lastName');
-        $people->dob = request('dob');
-        $people->mobile = request('mobile');
-        $people->start_date = request('startDate');
-        $people->company_id = request('companyId');
-        $people->role_position_id = request('rolePositionId');
-        //$people->department_id = request('departmentId');
-        $people->license_number = request('licenseNumber');
-        $people->license_issue_date = request('licenseIssueDate');
-        $people->license_class_id = request('licenseClassId');
+        $people->first_name = $request->input('firstName');
+        $people->middle_name = $request->input('middleName');
+        $people->last_name = $request->input('lastName');
+        $people->dob = $request->input('dob');
+        $people->mobile = $request->input('mobile');
+        $people->start_date = $request->input('startDate');
+        $people->company_id = $request->input('companyId');
+        $people->role_position_id = $request->input('rolePositionId');
+        //$people->department_id = $request->input('departmentId');
+        $people->license_number = $request->input('licenseNumber');
+        $people->license_issue_date = $request->input('licenseIssueDate');
+        $people->license_class_id = $request->input('licenseClassId');
         $people->activity_status_id = 1; //assignment status is active on creation
         $people->save();
         return  response()->json(['success'], 200);
@@ -79,18 +79,18 @@ class PeopleController extends Controller
     public function update(Request $request, $id)
     {
         $people = People::findOrFail($id);
-        $people->first_name = request('firstName');
-        $people->middle_name = request('middleName');
-        $people->last_name = request('lastName');
-        $people->dob = request('dob');
-        $people->mobile = request('mobile');
-        $people->start_date = request('startDate');
-        $people->company_id = request('companyId');
-        $people->department_id = request('departmentId');
-        $people->license_number = request('licenseNumber');
-        $people->license_issue_date = request('licenseIssueDate');
-        $people->license_class_id = request('licenseClassId');
-        $people->activity_status_id = request('activityStatusId');
+        $people->first_name = $request->input('firstName');
+        $people->middle_name = $request->input('middleName');
+        $people->last_name = $request->input('lastName');
+        $people->dob = $request->input('dob');
+        $people->mobile = $request->input('mobile');
+        $people->start_date = $request->input('startDate');
+        $people->company_id = $request->input('companyId');
+        $people->department_id = $request->input('departmentId');
+        $people->license_number = $request->input('licenseNumber');
+        $people->license_issue_date = $request->input('licenseIssueDate');
+        $people->license_class_id = $request->input('licenseClassId');
+        $people->activity_status_id = $request->input('activityStatusId');
         $people->save();
 
         return response()->json(["Person updated successfully"], 200);
