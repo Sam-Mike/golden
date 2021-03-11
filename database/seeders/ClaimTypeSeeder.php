@@ -14,8 +14,7 @@ class ClaimTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('claim_type')->insert(['name'=>'TRUCK']);
-        DB::table('claim_type')->insert(['name'=>'TRAILER']);
+        DB::table('claim_type')->insert(['name'=>'VEHICLES/TRAILERS']);
         DB::table('claim_type')->insert(['name'=>'GOODS']);
         DB::table('claim_type')->insert(['name'=>'FIDELITY']);
     }

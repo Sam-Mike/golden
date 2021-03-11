@@ -2,7 +2,7 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs>
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <!-- Active People -->
           <b-tab title="Active">
             <!-- DataTales  -->
@@ -10,13 +10,13 @@
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">People</h6>
-                  <!-- Button trigger Add Person modal -->
+                  <!-- Button trigger Create Person modal -->
                   <b-button
                     size="sm"
                     variant="primary"
-                    v-b-modal.addPersonModal
+                    v-b-modal.newPersonModal
                   >
-                    Add Person
+                    New Person
                   </b-button>
                 </div>
               </div>
@@ -55,7 +55,7 @@
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">People</h6>
-                  <!-- Button trigger Add Person modal -->
+                  <!-- Button trigger Create Person modal -->
                 </div>
               </div>
               <div class="card-body">
@@ -92,17 +92,17 @@
         </b-tabs>
       </b-card>
 
-      <!-- Add Person Modal -->
+      <!-- Create Person Modal -->
       <b-modal
         scrollable
         class="modal fade"
-        id="addPersonModal"
+        id="newPersonModal"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
         ok-title="Save"
         @ok="handleCreatePerson"
-        title="Add Person"
+        title="New Person"
         button-size="sm"
       >
         <form ref="form" @submit.stop.prevent="createPerson">
@@ -509,7 +509,7 @@ export default {
           //licenseClassId: this.newPerson.licenseClassid,
         });
         this.$nextTick(() => {
-          this.$bvModal.hide("addPersonModal");
+          this.$bvModal.hide("newPersonModal");
           this.newPerson.firstName = "";
           this.newPerson.middleName = "";
           this.newPerson.dob = "";

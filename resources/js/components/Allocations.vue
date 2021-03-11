@@ -52,7 +52,10 @@
         </div>
         <b-card no-body>
           <!-- COACH TAB -->
-          <b-tabs content-class="mt-3">
+          <b-tabs
+            active-nav-item-class="font-weight-bold text-uppercase"
+            content-class="mt-3"
+          >
             <b-tab title="Coach" active>
               <div class="card shadow mb-4">
                 <div class="card-header py-3">
@@ -65,9 +68,9 @@
                       variant="primary"
                       data-toggle="modal"
                       data-target="#exampleModal"
-                      v-b-modal.addCoachAllocationModal
+                      v-b-modal.newCoachAllocationModal
                     >
-                      Add Allocation
+                      New Allocation
                     </b-button>
                   </div>
                 </div>
@@ -123,9 +126,9 @@
                       size="sm"
                       variant="primary"
                       data-toggle="modal"
-                      v-b-modal.addFleetAllocationModal
+                      v-b-modal.newFleetAllocationModal
                     >
-                      Add Allocation
+                      New Allocation
                     </b-button>
                   </div>
                 </div>
@@ -180,9 +183,9 @@
                       size="sm"
                       variant="primary"
                       data-toggle="modal"
-                      v-b-modal.addWheelsAllocationModal
+                      v-b-modal.newWheelsAllocationModal
                     >
-                      Add Allocation
+                      New Allocation
                     </b-button>
                   </div>
                 </div>
@@ -234,7 +237,7 @@
       <b-modal
         class="modal fade"
         button-size="sm"
-        id="addCoachAllocationModal"
+        id="newCoachAllocationModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -294,7 +297,7 @@
       <b-modal
         class="modal fade"
         button-size="sm"
-        id="addFleetAllocationModal"
+        id="newFleetAllocationModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -354,7 +357,7 @@
       <b-modal
         class="modal fade"
         button-size="sm"
-        id="addWheelsAllocationModal"
+        id="newWheelsAllocationModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -588,9 +591,9 @@ export default {
           driverId: this.newAllocation.driverId,
         });
         this.$nextTick(() => {
-          this.$bvModal.hide("addCoachAllocationModal");
-          this.$bvModal.hide("addFleetAllocationModal");
-          this.$bvModal.hide("addWheelsAllocationModal");
+          this.$bvModal.hide("newCoachAllocationModal");
+          this.$bvModal.hide("newFleetAllocationModal");
+          this.$bvModal.hide("newWheelsAllocationModal");
           this.newAllocation.truckId = "";
           this.newAllocation.trailerId = "";
           this.newAllocation.driverId = "";
@@ -611,7 +614,7 @@ export default {
           allocationsList: this.newTrip.checkedAllocations,
         });
         this.$nextTick(() => {
-          this.$bvModal.hide("addAllocationModal");
+          //this.$bvModal.hide("newAllocationModal");
           this.getAllocations();
         });
       } catch (error) {
@@ -633,9 +636,9 @@ export default {
       api
         .delete("allocations/" + this.editAllocation.id)
         .then((response) => {
-          console.log(response)
-          console.log('allocation deleted')
-          })
+          console.log(response);
+          console.log("allocation deleted");
+        })
         .catch((error) => console.log(error));
       this.$nextTick(() => {
         this.$bvModal.hide("updateAllocationModal");

@@ -2,7 +2,7 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs content-class="mt-2">
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase" content-class="mt-2">
           <b-tab title="PENDING">
             <!-- TRIPS FOR TRIPS WITH PENDING INFORMATION -->
             <!-- DataTales Example -->
@@ -66,6 +66,11 @@
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.allocation.driver.firstName }}
+                      {{ methods.item.allocation.driver.middleName }}
+                      {{ methods.item.allocation.driver.lastName }}
+                    </template>
                     <template #cell(actions)="row">
                       <b-button
                         size="sm"
@@ -103,6 +108,11 @@
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.allocation.driver.firstName }}
+                      {{ methods.item.allocation.driver.middleName }}
+                      {{ methods.item.allocation.driver.lastName }}
+                    </template>
                     <template #cell(actions)="row">
                       <b-button
                         size="sm"
@@ -140,6 +150,11 @@
                     :sticky-header="true"
                     :filter="tableFilter"
                   >
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.allocation.driver.firstName }}
+                      {{ methods.item.allocation.driver.middleName }}
+                      {{ methods.item.allocation.driver.lastName }}
+                    </template>
                     <template #cell(actions)="row">
                       <b-button
                         size="sm"
@@ -276,7 +291,12 @@
             <b>MANIFEST DOC</b>
             <div class="input-group mb-3">
               <div class="custom-file">
-                <input class="custom-file-input" size="sm" id="inputGroupFile" type="file" />
+                <input
+                  class="custom-file-input"
+                  size="sm"
+                  id="inputGroupFile"
+                  type="file"
+                />
                 <label
                   class="custom-file-label"
                   for="inputGroupFile"

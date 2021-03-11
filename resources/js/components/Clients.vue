@@ -2,7 +2,7 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs>
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <b-tab title="ACTIVE">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -15,9 +15,9 @@
                     variant="primary"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    v-b-modal.addClientModal
+                    v-b-modal.newClientModal
                   >
-                    Add Client
+                    New Client
                   </b-button>
                 </div>
               </div>
@@ -104,14 +104,14 @@
 
       <!-- DataTales Example -->
 
-      <!-- Add Client Modal -->
+      <!-- Create Client Modal -->
       <b-modal
         ok-title="Save"
         scrollable
-        title="Add Client"
+        title="Create Client"
         class="modal fade"
         button-size="sm"
-        id="addClientModal"
+        id="newClientModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -413,7 +413,7 @@ export default {
           clientEmail: this.newClient.email,
         });
         this.$nextTick(() => {
-          this.$bvModal.hide("addClientModal");
+          this.$bvModal.hide("newClientModal");
           this.newClient.name = "";
           this.newClient.address = "";
           this.newClient.phoneNumber = "";
@@ -454,7 +454,7 @@ export default {
           clientEmail: this.editClient.content.email,
           clientActivityStatusId: this.editClient.content.activityStatus.id,
         });
-        console.log("client added");
+        console.log("client updated");
         this.$nextTick(() => {
           this.$bvModal.hide("updateClientModal");
           this.getClients();

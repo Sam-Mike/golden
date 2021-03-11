@@ -2,7 +2,7 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs>
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase" >
           <b-tab title="Active">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -10,15 +10,15 @@
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
 
-                  <!-- Button trigger modal -->
+                  <!-- Button trigger Create Truck Modal -->
                   <b-button
                     size="sm"
                     variant="primary"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    v-b-modal.addTruckModal
+                    v-b-modal.newTruckModal
                   >
-                    Add Truck
+                    New Truck
                   </b-button>
                 </div>
               </div>
@@ -86,13 +86,13 @@
         </b-tabs>
       </b-card>
 
-      <!-- Add Truck Modal -->
+      <!-- New Truck Modal -->
       <b-modal
         scrollable
-        title="Add Truck"
+        title="New Truck"
         button-size="sm"
         class="modal fade"
-        id="addTruckModal"
+        id="newTruckModal"
         tabindex="-1"
         role="dialog"
         aria-hidden="true"
@@ -191,7 +191,7 @@
       <!-- Inactive Truck Modal -->
       <b-modal
         scrollable
-        title="Add Truck"
+        title="Inactive Truck"
         ok-title="Activate"
         class="modal fade"
         id="inactiveTruckModal"
@@ -281,10 +281,10 @@ export default {
           truckTypeId: this.newTruck.truckTypeId,
           allocationStatusId: 1,
         })
-        .then((res) => console.log("truck added"));
+        .then((res) => console.log("new truck added"));
 
       this.$nextTick(() => {
-        this.$bvModal.hide("addTruckModal");
+        this.$bvModal.hide("newTruckModal");
         this.getTrucks();
       });
     },
@@ -301,21 +301,21 @@ export default {
       bvModalEvt.preventDefault();
       this.updateTruck();
     },
-    updateTruck() {
-      api
-        .patch("trucks/" + this.editTruck.content.id, {
+    async updateTruck() {
+      try {
+        await api.patch("trucks/" + this.editTruck.content.id, {
           registrationNumber: this.editTruck.content.registrationNumber,
           companyId: this.editTruck.content.company.id,
           truckTypeId: this.editTruck.content.truckType.id,
           activityStatusId: this.editTruck.content.activityStatus.id,
-        })
-        .then((res) => {
-          console.log("Truck updated");
         });
-      this.$nextTick(() => {
-        this.$bvModal.hide("updateTruckModal");
-        this.getTrucks();
-      });
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateTruckModal");
+          this.getTrucks();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleDeactivateTruck() {
       this.deactivateTruck();
@@ -361,7 +361,9 @@ export default {
           this.$bvModal.hide("inactiveTruckModal");
           this.getTrucks();
         });
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

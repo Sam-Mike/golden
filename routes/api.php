@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\TruckController;
 use App\Http\Controllers\TrailerController;
@@ -29,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //Route::apiResource('allocations', AllocationController::class)-> middleware('auth:sanctum');
-
+Route::get('global', [HomeController::class, 'index']);
 Route::apiResources([
     'clients' => ClientController::class,
     'people' => PeopleController::class,

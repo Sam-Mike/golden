@@ -110,7 +110,7 @@ class AllocationController extends Controller
      */
     public function destroy($id)
     {
-        //first get the allocation
+        //getting the allocation
         $allocation = Allocation::findOrFail($id);
 
         //changing truck, trailer and driver activity status to FREE
@@ -126,8 +126,7 @@ class AllocationController extends Controller
         $driver->activity_status_id = 1;
         $driver->save();
 
-        //finally delete the given allocation you want gone 
-        //(BUT WHICH WE SAID IT WILL STAY FROM THE LAST TIME WE TALKED!!)
+        //deleting the allocation
         $allocation->delete();
 
         return response()->json(['allocation deleted successfully']);

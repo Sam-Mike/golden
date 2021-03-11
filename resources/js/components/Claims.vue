@@ -2,8 +2,11 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs content-class="mt-2">
-          <b-tab title="INTIMATED">
+        <b-tabs
+          active-nav-item-class="font-weight-bold text-uppercase"
+          content-class="mt-2"
+        >
+          <b-tab title="Intimated">
             <!-- CLAIMS WITH PENDING INFORMATION -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -48,7 +51,7 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="SUBMITTED DOCS"
+          <b-tab title="Submitted Document"
             ><!-- LOCAL TRIPS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -82,7 +85,7 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="ASSESSED"
+          <b-tab title="Assessed"
             ><!-- TRANSIT TRIPS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -116,7 +119,7 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="VOUCHERS DISCHARGED">
+          <b-tab title="Vouchers Discharged">
             <!-- ARCHIVE TRIPS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -150,7 +153,7 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="PAID">
+          <b-tab title="Paid">
             <!-- ARCHIVE TRIPS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -184,7 +187,7 @@
               </div>
             </div>
           </b-tab>
-          <b-tab title="DECLINED">
+          <b-tab title="Declined">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -387,6 +390,8 @@ export default {
     return {
       loading: false,
       claims: [],
+      conpany: [],
+      clients: [],
       claimType: [], //load also trucks, trailers, goods, fidelity
       claimFields: [
         { key: "claimSubject.name", label: "Subject", sortable: true },
@@ -428,7 +433,11 @@ export default {
       },
     };
   },
-
+  computed: {
+    companyWithClients(){
+      return company.concat(clients);
+    }
+  },
   mounted() {
     this.getClaims();
   },
@@ -445,20 +454,20 @@ export default {
         console.log(error);
       }
     },
-    handleCreateClaim(bvModalEvt){
+    handleCreateClaim(bvModalEvt) {
       bvModalEvt.preventDefault();
       this.createClaim();
     },
-    async createClaim(){
+    async createClaim() {
       try {
         await api.post("claims", this.newClaim);
-        console.log('claim created');
-        this.$nextTick(()=>{
+        console.log("claim created");
+        this.$nextTick(() => {
           this.$bvModal.hide("createClaimModal");
           this.getClaims();
-        })
+        });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
     info(item, button) {

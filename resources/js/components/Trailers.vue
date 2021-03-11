@@ -2,7 +2,7 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs>
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <!-- ACTIVE TRAILERS -->
           <b-tab title="Active">
             <!-- DataTales Example -->
@@ -11,15 +11,15 @@
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
 
-                  <!-- Button trigger Add Trailer Modal -->
+                  <!-- Button trigger New Trailer Modal -->
                   <b-button
                     size="sm"
                     variant="primary"
                     data-toggle="modal"
                     data-target="#exampleModal"
-                    v-b-modal.addTrailerModal
+                    v-b-modal.newTrailerModal
                   >
-                    Add Trailer
+                    New Trailer
                   </b-button>
                 </div>
               </div>
@@ -54,7 +54,7 @@
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
 
-                  <!-- Button trigger Add Trailer Modal -->
+                  <!-- Button trigger New Trailer Modal -->
                 </div>
               </div>
               <div class="card-body">
@@ -87,13 +87,13 @@
         </b-tabs>
       </b-card>
 
-      <!-- Add Trailer Modal -->
+      <!-- New Trailer Modal -->
       <b-modal
         scrollable
-        title="Add Trailer"
+        title="New Trailer"
         class="modal fade"
         button-size="sm"
-        id="addTrailerModal"
+        id="newTrailerModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -312,7 +312,7 @@ export default {
     async createTrailer() {
       await api.post("trailers", this.newTrailer);
       this.$nextTick(() => {
-        this.$bvModal.hide("addTrailerModal");
+        this.$bvModal.hide("newTrailerModal");
         this.getTrailers();
       });
     },
