@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 //Route::apiResource('allocations', AllocationController::class)-> middleware('auth:sanctum');
-Route::get('global', [HomeController::class, 'index']);
+Route::get('globalData', [HomeController::class, 'index']);
 Route::apiResources([
     'clients' => ClientController::class,
     'people' => PeopleController::class,

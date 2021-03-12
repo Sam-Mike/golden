@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Claim;
 use App\Models\Company;
-use App\Models\Clients;
+use App\Models\Client;
 use App\Models\ClaimType;
 use App\Http\Resources\ClaimResource;
 use App\Http\Resources\CompanyResource;
@@ -40,6 +40,8 @@ class ClaimController extends Controller
         $claim = new Claim;
         $claim->claim_type_id = $request->input('claimTypeId');
         $claim->claim_subject = $request->input('claimSubject');
+        $claim->claim_subject_owner = $request->input('claimSubjectOwner');
+        $claim->save();
     }
 
     /**
@@ -77,16 +79,16 @@ class ClaimController extends Controller
 
         //updating the claim status
         $request->whenFilled('claimDocument', function($input){
-            $claim->claim_document_status = 2;
+            $claim->claim_status = 2;
         });
         $request->whenFilled('incidentAssessDocument', function($input){
-            $claim->assess_status = 2;
+            $claim->claim_status = 3;
         });
         $request->whenFilled('dischargeVoucherDocument', function($input){
-            $claim->discharge_voucher_status = 2;
+            $claim->claim_status = 4;
         });
         $request->whenFilled('paymentDocument', function($input){
-            $claim->payment_status = 2;
+            $claim->claim_status = 5;
         });
 
         //saving claim

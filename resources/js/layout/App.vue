@@ -162,10 +162,13 @@ export default {
       user: "auth/user",
     }),
   },
-  mounted() {},
+  mounted() {
+    this.getGlobalData();
+  },
   methods: {
     ...mapActions({
       logout: "auth/logout",
+      getGlobalData:"getGlobalData"
     }),
     async logout() {
       try {

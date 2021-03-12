@@ -252,6 +252,16 @@
             placeholder="Enter Claim Subject eg. Truck Number"
             required
           />
+        </div>
+        <div class="form-group">
+          <label for="">Claim Subject Owner</label>
+          <v-select
+            v-model="newClaim.claimSubjectOwner"
+            :options="clients"
+            label="name"
+            placeholder="Choose Company"
+            :reduce="(companyWithClients) => companyWithClients.name"
+          ></v-select>
         </div></form
     ></b-modal>
     <!-- MODAL TO UPDATE CLAIM INFORMATION -->
@@ -267,7 +277,7 @@
           size="sm"
           variant="danger"
           @click="hide(handleEndClaim())"
-          >End Trip</b-button
+          >End Claim</b-button
         >
         <b-button size="sm" @click="cancel()">Cancel</b-button>
         <b-button size="sm" variant="primary" @click="ok()">Save</b-button>
@@ -299,25 +309,42 @@
           <b-col class="border rounded">
             <b>ASSESSOR</b>
             <p>
-              {{ editClaim.incidentAssessorName }}
+              <b-input
+                v-model="editClaim.incidentAssessorName"
+                size="sm"
+                placeholder="Enter company name"
+              ></b-input>
             </p>
           </b-col>
           <b-col class="border rouded">
             <b>ASSESS COMPANY</b>
             <p>
-              {{ editClaim.incidentAssessorCompany }}
+              <b-input
+                v-model="editClaim.incidentAssessorCompany"
+                size="sm"
+                placeholder="Enter company name"
+              ></b-input>
             </p>
           </b-col>
           <b-col class="border rounded">
             <b>COMMENT</b>
             <p>
-              {{ editClaim.incidentAssessComment }}
+              <b-input
+                v-model="editClaim.incidentAssessorComment"
+                size="sm"
+                placeholder="Enter company name"
+              ></b-input>
             </p>
           </b-col>
           <b-col class="border rounded">
             <b>DATE</b>
             <p>
-              {{ editClaim.incidentAssessDate }}
+            <b-input
+                v-model="editClaim.incidentAssessDate"
+                size="sm"
+                type="date"
+                placeholder="Enter discharge date"
+              ></b-input>
             </p>
           </b-col>
         </b-row>
@@ -338,7 +365,7 @@
             <p>
               <b-input
                 size="sm"
-                type="date"
+                v-model="editClaim.dischargeVoucherComment"
                 placeholder="Enter comment"
               ></b-input>
             </p>
@@ -390,11 +417,12 @@ export default {
     return {
       loading: false,
       claims: [],
-      conpany: [],
+      company: [],
       clients: [],
       claimType: [], //load also trucks, trailers, goods, fidelity
       claimFields: [
-        { key: "claimSubject.name", label: "Subject", sortable: true },
+        { key: "claimSubject", label: "Claim Subject", sortable: true },
+        { key: "claimSubjectOwner", sortable: true },
         { key: "claimType.name", label: "Claim Type", sortable: true },
         { key: "incidentAssessorName", label: "Incindent Assessor" },
         {
@@ -404,7 +432,7 @@ export default {
         },
         { key: "incidentAssessDate", label: "Assessment Date" },
         { key: "incidentAssessComment", label: "Assessment Comment" },
-        { key: "dischargeVoucher", label: "" },
+        { key: "dischargeVoucher", label: "DischargeVoucher" },
         { key: "actions" },
       ],
       tableHeadVariant: "dark",
@@ -412,32 +440,26 @@ export default {
       newClaim: {
         claimTypeId: "",
         claimSubject: "",
+        claimSubjectOwner: "",
       },
       editClaim: {
         claimType: "",
         claimSubject: "",
+        claimSubjectOwner:"",
         claimDocument: "",
-        claimDocumentStatus: "",
         incidentAssessorName: "",
         incidentAssessorCompany: "",
         incidentAssessDate: "",
         incidentAssessComment: "",
         incidentAssessDocument: "",
-        assessStatus: "",
         dischargeVoucherDocument: "",
         dischargeVoucherComment: "",
-        dischargeVoucherStatus: "",
         paymentDocument: "",
         paymentComment: "",
-        paymentStatus: "",
       },
     };
   },
-  computed: {
-    companyWithClients(){
-      return company.concat(clients);
-    }
-  },
+  computed: {},
   mounted() {
     this.getClaims();
   },
@@ -448,6 +470,8 @@ export default {
         const response = await api.get("claims");
         this.claims = response.data.claims;
         this.claimType = response.data.claimType;
+        this.company = response.data.company;
+        this.clients = response.data.clients;
         this.loading = false;
         console.log("claims loaded");
       } catch (error) {
@@ -475,20 +499,17 @@ export default {
       this.editClaim.id = item.id;
       this.editClaim.claimType = item.claimType;
       this.editClaim.claimSubject = item.claimSubject;
+      this.editClaim.claimSubjectOwner = item.claimSubjectOwner;
       this.editClaim.claimDocument = item.claimDocument;
-      this.editClaim.claimDocumentStatus = item.claimDocumentStatus;
       this.editClaim.incidentAssessorName = item.incidentAssessorName;
       this.editClaim.incidentAssessorCompany = item.incidentAssessorCompany;
       this.editClaim.incidentAssessComment = item.incidentAssessComment;
       this.editClaim.incidentAssessDate = item.incidentAssessDate;
       this.editClaim.incidentAssessDocument = item.incidentAssessDocument;
-      this.editClaim.assessStatus = item.assessStatus;
       this.editClaim.dischargeVoucherDocument = item.dischargeVoucherDocument;
       this.editClaim.dischargeVoucherComment = item.dischargeVoucherComment;
-      this.editClaim.dischargeVoucherStatus = item.dischargeVoucherStatus;
       this.editClaim.paymentDocument = item.paymentDocument;
       this.editClaim.paymentComment = item.paymentComment;
-      this.editClaim.paymentStatus = item.paymentStatus;
 
       this.$root.$emit("bv::show::modal", "updateClaimModal", button);
     },
@@ -502,20 +523,17 @@ export default {
         await api.patch("/claims/" + this.editClaim.id, {
           claimTypeId: this.editClaim.claimType.id,
           claimSubject: this.editClaim.claimSubject,
+          claimSubjectOwner: this.editClaim.claimSubjectOwner,
           claimDocument: this.editClaim.claimDocument,
-          claimDocumentStatus: this.editClaim.claimDocumentStatus,
           incidentAssessorName: this.editClaim.incidentAssessorName,
           incidentAssessorCompany: this.editClaim.incidentAssessorCompany,
           incidentAssessorComment: this.editClaim.incidentAssessorComment,
           incidentAssessorDate: this.editClaim.incidentAssessorDate,
           incidentAssessDocument: this.editClaim.incidentAssessDocument,
-          assessStatus: this.editClaim.assessStatus,
           dischargeVoucherDocument: this.editClaim.dischargeVoucherDocument,
           dischargeVoucherComment: this.editClaim.dischargeVoucherComment,
-          dischargeVoucherStatus: this.editClaim.dischargeVoucherStatus,
           paymentDocument: this.editClaim.paymentDocument,
           paymentComment: this.editClaim.paymentComment,
-          paymentStatus: this.editClaim.paymentStatus,
         });
         console.log("claim updated successfully");
         this.$nextTick(() => {
