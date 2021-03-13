@@ -97,6 +97,7 @@ class TripController extends Controller
         $trip->current_location = $request->input('currentLocation');
         $trip->manifest_number = $request->input('manifestNumber');
         $trip->manifest_date = $request->input('manifestDate');
+        // $path = $request->file('avatar')->store('avatars');
         $trip->manifest_document = $request->input('manifestDocument');
         $trip->file_number = $request->input('fileNumber');
         $trip->cargo_order_number = $request->input('cargoOrderNumber');

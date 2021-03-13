@@ -65,14 +65,18 @@ class ClaimController extends Controller
     public function update(Request $request, $id)
     {
         $claim = Claim::findOrFail($id);
+        // $path = $request->file('avatar')->store('avatars');
         $claim->claim_document = $request->input('claimDocument');
         $claim->incident_assessor_name = $request->input('incidentAssessorName');
         $claim->incident_assessor_company = $request->input('incidentAssessorCompany');
         $claim->incident_assess_date = $request->input('incidentAssessDate');
         $claim->incident_assess_comment = $request->input('incidentAssessComment');
+        // $path = $request->file('avatar')->store('avatars');
         $claim->incident_assess_document = $request->input('incidentAssessDocument');
+        // $pa/th = $request->file('avatar')->store('avatars');
         $claim->discharge_voucher = $request->input('dischargeVoucherDocument');
         $claim->discharge_voucher_comment = $request->input('dischargeVoucherComment');
+        // $path = $request->file('avatar')->store('avatars');
         $claim->payment_document = $request->input('paymentDocument');
         $claim->payment_comment = $request->input('paymentComment');
         $claim->claim_status = $request->input('claimStatus');
