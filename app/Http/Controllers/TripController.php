@@ -89,7 +89,7 @@ class TripController extends Controller
     public function update(Request $request, $id)
     {
         $trip = Trip::findOrFail($id);
-        //$trip->activity_status_id = request('activityStatusId');
+        $trip->activity_status_id = $request->input('activityStatusId');
         $trip->trip_class_id = $request->input('tripClassId');
         $trip->dispatch_date = $request->input('dispatchDate');
         $trip->eta_site = $request->input('etaSite');
@@ -134,27 +134,8 @@ class TripController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //archiving trip
-        $trip = Trip::find($id);
-        $trip->activity_status_id = $request->input('activityStatusId');
-        $trip->save();
-
-        //making hte allocation entities free again
-        $allocation = Allocation::find($trip->allocation_id);
-
-        $truck = Truck::find($allocation->truck_id);
-        $truck->activity_status_id = $request->input('truckActivityStatusId');
-        $truck->save();
-
-        $trailer = Trailer::find($allocation->trailer_id);
-        $trailer->activity_status_id = $request->input('trailerActivityStatusId');
-        $trailer->save();
-
-        $driver = Driver::find($allocation->driver_id);
-        $driver->activity_status_id = $request->input('driverActivityStatusId');
-        $driver->save();
-
+        //
     }
 }

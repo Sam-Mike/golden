@@ -83,8 +83,6 @@ class TrailerController extends Controller
      */
     public function destroy($id)
     {
-        $trialer = Trailer::findOrFail($id);
-        $trialer->delete();
-        return response()->json(["Trailer deleted successfully"]);
+        //
     }
 }

@@ -39,8 +39,8 @@ class ClaimController extends Controller
     {
         $claim = new Claim;
         $claim->claim_type_id = $request->input('claimTypeId');
-        $claim->claim_subject = $request->input('claimSubject');
-        $claim->claim_subject_owner = $request->input('claimSubjectOwner');
+        $claim->claim_subject = $request->input('claimObject');
+        $claim->claim_subject_owner = $request->input('claimObjectOwner');
         $claim->save();
     }
 
@@ -82,16 +82,16 @@ class ClaimController extends Controller
         $claim->claim_status = $request->input('claimStatus');
 
         //updating the claim status
-        $request->whenFilled('claimDocument', function($input){
+        $request->whenFilled('claimDocument', function($claim){
             $claim->claim_status = 2;
         });
-        $request->whenFilled('incidentAssessDocument', function($input){
+        $request->whenFilled('incidentAssessDocument', function($claim){
             $claim->claim_status = 3;
         });
-        $request->whenFilled('dischargeVoucherDocument', function($input){
+        $request->whenFilled('dischargeVoucherDocument', function($claim){
             $claim->claim_status = 4;
         });
-        $request->whenFilled('paymentDocument', function($input){
+        $request->whenFilled('paymentDocument', function($claim){
             $claim->claim_status = 5;
         });
 

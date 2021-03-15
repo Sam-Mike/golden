@@ -244,23 +244,23 @@
           ></v-select>
         </div>
         <div class="form-group">
-          <label for="">Claim Subject</label>
+          <label for="">Claim Object</label>
           <input
             type="text"
             class="form-control"
-            v-model="newClaim.claimSubject"
+            v-model="newClaim.claimObject"
             placeholder="Enter Claim Subject eg. Truck Number"
             required
           />
         </div>
         <div class="form-group">
-          <label for="">Claim Subject Owner</label>
+          <label for="">Claim Object Owner</label>
           <v-select
-            v-model="newClaim.claimSubjectOwner"
-            :options="clients"
+            v-model="newClaim.claimObjectOwner"
+            :options="clientsWithTransporters"
             label="name"
             placeholder="Choose Company"
-            :reduce="(companyWithClients) => companyWithClients.name"
+            :reduce="(clientsWithTransporters) => clientsWithTransporters"
           ></v-select>
         </div></form
     ></b-modal>
@@ -300,7 +300,7 @@
           <b-col class="border rouded">
             <b>CLAIM SUBJECT</b>
             <p>
-              {{ editClaim.claimSubject }}
+              {{ editClaim.claimObject }}
             </p>
           </b-col>
         </b-row>
@@ -421,8 +421,8 @@ export default {
       clients: [],
       claimType: [], //load also trucks, trailers, goods, fidelity
       claimFields: [
-        { key: "claimSubject", label: "Claim Subject", sortable: true },
-        { key: "claimSubjectOwner", sortable: true },
+        { key: "claimObject", label: "Claim Object", sortable: true },
+        { key: "claimObjectOwner", sortable: true },
         { key: "claimType.name", label: "Claim Type", sortable: true },
         { key: "incidentAssessorName", label: "Incindent Assessor" },
         {
@@ -439,13 +439,13 @@ export default {
       tableFilter: null,
       newClaim: {
         claimTypeId: "",
-        claimSubject: "",
-        claimSubjectOwner: "",
+        claimObject: "",
+        claiObjectOwner: "",
       },
       editClaim: {
         claimType: "",
-        claimSubject: "",
-        claimSubjectOwner:"",
+        claimObject: "",
+        claimObjectOwner:"",
         claimDocument: "",
         incidentAssessorName: "",
         incidentAssessorCompany: "",
@@ -459,7 +459,13 @@ export default {
       },
     };
   },
-  computed: {},
+  computed: {
+    clientsWithTransporters(){
+      const clientTransporter =  this.clients.concat(this.company);
+      const final = clientTransporter.map(item=>item.name);
+      return final;
+    }
+  },
   mounted() {
     this.getClaims();
   },
@@ -498,8 +504,8 @@ export default {
       console.log(item);
       this.editClaim.id = item.id;
       this.editClaim.claimType = item.claimType;
-      this.editClaim.claimSubject = item.claimSubject;
-      this.editClaim.claimSubjectOwner = item.claimSubjectOwner;
+      this.editClaim.claimObject = item.claimObject;
+      this.editClaim.claimObjectOwner = item.claimObjectOwner;
       this.editClaim.claimDocument = item.claimDocument;
       this.editClaim.incidentAssessorName = item.incidentAssessorName;
       this.editClaim.incidentAssessorCompany = item.incidentAssessorCompany;
@@ -522,8 +528,8 @@ export default {
       try {
         await api.patch("/claims/" + this.editClaim.id, {
           claimTypeId: this.editClaim.claimType.id,
-          claimSubject: this.editClaim.claimSubject,
-          claimSubjectOwner: this.editClaim.claimSubjectOwner,
+          claimObject: this.editClaim.claimObject,
+          claimObjectOwner: this.editClaim.claimObjectOwner,
           claimDocument: this.editClaim.claimDocument,
           incidentAssessorName: this.editClaim.incidentAssessorName,
           incidentAssessorCompany: this.editClaim.incidentAssessorCompany,

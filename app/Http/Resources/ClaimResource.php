@@ -17,8 +17,8 @@ class ClaimResource extends JsonResource
         return [
             'id'=> $this->id,
             'claimType'=> new ClaimTypeResource($this->claim_type),
-            'claimSubject'=>$this->claim_subject,
-            'claimSubjectOwner'=>$this->claim_subject_owner,
+            'claimObject'=>$this->claim_subject,
+            'claimObjectOwner'=>$this->claim_subject_owner,
             'claimDocument'=>$this->claim_document,
             'incidentAssessorName'=>$this->insident_assessor_name,
             'incidentAssessorCompany'=>$this->insident_assessor_company,
