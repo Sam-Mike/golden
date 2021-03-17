@@ -7,7 +7,7 @@
           content-class="mt-2"
         >
           <b-tab title="Intimated">
-            <!-- CLAIMS WITH PENDING INFORMATION -->
+            <!-- INTIMATED CLAIMS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -52,7 +52,7 @@
             </div>
           </b-tab>
           <b-tab title="Submitted Document"
-            ><!-- LOCAL TRIPS -->
+            ><!-- CLAIMS WITH SUBMIETTED DOCUMENTS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -86,7 +86,7 @@
             </div>
           </b-tab>
           <b-tab title="Assessed"
-            ><!-- TRANSIT TRIPS -->
+            ><!-- ASSESSED CLAIMS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -120,7 +120,7 @@
             </div>
           </b-tab>
           <b-tab title="Vouchers Discharged">
-            <!-- ARCHIVE TRIPS -->
+            <!-- CLAIMS WITH DISCHARGED VOUCHERS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -154,7 +154,7 @@
             </div>
           </b-tab>
           <b-tab title="Paid">
-            <!-- ARCHIVE TRIPS -->
+            <!-- PAID CLAIMS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -188,6 +188,7 @@
             </div>
           </b-tab>
           <b-tab title="Declined">
+            <!-- DECLINED CLAIMS -->
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -269,7 +270,7 @@
       scrollable
       id="updateClaimModal"
       size="xl"
-      title="Update Claim Info"
+      title="Update Claim"
       @ok="handleUpdateClaim"
       ><template #modal-footer="{ ok, cancel, hide }">
         <b-button
@@ -294,116 +295,128 @@
           <b-col class="border rouded">
             <b>CLAIM TYPE</b>
             <p>
-              {{ editClaim.claimType.id }}
+              {{ editClaim.claimType.name }}
             </p>
           </b-col>
           <b-col class="border rouded">
-            <b>CLAIM SUBJECT</b>
+            <b>CLAIM OBJECT</b>
             <p>
               {{ editClaim.claimObject }}
             </p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>CLAIM OBJECT OWNER</b>
+            <p>
+              {{ editClaim.claimObjectOwner }}
+            </p>
+          </b-col>
+          <b-col class="border rouded">
+            <b>CLAIM DOCUMENT</b>
+            <b-form-file
+              size="sm"
+              @change="onClaimDocumentChange"
+              placeholder="Choose file..."
+              drop-placeholder="Drop file here..."
+            ></b-form-file>
           </b-col>
         </b-row>
         <!-- INCIDENT ASSESSMENT -->
         <b-row class="border rounded">
           <b-col class="border rounded">
+            <b>ASSESSMENT DATE</b>
+            <b-input
+              v-model="editClaim.incidentAssessDate"
+              size="sm"
+              type="date"
+              placeholder="Enter discharge date"
+            ></b-input>
+          </b-col>
+          <b-col class="border rounded">
             <b>ASSESSOR</b>
-            <p>
-              <b-input
-                v-model="editClaim.incidentAssessorName"
-                size="sm"
-                placeholder="Enter company name"
-              ></b-input>
-            </p>
+            <b-input
+              type="text"
+              v-model="editClaim.incidentAssessorName"
+              size="sm"
+              placeholder="Enter company name"
+            ></b-input>
           </b-col>
           <b-col class="border rouded">
             <b>ASSESS COMPANY</b>
-            <p>
-              <b-input
-                v-model="editClaim.incidentAssessorCompany"
-                size="sm"
-                placeholder="Enter company name"
-              ></b-input>
-            </p>
+            <b-input
+              type="text"
+              v-model="editClaim.incidentAssessCompany"
+              size="sm"
+              placeholder="Enter company name"
+            ></b-input>
           </b-col>
           <b-col class="border rounded">
             <b>COMMENT</b>
-            <p>
-              <b-input
-                v-model="editClaim.incidentAssessorComment"
-                size="sm"
-                placeholder="Enter company name"
-              ></b-input>
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>DATE</b>
-            <p>
             <b-input
-                v-model="editClaim.incidentAssessDate"
-                size="sm"
-                type="date"
-                placeholder="Enter discharge date"
-              ></b-input>
-            </p>
+              type="text"
+              v-model="editClaim.incidentAssessComment"
+              size="sm"
+              placeholder="Enter company name"
+            ></b-input>
+          </b-col>
+          <b-col class="border rouded">
+            <b>ASSESSMENT DOCUMENT</b>
+            <b-form-file
+              size="sm"
+              @change="onIncidentAssessDocumentChange"
+              placeholder="Choose file..."
+              drop-placeholder="Drop file here..."
+            ></b-form-file>
           </b-col>
         </b-row>
         <!-- DISCHARGE VOUCHER INFORMATION -->
         <b-row class="border rounded">
           <b-col class="border rounded">
-            <b>DISCHARGE VOUCHER DOCUMENT</b>
-            <p>
-              <b-input
-                size="sm"
-                type="date"
-                placeholder="Enter discharge date"
-              ></b-input>
-            </p>
+            <b>DISCHARGE VOUCHER DATE</b>
+            <b-input
+              size="sm"
+              type="date"
+              placeholder="Enter discharge date"
+              v-model="editClaim.dischargeVoucherDate"
+            ></b-input>
           </b-col>
           <b-col class="border rouded">
             <b>COMMENT</b>
-            <p>
-              <b-input
-                size="sm"
-                v-model="editClaim.dischargeVoucherComment"
-                placeholder="Enter comment"
-              ></b-input>
-            </p>
+            <b-input
+              type="text"
+              size="sm"
+              v-model="editClaim.dischargeVoucherComment"
+              placeholder="Enter comment"
+            ></b-input>
+          </b-col>
+          <b-col class="border rouded">
+            <b>DISCHARGE VOUCHER DOCUMENT</b>
+            <b-form-file
+              size="sm"
+              @change="onDischargeVoucherDocumentChange"
+              placeholder="Choose file..."
+              drop-placeholder="Drop file here..."
+            ></b-form-file>
           </b-col>
         </b-row>
         <!-- PAYMENT INFORMATION -->
         <b-row class="border rounded">
           <b-col class="border rounded">
-            <b>PAYMENT DOCUMENT</b>
-            <p>
-              <b-input
-                size="sm"
-                v-model="editClaim.paymentDocument"
-                placeholder="select payment document"
-              ></b-input>
-            </p>
-          </b-col>
-          <b-col class="border rounded">
             <b>PAYMENT COMMENT</b>
-            <p>
-              <b-input
-                size="sm"
-                v-model="editClaim.paymentComment"
-                placeholder="enter payment comment"
-              ></b-input>
-            </p>
+            <b-input
+            type="text"
+              size="sm"
+              v-model="editClaim.paymentComment"
+              placeholder="enter payment comment"
+            ></b-input>
           </b-col>
           <b-col class="border rouded">
-            <b>MANIFEST DOCUMENT</b>
-            <p>
-              <!-- <b-form-file
-                size="sm"
-                v-model="file1"
-                :state="Boolean(file1)"
-                placeholder="Choose a file or drop it here..."
-                drop-placeholder="Drop file here..."
-              ></b-form-file> -->
-            </p>
+            <b>PAYMENT DOCUMENT</b>
+            <b-form-file
+              size="sm"
+              @change="onPaymentDocumentChange"
+              placeholder="Choose a file or drop it here..."
+              drop-placeholder="Drop file here..."
+            ></b-form-file>
           </b-col>
         </b-row>
       </b-container>
@@ -426,7 +439,7 @@ export default {
         { key: "claimType.name", label: "Claim Type", sortable: true },
         { key: "incidentAssessorName", label: "Incindent Assessor" },
         {
-          key: "incidentAssessorCompany",
+          key: "incidentAssessCompany",
           label: "Assess Company",
           sortable: true,
         },
@@ -440,15 +453,15 @@ export default {
       newClaim: {
         claimTypeId: "",
         claimObject: "",
-        claiObjectOwner: "",
+        claimObjectOwner: "",
       },
       editClaim: {
         claimType: "",
         claimObject: "",
-        claimObjectOwner:"",
+        claimObjectOwner: "",
         claimDocument: "",
         incidentAssessorName: "",
-        incidentAssessorCompany: "",
+        incidentAssessCompany: "",
         incidentAssessDate: "",
         incidentAssessComment: "",
         incidentAssessDocument: "",
@@ -460,11 +473,10 @@ export default {
     };
   },
   computed: {
-    clientsWithTransporters(){
-      const clientTransporter =  this.clients.concat(this.company);
-      const final = clientTransporter.map(item=>item.name);
-      return final;
-    }
+    clientsWithTransporters() {
+      const clientTransporter = this.clients.concat(this.company);
+      return clientTransporter.map((item) => item.name);
+    },
   },
   mounted() {
     this.getClaims();
@@ -479,7 +491,6 @@ export default {
         this.company = response.data.company;
         this.clients = response.data.clients;
         this.loading = false;
-        console.log("claims loaded");
       } catch (error) {
         console.log(error);
       }
@@ -491,7 +502,6 @@ export default {
     async createClaim() {
       try {
         await api.post("claims", this.newClaim);
-        console.log("claim created");
         this.$nextTick(() => {
           this.$bvModal.hide("createClaimModal");
           this.getClaims();
@@ -508,7 +518,7 @@ export default {
       this.editClaim.claimObjectOwner = item.claimObjectOwner;
       this.editClaim.claimDocument = item.claimDocument;
       this.editClaim.incidentAssessorName = item.incidentAssessorName;
-      this.editClaim.incidentAssessorCompany = item.incidentAssessorCompany;
+      this.editClaim.incidentAssessCompany = item.incidentAssessCompany;
       this.editClaim.incidentAssessComment = item.incidentAssessComment;
       this.editClaim.incidentAssessDate = item.incidentAssessDate;
       this.editClaim.incidentAssessDocument = item.incidentAssessDocument;
@@ -520,28 +530,58 @@ export default {
       this.$root.$emit("bv::show::modal", "updateClaimModal", button);
     },
     //UPDATE TRIP INFORMATION
+    //handling and appending file
+    onClaimDocumentChange(e) {
+      this.editClaim.claimDocument = e.target.files[0];
+    },
+    onIncidentAssessDocumentChange(e) {
+      this.editClaim.incidentAssessDocument = e.target.files[0];
+    },
+    onDischargeVoucherDocumentChange(e) {
+      this.editClaim.dischargeVoucherDocument = e.target.files[0];
+    },
+    onPaymentDocumentChange(e) {
+      this.editClaim.paymentDocument = e.target.files[0];
+    },
     handleUpdateClaim(bvModalEvt) {
       bvModalEvt.preventDefault();
       this.updateClaim();
     },
     async updateClaim() {
+      let claimData = new FormData();
+      claimData.append("claimDocument", this.editClaim.claimDocument);
+      claimData.append(
+        "incidentAssessDate",
+        this.editClaim.incidentAssessDate
+      );
+      claimData.append(
+        "incidentAssessorName",
+        this.editClaim.incidentAssessorName
+      );
+      claimData.append(
+        "incidentAssessCompany",
+        this.editClaim.incidentAssessCompany
+      );
+      claimData.append(
+        "incidentAssessComment",
+        this.editClaim.incidentAssessComment
+      );
+      claimData.append(
+        "incidentAssessDocument",
+        this.editClaim.incidentAssessDocument
+      );
+      claimData.append(
+        "dischargeVoucherDocument",
+        this.editClaim.dischargeVoucherDocument
+      );
+      claimData.append(
+        "dischargeVoucherComment",
+        this.editClaim.dischargeVoucherComment
+      );
+      claimData.append("paymentDocument", this.editClaim.paymentDocument);
+      claimData.append("paymentComment", this.editClaim.paymentComment);
       try {
-        await api.patch("/claims/" + this.editClaim.id, {
-          claimTypeId: this.editClaim.claimType.id,
-          claimObject: this.editClaim.claimObject,
-          claimObjectOwner: this.editClaim.claimObjectOwner,
-          claimDocument: this.editClaim.claimDocument,
-          incidentAssessorName: this.editClaim.incidentAssessorName,
-          incidentAssessorCompany: this.editClaim.incidentAssessorCompany,
-          incidentAssessorComment: this.editClaim.incidentAssessorComment,
-          incidentAssessorDate: this.editClaim.incidentAssessorDate,
-          incidentAssessDocument: this.editClaim.incidentAssessDocument,
-          dischargeVoucherDocument: this.editClaim.dischargeVoucherDocument,
-          dischargeVoucherComment: this.editClaim.dischargeVoucherComment,
-          paymentDocument: this.editClaim.paymentDocument,
-          paymentComment: this.editClaim.paymentComment,
-        });
-        console.log("claim updated successfully");
+        await api.patch("/claims/" + this.editClaim.id, claimData);
         this.$nextTick(() => {
           this.$bvModal.hide("updateClaimModal");
           this.getClaims();
@@ -559,12 +599,7 @@ export default {
       try {
         await api.patch("claims/" + this.editClaim.id, {
           claimStatus: this.editClaim.claimStatus,
-          clientId: this.editClaim.client.id,
-          cargoId: this.editClaim.client.id,
-
-          // set truck, trailer and driver activity status to free again
         });
-        console.log("claim archived successfully");
         this.$nextTick(() => {
           this.$bvModal.hide("updateClaimModal");
           this.getClaims();

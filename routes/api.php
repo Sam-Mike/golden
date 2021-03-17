@@ -29,7 +29,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::apiResource('allocations', AllocationController::class)-> middleware('auth:sanctum');
 Route::get('globalData', [HomeController::class, 'index']);
 Route::apiResources([
     'clients' => ClientController::class,

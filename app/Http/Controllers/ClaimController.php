@@ -11,6 +11,7 @@ use App\Http\Resources\ClaimResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\ClaimTypeResource;
+use GuzzleHttp\Psr7\Message;
 
 class ClaimController extends Controller
 {
@@ -21,11 +22,11 @@ class ClaimController extends Controller
      */
     public function index()
     {
-        return[
-            'claims'=> ClaimResource::collection(Claim::all()),
-            'company'=> CompanyResource::collection(Company::all()),
-            'clients'=> ClientResource::collection(Client::all()),
-            'claimType'=> ClaimTypeResource::collection(ClaimType::all()),
+        return [
+            'claims' => ClaimResource::collection(Claim::all()),
+            'company' => CompanyResource::collection(Company::all()),
+            'clients' => ClientResource::collection(Client::all()),
+            'claimType' => ClaimTypeResource::collection(ClaimType::all()),
         ];
     }
 
@@ -64,39 +65,43 @@ class ClaimController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $claim = Claim::findOrFail($id);
-        // $path = $request->file('avatar')->store('avatars');
-        $claim->claim_document = $request->input('claimDocument');
-        $claim->incident_assessor_name = $request->input('incidentAssessorName');
-        $claim->incident_assessor_company = $request->input('incidentAssessorCompany');
-        $claim->incident_assess_date = $request->input('incidentAssessDate');
-        $claim->incident_assess_comment = $request->input('incidentAssessComment');
-        // $path = $request->file('avatar')->store('avatars');
-        $claim->incident_assess_document = $request->input('incidentAssessDocument');
-        // $pa/th = $request->file('avatar')->store('avatars');
-        $claim->discharge_voucher = $request->input('dischargeVoucherDocument');
-        $claim->discharge_voucher_comment = $request->input('dischargeVoucherComment');
-        // $path = $request->file('avatar')->store('avatars');
-        $claim->payment_document = $request->input('paymentDocument');
-        $claim->payment_comment = $request->input('paymentComment');
-        $claim->claim_status = $request->input('claimStatus');
-
-        //updating the claim status
-        $request->whenFilled('claimDocument', function($claim){
-            $claim->claim_status = 2;
-        });
-        $request->whenFilled('incidentAssessDocument', function($claim){
-            $claim->claim_status = 3;
-        });
-        $request->whenFilled('dischargeVoucherDocument', function($claim){
-            $claim->claim_status = 4;
-        });
-        $request->whenFilled('paymentDocument', function($claim){
-            $claim->claim_status = 5;
-        });
+        // $claim = Claim::find($id);
+        // $claim->incident_assessor_name = $request->input('incidentAssessorName');
+        // $claim->incident_assessor_company = $request->input('incidentAssessCompany');
+        // $claim->incident_assess_date = $request->input('incidentAssessDate');
+        // $claim->incident_assess_comment = $request->input('incidentAssessComment');
+        // $claim->discharge_voucher_comment = $request->input('dischargeVoucherComment');
+        // $claim->payment_comment = $request->input('paymentComment');
+        //uploading files and updating the claim status
+        // $request->whenFilled('claimDocument', function ($claim, $request) {
+        //     $claim_document_path = $request->file('claimDocument')->store('claimDocuments');
+        //     $claim->claim_document = $claim_document_path;
+        //     $claim->claim_status = 2;
+        // });
+        // $request->whenFilled('incidentAssessDocument', function ($claim, $request) {
+        //     $incident_assess_document_path = $request->file('incidentAssessDocument')->store('incidentAssessmentDocuments');
+        //     $claim->incident_assess_document = $incident_assess_document_path;
+        //     $claim->claim_status = 3;
+        // });
+        // $request->whenFilled('dischargeVoucherDocument', function ($claim, $request) {
+        //     $discharge_voucher_path = $request->file('dischargeVoucherDocument')->store('dischargeVouchers');
+        //     $claim->discharge_voucher = $discharge_voucher_path;
+        //     $claim->claim_status = 4;
+        // });
+        // $request->whenFilled('paymentDocument', function ($claim, $request) {
+        //     $payment_document_path = $request->file('paymentDocument')->store('paymentDocuments');
+        //     $claim->payment_document = $payment_document_path;
+        //     $claim->claim_status = 5;
+        // });
+        // $request->whenFilled('claimStatus', function ($claim, $request) {
+        //     $claim->claim_status = $request->input('claimStatus');
+        // });
 
         //saving claim
-        $claim->save();
+        // $claim->save();
+        return response()->json([
+            200
+        ]);
     }
 
     /**
