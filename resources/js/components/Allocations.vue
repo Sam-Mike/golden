@@ -571,7 +571,6 @@ export default {
         this.drivers = response.data.drivers;
         this.isSuccess = true;
         this.loading = false;
-        console.log("allocations loaded");
       } catch (error) {
         console.log(error);
       }

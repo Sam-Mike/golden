@@ -443,7 +443,6 @@ export default {
         this.trips = response.data.trips;
         this.locations = response.data.locations;
         this.loading = false;
-        console.log("trips loaded");
       } catch (error) {
         console.log(error);
       }

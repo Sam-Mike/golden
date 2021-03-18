@@ -335,7 +335,7 @@
             <b>ASSESSOR</b>
             <b-input
               type="text"
-              v-model="editClaim.incidentAssessorName"
+              v-model="editClaim.incidentAssessAgent"
               size="sm"
               placeholder="Enter company name"
             ></b-input>
@@ -401,9 +401,18 @@
         <!-- PAYMENT INFORMATION -->
         <b-row class="border rounded">
           <b-col class="border rounded">
+            <b>PAYMENT DATE</b>
+            <b-input
+              type="date"
+              size="sm"
+              v-model="editClaim.paymentDate"
+              placeholder="enter payment dATE"
+            ></b-input>
+          </b-col>
+          <b-col class="border rounded">
             <b>PAYMENT COMMENT</b>
             <b-input
-            type="text"
+              type="text"
               size="sm"
               v-model="editClaim.paymentComment"
               placeholder="enter payment comment"
@@ -437,7 +446,7 @@ export default {
         { key: "claimObject", label: "Claim Object", sortable: true },
         { key: "claimObjectOwner", sortable: true },
         { key: "claimType.name", label: "Claim Type", sortable: true },
-        { key: "incidentAssessorName", label: "Incindent Assessor" },
+        { key: "incidentAssessAgent", label: "Incindent Assess Agent" },
         {
           key: "incidentAssessCompany",
           label: "Assess Company",
@@ -456,19 +465,23 @@ export default {
         claimObjectOwner: "",
       },
       editClaim: {
+        id: "",
         claimType: "",
         claimObject: "",
         claimObjectOwner: "",
         claimDocument: "",
-        incidentAssessorName: "",
+        incidentAssessAgent: "",
         incidentAssessCompany: "",
         incidentAssessDate: "",
         incidentAssessComment: "",
         incidentAssessDocument: "",
+        dischargeVoucherDate: "",
         dischargeVoucherDocument: "",
         dischargeVoucherComment: "",
+        paymentDate: "",
         paymentDocument: "",
         paymentComment: "",
+        claimStatus: "",
       },
     };
   },
@@ -511,19 +524,20 @@ export default {
       }
     },
     info(item, button) {
-      console.log(item);
       this.editClaim.id = item.id;
       this.editClaim.claimType = item.claimType;
       this.editClaim.claimObject = item.claimObject;
       this.editClaim.claimObjectOwner = item.claimObjectOwner;
       this.editClaim.claimDocument = item.claimDocument;
-      this.editClaim.incidentAssessorName = item.incidentAssessorName;
+      this.editClaim.incidentAssessAgent = item.incidentAssessAgent;
       this.editClaim.incidentAssessCompany = item.incidentAssessCompany;
       this.editClaim.incidentAssessComment = item.incidentAssessComment;
       this.editClaim.incidentAssessDate = item.incidentAssessDate;
       this.editClaim.incidentAssessDocument = item.incidentAssessDocument;
+      this.editClaim.dischargeVoucherDate = item.dischargeVoucherDate;
       this.editClaim.dischargeVoucherDocument = item.dischargeVoucherDocument;
       this.editClaim.dischargeVoucherComment = item.dischargeVoucherComment;
+      this.editClaim.paymentDate = item.paymentDate;
       this.editClaim.paymentDocument = item.paymentDocument;
       this.editClaim.paymentComment = item.paymentComment;
 
@@ -548,40 +562,54 @@ export default {
       this.updateClaim();
     },
     async updateClaim() {
-      let claimData = new FormData();
-      claimData.append("claimDocument", this.editClaim.claimDocument);
-      claimData.append(
-        "incidentAssessDate",
-        this.editClaim.incidentAssessDate
-      );
-      claimData.append(
-        "incidentAssessorName",
-        this.editClaim.incidentAssessorName
-      );
-      claimData.append(
-        "incidentAssessCompany",
-        this.editClaim.incidentAssessCompany
-      );
-      claimData.append(
-        "incidentAssessComment",
-        this.editClaim.incidentAssessComment
-      );
-      claimData.append(
-        "incidentAssessDocument",
-        this.editClaim.incidentAssessDocument
-      );
-      claimData.append(
-        "dischargeVoucherDocument",
-        this.editClaim.dischargeVoucherDocument
-      );
-      claimData.append(
-        "dischargeVoucherComment",
-        this.editClaim.dischargeVoucherComment
-      );
-      claimData.append("paymentDocument", this.editClaim.paymentDocument);
-      claimData.append("paymentComment", this.editClaim.paymentComment);
       try {
-        await api.patch("/claims/" + this.editClaim.id, claimData);
+        let claimData = new FormData();
+        // claimData.append("claimDocument", this.editClaim.claimDocument);
+        // claimData.append(
+        //   "incidentAssessDate",
+        //   this.editClaim.incidentAssessDate
+        // );
+        claimData.append(
+          "incidentAssessAgent",
+          this.editClaim.incidentAssessAgent
+        );
+        // claimData.append(
+        //   "incidentAssessCompany",
+        //   this.editClaim.incidentAssessCompany
+        // );
+        // claimData.append(
+        //   "incidentAssessComment",
+        //   this.editClaim.incidentAssessComment
+        // );
+        // claimData.append(
+        //   "incidentAssessDocument",
+        //   this.editClaim.incidentAssessDocument
+        // );
+        // claimData.append(
+        //   "dischargeVoucherDate",
+        //   this.editClaim.dischargeVoucherDate
+        // );
+        // claimData.append(
+        //   "dischargeVoucherDocument",
+        //   this.editClaim.dischargeVoucherDocument
+        // );
+        // claimData.append(
+        //   "dischargeVoucherComment",
+        //   this.editClaim.dischargeVoucherComment
+        // );
+        // claimData.append("paymentDate", this.editClaim.paymentDate);
+        // claimData.append("paymentDocument", this.editClaim.paymentDocument);
+        // claimData.append("paymentComment", this.editClaim.paymentComment);
+        for (var entry of claimData.entries()) {
+          console.log(entry);
+        };
+        const config = {headers:{
+          "content-type": "multipart/form-data"
+        }}
+        //patching the claim
+        await api
+          .patch("claims/" + this.editClaim.id, claimData, config)
+          .then((response) => console.log(response)).catch(error=>console.log(error));
         this.$nextTick(() => {
           this.$bvModal.hide("updateClaimModal");
           this.getClaims();

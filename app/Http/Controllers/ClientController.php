@@ -76,7 +76,7 @@ class ClientController extends Controller
         $client->activity_status_id = $request->input('clientActivityStatusId');
         $client->save();
         return response()->json([
-            "Client updated Successfully"
+            "Client updated Successfully", 200
         ]);
     }
 

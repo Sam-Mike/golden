@@ -354,7 +354,6 @@ export default {
       },
       tableFilter: null,
       editClient: {
-        //content: "",
         id: "",
         name: "",
         address: "",
@@ -428,7 +427,6 @@ export default {
     },
 
     info(item, button) {
-      console.log(item);
       this.editClient.id = item.id;
       this.editClient.name = item.name;
       this.editClient.address = item.address;
@@ -445,16 +443,15 @@ export default {
     },
     async updateClient() {
       try {
-        await api.patch("clients/" + this.editClient.content.id, {
-          clientName: this.editClient.content.name,
-          clientAddress: this.editClient.content.address,
-          clientPhoneNumber: this.editClient.content.phoneNumber,
-          clientContactPersonName: this.editClient.content.contactPersonName,
-          clientMobile: this.editClient.content.mobile,
-          clientEmail: this.editClient.content.email,
-          clientActivityStatusId: this.editClient.content.activityStatus.id,
-        });
-        console.log("client updated");
+        await api.patch("clients/" + this.editClient.id, {
+          clientName: this.editClient.name,
+          clientAddress: this.editClient.address,
+          clientPhoneNumber: this.editClient.phoneNumber,
+          clientContactPersonName: this.editClient.contactPersonName,
+          clientMobile: this.editClient.mobile,
+          clientEmail: this.editClient.email,
+          clientActivityStatusId: this.editClient.activityStatus.id,
+        }).then(response=>console.log(response));
         this.$nextTick(() => {
           this.$bvModal.hide("updateClientModal");
           this.getClients();

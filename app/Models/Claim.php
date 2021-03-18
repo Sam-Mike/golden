@@ -11,14 +11,17 @@ class Claim extends Model
     protected $table = 'claim';
     protected $fillable = [
         'claim_document',
-        'insident_assessor_name',
-        'insident_assessor_company',
-        'insident_assessor_date',
-        'insident_assessor_document',
-        'insident_assessor_comment',
+        'incident_assess_agent',
+        'insident_assess_company',
+        'insident_assess_date',
+        'insident_assess_document',
+        'insident_assess_comment',
         'discharge_voucher_document',
         'discharge_voucher_comment',
+        'payment_date',
         'payment_document',
+        'payment_comment',
+        'claim_status',
     ];
     public function claim_type(){
         return $this->belongsTo(ClaimType::class);

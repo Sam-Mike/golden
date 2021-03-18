@@ -40,8 +40,8 @@ class ClaimController extends Controller
     {
         $claim = new Claim;
         $claim->claim_type_id = $request->input('claimTypeId');
-        $claim->claim_subject = $request->input('claimObject');
-        $claim->claim_subject_owner = $request->input('claimObjectOwner');
+        $claim->claim_object = $request->input('claimObject');
+        $claim->claim_object_owner = $request->input('claimObjectOwner');
         $claim->save();
     }
 
@@ -65,12 +65,23 @@ class ClaimController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $claim = Claim::find($id);
-        // $claim->incident_assessor_name = $request->input('incidentAssessorName');
-        // $claim->incident_assessor_company = $request->input('incidentAssessCompany');
+        $claim = Claim::find($id);
+        $claim->incident_assess_agent = $request->input('incidentAssessAgent');
+        //$claim->save();
+        $something = $request->attributes;
+        return response( json_encode($something));
+        // if ($claim->save()){
+        //     return response()->json(['claim is saved']);
+        // }else {
+        //     return response()->json(['claim failed to save']);
+        // }
+        //$claim->save();
+        // $claim->incident_assess_company = $request->input('incidentAssessCompany');
         // $claim->incident_assess_date = $request->input('incidentAssessDate');
         // $claim->incident_assess_comment = $request->input('incidentAssessComment');
+        // $claim->discharge_voucher_date = $request->input('dischargeVoucherDate');
         // $claim->discharge_voucher_comment = $request->input('dischargeVoucherComment');
+        // $claim->payment_date = $request->input('paymentDate');
         // $claim->payment_comment = $request->input('paymentComment');
         //uploading files and updating the claim status
         // $request->whenFilled('claimDocument', function ($claim, $request) {
@@ -85,7 +96,7 @@ class ClaimController extends Controller
         // });
         // $request->whenFilled('dischargeVoucherDocument', function ($claim, $request) {
         //     $discharge_voucher_path = $request->file('dischargeVoucherDocument')->store('dischargeVouchers');
-        //     $claim->discharge_voucher = $discharge_voucher_path;
+        //     $claim->discharge_voucher_document = $discharge_voucher_path;
         //     $claim->claim_status = 4;
         // });
         // $request->whenFilled('paymentDocument', function ($claim, $request) {
@@ -98,10 +109,8 @@ class ClaimController extends Controller
         // });
 
         //saving claim
-        // $claim->save();
-        return response()->json([
-            200
-        ]);
+        //$claim->save();
+        
     }
 
     /**
