@@ -67,15 +67,6 @@ class ClaimController extends Controller
     {
         $claim = Claim::find($id);
         $claim->incident_assess_agent = $request->input('incidentAssessAgent');
-        //$claim->save();
-        $something = $request->attributes;
-        return response( json_encode($something));
-        // if ($claim->save()){
-        //     return response()->json(['claim is saved']);
-        // }else {
-        //     return response()->json(['claim failed to save']);
-        // }
-        //$claim->save();
         // $claim->incident_assess_company = $request->input('incidentAssessCompany');
         // $claim->incident_assess_date = $request->input('incidentAssessDate');
         // $claim->incident_assess_comment = $request->input('incidentAssessComment');
@@ -107,10 +98,11 @@ class ClaimController extends Controller
         // $request->whenFilled('claimStatus', function ($claim, $request) {
         //     $claim->claim_status = $request->input('claimStatus');
         // });
-
         //saving claim
-        //$claim->save();
-        
+        $claim->save();
+        return response()->json([
+            "message"=>"success"
+        ]);
     }
 
     /**

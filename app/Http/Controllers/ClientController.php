@@ -34,7 +34,6 @@ class ClientController extends Controller
         ]);
 
         $client = new Client();
-
         $client->name = $request->input('clientName');
         $client->address = $request->input('clientAddress');
         $client->phone = $request->input('clientPhoneNumber');
@@ -73,7 +72,7 @@ class ClientController extends Controller
         $client->contact_person_name = $request->input('clientContactPersonName');
         $client->mobile = $request->input('clientMobile');
         $client->email = $request->input('clientEmail');
-        $client->activity_status_id = $request->input('clientActivityStatusId');
+        $client->activity_status_id = 1;
         $client->save();
         return response()->json([
             "Client updated Successfully", 200

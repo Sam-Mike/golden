@@ -564,6 +564,7 @@ export default {
     async updateClaim() {
       try {
         let claimData = new FormData();
+        claimData.append("_method", "PATCH");
         // claimData.append("claimDocument", this.editClaim.claimDocument);
         // claimData.append(
         //   "incidentAssessDate",
@@ -602,14 +603,18 @@ export default {
         // claimData.append("paymentComment", this.editClaim.paymentComment);
         for (var entry of claimData.entries()) {
           console.log(entry);
+        }
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+            "enctype": "multipart/form-data",
+          },
         };
-        const config = {headers:{
-          "content-type": "multipart/form-data"
-        }}
         //patching the claim
         await api
-          .patch("claims/" + this.editClaim.id, claimData, config)
-          .then((response) => console.log(response)).catch(error=>console.log(error));
+          .post("claims/" + this.editClaim.id, claimData, config)
+          .then((response) => console.log(response))
+          .catch((error) => console.log(error));
         this.$nextTick(() => {
           this.$bvModal.hide("updateClaimModal");
           this.getClaims();
