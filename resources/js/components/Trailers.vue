@@ -361,7 +361,6 @@ export default {
           companyId: this.editTrailer.company.id,
           activityStatusId: 3,
         });
-        console.log("Trailer deactivated");
         this.$nextTick(() => {
           this.$bvModal.hide("updateTrailerModal");
           this.getTrailers();

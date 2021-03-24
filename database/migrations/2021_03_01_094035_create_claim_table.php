@@ -30,7 +30,7 @@ class CreateClaimTable extends Migration
             $table->date('payment_date')->nullable();
             $table->string('payment_document')->nullable();
             $table->text('payment_comment')->nullable();
-            $table->enum('claim_status', ['intimated', 'has_claim_document', 'assessed', 'has_discharge_voucher','completed', 'declined']);
+            $table->enum('claim_status', ['intimated', 'has_claim_document', 'assessed', 'has_discharge_voucher','paid', 'declined']);
             $table->timestamps();
         });
     }

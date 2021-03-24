@@ -11,7 +11,6 @@ use App\Http\Resources\ClaimResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\ClaimTypeResource;
-use GuzzleHttp\Psr7\Message;
 
 class ClaimController extends Controller
 {
@@ -67,41 +66,37 @@ class ClaimController extends Controller
     {
         $claim = Claim::find($id);
         $claim->incident_assess_agent = $request->input('incidentAssessAgent');
-        // $claim->incident_assess_company = $request->input('incidentAssessCompany');
-        // $claim->incident_assess_date = $request->input('incidentAssessDate');
-        // $claim->incident_assess_comment = $request->input('incidentAssessComment');
-        // $claim->discharge_voucher_date = $request->input('dischargeVoucherDate');
-        // $claim->discharge_voucher_comment = $request->input('dischargeVoucherComment');
-        // $claim->payment_date = $request->input('paymentDate');
-        // $claim->payment_comment = $request->input('paymentComment');
-        //uploading files and updating the claim status
-        // $request->whenFilled('claimDocument', function ($claim, $request) {
-        //     $claim_document_path = $request->file('claimDocument')->store('claimDocuments');
-        //     $claim->claim_document = $claim_document_path;
-        //     $claim->claim_status = 2;
-        // });
-        // $request->whenFilled('incidentAssessDocument', function ($claim, $request) {
-        //     $incident_assess_document_path = $request->file('incidentAssessDocument')->store('incidentAssessmentDocuments');
-        //     $claim->incident_assess_document = $incident_assess_document_path;
-        //     $claim->claim_status = 3;
-        // });
-        // $request->whenFilled('dischargeVoucherDocument', function ($claim, $request) {
-        //     $discharge_voucher_path = $request->file('dischargeVoucherDocument')->store('dischargeVouchers');
-        //     $claim->discharge_voucher_document = $discharge_voucher_path;
-        //     $claim->claim_status = 4;
-        // });
-        // $request->whenFilled('paymentDocument', function ($claim, $request) {
-        //     $payment_document_path = $request->file('paymentDocument')->store('paymentDocuments');
-        //     $claim->payment_document = $payment_document_path;
-        //     $claim->claim_status = 5;
-        // });
-        // $request->whenFilled('claimStatus', function ($claim, $request) {
-        //     $claim->claim_status = $request->input('claimStatus');
-        // });
-        //saving claim
+        $claim->incident_assess_company = $request->input('incidentAssessCompany');
+        $claim->incident_assess_date = $request->input('incidentAssessDate');
+        $claim->incident_assess_comment = $request->input('incidentAssessComment');
+        $claim->discharge_voucher_date = $request->input('dischargeVoucherDate');
+        $claim->discharge_voucher_comment = $request->input('dischargeVoucherComment');
+        $claim->payment_date = $request->input('paymentDate');
+        $claim->payment_comment = $request->input('paymentComment');
+        
+        //uploading files
+        if ($request->hasFile('claimDocument')) {
+            $claim->claim_document ='http://10.1.1.50:81'.$request->file('claimDocument')->store('claimDocuments');
+            $claim->claim_status = 2;
+        };
+        if ($request->hasFile('incidentAssessDocument')) {
+            $claim->incident_assess_document = $request->file('incidentAssessDocument')->store('incidentAssessmentDocuments');
+            $claim->claim_status = 3;
+        }
+        if ($request->hasFile('dischargeVoucherDocument')) {
+            $claim->discharge_voucher_document = $request->file('dischargeVoucherDocument')->store('dischargeVouchers');
+            $claim->claim_status = 4;
+        }
+        if ($request->hasfile('paymentDocument')) {
+            $claim->payment_document = $request->file('paymentDocument')->store('paymentDocuments');
+            $claim->claim_status = 5;
+        }
+        if ($request->has('claimStatus')) {
+            $claim->claim_status = $request->input('claimStatus');
+        }
         $claim->save();
         return response()->json([
-            "message"=>"success"
+            "message" => "success"
         ]);
     }
 
