@@ -73,10 +73,10 @@ class ClaimController extends Controller
         $claim->discharge_voucher_comment = $request->input('dischargeVoucherComment');
         $claim->payment_date = $request->input('paymentDate');
         $claim->payment_comment = $request->input('paymentComment');
-        
+
         //uploading files
         if ($request->hasFile('claimDocument')) {
-            $claim->claim_document ='http://10.1.1.50:81'.$request->file('claimDocument')->store('claimDocuments');
+            $claim->claim_document = $request->file('claimDocument')->store('claimDocuments');
             $claim->claim_status = 2;
         };
         if ($request->hasFile('incidentAssessDocument')) {

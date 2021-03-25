@@ -343,7 +343,9 @@
             <b-col v-else class="border rouded">
               <b>CLAIM DOCUMENT</b>
               <p>
-                <a href="http://10.1.1.50:81">claim document</a>
+                <a :href="this.path + this.editClaim.claimDocument"
+                  >claim document</a
+                >
               </p>
             </b-col>
           </b-row>
@@ -473,6 +475,7 @@ import api from "../apis/api";
 export default {
   data() {
     return {
+      path: "C:/dev/Laravel/goldenerp/storage/app/",
       loading: false,
       claims: [],
       company: [],
