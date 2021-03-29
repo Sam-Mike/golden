@@ -391,7 +391,10 @@
                 placeholder="Enter company name"
               ></b-input>
             </b-col>
-            <b-col class="border rouded">
+            <b-col
+              v-if="this.editClaim.incidentAssessDocument === null"
+              class="border rouded"
+            >
               <b>ASSESSMENT DOCUMENT</b>
               <b-form-file
                 size="sm"
@@ -399,6 +402,14 @@
                 placeholder="Choose file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
+            </b-col>
+            <b-col v-else class="border rouded">
+              <b>ASSESSMENT DOCUMENT</b>
+              <p>
+                <a :href="this.path + this.editClaim.incidentAssessDocument"
+                  >assessment document</a
+                >
+              </p>
             </b-col>
           </b-row>
           <!-- DISCHARGE VOUCHER INFORMATION -->
@@ -423,7 +434,10 @@
                 placeholder="Enter comment"
               ></b-input>
             </b-col>
-            <b-col class="border rouded">
+            <b-col
+              v-if="this.editClaim.dischargeVoucherDocument === null"
+              class="border rouded"
+            >
               <b>DISCHARGE VOUCHER DOCUMENT</b>
               <b-form-file
                 size="sm"
@@ -431,6 +445,14 @@
                 placeholder="Choose file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
+            </b-col>
+            <b-col v-else class="border rouded">
+              <b>DISCHARGE VOUCHER DOCUMENT</b>
+              <p>
+                <a :href="this.path + this.editClaim.dischargeVoucherDocument"
+                  >discharge voucher document</a
+                >
+              </p>
             </b-col>
           </b-row>
           <!-- PAYMENT INFORMATION -->
@@ -455,7 +477,10 @@
                 placeholder="enter payment comment"
               ></b-input>
             </b-col>
-            <b-col class="border rouded">
+            <b-col
+              v-if="this.editClaim.paymentDocument === null"
+              class="border rouded"
+            >
               <b>PAYMENT DOCUMENT</b>
               <b-form-file
                 size="sm"
@@ -463,6 +488,14 @@
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
+            </b-col>
+            <b-col v-else class="border rouded">
+              <b>PAYMENT DOCUMENT</b>
+              <p>
+                <a :href="this.path + this.editClaim.paymentDocument"
+                  >payment document</a
+                >
+              </p>
             </b-col>
           </b-row>
         </b-container>
@@ -475,7 +508,7 @@ import api from "../apis/api";
 export default {
   data() {
     return {
-      path: "C:/dev/Laravel/goldenerp/storage/app/",
+      path: "http://127.0.0.1:8000/storage/app/",
       loading: false,
       claims: [],
       company: [],

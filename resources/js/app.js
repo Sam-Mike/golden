@@ -45,7 +45,7 @@ import App from './layout/App.vue';
 async function myApp() {
     try {
         await store.dispatch("auth/getUserInfo");
-        const app = new Vue({
+        const app = new  Vue({
             store,
             el: '#app',
             components: {

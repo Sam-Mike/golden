@@ -29,7 +29,7 @@ export default {
         async login({ dispatch }, login) {
             try {
                 await axios.get("/sanctum/csrf-cookie");
-                const response = await api.post("login", {
+                await api.post("login", {
                     email: login.email,
                     password: login.password
                 });
