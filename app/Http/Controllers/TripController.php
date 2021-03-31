@@ -29,7 +29,7 @@ class TripController extends Controller
             //local, transit, arrchive trips filtering
             "locations" =>  LocationResource::collection(Location::all()),
             "tripClass" =>  TripClassResource::collection(TripClass::all()),
-            "dispatcher" => PeopleResource::collection(People::where('role_position_id','=', '1')->get())
+            "dispatcher" => PeopleResource::collection(People::where('role_position_id', '=', '1')->get())
         ];
     }
 
@@ -97,7 +97,10 @@ class TripController extends Controller
         $trip->current_location = $request->input('currentLocation');
         $trip->manifest_number = $request->input('manifestNumber');
         $trip->manifest_date = $request->input('manifestDate');
-        // $path = $request->file('avatar')->store('avatars');
+        if ($request->hasFile('manifestDocument')) {
+            $trip->manifest_document = $request->file('manifestDocument')->store('manifestDocuments');
+            $trip->activity_status_id = 5;
+        }
         $trip->manifest_document = $request->input('manifestDocument');
         $trip->file_number = $request->input('fileNumber');
         $trip->cargo_order_number = $request->input('cargoOrderNumber');

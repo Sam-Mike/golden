@@ -18,7 +18,6 @@ const routes = [
     path: '/login',
     component: Login,
     name: 'login',
-    meta: { guestOnly: true },
     //can use BEFORE ENTER here to check the roles or the username
   },
   {
@@ -77,13 +76,14 @@ const router = new VueRouter({
   routes
 });
 
-const authStatus = store.getters["auth/authenticated"]
-
+function authStatus(){
+  return store.getters["auth/authenticated"]
+};
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
-    if (!authStatus.authenticated) {
+    if (!authStatus()) {
       next({
         path: '/login',
         query: { redirect: to.fullPath }

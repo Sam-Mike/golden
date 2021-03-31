@@ -8,7 +8,10 @@
         <div id="content">
           <!-- Topbar -->
           <div class="fixed-top d-flex flex-column">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav
+              v-if="this.authenticated"
+              class="navbar navbar-expand-lg navbar-dark bg-dark"
+            >
               <button
                 class="navbar-toggler"
                 type="button"
@@ -44,7 +47,7 @@
                       <router-link class="dropdown-item" to="/trips"
                         >Trips
                       </router-link>
-                      
+
                       <div class="dropdown-divider"></div>
                       <router-link class="dropdown-item" to="/clients"
                         >Clients</router-link
@@ -52,7 +55,6 @@
                       <router-link class="dropdown-item" to="/claims"
                         >Claims</router-link
                       >
-                      
                     </div>
                   </li>
                   <li class="nav-item dropdown">
@@ -115,7 +117,9 @@
                 </ul>
                 <ul v-if="authenticated" class="navbar-nav ml-auto">
                   <li class="nav-item">
-                    <a class="nav-link" @click.prevent="logout()">Logout</a>
+                    <a class="nav-link" role="button" @click.prevent="logout()"
+                      >Logout</a
+                    >
                   </li>
                   <li class="nav-item">
                     <a class="nav-link disabled">{{ user.name }}</a>
@@ -167,13 +171,13 @@ export default {
   },
   methods: {
     ...mapActions({
-      logout: "auth/logout",
-      getGlobalData:"getGlobalData"
+      logoutAction: "auth/logout",
+      getGlobalData: "getGlobalData",
     }),
     async logout() {
       try {
-        await this.logout();
-        this.$router.push({ name: "login" });
+        await this.logoutAction();
+        this.$router.push({ path: "/login" });
       } catch (error) {
         console.log(error);
       }

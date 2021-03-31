@@ -10,12 +10,12 @@
           <form class="text-left" id="loginForm" @submit.prevent="handleLogin">
             <span class="text-danger" v-if="error.data"> {{ error.data }}</span>
             <div class="field mt-3">
-              <label for="username">Username or Email</label><br />
+              <label for="username">Username</label><br />
               <b-input
                 size="sm"
-                type="email"
-                placeholder="username or email"
-                v-model="login.email"
+                type="text"
+                placeholder="username"
+                v-model="login.name"
               ></b-input>
             </div>
             <div class="field mt-3">
@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       login: {
-        email: "",
+        name: "",
         password: "",
       },
       error: [],
@@ -54,7 +54,7 @@ export default {
     async handleLogin() {
       try {
         await this.$store.dispatch("auth/login", this.login);
-        await this.$router.push("/");
+        await this.$router.push({ path: "/" });
       } catch (error) {
         console.log(error);
       }

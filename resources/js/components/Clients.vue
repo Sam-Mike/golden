@@ -44,6 +44,7 @@
                   :head-variant="tableHeadVariant"
                   :sticky-header="true"
                   :filter="tableFilter"
+                  @row-clicked="info(row.item)"
                 >
                   <template #cell(actions)="row">
                     <b-button size="sm" @click="info(row.item)" class="mr-1"
