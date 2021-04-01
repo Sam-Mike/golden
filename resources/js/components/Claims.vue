@@ -248,6 +248,7 @@
       ok-title="Save"
       id="createClaimModal"
       size="lg"
+      button-size="sm"
       title="Create Claim"
       @ok="handleCreateClaim"
     >
@@ -328,10 +329,13 @@
                 {{ editClaim.claimObjectOwner }}
               </p>
             </b-col>
-            <b-col
-              v-if="editClaim.claimDocument === null"
-              class="border rouded"
-            >
+            <b-col v-if="editClaim.claimDocument" class="border rouded">
+              <b>CLAIM DOCUMENT</b>
+              <p>
+                <a :href="path + editClaim.claimDocument">claim document</a>
+              </p>
+            </b-col>
+            <b-col v-else class="border rouded">
               <b>CLAIM DOCUMENT</b>
               <b-form-file
                 size="sm"
@@ -339,14 +343,6 @@
                 placeholder="Choose file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
-            </b-col>
-            <b-col v-else class="border rouded">
-              <b>CLAIM DOCUMENT</b>
-              <p>
-                <a :href="this.path + this.editClaim.claimDocument"
-                  >claim document</a
-                >
-              </p>
             </b-col>
           </b-row>
           <!-- INCIDENT ASSESSMENT -->
@@ -392,9 +388,17 @@
               ></b-input>
             </b-col>
             <b-col
-              v-if="this.editClaim.incidentAssessDocument === null"
+              v-if="editClaim.incidentAssessDocument"
               class="border rouded"
             >
+              <b>ASSESSMENT DOCUMENT</b>
+              <p>
+                <a :href="path + editClaim.incidentAssessDocument"
+                  >assessment document</a
+                >
+              </p>
+            </b-col>
+            <b-col v-else class="border rouded">
               <b>ASSESSMENT DOCUMENT</b>
               <b-form-file
                 size="sm"
@@ -402,14 +406,6 @@
                 placeholder="Choose file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
-            </b-col>
-            <b-col v-else class="border rouded">
-              <b>ASSESSMENT DOCUMENT</b>
-              <p>
-                <a :href="this.path + this.editClaim.incidentAssessDocument"
-                  >assessment document</a
-                >
-              </p>
             </b-col>
           </b-row>
           <!-- DISCHARGE VOUCHER INFORMATION -->
@@ -435,9 +431,17 @@
               ></b-input>
             </b-col>
             <b-col
-              v-if="this.editClaim.dischargeVoucherDocument === null"
+              v-if="editClaim.dischargeVoucherDocument"
               class="border rouded"
             >
+              <b>DISCHARGE VOUCHER DOCUMENT</b>
+              <p>
+                <a :href="path + editClaim.dischargeVoucherDocument"
+                  >discharge voucher document</a
+                >
+              </p>
+            </b-col>
+            <b-col v-else class="border rouded">
               <b>DISCHARGE VOUCHER DOCUMENT</b>
               <b-form-file
                 size="sm"
@@ -445,14 +449,6 @@
                 placeholder="Choose file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
-            </b-col>
-            <b-col v-else class="border rouded">
-              <b>DISCHARGE VOUCHER DOCUMENT</b>
-              <p>
-                <a :href="this.path + this.editClaim.dischargeVoucherDocument"
-                  >discharge voucher document</a
-                >
-              </p>
             </b-col>
           </b-row>
           <!-- PAYMENT INFORMATION -->
@@ -477,10 +473,13 @@
                 placeholder="enter payment comment"
               ></b-input>
             </b-col>
-            <b-col
-              v-if="this.editClaim.paymentDocument === null"
-              class="border rouded"
-            >
+            <b-col v-if="editClaim.paymentDocument" class="border rouded">
+              <b>PAYMENT DOCUMENT</b>
+              <p>
+                <a :href="path + editClaim.paymentDocument">payment document</a>
+              </p>
+            </b-col>
+            <b-col v-else class="border rouded">
               <b>PAYMENT DOCUMENT</b>
               <b-form-file
                 size="sm"
@@ -488,14 +487,6 @@
                 placeholder="Choose a file or drop it here..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
-            </b-col>
-            <b-col v-else class="border rouded">
-              <b>PAYMENT DOCUMENT</b>
-              <p>
-                <a :href="this.path + this.editClaim.paymentDocument"
-                  >payment document</a
-                >
-              </p>
             </b-col>
           </b-row>
         </b-container>

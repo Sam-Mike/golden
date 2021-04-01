@@ -2,7 +2,10 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs active-nav-item-class="font-weight-bold text-uppercase" content-class="mt-2">
+        <b-tabs
+          active-nav-item-class="font-weight-bold text-uppercase"
+          content-class="mt-2"
+        >
           <b-tab title="PENDING">
             <!-- TRIPS FOR TRIPS WITH PENDING INFORMATION -->
             <!-- DataTales Example -->
@@ -189,192 +192,200 @@
         <b-button size="sm" @click="cancel()">Cancel</b-button>
         <b-button size="sm" variant="primary" @click="ok()">Save</b-button>
       </template>
-      <b-container fluid>
-        <!-- TRIP LOCATION INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Trip No</b>
-            <p>
-              {{ editTrip.id }}
-            </p>
-          </b-col>
-          <b-col class="border rouded">
-            <b>Current Location</b>
-            <p>
-              {{ editTrip.currentLocation }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Destination</b>
-            <p>
-              {{ editTrip.destination.name }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>ETA</b>
-            <p>
-              {{ editTrip.etaSite }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Trip Status</b>
-            <p>
-              {{ editTrip.activityStatus.name }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Job Class</b>
-            <p>JOB CLASS INFO</p>
-          </b-col>
-        </b-row>
-        <!-- ALLOCATION INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Truck</b>
-            <p>
-              {{ editTrip.allocation.truck.registrationNumber }}
-            </p>
-          </b-col>
-          <b-col class="border rouded">
-            <b>Trailer</b>
-            <p>
-              {{ editTrip.allocation.trailer.registrationNumber }}
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Driver</b>
-            <p>
-              {{ editTrip.allocation.driver.firstName }}
-              {{ editTrip.allocation.driver.middleName }}
-              {{ editTrip.allocation.driver.lastName }}
-            </p>
-          </b-col>
-        </b-row>
-        <!-- DISPATCH INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Dispatch Date</b>
-            <p>
-              <b-input
-                size="sm"
-                type="date"
-                placeholder="Enter dispatch date"
-                v-model="editTrip.dispatchDate"
-              ></b-input>
-            </p>
-          </b-col>
-        </b-row>
-        <!-- MANIFEST INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>MANIFEST NO</b>
-            <p>
-              <b-input
-                size="sm"
-                v-model="editTrip.manifestNumber"
-                placeholder="Enter manifest number"
-              ></b-input>
-            </p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>MANIFEST DATE</b>
-            <p>
-              <b-input
-                size="sm"
-                type="date"
-                v-model="editTrip.manifestDate"
-                placeholder="Enter manifest number"
-              ></b-input>
-            </p>
-          </b-col>
-          <b-col class="border rouded">
-            <b>MANIFEST DOC</b>
-            <div class="input-group mb-3">
-              <div class="custom-file">
-                <input
-                  class="custom-file-input"
+      <form id="tripForm">
+        <b-container fluid>
+          <!-- TRIP LOCATION INFORMATION -->
+          <b-row class="border rounded">
+            <b-col class="border rounded">
+              <b>Trip No</b>
+              <p>
+                {{ editTrip.id }}
+              </p>
+            </b-col>
+            <b-col class="border rouded">
+              <b>Current Location</b>
+              <p>
+                {{ editTrip.currentLocation }}
+              </p>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Destination</b>
+              <p>
+                {{ editTrip.destination.name }}
+              </p>
+            </b-col>
+            <b-col class="border rounded">
+              <b>ETA</b>
+              <p>
+                {{ editTrip.etaSite }}
+              </p>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Trip Status</b>
+              <p>
+                {{ editTrip.activityStatus.name }}
+              </p>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Job Class</b>
+              <p>JOB CLASS INFO</p>
+            </b-col>
+          </b-row>
+          <!-- ALLOCATION INFORMATION -->
+          <b-row class="border rounded">
+            <b-col class="border rounded">
+              <b>Truck</b>
+              <p>
+                {{ editTrip.allocation.truck.registrationNumber }}
+              </p>
+            </b-col>
+            <b-col class="border rouded">
+              <b>Trailer</b>
+              <p>
+                {{ editTrip.allocation.trailer.registrationNumber }}
+              </p>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Driver</b>
+              <p>
+                {{ editTrip.allocation.driver.firstName }}
+                {{ editTrip.allocation.driver.middleName }}
+                {{ editTrip.allocation.driver.lastName }}
+              </p>
+            </b-col>
+          </b-row>
+          <!-- DISPATCH INFORMATION -->
+          <b-row class="border rounded">
+            <b-col class="border rounded">
+              <b>Dispatch Date</b>
+              <p>
+                <b-input
                   size="sm"
-                  id="inputGroupFile"
-                  type="file"
-                />
-                <label
-                  class="custom-file-label"
-                  for="inputGroupFile"
-                  aria-describedby="inputGroupFileAddon02"
-                  >Choose file</label
-                >
-              </div>
-            </div>
-            <!-- <b-form-file
+                  type="date"
+                  placeholder="Enter dispatch date"
+                  name="dispatchDate"
+                  v-model="editTrip.dispatchDate"
+                ></b-input>
+              </p>
+            </b-col>
+          </b-row>
+          <!-- MANIFEST INFORMATION -->
+          <b-row class="border rounded">
+            <b-col class="border rounded">
+              <b>MANIFEST NO</b>
+              <p>
+                <b-input
+                  size="sm"
+                  type="number"
+                  name="manifestNumber"
+                  v-model="editTrip.manifestNumber"
+                  placeholder="Enter manifest number"
+                ></b-input>
+              </p>
+            </b-col>
+            <b-col class="border rounded">
+              <b>MANIFEST DATE</b>
+              <p>
+                <b-input
+                  size="sm"
+                  type="date"
+                  name="manifestDate"
+                  v-model="editTrip.manifestDate"
+                  placeholder="Enter manifest number"
+                ></b-input>
+              </p>
+            </b-col>
+            <b-col class="border rouded">
+              <b>MANIFEST DOC</b>
+              <b-col v-if="editTrip.manifestDocument" class="border rounded">
+                <b>MANIFEST DOCUMENT</b>
+                <p>
+                  <a :href="path + editTrip.manifestDocument"
+                    >manifestDocument</a
+                  >
+                </p>
+              </b-col>
+              <b-form-file
+                v-else
                 size="sm"
+                name="manifestDocument"
                 v-model="editTrip.manifestDocument"
                 :state="Boolean(editTrip.manifestDocument)"
-                placeholder="Choose a file or drop it here..."
+                placeholder="Choose a file..."
                 drop-placeholder="Drop file here..."
-              ></b-form-file> -->
-          </b-col>
-        </b-row>
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Client</b>
-            <p>{{ editTrip.client.name }}</p>
-          </b-col>
-          <b-col class="border rouded">
-            <b>Client No</b>
-            <p>
-              {{ editTrip.client.id }}
-            </p>
-          </b-col>
-        </b-row>
-        <!-- CARGO INFORMATION -->
-        <b-row class="border rounded">
-          <b-col class="border rounded">
-            <b>Cargo Name</b>
-            <p>{{ editTrip.cargo.name }}</p>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Cargo Weight</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.cargoWeight"
-              placeholder="Enter cargo Weight"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Cargo Quantity</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.cargoQuantity"
-              placeholder="Enter cargo Quantity"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Seal No</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.sealNumber"
-              placeholder="Enter seal Number"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Container No</b>
-            <b-input
-              size="sm"
-              v-model="editTrip.containerNumber"
-              placeholder="Enter container Number"
-            ></b-input>
-          </b-col>
-          <b-col class="border rounded">
-            <b>Loading Location</b>
-            <v-select
-              v-model="editTrip.loadingLocation"
-              label="name"
-              :options="locations"
-              :reduce="(locations) => locations.id"
-            ></v-select>
-          </b-col>
-        </b-row>
-      </b-container>
+              ></b-form-file>
+            </b-col>
+          </b-row>
+          <b-row class="border rounded">
+            <b-col class="border rounded">
+              <b>Client</b>
+              <p>{{ editTrip.client.name }}</p>
+            </b-col>
+            <b-col class="border rouded">
+              <b>Client No</b>
+              <p>
+                {{ editTrip.client.id }}
+              </p>
+            </b-col>
+          </b-row>
+          <!-- CARGO INFORMATION -->
+          <b-row class="border rounded">
+            <b-col class="border rounded">
+              <b>Cargo Name</b>
+              <p>{{ editTrip.cargo.name }}</p>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Cargo Weight</b>
+              <b-input
+                size="sm"
+                type="number"
+                name="cargoWeight"
+                v-model="editTrip.cargoWeight"
+                placeholder="Enter cargo Weight"
+              ></b-input>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Cargo Quantity</b>
+              <b-input
+                size="sm"
+                type="number"
+                name="cargoWeight"
+                v-model="editTrip.cargoQuantity"
+                placeholder="Enter cargo Quantity"
+              ></b-input>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Seal No</b>
+              <b-input
+                size="sm"
+                type="number"
+                name="sealNumber"
+                v-model="editTrip.sealNumber"
+                placeholder="Enter seal Number"
+              ></b-input>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Container No</b>
+              <b-input
+                size="sm"
+                type="number"
+                name="containerNumber"
+                v-model="editTrip.containerNumber"
+                placeholder="Enter container Number"
+              ></b-input>
+            </b-col>
+            <b-col class="border rounded">
+              <b>Loading Location</b>
+              <v-select
+                v-model="editTrip.loadingLocation"
+                label="name"
+                :options="locations"
+                :reduce="(locations) => locations.id"
+              ></v-select>
+            </b-col>
+          </b-row>
+        </b-container>
+      </form>
     </b-modal>
   </div>
 </template>
@@ -480,29 +491,22 @@ export default {
     },
     async updateTrip() {
       try {
-        await api.patch("/trips/" + this.editTrip.id, {
-          // activityStatusId: this.editTrip.activityStatus.id,
-          tripClassId: this.editTrip.tripClassId,
-          dispatchDate: this.editTrip.dispatchDate,
-          etaSite: this.editTrip.etaSite,
-          routeCode: this.editTrip.routeCode,
-          currentLocation: this.editTrip.currentLocation,
-          manifestNumber: this.editTrip.manifestNumber,
-          manifestDate: this.editTrip.manifestDate,
-          manifestDocument: this.editTrip.manifestDocument,
-          fileNumber: this.editTrip.fileNumber,
-          cargoOrderNumber: this.editTrip.cargoOrderNumber,
-          cargoWeight: this.editTrip.cargoWeight,
-          cargoQuantity: this.editTrip.cargoQuantity,
-          sealNumber: this.editTrip.sealNumber,
-          containerNumber: this.editTrip.containerNumber,
-          loadingDate: this.editTrip.loadingDate,
-          loadingLocation: this.editTrip.loadingLocationId,
-          truckActivityStatusId: 2,
-          trailerActivityStatusId: 2,
-          driverActivityStatusId: 2,
-        });
-        console.log("trip updated successfully");
+        let tripForm = document.getElementById("tripForm");
+        let tripData = new FormData(tripForm);
+        tripData.append("_method", "PATCH");
+        if (this.editTrip.loadingLocation) {
+          tripData.append("loadingLocation", this.editTrip.loadingLocation);
+        }
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+            enctype: "multipart/form-data",
+          },
+        };
+        for (var entry of tripData.entries()) {
+          console.log(entry);
+        }
+        await api.post("/trips/" + this.editTrip.id, tripData, config);
         this.$nextTick(() => {
           this.$bvModal.hide("updateTripModal");
           this.getTrips();
@@ -512,19 +516,12 @@ export default {
       }
     },
     async updateTruckLocation() {},
-    handleEndTrip(bvModalEvt) {
-      bvModalEvt.preventDefault();
+    handleEndTrip() {
       this.endTrip();
     },
     async endTrip() {
       try {
-        await api.patch("trips/" + this.editTrip.id, {
-          // set truck, trailer and driver activity status to free again
-          activityStatusId: 3,
-          truckActivityStatusId: 1,
-          trailerActivityStatusId: 1,
-          driverActivityStatusId: 1,
-        });
+        await api.post("endTrip/" + this.editTrip.id);
         console.log("trip archived successfully");
         this.$nextTick(() => {
           this.$bvModal.hide("updateTripModal");

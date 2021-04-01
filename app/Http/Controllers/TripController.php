@@ -89,32 +89,40 @@ class TripController extends Controller
     public function update(Request $request, $id)
     {
         $trip = Trip::findOrFail($id);
-        $trip->activity_status_id = $request->input('activityStatusId');
-        $trip->trip_class_id = $request->input('tripClassId');
+        // $trip->activity_status_id = $request->input('activityStatusId');
+        // $trip->trip_class_id = $request->input('tripClassId');
         $trip->dispatch_date = $request->input('dispatchDate');
-        $trip->eta_site = $request->input('etaSite');
-        $trip->route_code = $request->input('routeCode');
-        $trip->current_location = $request->input('currentLocation');
+        // $trip->eta_site = $request->input('etaSite');
+        // $trip->route_code = $request->input('routeCode');
+        // $trip->current_location = $request->input('currentLocation');
         $trip->manifest_number = $request->input('manifestNumber');
         $trip->manifest_date = $request->input('manifestDate');
         if ($request->hasFile('manifestDocument')) {
             $trip->manifest_document = $request->file('manifestDocument')->store('manifestDocuments');
             $trip->activity_status_id = 5;
         }
-        $trip->manifest_document = $request->input('manifestDocument');
-        $trip->file_number = $request->input('fileNumber');
-        $trip->cargo_order_number = $request->input('cargoOrderNumber');
+        // $trip->file_number = $request->input('fileNumber');
+        // $trip->cargo_order_number = $request->input('cargoOrderNumber');
         $trip->cargo_weight = $request->input('cargoWeight');
         $trip->cargo_quantity = $request->input('cargoQuantity');
         $trip->seal_number = $request->input('sealNumber');
         $trip->container_number = $request->input('containerNumber');
-        $trip->loading_date = $request->input('loadingDate');
-        $trip->loading_location_id = $request->input('loadingLocation');
+        // $trip->loading_date = $request->input('loadingDate');
+        if ($request->has('loadingLocation')) {
+            $trip->loading_location_id = $request->input('loadingLocation');
+        }
         $trip->save();
+        return response()->json([
+            'success',
+        ], 200);
+    }
 
-        //setting truck, trailer and driver free in case the trip ends
+    public function endTrip(Request $request, $id)
+    {
+        $trip = Trip::find($id);
+        $trip->activity_status_id = 3;
+
         $allocation = Allocation::find($trip->allocation_id);
-
         $truck = Truck::find($allocation->truck_id);
         $truck->activity_status_id = $request->input('truckActivityStatusId');
         $truck->save();

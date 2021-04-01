@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('globalData', [HomeController::class, 'index']);
+Route::post('endTrip', [TripController::class, 'endTrip']);
 Route::apiResources([
     'clients' => ClientController::class,
     'people' => PeopleController::class,
@@ -37,7 +38,5 @@ Route::apiResources([
     'trailers' => TrailerController::class,
     'allocations' => AllocationController::class,
     'trips' => TripController::class,
-    'claims' =>ClaimController::class,
+    'claims' => ClaimController::class,
 ]);
-
-
