@@ -476,7 +476,7 @@
             <b-col v-if="editClaim.paymentDocument" class="border rouded">
               <b>PAYMENT DOCUMENT</b>
               <p>
-                <a :href="path + editClaim.paymentDocument">payment document</a>
+                <a :href="filesPath + editClaim.paymentDocument">payment document</a>
               </p>
             </b-col>
             <b-col v-else class="border rouded">
@@ -495,11 +495,11 @@
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 import api from "../apis/api";
 export default {
   data() {
     return {
-      path: "http://127.0.0.1:8000/storage/app/",
       loading: false,
       claims: [],
       company: [],
@@ -575,6 +575,9 @@ export default {
     declinedClaims() {
       return this.claims.filter((claim) => claim.claimStatus === "declined");
     },
+    ...mapState({
+      filesPath: "filesPath",
+    }),
   },
   mounted() {
     this.getClaims();

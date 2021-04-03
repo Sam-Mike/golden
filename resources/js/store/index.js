@@ -8,7 +8,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         //global Data
-        company:[]
+        company:[],
+        filesPath: "http://127.0.0.1:8000/storage/app/"
     },
     mutations: {
         setGlobalData(state, data){

@@ -30,7 +30,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('globalData', [HomeController::class, 'index']);
-Route::post('endTrip', [TripController::class, 'endTrip']);
+Route::patch('endTrip/{id}', [TripController::class, 'endTrip']);
 Route::apiResources([
     'clients' => ClientController::class,
     'people' => PeopleController::class,

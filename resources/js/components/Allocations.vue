@@ -16,7 +16,7 @@
           </b-button>
           <div class="row">
             <div class="input-group mb-1 col">
-              <div class="col-md-8">
+              <div class="col-md-10">
                 <v-select
                   v-model="newTrip.clientId"
                   label="name"
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="input-group mb-1 col">
-              <div class="col-md-8">
+              <div class="col-md-10">
                 <v-select
                   v-model="newTrip.cargoId"
                   label="name"
@@ -38,13 +38,24 @@
               </div>
             </div>
             <div class="input-group mb-1 col">
-              <div class="col-md-8">
+              <div class="col-md-10">
                 <v-select
                   v-model="newTrip.destinationLocationId"
                   label="name"
                   :options="locations"
                   :reduce="(locations) => locations.id"
                   placeholder="Select Destination"
+                ></v-select>
+              </div>
+            </div>
+            <div class="input-group mb-1 col">
+              <div class="col-md-10">
+                <v-select
+                  v-model="newTrip.tripClassId"
+                  label="name"
+                  :options="tripClass"
+                  :reduce="(tripClass) => tripClass.id"
+                  placeholder="Select Trip Class"
                 ></v-select>
               </div>
             </div>
@@ -472,6 +483,7 @@ export default {
       trucks: [],
       trailers: [],
       drivers: [],
+      tripClass: [],
       newAllocation: {
         truckId: "",
         trailerId: "",
@@ -481,6 +493,7 @@ export default {
         clientId: "",
         cargoId: "",
         destinationLocationId: "",
+        tripClassId: "",
         checkedAllocations: [],
       },
       editAllocation: {
@@ -569,6 +582,7 @@ export default {
         this.trucks = response.data.trucks;
         this.trailers = response.data.trailers;
         this.drivers = response.data.drivers;
+        this.tripClass = response.data.tripClass;
         this.isSuccess = true;
         this.loading = false;
       } catch (error) {
@@ -610,6 +624,7 @@ export default {
           cargoId: this.newTrip.cargoId,
           clientId: this.newTrip.clientId,
           destinationId: this.newTrip.destinationLocationId,
+          tripClassId: this.newTrip.tripClassId,
           allocationsList: this.newTrip.checkedAllocations,
         });
         this.$nextTick(() => {

@@ -63,7 +63,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
+                    :items="localTrips"
                     :fields="tripFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -105,7 +105,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
+                    :items="transitTrips"
                     :fields="tripFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -147,7 +147,7 @@
                     striped
                     hover
                     :small="true"
-                    :items="trips"
+                    :items="archivedTrips"
                     :fields="tripFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
@@ -296,11 +296,10 @@
               </p>
             </b-col>
             <b-col class="border rouded">
-              <b>MANIFEST DOC</b>
+              <b>MANIFEST DOCUMENT</b>
               <b-col v-if="editTrip.manifestDocument" class="border rounded">
-                <b>MANIFEST DOCUMENT</b>
                 <p>
-                  <a :href="path + editTrip.manifestDocument"
+                  <a :href="filesPath + editTrip.manifestDocument"
                     >manifestDocument</a
                   >
                 </p>
@@ -309,8 +308,6 @@
                 v-else
                 size="sm"
                 name="manifestDocument"
-                v-model="editTrip.manifestDocument"
-                :state="Boolean(editTrip.manifestDocument)"
                 placeholder="Choose a file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
@@ -391,6 +388,7 @@
 </template>
 <script>
 import api from "../apis/api";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -442,7 +440,23 @@ export default {
       },
     };
   },
-
+  computed: {
+    pendingTrips() {
+      return this.trips.filter((trip) => trip.activityStatus.id === 4);
+    },
+    localTrips() {
+      return this.trips.filter((trip) => trip.tripClass.id === 1);
+    },
+    transitTrips() {
+      return this.trips.filter((trip) => trip.tripClass.id === 2);
+    },
+    archivedTrips() {
+      return this.trips.filter((trip) => trip.activityStatus.id === 1);
+    },
+    ...mapState({
+      filesPath:"filesPath"
+    })
+  },
   mounted() {
     this.getTrips();
   },
@@ -521,8 +535,12 @@ export default {
     },
     async endTrip() {
       try {
-        await api.post("endTrip/" + this.editTrip.id);
-        console.log("trip archived successfully");
+        await api.patch("endTrip/" + this.editTrip.id, {
+          tripActivityStatusId: 3,
+          truckActivityStatusId: 1,
+          trailerActivityStatusId: 1,
+          driverActivityStatusId: 1,
+        });
         this.$nextTick(() => {
           this.$bvModal.hide("updateTripModal");
           this.getTrips();

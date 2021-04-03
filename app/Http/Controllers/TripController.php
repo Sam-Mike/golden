@@ -4,16 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Trip;
-use App\Models\TripClass;
 use App\Models\Allocation;
 use App\Models\Truck;
 use App\Models\Trailer;
 use App\Models\People;
-use App\Models\Location;
 use App\Http\Resources\TripResource;
-use App\Http\Resources\LocationResource;
-use App\Http\Resources\PeopleResource;
-use App\Http\Resources\TripClassResource;
 
 class TripController extends Controller
 {
@@ -26,10 +21,7 @@ class TripController extends Controller
     {
         return [
             "trips" =>  TripResource::collection(Trip::all()),
-            //local, transit, arrchive trips filtering
-            "locations" =>  LocationResource::collection(Location::all()),
-            "tripClass" =>  TripClassResource::collection(TripClass::all()),
-            "dispatcher" => PeopleResource::collection(People::where('role_position_id', '=', '1')->get())
+            //"dispatcher" => PeopleResource::collection(People::where('role_position_id', '=', '1')->get())
         ];
     }
 
@@ -45,6 +37,7 @@ class TripController extends Controller
             'clientId' => 'required',
             'cargoId' => 'required',
             'destinationId' => 'required',
+            'tripClassId' => 'required',
             'allocationsList' => 'required'
         ]);
         $allocations = request("allocationsList");
@@ -53,8 +46,9 @@ class TripController extends Controller
             $trip->client_id = $request->input('clientId');
             $trip->cargo_id = $request->input('cargoId');
             $trip->destination_id = $request->input('destinationId');
+            $trip->trip_class_id = $request->input('tripClassId');
             $trip->allocation_id = $allocation;
-            $trip->activity_status_id = 4; //maybe from api as activityStatusId
+            $trip->activity_status_id = 4; //maybe from api as activityStatusId PENDING
             $trip->save();
 
             //setting allocation to allocated
@@ -119,10 +113,14 @@ class TripController extends Controller
 
     public function endTrip(Request $request, $id)
     {
-        $trip = Trip::find($id);
-        $trip->activity_status_id = 3;
+        $trip = Trip::findOrFail($id);
+        $trip->activity_status_id = $request->input('tripActivityStatusId');
+        $trip->save();
 
         $allocation = Allocation::find($trip->allocation_id);
+        $allocation->activity_status_id = 3;
+        $allocation->save();
+
         $truck = Truck::find($allocation->truck_id);
         $truck->activity_status_id = $request->input('truckActivityStatusId');
         $truck->save();

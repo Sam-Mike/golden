@@ -12,6 +12,7 @@ use App\Models\Client;
 use App\Models\Company;
 use App\Models\Cargo;
 use App\Models\Location;
+use App\Models\TripClass;
 use App\Http\Resources\PeopleResource;
 use App\Http\Resources\TruckResource;
 use App\Http\Resources\TrailerResource;
@@ -19,6 +20,7 @@ use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\CargoResource;
 use App\Http\Resources\LocationResource;
+use App\Http\Resources\TripClassResource;
 
 class AllocationController extends Controller
 {
@@ -31,14 +33,14 @@ class AllocationController extends Controller
     {
         return [
             "allocations" => AllocationResource::collection(Allocation::all()),
-            //filter coach, fleet and wheels trucks here
             "trucks" => TruckResource::collection(Truck::all()),
             "trailers" => TrailerResource::collection(Trailer::all()),
-            "drivers" => PeopleResource::collection(People::all()), //use where clause for drivers only among people
+            "drivers" => PeopleResource::collection(People::all()),
             "clients" => ClientResource::collection(Client::all()),
             "company" => CompanyResource::collection(Company::all()),
             "cargo" => CargoResource::collection(Cargo::all()),
             "locations" => LocationResource::collection(Location::all()),
+            "tripClass" =>  TripClassResource::collection(TripClass::all()),
         ];
     }
 
