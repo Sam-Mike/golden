@@ -33,16 +33,13 @@
                     :fields="peopleFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
+                    @row-clicked="personInfo"
                   >
                     <template #cell(Name)="data">
                       {{ data.item.firstName }} {{ data.item.middleName }}
                       {{ data.item.lastName }}
                     </template>
-                    <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                  
                   </b-table>
                 </div>
               </div>
@@ -71,19 +68,13 @@
                     :fields="peopleFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
+                    @row-clicked="inactivePersonInfo"
                   >
                     <template #cell(Name)="data">
                       {{ data.item.firstName }} {{ data.item.middleName }}
                       {{ data.item.lastName }}
                     </template>
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="inactiveInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS</b-button
-                      >
-                    </template>
+                   
                   </b-table>
                 </div>
               </div>
@@ -243,7 +234,7 @@
             v-if="editPerson.activityStatus.id == 1"
             size="sm"
             variant="danger"
-            @click="hide(handleDeactivatePerson())"
+            @click="hide(deactivatePerson())"
             >Deactivate</b-button
           >
           <b-button size="sm" variant="" @click="cancel">Cancel</b-button>
@@ -411,21 +402,20 @@ export default {
         { key: "dob" },
         { key: "mobile" },
         { key: "company.name", label: "Company", sortable: true },
-        { key: "startDate", sortable: true },
         {
           key: "rolePosition.department.name",
           label: "Department",
           sortable: true,
         },
+        { key: "startDate", sortable: true },
         { key: "rolePosition.name", label: "Role" },
         { key: "licenseIssueDate" },
         { key: "licenseExpiryDate" },
         { key: "activityStatus.name", label: "Assignment Status" },
-        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       company: [],
-      rolePositions: [],
+      departmentRoles: [],
       departments: [],
       licenseClasses: [],
       newPerson: {
@@ -526,7 +516,7 @@ export default {
         console.log(error);
       }
     },
-    info(item, button) {
+    personInfo(item, button) {
       console.log(item);
       this.editPerson.id = item.id;
       this.editPerson.firstName = item.firstName;
@@ -536,6 +526,7 @@ export default {
       this.editPerson.mobile = item.mobile;
       this.editPerson.startDate = item.startDate;
       this.editPerson.company = item.company;
+      this.editPerson.departmentId = item.department;
       this.editPerson.rolePosition = item.rolePosition;
       this.editPerson.licenseNumber = item.licenseNumber;
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
@@ -551,20 +542,19 @@ export default {
     },
     async updatePerson() {
       try {
-        await api.patch("people/" + this.editPerson.content.id, {
-          firstName: this.editPerson.content.firstName,
-          middleName: this.editPerson.content.middleName,
-          lastName: this.editPerson.content.lastName,
-          dob: this.editPerson.content.dob,
-          mobile: this.editPerson.content.mobile,
-          startDate: this.editPerson.content.startDate,
-          companyId: this.editPerson.content.company.id,
-          rolePositionId: this.editPerson.content.rolePosition.id,
-          //departmentId: this.editPerson.content.department.id,
-          licenseNumber: this.editPerson.content.licenseNumber,
-          licenseIssueDate: this.editPerson.content.licenseIssueDate,
-          //licenseClassId: this.editPerson.content.licenseClass.id,
-          activityStatusId: this.editPerson.content.activityStatus.id,
+        await api.patch("people/" + this.editPerson.id, {
+          firstName: this.editPerson.firstName,
+          middleName: this.editPerson.middleName,
+          lastName: this.editPerson.lastName,
+          dob: this.editPerson.dob,
+          mobile: this.editPerson.mobile,
+          startDate: this.editPerson.startDate,
+          companyId: this.editPerson.company.id,
+          rolePositionId: this.editPerson.rolePosition.id,
+          //departmentId: this.editPerson.licenseNumber,
+          licenseIssueDate: this.editPerson.licenseIssueDate,
+          //licenseClassId: this.editPerson.licenseClass.id,
+          activityStatusId: this.editPerson.activityStatus.id,
         });
         this.$nextTick(() => {
           this.$bvModal.hide("updatePersonModal");
@@ -572,9 +562,6 @@ export default {
         });
         console.log("Person updated");
       } catch (error) {}
-    },
-    handleDeactivatePerson() {
-      this.deactivatePerson();
     },
     async deactivatePerson() {
       try {
@@ -601,9 +588,8 @@ export default {
         console.log(error);
       }
     },
-    inactiveInfo(item, button) {
+    inactivePersonInfo(item, button) {
       this.editPerson = item;
-      this.rowDetails = true;
       this.$root.$emit("bv::show::modal", "inactivePersonModal", button);
     },
     handleActivatePerson() {

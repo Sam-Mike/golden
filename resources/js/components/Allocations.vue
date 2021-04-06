@@ -99,6 +99,7 @@
                       :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
+                      @row-clicked="allocationInfo"
                     >
                       <template #cell(select)="methods"
                         ><b-form-checkbox
@@ -112,14 +113,7 @@
                         {{ methods.item.driver.middleName }}
                         {{ methods.item.driver.lastName }}
                       </template>
-                      <template #cell(actions)="row">
-                        <b-button
-                          size="sm"
-                          @click="allocationInfo(row.item)"
-                          class="mr-1"
-                          >DETAILS
-                        </b-button>
-                      </template>
+                      
                     </b-table>
                   </div>
                 </div>
@@ -156,6 +150,7 @@
                       :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
+                      @row-clicked="allocationInfo"
                     >
                       <template #cell(select)="methods"
                         ><b-form-checkbox
@@ -169,14 +164,7 @@
                         {{ methods.item.driver.middleName }}
                         {{ methods.item.driver.lastName }}
                       </template>
-                      <template #cell(actions)="row">
-                        <b-button
-                          size="sm"
-                          @click="allocationInfo(row.item)"
-                          class="mr-1"
-                          >DETAILS
-                        </b-button>
-                      </template>
+                      
                     </b-table>
                   </div>
                 </div>
@@ -213,6 +201,7 @@
                       :fields="allocationsFields"
                       :head-variant="tableHeadVariant"
                       :sticky-header="true"
+                      @row-clicked="allocationInfo"
                     >
                       <template #cell(select)="methods"
                         ><b-form-checkbox
@@ -226,14 +215,7 @@
                         {{ methods.item.driver.middleName }}
                         {{ methods.item.driver.lastName }}
                       </template>
-                      <template #cell(actions)="row">
-                        <b-button
-                          size="sm"
-                          @click="allocationInfo(row.item)"
-                          class="mr-1"
-                          >DETAILS
-                        </b-button>
-                      </template>
+                      
                     </b-table>
                   </div>
                 </div>
@@ -473,7 +455,6 @@ export default {
         { key: "trailer.tlNumber", label: "Trailer" },
         { key: "driverName", label: "Driver" },
         { key: "activityStatus.name", label: "Activity Status" },
-        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       company: [],

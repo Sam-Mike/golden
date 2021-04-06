@@ -2,7 +2,7 @@
   <div>
     <b-overlay :show="loading">
       <b-card no-body>
-        <b-tabs active-nav-item-class="font-weight-bold text-uppercase" >
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <b-tab title="Active">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
@@ -35,12 +35,8 @@
                     :fields="trucksFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
+                    @row-clicked="truckInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
                   </b-table>
                 </div>
               </div>
@@ -69,15 +65,8 @@
                     :fields="trucksFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
+                    @row-clicked="inactiveTruckInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="inactiveInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
                   </b-table>
                 </div>
               </div>
@@ -226,7 +215,6 @@ export default {
         { key: "company.name", label: "Company" },
         { key: "truckType.name", label: "Truck Type" },
         { key: "activityStatus.name", label: "Activity Status" },
-        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       newTruck: {
@@ -288,7 +276,7 @@ export default {
         this.getTrucks();
       });
     },
-    info(item, button) {
+    truckInfo(item, button) {
       //console.log(item);
       this.editTruck.id = item.id;
       this.editTruck.registrationNumber = item.registrationNumber;
@@ -337,7 +325,7 @@ export default {
         console.log(error);
       }
     },
-    inactiveInfo(item, button) {
+    inactiveTruckInfo(item, button) {
       this.editTruck.id = item.id;
       this.editTruck.registrationNumber = item.registrationNumber;
       this.editTruck.company = item.company;

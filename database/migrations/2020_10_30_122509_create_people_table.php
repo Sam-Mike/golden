@@ -22,7 +22,7 @@ class CreatePeopleTable extends Migration
             $table->text('mobile');
             $table->date('start_date');
             $table->foreignId('company_id')->constrained('company');
-            $table->foreignId('role_position_id')->constrained('role_position');
+            $table->foreignId('department_role_id')->constrained('department_role');
             $table->Biginteger('license_number')->nullable();
             $table->foreignId('license_class_id')->constrained('license_class')->nullable();
             $table->date('license_issue_date')->nullable();

@@ -29,7 +29,7 @@ class PeopleFactory extends Factory
             'mobile' => $this->faker->phoneNumber,
             'start_date' => $this->faker->date($format = 'Y-m-d'),
             'company_id' => $this->faker->numberBetween($min = 1, $max = 3),
-            'role_position_id' => 1,
+            'department_role_id' => 1,
             'license_number' => $this->faker->ean13,
             'license_class_id' => 3,
             'license_issue_date' => $this->faker->date($format = 'Y-m-d'),

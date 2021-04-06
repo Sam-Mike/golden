@@ -29,16 +29,12 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="trailerInfo"
                   >
                     <template #cell(driverName)="methods">
                       {{ methods.item.allocation.driver.firstName }}
                       {{ methods.item.allocation.driver.middleName }}
                       {{ methods.item.allocation.driver.lastName }}
-                    </template>
-                    <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
-                        >DETAILS
-                      </b-button>
                     </template>
                   </b-table>
                 </div>
@@ -68,20 +64,14 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="archiveTripInfo"
                   >
                     <template #cell(driverName)="methods">
                       {{ methods.item.allocation.driver.firstName }}
                       {{ methods.item.allocation.driver.middleName }}
                       {{ methods.item.allocation.driver.lastName }}
                     </template>
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                    
                   </b-table>
                 </div>
               </div>
@@ -110,20 +100,14 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="tripInfo"
                   >
                     <template #cell(driverName)="methods">
                       {{ methods.item.allocation.driver.firstName }}
                       {{ methods.item.allocation.driver.middleName }}
                       {{ methods.item.allocation.driver.lastName }}
                     </template>
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                   
                   </b-table>
                 </div>
               </div>
@@ -152,20 +136,14 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="archiveTripInfo"
                   >
                     <template #cell(driverName)="methods">
                       {{ methods.item.allocation.driver.firstName }}
                       {{ methods.item.allocation.driver.middleName }}
                       {{ methods.item.allocation.driver.lastName }}
                     </template>
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="archiveInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                   
                   </b-table>
                 </div>
               </div>
@@ -407,13 +385,10 @@ export default {
         },
         { key: "allocation.trailer.tlNumber", label: "Trailer" },
         { key: "currentLocation", label: "Current Location" },
-        { key: "activityStatus.name", label: "Status" },
-        { key: "actions" },
+        { key: "activityStatus.name", label: "Status", sortable: true },
       ],
       tableHeadVariant: "dark",
       tableFilter: null,
-
-      //when trip is declared ended we need to change the truck allocation status to free again
       editTrip: {
         id: "",
         client: "",
@@ -454,8 +429,8 @@ export default {
       return this.trips.filter((trip) => trip.activityStatus.id === 1);
     },
     ...mapState({
-      filesPath:"filesPath"
-    })
+      filesPath: "filesPath",
+    }),
   },
   mounted() {
     this.getTrips();
@@ -472,8 +447,7 @@ export default {
         console.log(error);
       }
     },
-    info(item, button) {
-      console.log(item);
+    tripInfo(item, button) {
       this.editTrip.id = item.id;
       this.editTrip.client = item.client;
       this.editTrip.cargo = item.cargo;

@@ -16,8 +16,8 @@ class Department extends Model
         return $this->hasMany(People::class);
     }
 
-    public function role_positions()
+    public function department_roles()
     {
-        return $this->hasMany(RolePosition::class);
+        return $this->hasMany(DepartmentRole::class);
     }
 }

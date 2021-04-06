@@ -44,13 +44,8 @@
                   :head-variant="tableHeadVariant"
                   :sticky-header="true"
                   :filter="tableFilter"
-                  @row-clicked="info(row.item)"
+                  @row-clicked="info"
                 >
-                  <template #cell(actions)="row">
-                    <b-button size="sm" @click="info(row.item)" class="mr-1"
-                      >DETAILS
-                    </b-button>
-                  </template>
                 </b-table>
               </div>
             </div>
@@ -87,15 +82,8 @@
                   :head-variant="tableHeadVariant"
                   :sticky-header="true"
                   :filter="tableFilter"
+                  @row-clicked="inactiveInfo"
                 >
-                  <template #cell(actions)="row">
-                    <b-button
-                      size="sm"
-                      @click="inactiveInfo(row.item)"
-                      class="mr-1"
-                      >DETAILS
-                    </b-button>
-                  </template>
                 </b-table>
               </div>
             </div>
@@ -131,7 +119,7 @@
                     v-model="newClient.name"
                     placeholder="Enter client name"
                     required
-                  >
+                  />
                 </b-form-group>
                 <b-form-group
                   label="Address"
@@ -216,10 +204,10 @@
       >
         <template #modal-footer="{ ok, cancel, hide }">
           <b-button
-          v-if="editClient.activityStatus.id == 1"
+            v-if="editClient.activityStatus.id == 1"
             size="sm"
             variant="danger"
-            @click="hide(handleDeactivateClient())"
+            @click="hide(deactivateClient())"
             >Deactivate</b-button
           >
           <b-button size="sm" @click="cancel()">Cancel</b-button>
@@ -305,7 +293,7 @@
         role="dialog"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        @ok="handleActivateClient"
+        @ok="activateClient"
       >
         <div class="modal-body">
           <h6>Name:</h6>
@@ -342,7 +330,6 @@ export default {
         { key: "contactPersonName" },
         { key: "mobile" },
         { key: "email" },
-        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       newClient: {
@@ -435,7 +422,6 @@ export default {
       this.editClient.contactPersonName = item.contactPersonName;
       this.editClient.mobile = item.mobile;
       this.editClient.email = item.email;
-      this.editClient.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "updateClientModal", button);
     },
     handleUpdateClient(bvModalEvt) {
@@ -444,15 +430,17 @@ export default {
     },
     async updateClient() {
       try {
-        await api.patch("clients/" + this.editClient.id, {
-          clientName: this.editClient.name,
-          clientAddress: this.editClient.address,
-          clientPhoneNumber: this.editClient.phoneNumber,
-          clientContactPersonName: this.editClient.contactPersonName,
-          clientMobile: this.editClient.mobile,
-          clientEmail: this.editClient.email,
-          clientActivityStatusId: this.editClient.activityStatus.id,
-        }).then(response=>console.log(response));
+        await api
+          .patch("clients/" + this.editClient.id, {
+            clientName: this.editClient.name,
+            clientAddress: this.editClient.address,
+            clientPhoneNumber: this.editClient.phoneNumber,
+            clientContactPersonName: this.editClient.contactPersonName,
+            clientMobile: this.editClient.mobile,
+            clientEmail: this.editClient.email,
+            clientActivityStatusId: this.editClient.activityStatus.id,
+          })
+          .then((response) => console.log(response));
         this.$nextTick(() => {
           this.$bvModal.hide("updateClientModal");
           this.getClients();
@@ -461,18 +449,15 @@ export default {
         console.log(error);
       }
     },
-    handleDeactivateClient() {
-      this.deactivateClient();
-    },
     async deactivateClient() {
       try {
-        await api.patch("clients/" + this.editClient.content.id, {
-          clientName: this.editClient.content.name,
-          clientAddress: this.editClient.content.address,
-          clientPhoneNumber: this.editClient.content.phoneNumber,
-          clientContactPersonName: this.editClient.content.contactPersonName,
-          clientMobile: this.editClient.content.mobile,
-          clientEmail: this.editClient.content.email,
+        await api.patch("clients/" + this.editClient.id, {
+          clientName: this.editClient.name,
+          clientAddress: this.editClient.address,
+          clientPhoneNumber: this.editClient.phoneNumber,
+          clientContactPersonName: this.editClient.contactPersonName,
+          clientMobile: this.editClient.mobile,
+          clientEmail: this.editClient.email,
           clientActivityStatusId: 3,
         });
         console.log("Client deactivated");
@@ -485,22 +470,25 @@ export default {
       }
     },
     inactiveInfo(item, button) {
-      this.editClient.content = item;
+      this.editClient.id = item.id;
+      this.editClient.name = item.name;
+      this.editClient.address = item.address;
+      this.editClient.phoneNumber = item.phoneNumber;
+      this.editClient.contactPersonName = item.contactPersonName;
+      this.editClient.mobile = item.mobile;
+      this.editClient.email = item.email;
       this.$root.$emit("bv::show::modal", "activateClientModal", button);
-    },
-    handleActivateClient() {
-      this.activateClient();
     },
     async activateClient() {
       try {
-        await api.patch("clients/" + this.editClient.content.id, {
-          clientName: this.editClient.content.name,
-          clientAddress: this.editClient.content.address,
-          clientPhoneNumber: this.editClient.content.phoneNumber,
-          clientContactPersonName: this.editClient.content.contactPersonName,
-          clientMobile: this.editClient.content.mobile,
-          clientEmail: this.editClient.content.email,
-          clientActivityStatusId: 3,
+        await api.patch("clients/" + this.editClient.id, {
+          clientName: this.editClient.name,
+          clientAddress: this.editClient.address,
+          clientPhoneNumber: this.editClient.phoneNumber,
+          clientContactPersonName: this.editClient.contactPersonName,
+          clientMobile: this.editClient.mobile,
+          clientEmail: this.editClient.email,
+          clientActivityStatusId: 1,
         });
         console.log("Client activated");
         this.$nextTick(() => {

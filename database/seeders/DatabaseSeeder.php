@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             TrailerTypeSeeder::class,
             CargoTypeSeeder::class,
             LocationSeeder::class,
-            RolePositionSeeder::class,
+            DepartmentRoleSeeder::class,
             CargoSeeder::class,
             ClientSeeder::class,
             PeopleSeeder::class,
@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             TruckSeeder::class,
             ClaimTypeSeeder::class,
             UserSeeder::class,
+            RoleSeeder::class,
         ]); 
     }
 }

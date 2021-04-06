@@ -11,6 +11,7 @@ use App\Http\Controllers\AllocationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\ClaimController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,4 +40,5 @@ Route::apiResources([
     'allocations' => AllocationController::class,
     'trips' => TripController::class,
     'claims' => ClaimController::class,
+    'users' => UserController::class,
 ]);

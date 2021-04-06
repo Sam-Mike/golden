@@ -40,15 +40,9 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="claimInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="claimInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                    
                   </b-table>
                 </div>
               </div>
@@ -77,15 +71,9 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="claimInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="claimInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                    
                   </b-table>
                 </div>
               </div>
@@ -114,15 +102,9 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="claimInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="claimInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                    
                   </b-table>
                 </div>
               </div>
@@ -151,15 +133,9 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="claimInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="claimInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                    
                   </b-table>
                 </div>
               </div>
@@ -188,15 +164,9 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="claimInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="claimInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                    
                   </b-table>
                 </div>
               </div>
@@ -225,15 +195,8 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
+                    @row-clicked="claimInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="claimInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
                   </b-table>
                 </div>
               </div>
@@ -476,7 +439,9 @@
             <b-col v-if="editClaim.paymentDocument" class="border rouded">
               <b>PAYMENT DOCUMENT</b>
               <p>
-                <a :href="filesPath + editClaim.paymentDocument">payment document</a>
+                <a :href="filesPath + editClaim.paymentDocument"
+                  >payment document</a
+                >
               </p>
             </b-col>
             <b-col v-else class="border rouded">
@@ -518,7 +483,6 @@ export default {
         { key: "incidentAssessDate", label: "Assessment Date" },
         { key: "incidentAssessComment", label: "Assessment Comment" },
         { key: "dischargeVoucher", label: "DischargeVoucher" },
-        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       tableFilter: null,

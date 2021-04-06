@@ -14,12 +14,12 @@
               data-target="#exampleModal"
               v-b-modal.addUserModal
             >
-              Add User
+              Create User
             </b-button>
           </div>
         </div>
         <div class="card-body">
-          <div class="table-search">
+          <!-- <div class="table-search">
             <b-input-group size="sm">
               <b-form-input
                 id="tableFilter"
@@ -28,7 +28,7 @@
                 placeholder="Search"
               ></b-form-input>
             </b-input-group>
-          </div>
+          </div> -->
           <b-table
             class="table-list"
             responsive
@@ -40,13 +40,9 @@
             :fields="usersFields"
             :head-variant="tableHeadVariant"
             :sticky-header="true"
-            :filter="tableFilter"
+            @row-clicked="userInfo"
           >
-            <template #cell(actions)="row">
-              <b-button size="sm" @click="info(row.item)" class="mr-1"
-                >DETAILS
-              </b-button>
-            </template>
+            
           </b-table>
         </div>
       </div>
@@ -136,12 +132,11 @@
               id="user-name"
               type="text"
               class="form-control"
-              v-model="editUser.content.name"
+              v-model="editUser.name"
               placeholder="Enter user name"
               required
             ></b-form-input>
           </b-form-group>
-
           <b-form-group
             label="Email address"
             invalid-feedback="email is required"
@@ -149,9 +144,22 @@
             <b-form-input
               type="email"
               class="form-control"
-              v-model="editUser.content.email"
+              v-model="editUser.email"
               aria-describedby="emailHelp"
               placeholder="Enter user's email"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Email address"
+            invalid-feedback="email is required"
+          >
+            <b-form-input
+              type="email"
+              class="form-control"
+              v-model="editUser.password"
+              aria-describedby="emailHelp"
+              placeholder="Enter user's password"
               required
             ></b-form-input>
           </b-form-group>
@@ -173,34 +181,54 @@
       >
         <div class="modal-body">
           <h6>Name:</h6>
-          <p>{{ this.editUser.content.name }}</p>
+          <p>{{ this.editUser.name }}</p>
           <h6>Email:</h6>
-          <p>{{ this.editUser.content.email }}</p>
+          <p>{{ this.editUser.password }}</p>
         </div>
       </b-modal>
     </b-overlay>
   </div>
 </template>
 <script>
+import api from "../apis/api";
 export default {
   data() {
     return {
+      loading: false,
       users: [],
-      rolePosition:[],
+      rolePosition: [],
+      usersFields:[
+        {key:"users.name", label:"Name"},
+        {key:"users.email", label:"Email"},
+        {key:"users.password", label:"Password"},
+      ],
+      tableHeadVariant:"dark",
       newUser: {
         name: "",
-        email: "",
+        password: "",
+      },
+      editUser: {
+        id:"",
+        name: "",
         password: "",
       },
     };
+  },
+  computed: {
+    activeUsers() {
+      return this.users.filter((user) => user.user_activity === "active");
+    },
+    inactiveUsers() {
+      return this.users.filter((user) => user.user_activity === "inactive");
+    },
   },
   mounted() {
     this.getUsers();
   },
   methods: {
     getUsers() {
-      axios
-        .get("http://localhost:8000/api/users")
+      api
+        .get("users")
         .then((response) => {
           this.users = response.data.users;
           this.rolePositions = response.data.rolePositions;
@@ -215,11 +243,11 @@ export default {
     },
     createUser() {
       {
-        axios
-          .post("http://localhost:8000/api/users", {
+        api
+          .post("users", {
             name: this.newUser.name,
-            email: this.newUser.email,
-            pass: this.newUser.password,
+            username: this.newUser.username,
+            password: this.newUser.password,
           })
           .then((response) => {
             this.users = response.data.users;
@@ -229,9 +257,31 @@ export default {
           });
       }
     },
-
-    handleDeactivateUser() {},
-    handleActivateUser() {},
+    userInfo(item, button){
+      this.editUser.id = item.id;
+      this.editUser.name = item.name;
+      this.editUser.password = item.password;
+      this.$root.$emit("bv::show::modal", "updateUserModal" ,button)
+    },
+    handleUpdateUser(bvModalEvt){
+      bvModalEvt.PreventDefault();
+      this.updateUser();
+    },
+    async updateUser(){
+      try {
+        await api.patch('users/', this.editUser);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async deactivateUser() {
+      try {
+        await api.patch('users', this.edit);
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async activateUser() {},
   },
 };
 </script>

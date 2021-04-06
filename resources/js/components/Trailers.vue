@@ -36,12 +36,8 @@
                     :fields="trailersFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
+                    @row-clicked="trailerInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button size="sm" @click="info(row.item)" class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
                   </b-table>
                 </div>
               </div>
@@ -70,15 +66,9 @@
                     :fields="trailersFields"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
+                    @row-clicked="inactiveTrailerInfo"
                   >
-                    <template #cell(actions)="row">
-                      <b-button
-                        size="sm"
-                        @click="inactiveInfo(row.item)"
-                        class="mr-1"
-                        >DETAILS
-                      </b-button>
-                    </template>
+                    
                   </b-table>
                 </div>
               </div>
@@ -251,7 +241,6 @@ export default {
         { key: "tlNumber", label: "TL Number", sortable: true },
         { key: "company.name", label: "Company" },
         { key: "activityStatus.name", label: "Assignment Status" },
-        { key: "actions" },
       ],
       tableHeadVariant: "dark",
       trailerType: [],
@@ -316,7 +305,7 @@ export default {
         this.getTrailers();
       });
     },
-    info(item, button) {
+    trailerInfo(item, button) {
       console.log(item);
       this.editTrailer.id = item.id;
       this.editTrailer.registrationNumber = item.registrationNumber;
@@ -369,7 +358,7 @@ export default {
         console.log(error);
       }
     },
-    inactiveInfo(item, button) {
+    inactiveTrailerInfo(item, button) {
       this.editTrailer.id = item.id;
       this.editTrailer.registrationNumber = item.registrationNumber;
       this.editTrailer.tlNumber = item.tlNumber;

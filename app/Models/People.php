@@ -18,9 +18,9 @@ class People extends Model
     {
         return $this->belongsTo(Company::class);
     }
-    public function role_position()
+    public function department_role()
     {
-        return $this->belongsTo(RolePosition::class);
+        return $this->belongsTo(DepartmentRole::class, 'department_role_id');
     }
     public function license_class()
     {
