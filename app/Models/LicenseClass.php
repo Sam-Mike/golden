@@ -13,6 +13,6 @@ class LicenseClass extends Model
 
     public function people()
     {
-        return $this->hasMany(App\Models\People::class);
+        return $this->hasMany(People::class);
     }
 }

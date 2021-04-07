@@ -12,11 +12,11 @@ class DepartmentRole extends Model
 
     public function people()
     {
-        return $this->hasMany(App\Models\People::class);
+        return $this->hasMany(People::class);
     }
     public function department()
     {
-        return $this->belongsTo(App\Models\Department::class, 'department_id');
+        return $this->belongsTo(Department::class);
     }
     
 }

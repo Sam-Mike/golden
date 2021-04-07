@@ -32,7 +32,7 @@ class People extends Model
     }
     public function allocations()
     {
-        return $this->hasMany(App\Models\Allocation::class);
+        return $this->hasMany(Allocation::class);
     }
     public function trips()
     {

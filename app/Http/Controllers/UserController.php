@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\RolePositionResource;
 use App\Http\Resources\UserResource;
-use App\Models\RolePosition;
+use App\Http\Resources\RoleResource;
 use App\Models\User;
+use App\Models\Role;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         return[
             'users'=> UserResource::collection(User::all()),
-            'rolePositions'=> RolePositionResource::collection(RolePosition::all())
+            // 'roles'=> RoleResource::collection(Role::all())
         ];
     }
 
