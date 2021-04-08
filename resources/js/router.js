@@ -18,7 +18,6 @@ const routes = [
     path: '/login',
     component: Login,
     name: 'login',
-    //can use BEFORE ENTER here to check the roles or the username
   },
   {
     path: '/',

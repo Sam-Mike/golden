@@ -42,7 +42,6 @@
             :sticky-header="true"
             @row-clicked="userInfo"
           >
-            
           </b-table>
         </div>
       </div>
@@ -196,20 +195,22 @@ export default {
     return {
       loading: false,
       users: [],
-      rolePosition: [],
-      usersFields:[
-        {key:"users.name", label:"Name"},
-        {key:"users.email", label:"Email"},
-        {key:"users.password", label:"Password"},
+      userRoles: [],
+      usersFields: [
+        { key: "users.name", label: "Name" },
+        { key: "users.email", label: "Email" },
+        { key: "users.password", label: "Password" },
       ],
-      tableHeadVariant:"dark",
+      tableHeadVariant: "dark",
       newUser: {
         name: "",
+        email: "",
         password: "",
       },
       editUser: {
-        id:"",
+        id: "",
         name: "",
+        email: "",
         password: "",
       },
     };
@@ -231,14 +232,14 @@ export default {
         .get("users")
         .then((response) => {
           this.users = response.data.users;
-          this.rolePositions = response.data.rolePositions;
+          this.userRoles = response.data.userRoles;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     handleCreateUser(bvModalEvt) {
-      this.bvModalEvt.PreventDefault();
+      bvModalEvt.PreventDefault();
       this.createUser();
     },
     createUser() {
@@ -257,31 +258,42 @@ export default {
           });
       }
     },
-    userInfo(item, button){
+    userInfo(item, button) {
       this.editUser.id = item.id;
       this.editUser.name = item.name;
+      this.editUser.email = item.email;
       this.editUser.password = item.password;
-      this.$root.$emit("bv::show::modal", "updateUserModal" ,button)
+      this.$root.$emit("bv::show::modal", "updateUserModal", button);
     },
-    handleUpdateUser(bvModalEvt){
+    handleUpdateUser(bvModalEvt) {
       bvModalEvt.PreventDefault();
       this.updateUser();
     },
-    async updateUser(){
+    async updateUser() {
       try {
-        await api.patch('users/', this.editUser);
+        await api.patch("users/", this.editUser);
       } catch (error) {
         console.log(error);
       }
     },
     async deactivateUser() {
       try {
-        await api.patch('users', this.edit);
+        await api.patch("users", this.editUser);
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     },
-    async activateUser() {},
+    handleActivateUser(bvModalEvt) {
+      bvModalEvt.PreventDefault();
+      this.activateUser();
+    },
+    async activateUser() {
+      try {
+        await api.patch("users", this.editUser);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 };
 </script>
