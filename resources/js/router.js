@@ -18,6 +18,7 @@ const routes = [
     path: '/login',
     component: Login,
     name: 'login',
+    meta: { requiresAuth: false }
   },
   {
     path: '/',
@@ -75,7 +76,7 @@ const router = new VueRouter({
   routes
 });
 
-function authStatus(){
+function authStatus() {
   return store.getters["auth/authenticated"]
 };
 router.beforeEach((to, from, next) => {

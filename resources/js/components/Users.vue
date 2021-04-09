@@ -197,9 +197,9 @@ export default {
       users: [],
       userRoles: [],
       usersFields: [
-        { key: "name", label: "Name" },
-        { key: "email", label: "Email" },
-        { key: "password", label: "Password" },
+        { key: "name" },
+        { key: "email"},
+        { key: "role.name", label: "Role" },
       ],
       tableHeadVariant: "dark",
       newUser: {

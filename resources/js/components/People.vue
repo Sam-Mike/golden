@@ -39,7 +39,6 @@
                       {{ data.item.firstName }} {{ data.item.middleName }}
                       {{ data.item.lastName }}
                     </template>
-                  
                   </b-table>
                 </div>
               </div>
@@ -74,7 +73,6 @@
                       {{ data.item.firstName }} {{ data.item.middleName }}
                       {{ data.item.lastName }}
                     </template>
-                   
                   </b-table>
                 </div>
               </div>
@@ -403,12 +401,12 @@ export default {
         { key: "mobile" },
         { key: "company.name", label: "Company", sortable: true },
         {
-          key: "rolePosition.department.name",
+          key: "departmentRole.department.name",
           label: "Department",
           sortable: true,
         },
+        { key: "departmentRole.name", label: "Role" },
         { key: "startDate", sortable: true },
-        { key: "rolePosition.name", label: "Role" },
         { key: "licenseIssueDate" },
         { key: "licenseExpiryDate" },
         { key: "activityStatus.name", label: "Assignment Status" },
