@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         return[
             'users'=> UserResource::collection(User::all()),
-            // 'roles'=> RoleResource::collection(Role::all())
+            'roles'=> RoleResource::collection(Role::all())
         ];
     }
 

@@ -21,7 +21,8 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'example@mail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('admin') , // password
+            'password' => Hash::make('admin') ,
+            'role_id' => 1,
             'remember_token' => Str::random(10),
         ]);
     }

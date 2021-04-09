@@ -150,11 +150,11 @@
             ></b-form-input>
           </b-form-group>
           <b-form-group
-            label="Email address"
-            invalid-feedback="email is required"
+            label="Password"
+            invalid-feedback="password is required"
           >
             <b-form-input
-              type="email"
+              type="text"
               class="form-control"
               v-model="editUser.password"
               aria-describedby="emailHelp"
@@ -197,9 +197,9 @@ export default {
       users: [],
       userRoles: [],
       usersFields: [
-        { key: "users.name", label: "Name" },
-        { key: "users.email", label: "Email" },
-        { key: "users.password", label: "Password" },
+        { key: "name", label: "Name" },
+        { key: "email", label: "Email" },
+        { key: "password", label: "Password" },
       ],
       tableHeadVariant: "dark",
       newUser: {
@@ -217,10 +217,10 @@ export default {
   },
   computed: {
     activeUsers() {
-      return this.users.filter((user) => user.user_activity === "active");
+      return this.users.filter((user) => user.userActivityStatus === "active");
     },
     inactiveUsers() {
-      return this.users.filter((user) => user.user_activity === "inactive");
+      return this.users.filter((user) => user.userActivityStatus === "inactive");
     },
   },
   mounted() {
