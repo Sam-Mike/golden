@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('password_visible');
             $table->foreignId('role_id')->constrained('role');
             $table->enum('user_activity_status', ['active', 'inactive']);
             $table->rememberToken();

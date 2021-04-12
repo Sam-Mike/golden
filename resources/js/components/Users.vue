@@ -46,8 +46,6 @@
         </div>
       </div>
 
-      <!-- DataTales Example -->
-
       <!-- Create User Modal -->
       <b-modal
         ok-title="Save"
@@ -94,6 +92,15 @@
                     placeholder="Enter user password"
                     required
                   ></b-form-input>
+                </b-form-group>
+                <b-form-group label="User Role">
+                  <v-select
+                    v-model="newUser.roleId"
+                    label="name"
+                    :options="roles"
+                    :reduce="(roles) => role.id"
+                    placeholder = "Choose user role"
+                  ></v-select>
                 </b-form-group>
               </form>
             </div>
@@ -195,10 +202,11 @@ export default {
     return {
       loading: false,
       users: [],
-      userRoles: [],
+      roles: [],
       usersFields: [
         { key: "name" },
-        { key: "email"},
+        { key: "email" },
+        { key: "password" },
         { key: "role.name", label: "Role" },
       ],
       tableHeadVariant: "dark",
@@ -206,6 +214,7 @@ export default {
         name: "",
         email: "",
         password: "",
+        roleId:""
       },
       editUser: {
         id: "",
@@ -220,7 +229,9 @@ export default {
       return this.users.filter((user) => user.userActivityStatus === "active");
     },
     inactiveUsers() {
-      return this.users.filter((user) => user.userActivityStatus === "inactive");
+      return this.users.filter(
+        (user) => user.userActivityStatus === "inactive"
+      );
     },
   },
   mounted() {
@@ -232,7 +243,7 @@ export default {
         .get("users")
         .then((response) => {
           this.users = response.data.users;
-          this.userRoles = response.data.userRoles;
+          this.roles = response.data.roles;
         })
         .catch((error) => {
           console.log(error);

@@ -17,7 +17,7 @@ class UserResource extends JsonResource
         return [
             'name'=>$this->name,
             'email'=>$this->email,
-            'password'=>$this->password,
+            'password'=>$this->password_visible,
             'role'=>new RoleResource($this->role),
             'userActivityStatus'=>$this->user_activity_status,
         ];

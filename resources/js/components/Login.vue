@@ -15,7 +15,7 @@
                 size="sm"
                 type="text"
                 placeholder="username"
-                v-model="login.name"
+                v-model="credentials.name"
               ></b-input>
             </div>
             <div class="field mt-3">
@@ -24,7 +24,7 @@
                 size="sm"
                 type="password"
                 placeholder="password"
-                v-model="login.password"
+                v-model="credentials.password"
               ></b-input>
             </div>
             <div class="field mt-3">
@@ -39,10 +39,11 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
-      login: {
+      credentials: {
         name: "",
         password: "",
       },
@@ -51,9 +52,12 @@ export default {
   },
   computed: {},
   methods: {
+    ...mapActions({
+      login: "auth/login",
+    }),
     async handleLogin() {
       try {
-        await this.$store.dispatch("auth/login", this.login);
+        await this.login(this.credentials);
         await this.$router.push({ path: "/" });
       } catch (error) {
         console.log(error);

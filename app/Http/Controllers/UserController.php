@@ -7,6 +7,7 @@ use App\Http\Resources\RoleResource;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -17,9 +18,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return[
-            'users'=> UserResource::collection(User::all()),
-            'roles'=> RoleResource::collection(Role::all())
+        return [
+            'users' => UserResource::collection(User::all()),
+            'roles' => RoleResource::collection(Role::all())
         ];
     }
 
@@ -31,7 +32,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->password_visible = $request->input('password');
+        $user->role_id = $request->input('roleId');
+        $user->user_activity_status = $request->input('userActivityStatus');
+        $user->save();
     }
 
     /**
@@ -54,7 +62,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = Hash::make($request->input('password'));
+        $user->password_visible = $request->input('password');
+        $user->role_id = $request->input('roleId');
+        $user->user_activity_status = $request->input('userActivityStatus');
+        $user->save();
     }
 
     /**

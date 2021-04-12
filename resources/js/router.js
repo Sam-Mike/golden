@@ -84,7 +84,7 @@ router.beforeEach((to, from, next) => {
     // this route requires auth, check if logged in
     // if not, redirect to login page.
     if (!authStatus()) {
-      next({
+      router.push({
         path: '/login',
         query: { redirect: to.fullPath }
       })
