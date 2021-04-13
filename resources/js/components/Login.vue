@@ -1,15 +1,16 @@
 <template>
   <div class="container-fluid">
     <div class="login-form mt-4">
-      <div class="m-3">
+      <div class="m-2">
         <!-- LOGO -->
-        <a class="text-center" href="#">image goes here</a>
-
-        <h1 class="my-4 text-center">Login</h1>
+        <div class="center-block">
+          <img  src="/img/copy.ico" />
+        </div>
+        <h3 class="my-12 text-center">Login</h3>
         <div class="form-panel">
           <form class="text-left" id="loginForm" @submit.prevent="handleLogin">
             <span class="text-danger" v-if="error.data"> {{ error.data }}</span>
-            <div class="field mt-3">
+            <div class="field mt-2">
               <label for="username">Username</label><br />
               <b-input
                 size="sm"
@@ -18,7 +19,7 @@
                 v-model="credentials.name"
               ></b-input>
             </div>
-            <div class="field mt-3">
+            <div class="field mt-2">
               <label for="password">Password</label><br />
               <b-input
                 size="sm"
@@ -27,7 +28,7 @@
                 v-model="credentials.password"
               ></b-input>
             </div>
-            <div class="field mt-3">
+            <div class="field mt-1">
               <b-button size="sm" variant="primary" type="submit"
                 >Sign in</b-button
               >
