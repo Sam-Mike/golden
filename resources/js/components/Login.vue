@@ -3,7 +3,7 @@
     <div class="login-form mt-4">
       <div class="m-2">
         <!-- LOGO -->
-        <div class="center-block">
+        <div id="loginimg">
           <img  src="/img/copy.ico" />
         </div>
         <h3 class="my-12 text-center">Login</h3>

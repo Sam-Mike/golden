@@ -169,10 +169,20 @@
           <div class="form-group">
             <label for="role">Role</label>
             <v-select
-              v-model="newPerson.rolePositionId"
+              v-model="newPerson.departmentId"
               label="name"
-              :options="rolePositions"
-              :reduce="(rolePositions) => rolePositions.id"
+              :options="departments"
+              :reduce="(departments) => departments.id"
+              placeholder="Choose Role"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <v-select
+              v-model="newPerson.departmentRoleId"
+              label="name"
+              :options="departmentRoles[newPerson.department]"
+              :reduce="(departmentRoles) => departmentRoles.id"
               placeholder="Choose Role"
             ></v-select>
           </div>
@@ -398,6 +408,7 @@ export default {
       peopleFields: [
         { key: "Name", label: "Name" },
         { key: "dob" },
+        { key: "age", sortable:true },
         { key: "mobile" },
         { key: "company.name", label: "Company", sortable: true },
         {
@@ -407,6 +418,7 @@ export default {
         },
         { key: "departmentRole.name", label: "Role" },
         { key: "startDate", sortable: true },
+        { key: "serviceTime", sortable: true },
         { key: "licenseIssueDate" },
         { key: "licenseExpiryDate" },
         { key: "activityStatus.name", label: "Assignment Status" },
@@ -424,6 +436,7 @@ export default {
         mobile: "",
         startDate: "",
         companyId: "",
+        departmentId:"",
         rolePositionId: "",
         licenseNumber: "",
         licenseIssueDate: "",
@@ -456,6 +469,11 @@ export default {
     },
     inactivePeople() {
       return this.people.filter((people) => people.activityStatus.id === 3);
+    },
+  },
+  watch:{
+    roles(){
+
     },
   },
   mounted() {
@@ -525,7 +543,6 @@ export default {
       this.editPerson.startDate = item.startDate;
       this.editPerson.company = item.company;
       this.editPerson.departmentId = item.department;
-      this.editPerson.rolePosition = item.rolePosition;
       this.editPerson.licenseNumber = item.licenseNumber;
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
       this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
@@ -548,7 +565,6 @@ export default {
           mobile: this.editPerson.mobile,
           startDate: this.editPerson.startDate,
           companyId: this.editPerson.company.id,
-          rolePositionId: this.editPerson.rolePosition.id,
           //departmentId: this.editPerson.licenseNumber,
           licenseIssueDate: this.editPerson.licenseIssueDate,
           //licenseClassId: this.editPerson.licenseClass.id,

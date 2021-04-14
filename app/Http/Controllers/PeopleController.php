@@ -26,7 +26,7 @@ class PeopleController extends Controller
         return [
             'people' => PeopleResource::collection(People::all()),
             'company' => CompanyResource::collection(Company::all()),
-            // 'departmentRoles' => DepartmentRoleResource::collection(DepartmentRole::all()),
+            'departmentRoles' => DepartmentRoleResource::collection(DepartmentRole::all()),
             'departments' => DepartmentResource::collection(Department::all()),
             //'licenseClass'=>LicenseClasses::collection(Licence::all())
         ];
