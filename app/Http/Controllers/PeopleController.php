@@ -49,10 +49,12 @@ class PeopleController extends Controller
         $people->start_date = $request->input('startDate');
         $people->company_id = $request->input('companyId');
         $people->role_position_id = $request->input('rolePositionId');
-        //$people->department_id = $request->input('departmentId');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
         $people->license_class_id = $request->input('licenseClassId');
+        if ($request->hasFile('profilePicture')) {
+            $people->profile_picture = $request->file('profilePicture')->store('profilePictures');
+        }
         $people->activity_status_id = 1; //assignment status is active on creation
         $people->save();
         return  response()->json(['success'], 200);

@@ -15,5 +15,6 @@ class DepartmentRoleSeeder extends Seeder
     public function run()
     {
         DB::table('department_role')->insert(['name' => 'DRIVER', 'department_id' => 1]);
+        DB::table('department_role')->insert(['name' => 'HR-ASS', 'department_id' => 3]);
     }
 }

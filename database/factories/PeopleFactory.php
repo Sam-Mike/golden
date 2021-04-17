@@ -21,6 +21,7 @@ class PeopleFactory extends Factory
      */
     public function definition()
     {
+        $license_classes = "ABCDEFG";
         return [
             'first_name' => $this->faker->firstName,
             'middle_name' => $this->faker->lastName,
@@ -32,6 +33,7 @@ class PeopleFactory extends Factory
             'department_role_id' => 1,
             'license_number' => $this->faker->ean13,
             'license_class_id' => 3,
+            'license_classes' => json_encode($license_classes),
             'license_issue_date' => $this->faker->date($format = 'Y-m-d'),
             'license_expiry_date' => $this->faker->date($format = 'Y-m-d'),
             'passport_number' => $this->faker->numberBetween($min = 1000000000, $max = 1999999999),

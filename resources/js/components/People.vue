@@ -94,12 +94,13 @@
         title="New Person"
         button-size="sm"
       >
-        <form ref="form" @submit.stop.prevent="createPerson">
+        <form id="newPersonForm" ref="form" @submit.stop.prevent="createPerson">
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
               type="text"
               class="form-control"
+              name="firstName"
               v-model="newPerson.firstName"
               placeholder="Enter your first name"
               required
@@ -110,6 +111,7 @@
             <input
               type="text"
               class="form-control"
+              name="middleName"
               v-model="newPerson.middleName"
               placeholder="Enter your middle name"
               required
@@ -120,6 +122,7 @@
             <input
               type="text"
               class="form-control"
+              name="lastName"
               v-model="newPerson.lastName"
               placeholder="Enter your last name"
               required
@@ -130,6 +133,7 @@
             <input
               type="date"
               class="form-control"
+              name="dob"
               v-model="newPerson.dob"
               placeholder="Enter date of birth"
               required
@@ -140,6 +144,7 @@
             <input
               type="tel"
               class="form-control"
+              name="mobile"
               v-model="newPerson.mobile"
               placeholder="Enter Mobile Number"
               required
@@ -150,6 +155,7 @@
             <input
               type="date"
               class="form-control"
+              name="startDate"
               v-model="newPerson.startDate"
               placeholder="Enter employment date"
               required
@@ -167,13 +173,13 @@
             ></v-select>
           </div>
           <div class="form-group">
-            <label for="role">Role</label>
+            <label for="role">Department</label>
             <v-select
               v-model="newPerson.departmentId"
               label="name"
               :options="departments"
               :reduce="(departments) => departments.id"
-              placeholder="Choose Role"
+              placeholder="Choose Department"
             ></v-select>
           </div>
           <div class="form-group">
@@ -181,7 +187,7 @@
             <v-select
               v-model="newPerson.departmentRoleId"
               label="name"
-              :options="departmentRoles[newPerson.department]"
+              :options="departmentRolesCascade"
               :reduce="(departmentRoles) => departmentRoles.id"
               placeholder="Choose Role"
             ></v-select>
@@ -191,6 +197,7 @@
             <input
               type="number"
               class="form-control"
+              name="licenseNumber"
               v-model="newPerson.licenseNumber"
               placeholder="Enter License Number"
               required
@@ -201,28 +208,44 @@
             <input
               type="date"
               class="form-control"
+              name="licenseIssueDate"
               v-model="newPerson.licenseIssueDate"
               placeholder="Enter License Issue Date"
               required
             />
           </div>
           <div class="form-group">
-            <label for="licenseClass">License Class</label>
-            <select
-              type="text"
-              class="form-control"
-              v-model="newPerson.licenseClass"
-              placeholder="Choose license class"
-              required
+            <label for="licenseClass">License Class</label><br />
+            <b-form-checkbox v-model="newPerson.licenseClasses" value="A"
+              >A</b-form-checkbox
             >
-              <option
-                v-for="licenseClass in licenseClasses"
-                :key="licenseClass.id"
-                :value="licenseClass.id"
-              >
-                {{ licenseClass.name }}
-              </option>
-            </select>
+            <b-form-checkbox v-model="newPerson.licenseClasses" value="B"
+              >B</b-form-checkbox
+            >
+            <b-form-checkbox v-model="newPerson.licenseClasses" value="C"
+              >C</b-form-checkbox
+            >
+            <b-form-checkbox v-model="newPerson.licenseClasses" value="D"
+              >D</b-form-checkbox
+            >
+            <b-form-checkbox v-model="newPerson.licenseClasses" value="E"
+              >E</b-form-checkbox
+            >
+            <b-form-checkbox v-model="newPerson.licenseClasses" value="F"
+              >F</b-form-checkbox
+            >
+            <b-form-checkbox v-model="newPerson.licenseClasses" value="G"
+              >G</b-form-checkbox
+            >
+          </div>
+          <div class="form-group">
+            <label for="Profile Picture">Profile Picture</label>
+            <b-form-file
+              size="sm"
+              name="profilePicture"
+              placeholder="Choose image..."
+              drop-placeholder="Drop image here..."
+            ></b-form-file>
           </div>
         </form>
       </b-modal>
@@ -248,12 +271,17 @@
           <b-button size="sm" variant="" @click="cancel">Cancel</b-button>
           <b-button size="sm" variant="primary" @click="ok">Update</b-button>
         </template>
-        <form ref="form" @submit.stop.prevent="updatePerson">
+        <form
+          id="updatePersonForm"
+          ref="form"
+          @submit.stop.prevent="updatePerson"
+        >
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
               type="text"
               class="form-control"
+              name="firstName"
               v-model="editPerson.firstName"
               placeholder="Enter your first name"
               required
@@ -264,6 +292,7 @@
             <input
               type="text"
               class="form-control"
+              name="middleName"
               v-model="editPerson.middleName"
               placeholder="Enter your middle name"
               required
@@ -274,6 +303,7 @@
             <input
               type="text"
               class="form-control"
+              name="lastName"
               v-model="editPerson.lastName"
               placeholder="Enter your last name"
               required
@@ -284,6 +314,7 @@
             <input
               type="date"
               class="form-control"
+              name="dob"
               v-model="editPerson.dob"
               placeholder="Enter date of birth"
               required
@@ -294,6 +325,7 @@
             <input
               type="tel"
               class="form-control"
+              name="mobile"
               v-model="editPerson.mobile"
               placeholder="Enter Mobile Number"
               required
@@ -304,6 +336,7 @@
             <input
               type="date"
               class="form-control"
+              name="startDate"
               v-model="editPerson.startDate"
               placeholder="Enter employment date"
               required
@@ -323,10 +356,10 @@
           <div class="form-group">
             <label for="role">Role</label>
             <v-select
-              v-model="editPerson.rolePosition.id"
+              v-model="editPerson.departmentRole.id"
               label="name"
-              :options="rolePositions"
-              :reduce="(rolePositions) => rolePositions.id"
+              :options="departmentRolesCascade"
+              :reduce="(departmentRoles) => departmentRoles.id"
               placeholder="Choose Role"
             ></v-select>
           </div>
@@ -335,6 +368,7 @@
             <input
               type="number"
               class="form-control"
+              name="licenseNumber"
               v-model="editPerson.licenseNumber"
               placeholder="Enter License Number"
               required
@@ -345,13 +379,35 @@
             <input
               type="date"
               class="form-control"
+              name="licenseIssueDate"
               v-model="editPerson.licenseIssueDate"
               placeholder="Enter License Issue Date"
               required
             />
           </div>
           <div class="form-group">
-            <label for="licenseClass">License Class</label>
+            <label for="licenseClass">License Class</label><br />
+            <b-form-checkbox v-model="editPerson.licenseClasses[0]" value="A"
+              >A</b-form-checkbox
+            >
+            <b-form-checkbox v-model="editPerson.licenseClasses[1]" value="B"
+              >B</b-form-checkbox
+            >
+            <b-form-checkbox v-model="editPerson.licenseClasses[2]" value="C"
+              >C</b-form-checkbox
+            >
+            <b-form-checkbox v-model="editPerson.licenseClasses[3]" value="D"
+              >D</b-form-checkbox
+            >
+            <b-form-checkbox v-model="editPerson.licenseClasses[4]" value="E"
+              >E</b-form-checkbox
+            >
+            <b-form-checkbox v-model="editPerson.licenseClasses[5]" value="F"
+              >F</b-form-checkbox
+            >
+            <b-form-checkbox v-model="editPerson.licenseClasses[6]" value="G"
+              >G</b-form-checkbox
+            >
           </div>
         </form>
       </b-modal>
@@ -368,7 +424,6 @@
         ok-title="Activate"
         @ok="handleActivatePerson"
         title="Person Info"
-        v-if="rowDetails == true"
       >
         <div class="modal-body">
           <h6>First Name</h6>
@@ -386,7 +441,7 @@
           <h6>Company</h6>
           <p>{{ editPerson.company.name }}</p>
           <h6>Role</h6>
-          <p>{{ editPerson.rolePosition.name }}</p>
+          <p>{{ editPerson.departmentRole.name }}</p>
           <h6>License Number</h6>
           <p>{{ editPerson.licenseNumber }}</p>
           <h6>License Issue Date</h6>
@@ -402,14 +457,12 @@ import api from "../apis/api";
 export default {
   data() {
     return {
-      rowDetails: false,
       loading: false,
       people: [],
       peopleFields: [
         { key: "Name", label: "Name" },
         { key: "dob" },
-        { key: "age", sortable:true },
-        { key: "mobile" },
+        { key: "age", sortable: true },
         { key: "company.name", label: "Company", sortable: true },
         {
           key: "departmentRole.department.name",
@@ -420,12 +473,13 @@ export default {
         { key: "startDate", sortable: true },
         { key: "serviceTime", sortable: true },
         { key: "licenseIssueDate" },
-        { key: "licenseExpiryDate" },
+        { key: "licenseExpiryDate", label: "License Expiry", sortable: true },
         { key: "activityStatus.name", label: "Assignment Status" },
       ],
       tableHeadVariant: "dark",
       company: [],
       departmentRoles: [],
+      departmentRolesCascade: [],
       departments: [],
       licenseClasses: [],
       newPerson: {
@@ -436,9 +490,10 @@ export default {
         mobile: "",
         startDate: "",
         companyId: "",
-        departmentId:"",
-        rolePositionId: "",
+        departmentId: "",
+        departmentRoleId: "",
         licenseNumber: "",
+        licenseClasses: [],
         licenseIssueDate: "",
         licenseClassId: "",
       },
@@ -451,11 +506,11 @@ export default {
         mobile: "",
         startDate: "",
         company: "",
-        rolePosition: "",
+        department: "",
+        departmentRole: "",
         licenseNumber: "",
         licenseIssueDate: "",
-        licenseExpiryDate: "",
-        licenseClass: "",
+        licenseClasses: [],
         activityStatus: "",
       },
     };
@@ -471,9 +526,16 @@ export default {
       return this.people.filter((people) => people.activityStatus.id === 3);
     },
   },
-  watch:{
-    roles(){
-
+  watch: {
+    "newPerson.departmentId": function (value) {
+      this.departmentRolesCascade = this.departmentRoles.filter(
+        (departmentRole) => departmentRole.department.id == value
+      );
+    },
+    "editPerson.departmentId": function (value) {
+      this.departmentRolesCascade = this.departmentRoles.filter(
+        (departmentRole) => departmentRole.department.id == value
+      );
     },
   },
   mounted() {
@@ -486,7 +548,7 @@ export default {
         const response = await api.get("people");
         this.people = response.data.people;
         this.company = response.data.company;
-        this.rolePositions = response.data.rolePositions;
+        this.departmentRoles = response.data.departmentRoles;
         this.departments = response.data.departments;
         this.loading = false;
       } catch (error) {
@@ -501,31 +563,54 @@ export default {
     },
     async createPerson() {
       try {
-        await api.post("people", {
-          firstName: this.newPerson.firstName,
-          middleName: this.newPerson.middleName,
-          lastName: this.newPerson.lastName,
-          dob: this.newPerson.dob,
-          mobile: this.newPerson.mobile,
-          startDate: this.newPerson.startDate,
-          companyId: this.newPerson.companyId,
-          rolePositionId: this.newPerson.rolePositionId,
-          licenseNumber: this.newPerson.licenseNumber,
-          licenseIssueDate: this.newPerson.licenseIssueDate,
-          //licenseClassId: this.newPerson.licenseClassid,
-        });
+        let newPersonForm = document.getElementById("newPersonForm");
+        let newPersonData = new FormData(newPersonForm);
+        if (this.newPerson.companyId) {
+          newPersonData.append("companyId", this.newPerson.companyId);
+        }
+        if (this.newPerson.departmentRoleId) {
+          newPersonData.append(
+            "departmentRoleId",
+            this.newPerson.departmentRoleId
+          );
+        }
+        if (this.newPerson.licenseClasses){
+          newPersonData.append("licenseClasses", this.newPerson.licenseClasses);
+        }
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+            enctype: "multipart/form-data",
+          },
+        };
+        for (var person of newPersonData.entries()) {
+          console.log(person);
+        }
+        // await api.post("people", {
+        //   firstName: this.newPerson.firstName,
+        //   middleName: this.newPerson.middleName,
+        //   lastName: this.newPerson.lastName,
+        //   dob: this.newPerson.dob,
+        //   mobile: this.newPerson.mobile,
+        //   startDate: this.newPerson.startDate,
+        //   companyId: this.newPerson.companyId,
+        //   departmentRoleId: this.newPerson.departmentRoleId,
+        //   licenseNumber: this.newPerson.licenseNumber,
+        //   licenseIssueDate: this.newPerson.licenseIssueDate,
+        //   //licenseClassId: this.newPerson.licenseClassid,
+        // });
         this.$nextTick(() => {
-          this.$bvModal.hide("newPersonModal");
-          this.newPerson.firstName = "";
-          this.newPerson.middleName = "";
-          this.newPerson.dob = "";
-          this.newPerson.mobile = "";
-          this.newPerson.startDate = "";
-          this.newPerson.companyId = "";
-          this.newPerson.rolePositionId = "";
-          this.newPerson.licenseIssueDate = "";
-          this.newPerson.firstName = "";
-          this.newPerson.firstName = "";
+          // this.$bvModal.hide("newPersonModal");
+          // this.newPerson.firstName = "";
+          // this.newPerson.middleName = "";
+          // this.newPerson.dob = "";
+          // this.newPerson.mobile = "";
+          // this.newPerson.startDate = "";
+          // this.newPerson.companyId = "";
+          // this.newPerson.departmentRoleId = "";
+          // this.newPerson.licenseIssueDate = "";
+          // this.newPerson.firstName = "";
+          // this.newPerson.firstName = "";
           this.getPeople();
         });
       } catch (error) {
@@ -533,7 +618,6 @@ export default {
       }
     },
     personInfo(item, button) {
-      console.log(item);
       this.editPerson.id = item.id;
       this.editPerson.firstName = item.firstName;
       this.editPerson.middleName = item.middleName;
@@ -542,11 +626,12 @@ export default {
       this.editPerson.mobile = item.mobile;
       this.editPerson.startDate = item.startDate;
       this.editPerson.company = item.company;
-      this.editPerson.departmentId = item.department;
+      this.editPerson.department = item.department;
+      this.editPerson.departmentRole = item.departmentRole;
       this.editPerson.licenseNumber = item.licenseNumber;
+      this.editPerson.licenseClasses = item.licenseClasses;
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
       this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
-      this.editPerson.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "updatePersonModal", button);
     },
     handleUpdatePerson(bvModalEvt) {

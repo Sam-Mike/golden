@@ -11,7 +11,10 @@ class People extends Model
 
     protected $table = 'people';
     protected $fillable = [
-        'first_name', 'middle_name', 'last_name', 'dob', 'mobile', 'start_date', 'company_id', 'department_id', 'license_number', 'license_issue_date', 'assignment_status_id'
+        'first_name', 'middle_name', 'last_name', 'dob', 'mobile', 'start_date', 'company_id', 'department_id', 'license_number', 'license_issue_date', 'assignment_status_id', 'license_classes'
+    ];
+    protected $casts = [
+        'license_classes' => 'array'
     ];
 
     public function company()

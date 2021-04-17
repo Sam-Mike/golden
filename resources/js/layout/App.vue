@@ -93,7 +93,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                       <router-link class="dropdown-item" to="/people"
-                        >All People</router-link
+                        >People</router-link
                       >
                     </div>
                   </li>
