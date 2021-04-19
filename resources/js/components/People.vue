@@ -216,25 +216,25 @@
           </div>
           <div class="form-group">
             <label for="licenseClass">License Class</label><br />
-            <b-form-checkbox v-model="newPerson.licenseClasses" value="A"
+            <b-form-checkbox v-model="newPerson.licenseClasses.classA"
               >A</b-form-checkbox
             >
-            <b-form-checkbox v-model="newPerson.licenseClasses" value="B"
+            <b-form-checkbox v-model="newPerson.licenseClasses.classB"
               >B</b-form-checkbox
             >
-            <b-form-checkbox v-model="newPerson.licenseClasses" value="C"
+            <b-form-checkbox v-model="newPerson.licenseClasses.classC"
               >C</b-form-checkbox
             >
-            <b-form-checkbox v-model="newPerson.licenseClasses" value="D"
+            <b-form-checkbox v-model="newPerson.licenseClasses.classD"
               >D</b-form-checkbox
             >
-            <b-form-checkbox v-model="newPerson.licenseClasses" value="E"
+            <b-form-checkbox v-model="newPerson.licenseClasses.classE"
               >E</b-form-checkbox
             >
-            <b-form-checkbox v-model="newPerson.licenseClasses" value="F"
+            <b-form-checkbox v-model="newPerson.licenseClasses.classF"
               >F</b-form-checkbox
             >
-            <b-form-checkbox v-model="newPerson.licenseClasses" value="G"
+            <b-form-checkbox v-model="newPerson.licenseClasses.classG"
               >G</b-form-checkbox
             >
           </div>
@@ -493,7 +493,15 @@ export default {
         departmentId: "",
         departmentRoleId: "",
         licenseNumber: "",
-        licenseClasses: [],
+        licenseClasses: {
+          classA: "",
+          classB: "",
+          classC: "",
+          classD: "",
+          classE: "",
+          classF: "",
+          classG: "",
+        },
         licenseIssueDate: "",
         licenseClassId: "",
       },
@@ -510,7 +518,7 @@ export default {
         departmentRole: "",
         licenseNumber: "",
         licenseIssueDate: "",
-        licenseClasses: [],
+        licenseClasses: "",
         activityStatus: "",
       },
     };
@@ -574,7 +582,7 @@ export default {
             this.newPerson.departmentRoleId
           );
         }
-        if (this.newPerson.licenseClasses){
+        if (this.newPerson.licenseClasses) {
           newPersonData.append("licenseClasses", this.newPerson.licenseClasses);
         }
         const config = {
