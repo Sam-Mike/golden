@@ -21,7 +21,7 @@ class PeopleFactory extends Factory
      */
     public function definition()
     {
-        $license_classes = "ABCDEFG";
+        $license_classes = "{\"classA\":true,\"classB\":true,\"classC\":false,\"classD\":false,\"classE\":false,\"classF\":false,\"classG\":false}";
         return [
             'first_name' => $this->faker->firstName,
             'middle_name' => $this->faker->lastName,

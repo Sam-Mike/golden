@@ -387,25 +387,25 @@
           </div>
           <div class="form-group">
             <label for="licenseClass">License Class</label><br />
-            <b-form-checkbox v-model="editPerson.licenseClasses[0]" value="A"
+            <b-form-checkbox v-model="editPerson.licenseClasses.classA"
               >A</b-form-checkbox
             >
-            <b-form-checkbox v-model="editPerson.licenseClasses[1]" value="B"
+            <b-form-checkbox v-model="editPerson.licenseClasses.classB"
               >B</b-form-checkbox
             >
-            <b-form-checkbox v-model="editPerson.licenseClasses[2]" value="C"
+            <b-form-checkbox v-model="editPerson.licenseClasses.classC"
               >C</b-form-checkbox
             >
-            <b-form-checkbox v-model="editPerson.licenseClasses[3]" value="D"
+            <b-form-checkbox v-model="editPerson.licenseClasses.classD"
               >D</b-form-checkbox
             >
-            <b-form-checkbox v-model="editPerson.licenseClasses[4]" value="E"
+            <b-form-checkbox v-model="editPerson.licenseClasses.classE"
               >E</b-form-checkbox
             >
-            <b-form-checkbox v-model="editPerson.licenseClasses[5]" value="F"
+            <b-form-checkbox v-model="editPerson.licenseClasses.classF"
               >F</b-form-checkbox
             >
-            <b-form-checkbox v-model="editPerson.licenseClasses[6]" value="G"
+            <b-form-checkbox v-model="editPerson.licenseClasses.classG"
               >G</b-form-checkbox
             >
           </div>
@@ -494,13 +494,13 @@ export default {
         departmentRoleId: "",
         licenseNumber: "",
         licenseClasses: {
-          classA: "",
-          classB: "",
-          classC: "",
-          classD: "",
-          classE: "",
-          classF: "",
-          classG: "",
+          classA: false,
+          classB: false,
+          classC: false,
+          classD: false,
+          classE: false,
+          classF: false,
+          classG: false,
         },
         licenseIssueDate: "",
         licenseClassId: "",
@@ -583,7 +583,7 @@ export default {
           );
         }
         if (this.newPerson.licenseClasses) {
-          newPersonData.append("licenseClasses", this.newPerson.licenseClasses);
+          newPersonData.append("licenseClasses", JSON.stringify(this.newPerson.licenseClasses));
         }
         const config = {
           headers: {
@@ -637,7 +637,7 @@ export default {
       this.editPerson.department = item.department;
       this.editPerson.departmentRole = item.departmentRole;
       this.editPerson.licenseNumber = item.licenseNumber;
-      this.editPerson.licenseClasses = item.licenseClasses;
+      this.editPerson.licenseClasses = JSON.parse(item.licenseClasses);
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
       this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
       this.$root.$emit("bv::show::modal", "updatePersonModal", button);

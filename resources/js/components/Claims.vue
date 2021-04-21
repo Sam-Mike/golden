@@ -295,7 +295,7 @@
             <b-col v-if="editClaim.claimDocument" class="border rouded">
               <b>CLAIM DOCUMENT</b>
               <p>
-                <a :href="path + editClaim.claimDocument">claim document</a>
+                <a :href="filesPath + editClaim.claimDocument" @click.prevent="">claim document</a>
               </p>
             </b-col>
             <b-col v-else class="border rouded">
@@ -356,7 +356,7 @@
             >
               <b>ASSESSMENT DOCUMENT</b>
               <p>
-                <a :href="path + editClaim.incidentAssessDocument"
+                <a :href="filesPath + editClaim.incidentAssessDocument"
                   >assessment document</a
                 >
               </p>
@@ -399,7 +399,7 @@
             >
               <b>DISCHARGE VOUCHER DOCUMENT</b>
               <p>
-                <a :href="path + editClaim.dischargeVoucherDocument"
+                <a :href="filesPath + editClaim.dischargeVoucherDocument"
                   >discharge voucher document</a
                 >
               </p>

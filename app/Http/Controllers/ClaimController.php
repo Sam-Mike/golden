@@ -87,7 +87,7 @@ class ClaimController extends Controller
             $claim->discharge_voucher_document = $request->file('dischargeVoucherDocument')->store('dischargeVouchers');
             $claim->claim_status = 4;
         }
-        if ($request->hasfile('paymentDocument')) {
+        if ($request->hasFile('paymentDocument')) {
             $claim->payment_document = $request->file('paymentDocument')->store('paymentDocuments');
             $claim->claim_status = 5;
         }
