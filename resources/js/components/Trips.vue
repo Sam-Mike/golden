@@ -29,7 +29,7 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
-                    @row-clicked="archiveTripInfo"
+                    @row-clicked="activeTripInfo"
                   >
                     <template #cell(driverName)="methods">
                       {{ methods.item.allocation.driver.firstName }}
@@ -64,7 +64,7 @@
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     :filter="tableFilter"
-                    @row-clicked="tripInfo"
+                    @row-clicked="activeTripInfo"
                   >
                     <template #cell(driverName)="methods">
                       {{ methods.item.allocation.driver.firstName }}
@@ -327,7 +327,7 @@
     <!-- MODAL TO SHOW ARCHIVED TRIP INFORMATION -->
     <b-modal
       scrollable
-      id="updateTripModal"
+      id="archiveTripModal"
       size="xl"
       title="Archive Trip Info"
       @ok="handleUpdateTrip"
@@ -422,7 +422,7 @@
             <b-col class="border rouded">
               <b>MANIFEST DOCUMENT</b>
               <p>
-                <a :href="filesPath + editTrip.manifestDocument"
+                <a v-if="editTrip.manifestDocument" :href="filesPath + editTrip.manifestDocument"
                   >manifestDocument</a
                 >
               </p>
@@ -552,7 +552,7 @@ export default {
         console.log(error);
       }
     },
-    tripInfo(item, button) {
+    activeTripInfo(item, button) {
       this.editTrip.id = item.id;
       this.editTrip.client = item.client;
       this.editTrip.cargo = item.cargo;
@@ -651,7 +651,7 @@ export default {
       this.editTrip.containerNumber = item.containerNumber;
       this.editTrip.loadingDate = item.loadingDate;
       this.editTrip.loadingLocation = item.loadingLocation;
-      this.$root.$emit("bv::show::modal", "inactiveTripModal", button);
+      this.$root.$emit("bv::show::modal", "archiveTripModal", button);
     },
   },
 };
