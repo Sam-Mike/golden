@@ -132,7 +132,7 @@
         <b-button size="sm" @click="cancel()">Cancel</b-button>
         <b-button size="sm" variant="primary" @click="ok()">Save</b-button>
       </template>
-      <form id="tripForm">
+      <form id="tripForm" @submit="updateTrip" enctype="multipart/form-data">
         <b-container fluid>
           <!-- TRIP LOCATION INFORMATION -->
           <b-row class="border rounded">
@@ -247,9 +247,9 @@
               <b-form-file
                 v-else
                 size="sm"
-                name="manifestDocument"
                 placeholder="Choose a file..."
                 drop-placeholder="Drop file here..."
+                @change="onChange"
               ></b-form-file>
             </b-col>
           </b-row>
@@ -422,7 +422,9 @@
             <b-col class="border rouded">
               <b>MANIFEST DOCUMENT</b>
               <p>
-                <a v-if="editTrip.manifestDocument" :href="filesPath + editTrip.manifestDocument"
+                <a
+                  v-if="editTrip.manifestDocument"
+                  :href="filesPath + editTrip.manifestDocument"
                   >manifestDocument</a
                 >
               </p>
@@ -582,11 +584,16 @@ export default {
       bvModalEvt.preventDefault();
       this.updateTrip();
     },
+    onChange(e) {
+      this.editTrip.manifestDocument = e.target.files[0];
+    },
     async updateTrip() {
       try {
         let tripForm = document.getElementById("tripForm");
         let tripData = new FormData(tripForm);
+        tripData.append("manifestDocument", this.editTrip.manifestDocument);
         tripData.append("_method", "PATCH");
+
         if (this.editTrip.loadingLocation) {
           tripData.append("loadingLocation", this.editTrip.loadingLocation);
         }

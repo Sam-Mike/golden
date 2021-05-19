@@ -106,9 +106,7 @@ class TripController extends Controller
             $trip->loading_location_id = $request->input('loadingLocation');
         }
         $trip->save();
-        return response()->json([
-            'success',
-        ], 200);
+        return response()->json();
     }
 
     public function endTrip(Request $request, $id)

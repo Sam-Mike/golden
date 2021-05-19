@@ -618,7 +618,7 @@ export default {
         await api
           .post("claims/" + this.editClaim.id, claimData, config)
           .then((response) => console.log(response))
-          .catch((error) => console.log(error));
+          .catch((response) => console.log(response));
         this.$nextTick(() => {
           this.$bvModal.hide("updateClaimModal");
           this.getClaims();

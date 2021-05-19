@@ -93,6 +93,15 @@ class PeopleController extends Controller
         $people->license_issue_date = $request->input('licenseIssueDate');
         $people->license_class_id = $request->input('licenseClassId');
         $people->activity_status_id = $request->input('activityStatusId');
+
+        //if a picture is uploaded when there is an existing one we delete it then upload the new one
+        // if($request->hasFile('profilePicture')){
+        //     if($people->profile_picture){
+        //         //delete file then
+        //     }else{
+        //         //upload the file without deleting
+        //     }
+        // }
         $people->save();
 
         return response()->json(["Person updated successfully"], 200);
