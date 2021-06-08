@@ -249,7 +249,7 @@
                 size="sm"
                 placeholder="Choose a file..."
                 drop-placeholder="Drop file here..."
-                @change="onChange"
+                name="manifestDocument"
               ></b-form-file>
             </b-col>
           </b-row>
@@ -584,16 +584,12 @@ export default {
       bvModalEvt.preventDefault();
       this.updateTrip();
     },
-    onChange(e) {
-      this.editTrip.manifestDocument = e.target.files[0];
-    },
     async updateTrip() {
       try {
         let tripForm = document.getElementById("tripForm");
         let tripData = new FormData(tripForm);
-        tripData.append("manifestDocument", this.editTrip.manifestDocument);
         tripData.append("_method", "PATCH");
-
+        //temporary
         if (this.editTrip.loadingLocation) {
           tripData.append("loadingLocation", this.editTrip.loadingLocation);
         }

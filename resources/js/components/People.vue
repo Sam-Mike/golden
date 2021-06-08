@@ -94,7 +94,12 @@
         title="New Person"
         button-size="sm"
       >
-        <form id="newPersonForm" ref="form" @submit.stop.prevent="createPerson">
+        <form
+          id="newPersonForm"
+          ref="form"
+          @submit.stop.prevent="createPerson"
+          enctype="multipart/form-data"
+        >
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
@@ -275,8 +280,10 @@
           id="updatePersonForm"
           ref="form"
           @submit.stop.prevent="updatePerson"
+          enctype="multipart/form-data"
         >
           <div class="form-group">
+            <!-- <img :src="'/storage/app/'" alt=""> -->
             <label for="firstName">First Name</label>
             <input
               type="text"
@@ -408,6 +415,15 @@
             <b-form-checkbox v-model="editPerson.licenseClasses.classG"
               >G</b-form-checkbox
             >
+          </div>
+          <div class="form-group">
+            <label for="Profile Picture">Profile Picture</label>
+            <b-form-file
+              size="sm"
+              name="profilePicture"
+              placeholder="Choose image..."
+              drop-placeholder="Drop image here..."
+            ></b-form-file>
           </div>
         </form>
       </b-modal>
@@ -564,9 +580,7 @@ export default {
       }
     },
     handleCreatePerson(bvModalEvt) {
-      // Prevent modal from closing
       bvModalEvt.preventDefault();
-      // Trigger submit handler
       this.createPerson();
     },
     async createPerson() {
@@ -583,7 +597,10 @@ export default {
           );
         }
         if (this.newPerson.licenseClasses) {
-          newPersonData.append("licenseClasses", JSON.stringify(this.newPerson.licenseClasses));
+          newPersonData.append(
+            "licenseClasses",
+            JSON.stringify(this.newPerson.licenseClasses)
+          );
         }
         const config = {
           headers: {

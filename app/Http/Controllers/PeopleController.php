@@ -13,6 +13,7 @@ use App\Http\Resources\CompanyResource;
 use App\Http\Resources\DepartmentRoleResource;
 use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\LicenseClassResource;
+use Illuminate\Support\Facades\Storage;
 
 class PeopleController extends Controller
 {
@@ -46,15 +47,16 @@ class PeopleController extends Controller
         $people->last_name = $request->input('lastName');
         $people->dob = $request->input('dob');
         $people->mobile = $request->input('mobile');
+        if ($request->hasFile('profilePicture')) {
+            $pictureName = date('Ymd_Hi') . $request->file('profilePicture')->getClientOriginalName();
+            $people->profile_picture = $request->file('profilePicture')->storeAs('profilePictures', $pictureName);
+        }
         $people->start_date = $request->input('startDate');
         $people->company_id = $request->input('companyId');
         $people->role_position_id = $request->input('rolePositionId');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
         $people->license_class_id = $request->input('licenseClassId');
-        if ($request->hasFile('profilePicture')) {
-            $people->profile_picture = $request->file('profilePicture')->store('profilePictures');
-        }
         $people->activity_status_id = 1; //assignment status is active on creation
         $people->save();
         return  response()->json(['success'], 200);
@@ -86,6 +88,19 @@ class PeopleController extends Controller
         $people->last_name = $request->input('lastName');
         $people->dob = $request->input('dob');
         $people->mobile = $request->input('mobile');
+        if ($request->hasFile('profilePicture')) {
+            if ($people->profile_picture) {
+                //delete existing if a new picture comes in
+                Storage::delete('profilePictures/' . $people->profile_picture);
+                //then save the new picture
+                $pictureName2 = date('Ymd_Hi') . $request->file('profilePicture')->getclientOriginalName();
+                $people->profile_picture = $request->file('profilePicture')->storeAs('profilePictures', $pictureName2);
+            } else {
+                //save fresh picture
+                $pictureName3 = date('Ymd_Hi') . $request->file('profilePicture')->getclientOriginalName();
+                $people->profile_picture = $request->file('profilePicture')->storeAs('profilePictures', $pictureName3);
+            }
+        }
         $people->start_date = $request->input('startDate');
         $people->company_id = $request->input('companyId');
         $people->department_id = $request->input('departmentId');
@@ -93,15 +108,6 @@ class PeopleController extends Controller
         $people->license_issue_date = $request->input('licenseIssueDate');
         $people->license_class_id = $request->input('licenseClassId');
         $people->activity_status_id = $request->input('activityStatusId');
-
-        //if a picture is uploaded when there is an existing one we delete it then upload the new one
-        // if($request->hasFile('profilePicture')){
-        //     if($people->profile_picture){
-        //         //delete file then
-        //     }else{
-        //         //upload the file without deleting
-        //     }
-        // }
         $people->save();
 
         return response()->json(["Person updated successfully"], 200);

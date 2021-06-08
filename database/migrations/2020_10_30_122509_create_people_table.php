@@ -20,6 +20,7 @@ class CreatePeopleTable extends Migration
             $table->string('last_name');
             $table->date('dob');
             $table->text('mobile');
+            $table->string('profile_picture')->nullable();
             $table->date('start_date');
             $table->foreignId('company_id')->constrained('company');
             $table->foreignId('department_role_id')->constrained('department_role');

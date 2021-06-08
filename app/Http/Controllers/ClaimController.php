@@ -76,19 +76,23 @@ class ClaimController extends Controller
 
         //uploading files
         if ($request->hasFile('claimDocument')) {
-            $claim->claim_document = $request->file('claimDocument')->store('claimDocuments');
+            $claimDocumentName = date('Ymd_Hi') . $request->file('claimDocument')->getClientOriginalName();
+            $claim->claim_document = $request->file('claimDocument')->storeAs('claimDocuments', $claimDocumentName);
             $claim->claim_status = 2;
         };
         if ($request->hasFile('incidentAssessDocument')) {
-            $claim->incident_assess_document = $request->file('incidentAssessDocument')->store('incidentAssessmentDocuments');
+            $assessDocumentName = date('Ymdm_Hi') . $request->file('incidentAssessDocument')->getClientOriginalName();
+            $claim->incident_assess_document = $request->file('incidentAssessDocument')->storeAs('incidentAssessmentDocuments', $assessDocumentName);
             $claim->claim_status = 3;
         }
         if ($request->hasFile('dischargeVoucherDocument')) {
-            $claim->discharge_voucher_document = $request->file('dischargeVoucherDocument')->store('dischargeVouchers');
+            $dischargeVoucherDocumentName = date('Ymdm_Hi') . $request->file('incidentAssessDocument')->getClientOriginalName();
+            $claim->discharge_voucher_document = $request->file('dischargeVoucherDocument')->storeAs('dischargeVouchers', $dischargeVoucherDocumentName);
             $claim->claim_status = 4;
         }
         if ($request->hasFile('paymentDocument')) {
-            $claim->payment_document = $request->file('paymentDocument')->store('paymentDocuments');
+            $paymentDocumentName = date('Ymdm_Hi') . $request->file('incidentAssessDocument')->getClientOriginalName();
+            $claim->payment_document = $request->file('paymentDocument')->storeAs('paymentDocuments', $paymentDocumentName);
             $claim->claim_status = 5;
         }
         if ($request->has('claimStatus')) {
