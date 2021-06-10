@@ -103,7 +103,7 @@ class PeopleController extends Controller
         }
         $people->start_date = $request->input('startDate');
         $people->company_id = $request->input('companyId');
-        $people->department_id = $request->input('departmentId');
+        $people->department_role_id = $request->input('departmentRoleId');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
         $people->license_class_id = $request->input('licenseClassId');

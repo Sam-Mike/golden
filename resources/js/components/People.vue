@@ -361,9 +361,19 @@
             ></v-select>
           </div>
           <div class="form-group">
+            <label for="role">Department</label>
+            <v-select
+              v-model="editPerson.departmentId"
+              label="name"
+              :options="departments"
+              :reduce="(departments) => departments.id"
+              placeholder="Choose Department"
+            ></v-select>
+          </div>
+          <div class="form-group">
             <label for="role">Role</label>
             <v-select
-              v-model="editPerson.departmentRole.id"
+              v-model="editPerson.departmentRoleId"
               label="name"
               :options="departmentRolesCascade"
               :reduce="(departmentRoles) => departmentRoles.id"
@@ -530,8 +540,9 @@ export default {
         mobile: "",
         startDate: "",
         company: "",
-        department: "",
+        departmentId: "",
         departmentRole: "",
+        departmentRoleId: "",
         licenseNumber: "",
         licenseIssueDate: "",
         licenseClasses: "",
@@ -605,7 +616,7 @@ export default {
         const config = {
           headers: {
             "content-type": "multipart/form-data",
-            enctype: "multipart/form-data",
+            //enctype: "multipart/form-data",
           },
         };
         for (var person of newPersonData.entries()) {
@@ -634,8 +645,6 @@ export default {
           // this.newPerson.companyId = "";
           // this.newPerson.departmentRoleId = "";
           // this.newPerson.licenseIssueDate = "";
-          // this.newPerson.firstName = "";
-          // this.newPerson.firstName = "";
           this.getPeople();
         });
       } catch (error) {
@@ -651,8 +660,8 @@ export default {
       this.editPerson.mobile = item.mobile;
       this.editPerson.startDate = item.startDate;
       this.editPerson.company = item.company;
-      this.editPerson.department = item.department;
-      this.editPerson.departmentRole = item.departmentRole;
+      this.editPerson.departmentId = item.departmentRole.department.id;
+      this.editPerson.departmentRoleId = item.departmentRole.id;
       this.editPerson.licenseNumber = item.licenseNumber;
       this.editPerson.licenseClasses = JSON.parse(item.licenseClasses);
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
@@ -667,25 +676,59 @@ export default {
     },
     async updatePerson() {
       try {
-        await api.patch("people/" + this.editPerson.id, {
-          firstName: this.editPerson.firstName,
-          middleName: this.editPerson.middleName,
-          lastName: this.editPerson.lastName,
-          dob: this.editPerson.dob,
-          mobile: this.editPerson.mobile,
-          startDate: this.editPerson.startDate,
-          companyId: this.editPerson.company.id,
-          //departmentId: this.editPerson.licenseNumber,
-          licenseIssueDate: this.editPerson.licenseIssueDate,
-          //licenseClassId: this.editPerson.licenseClass.id,
-          activityStatusId: this.editPerson.activityStatus.id,
-        });
+        let updatePersonForm = document.getElementById("updatePersonForm");
+        let updatePersonFormData = new FormData(updatePersonForm);
+        updatePersonFormData.append("_method", "PATCH");
+        if (this.editPerson.companyId) {
+          updatePersonFormData.append("companyId", this.editPerson.companyId);
+        }
+        if (this.editPerson.departmentRoleId) {
+          updatePersonFormData.append(
+            "departmentRoleId",
+            this.editPerson.departmentRoleId
+          );
+        }
+        if (this.editPerson.licenseClasses) {
+          updatePersonFormData.append(
+            "licenseClasses",
+            JSON.stringify(this.editPerson.licenseClasses)
+          );
+        }
+        const config = {
+          "content-type": "mulitpart/form-data",
+        };
+        for (var person of updatePersonFormData.entries()) {
+          console.log(person);
+        }
+        await api
+          .post(
+            "people/" + this.editPerson.id,
+            updatePersonFormData,
+            config
+            // {
+            //   firstName: this.editPerson.firstName,
+            //   middleName: this.editPerson.middleName,
+            //   lastName: this.editPerson.lastName,
+            //   dob: this.editPerson.dob,
+            //   mobile: this.editPerson.mobile,
+            //   startDate: this.editPerson.startDate,
+            //   companyId: this.editPerson.company.id,
+            //   //departmentId: this.editPerson.licenseNumber,
+            //   licenseIssueDate: this.editPerson.licenseIssueDate,
+            //   //licenseClassId: this.editPerson.licenseClass.id,
+            //   activityStatusId: this.editPerson.activityStatus.id,
+            // }
+          )
+          .then((response) => console.log(response))
+          .catch((error) => console.log(error));
         this.$nextTick(() => {
           this.$bvModal.hide("updatePersonModal");
           this.getPeople();
         });
         console.log("Person updated");
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
     async deactivatePerson() {
       try {
