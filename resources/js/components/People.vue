@@ -283,7 +283,7 @@
           enctype="multipart/form-data"
         >
           <div class="form-group">
-            <!-- <img :src="'/storage/app/'" alt=""> -->
+            <img :src="editPerson.profilePicture" alt="">
             <label for="firstName">First Name</label>
             <input
               type="text"
@@ -353,7 +353,7 @@
           <div class="form-group">
             <label for="company">Company</label>
             <v-select
-              v-model="editPerson.company.id"
+              v-model="editPerson.companyId"
               label="name"
               :options="company"
               :reduce="(company) => company.id"
@@ -537,9 +537,11 @@ export default {
         middleName: "",
         lastName: "",
         dob: "",
+        profilePicture: "",
         mobile: "",
         startDate: "",
         company: "",
+        companyId: "",
         departmentId: "",
         departmentRole: "",
         departmentRoleId: "",
@@ -613,12 +615,12 @@ export default {
             JSON.stringify(this.newPerson.licenseClasses)
           );
         }
-        const config = {
-          headers: {
-            "content-type": "multipart/form-data",
-            //enctype: "multipart/form-data",
-          },
-        };
+        // const config = {
+        //   headers: {
+        //     "content-type": "multipart/form-data",
+        //     //enctype: "multipart/form-data",
+        //   },
+        // };
         for (var person of newPersonData.entries()) {
           console.log(person);
         }
@@ -657,15 +659,17 @@ export default {
       this.editPerson.middleName = item.middleName;
       this.editPerson.lastName = item.lastName;
       this.editPerson.dob = item.dob;
+      //this.editPerson.profilePicture = item.profilePicture;
       this.editPerson.mobile = item.mobile;
       this.editPerson.startDate = item.startDate;
-      this.editPerson.company = item.company;
+      this.editPerson.companyId = item.company.id;
       this.editPerson.departmentId = item.departmentRole.department.id;
       this.editPerson.departmentRoleId = item.departmentRole.id;
       this.editPerson.licenseNumber = item.licenseNumber;
       this.editPerson.licenseClasses = JSON.parse(item.licenseClasses);
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
       this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
+      this.editPerson.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "updatePersonModal", button);
     },
     handleUpdatePerson(bvModalEvt) {
@@ -679,6 +683,8 @@ export default {
         let updatePersonForm = document.getElementById("updatePersonForm");
         let updatePersonFormData = new FormData(updatePersonForm);
         updatePersonFormData.append("_method", "PATCH");
+        updatePersonFormData.append("companyId", this.editPerson.company.id);
+        updatePersonFormData.append("activityStatusId", this.editPerson.activityStatus.id);
         if (this.editPerson.companyId) {
           updatePersonFormData.append("companyId", this.editPerson.companyId);
         }
@@ -694,31 +700,11 @@ export default {
             JSON.stringify(this.editPerson.licenseClasses)
           );
         }
-        const config = {
-          "content-type": "mulitpart/form-data",
-        };
         for (var person of updatePersonFormData.entries()) {
           console.log(person);
         }
         await api
-          .post(
-            "people/" + this.editPerson.id,
-            updatePersonFormData,
-            config
-            // {
-            //   firstName: this.editPerson.firstName,
-            //   middleName: this.editPerson.middleName,
-            //   lastName: this.editPerson.lastName,
-            //   dob: this.editPerson.dob,
-            //   mobile: this.editPerson.mobile,
-            //   startDate: this.editPerson.startDate,
-            //   companyId: this.editPerson.company.id,
-            //   //departmentId: this.editPerson.licenseNumber,
-            //   licenseIssueDate: this.editPerson.licenseIssueDate,
-            //   //licenseClassId: this.editPerson.licenseClass.id,
-            //   activityStatusId: this.editPerson.activityStatus.id,
-            // }
-          )
+          .post("people/" + this.editPerson.id, updatePersonFormData)
           .then((response) => console.log(response))
           .catch((error) => console.log(error));
         this.$nextTick(() => {

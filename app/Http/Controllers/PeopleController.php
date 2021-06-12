@@ -106,7 +106,7 @@ class PeopleController extends Controller
         $people->department_role_id = $request->input('departmentRoleId');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
-        $people->license_class_id = $request->input('licenseClassId');
+        $people->license_classes = $request->input('licenseClasses');
         $people->activity_status_id = $request->input('activityStatusId');
         $people->save();
 
