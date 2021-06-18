@@ -29,6 +29,8 @@ class CreatePeopleTable extends Migration
             $table->date('license_issue_date')->nullable();
             $table->date('license_expiry_date')->nullable();
             $table->string('passport_number')->nullable();
+            $table->date('passport_issue_date')->nullable();
+            $table->date('passport_expiry_date')->nullable();
             $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();
         });

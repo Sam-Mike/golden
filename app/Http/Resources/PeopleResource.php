@@ -15,6 +15,7 @@ class PeopleResource extends JsonResource
      */
     public function toArray($request)
     {
+        //$profilePicture = Storage::get($this->profile_picture);
         return [
             'id' => $this->id,
             'firstName' => $this->first_name,
@@ -23,15 +24,18 @@ class PeopleResource extends JsonResource
             'dob' => $this->dob,
             'age' => date_diff(date_create($this->dob), today(), true)->format('%y years'),
             'mobile' => $this->mobile,
-            'profilePicture' => Storage:: url($this->profile_picture),
+            'profilePicture' => Storage::url($this->profile_picture),
             'startDate' => $this->start_date,
             'serviceTime' => date_diff(date_create($this->start_date), today(), true)->format('%y years'),
             'company' => new CompanyResource($this->company),
             'departmentRole' => new DepartmentRoleResource($this->department_role),
             'licenseNumber' => $this->license_number,
-            'licenseIssueDate' => $this->license_issue_date,
             'licenseClasses' => json_decode($this->license_classes),
-            'licenseExpiryDate' => date_diff(date_create($this->license_issue_date), today(), true)->format('%y years, %m months'),
+            'licenseIssueDate' => $this->license_issue_date,
+            'licenseExpiryDate' => $this->license_expiry_date,
+            'passportNumber' => $this->passport_number,
+            'passportIssueDate' => $this->passport_issue_date,
+            'passportExpiryDate' => $this->passport_expiry_date,
             'activityStatus' => new StatusResource($this->status),
         ];
     }

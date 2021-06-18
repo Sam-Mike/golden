@@ -282,8 +282,19 @@
           @submit.stop.prevent="updatePerson"
           enctype="multipart/form-data"
         >
+          <img id="profile-picture"
+            v-bind:src="editPerson.profilePicture"
+            alt=""
+            style="
+              border-radius: 50%;
+              width: 100px;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 50%;
+            "
+          />
           <div class="form-group">
-            <img :src="editPerson.profilePicture" alt="">
             <label for="firstName">First Name</label>
             <input
               type="text"
@@ -427,6 +438,17 @@
             >
           </div>
           <div class="form-group">
+            <label for="passportNumber">Passport Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="passportNumber"
+              v-model="editPerson.passportNumber"
+              placeholder="Enter Passport Number"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="Profile Picture">Profile Picture</label>
             <b-form-file
               size="sm"
@@ -507,7 +529,6 @@ export default {
       departmentRoles: [],
       departmentRolesCascade: [],
       departments: [],
-      licenseClasses: [],
       newPerson: {
         firstName: "",
         middleName: "",
@@ -659,14 +680,14 @@ export default {
       this.editPerson.middleName = item.middleName;
       this.editPerson.lastName = item.lastName;
       this.editPerson.dob = item.dob;
-      //this.editPerson.profilePicture = item.profilePicture;
+      this.editPerson.profilePicture = item.profilePicture;
       this.editPerson.mobile = item.mobile;
       this.editPerson.startDate = item.startDate;
       this.editPerson.companyId = item.company.id;
       this.editPerson.departmentId = item.departmentRole.department.id;
       this.editPerson.departmentRoleId = item.departmentRole.id;
       this.editPerson.licenseNumber = item.licenseNumber;
-      this.editPerson.licenseClasses = JSON.parse(item.licenseClasses);
+      this.editPerson.licenseClasses = item.licenseClasses;
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
       this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
       this.editPerson.activityStatus = item.activityStatus;
@@ -684,7 +705,10 @@ export default {
         let updatePersonFormData = new FormData(updatePersonForm);
         updatePersonFormData.append("_method", "PATCH");
         updatePersonFormData.append("companyId", this.editPerson.company.id);
-        updatePersonFormData.append("activityStatusId", this.editPerson.activityStatus.id);
+        updatePersonFormData.append(
+          "activityStatusId",
+          this.editPerson.activityStatus.id
+        );
         if (this.editPerson.companyId) {
           updatePersonFormData.append("companyId", this.editPerson.companyId);
         }

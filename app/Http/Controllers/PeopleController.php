@@ -29,7 +29,6 @@ class PeopleController extends Controller
             'company' => CompanyResource::collection(Company::all()),
             'departmentRoles' => DepartmentRoleResource::collection(DepartmentRole::all()),
             'departments' => DepartmentResource::collection(Department::all()),
-            //'licenseClass'=>LicenseClasses::collection(Licence::all())
         ];
     }
 
@@ -91,7 +90,7 @@ class PeopleController extends Controller
         if ($request->hasFile('profilePicture')) {
             if ($people->profile_picture) {
                 //delete existing if a new picture comes in
-                Storage::delete('profilePictures/' . $people->profile_picture);
+                Storage::delete($people->profile_picture);
                 //then save the new picture
                 $pictureName2 = date('Ymd_Hi') . $request->file('profilePicture')->getclientOriginalName();
                 $people->profile_picture = $request->file('profilePicture')->storeAs('profilePictures', $pictureName2);

@@ -21,7 +21,7 @@ class PeopleFactory extends Factory
      */
     public function definition()
     {
-        $license_classes = "{\"classA\":true,\"classB\":true,\"classC\":false,\"classD\":false,\"classE\":false,\"classF\":false,\"classG\":false}";
+        $license_classes = array("classA" => "true", "classB" => "true", "classC" => "true", "classD" => "false", "classE" => "false", "classF" => "false");
         return [
             'first_name' => $this->faker->firstName,
             'middle_name' => $this->faker->lastName,
@@ -36,6 +36,8 @@ class PeopleFactory extends Factory
             'license_issue_date' => $this->faker->date($format = 'Y-m-d'),
             'license_expiry_date' => $this->faker->date($format = 'Y-m-d'),
             'passport_number' => $this->faker->numberBetween($min = 1000000000, $max = 1999999999),
+            'passport_issue_date' => $this->faker->date($format = 'Y-m-d'),
+            'passport_expiry_date' => $this->faker->date($format = 'Y-m-d'),
             'activity_status_id' => 1,
         ];
     }
