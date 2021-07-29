@@ -19,7 +19,7 @@ class CreateClientTable extends Migration
             $table->string('address')->nullable();
             $table->text('phone')->nullable();
             $table->string('contact_person_name')->nullable();
-            $table->text('mobile')->nullable();
+            $table->string('mobile')->nullable();
             $table->string('email')->nullable();
             $table->foreignId('activity_status_id')->constrained('status');
             $table->timestamps();

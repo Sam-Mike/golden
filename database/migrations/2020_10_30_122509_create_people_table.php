@@ -19,7 +19,7 @@ class CreatePeopleTable extends Migration
             $table->string('middle_name');
             $table->string('last_name');
             $table->date('dob');
-            $table->text('mobile');
+            $table->string('mobile');
             $table->string('profile_picture')->nullable();
             $table->date('start_date');
             $table->foreignId('company_id')->constrained('company');

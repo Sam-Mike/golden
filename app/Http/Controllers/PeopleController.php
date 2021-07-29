@@ -7,12 +7,10 @@ use App\Models\People;
 use App\Models\Company;
 use App\Models\DepartmentRole;
 use App\Models\Department;
-use App\Models\LicenseClass;
 use App\Http\Resources\PeopleResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\DepartmentRoleResource;
 use App\Http\Resources\DepartmentResource;
-use App\Http\Resources\LicenseClassResource;
 use Illuminate\Support\Facades\Storage;
 
 class PeopleController extends Controller
@@ -55,7 +53,11 @@ class PeopleController extends Controller
         $people->role_position_id = $request->input('rolePositionId');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
-        $people->license_class_id = $request->input('licenseClassId');
+        $people->license_expiry_date = $request->input('licenseExpiryDate');
+        $people->license_classes = $request->input('licenseClasses');
+        $people->passport_number = $request->input('passportNumber');
+        $people->passport_issue_date = $request->input('passportIssueDate');
+        $people->passport_expiry_date = $request->input('passportExpiryDate');
         $people->activity_status_id = 1; //assignment status is active on creation
         $people->save();
         return  response()->json(['success'], 200);
@@ -105,7 +107,11 @@ class PeopleController extends Controller
         $people->department_role_id = $request->input('departmentRoleId');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
+        $people->license_expiry_date = $request->input('licenseExpiryDate');
         $people->license_classes = $request->input('licenseClasses');
+        $people->passport_number = $request->input('passportNumber');
+        $people->passport_issue_date = $request->input('passportIssueDate');
+        $people->passport_expiry_date = $request->input('passportExpiryDate');
         $people->activity_status_id = $request->input('activityStatusId');
         $people->save();
 

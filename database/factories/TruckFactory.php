@@ -23,8 +23,20 @@ class TruckFactory extends Factory
     {
         return [
             'registration_number' => $this->faker->regexify('T[1-9]{3}[A-Z]{3}'),
-            'company_id' => $this->faker->numberBetween($min = 1, $max = 3),
-            'truck_type_id' => $this->faker->numberBetween($min = 1, $max = 4),
+            'year_model' => $this->faker->year($max = 'now'),
+            'chassis_number' => $this->faker->regexify('[A-Z]{4}[1-9]{8}'),
+            'engine_size' => 300,
+            'authorized_payload' => 25,
+            'length' => 6.98,
+            'width' => 2.5,
+            'height' => 3.8,
+            'fuel_capacity' => 770,
+            'fuel_consumption' => 2.21,
+            'vehicle_transmission_type_id' => $this->faker->numberBetween(1,2),
+            'fuel_type_id' => $this->faker->numberBetween(1,2),
+            'make_id' => $this->faker->numberBetween(1,3),
+            'company_id' => $this->faker->numberBetween(1, 3),
+            'truck_type_id' => $this->faker->numberBetween(1, 4),
             'activity_status_id' => 1,
         ];
     }

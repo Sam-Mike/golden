@@ -33,6 +33,7 @@ class PeopleResource extends JsonResource
             'licenseClasses' => json_decode($this->license_classes),
             'licenseIssueDate' => $this->license_issue_date,
             'licenseExpiryDate' => $this->license_expiry_date,
+            'licenseExpiry' => date_diff(date_create($this->license_issue_date), date_create($this->license_expiry_date), true)->format('%y years, %m months'),
             'passportNumber' => $this->passport_number,
             'passportIssueDate' => $this->passport_issue_date,
             'passportExpiryDate' => $this->passport_expiry_date,

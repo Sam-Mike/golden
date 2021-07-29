@@ -26,13 +26,17 @@ class Truck extends Model
     {
         return $this->belongsTo(TruckType::class, 'truck_type_id');
     }
+    public function vehicle_make()
+    {
+        return $this->belongsTo(VehicleMake::class, 'make_id');
+    }
     public function status()
     {
         return $this->belongsTo(Status::class, 'activity_status_id');
     }
     public function allocations()
     {
-        return $this->hasMany(Allocation::class, );
+        return $this->hasMany(Allocation::class,);
     }
     public function trips()
     {
