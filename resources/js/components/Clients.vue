@@ -8,7 +8,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                   <!-- Button trigger modal -->
                   <b-button
                     size="sm"
@@ -55,7 +55,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Clients</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                   <!-- Button trigger modal -->
                 </div>
               </div>

@@ -8,7 +8,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
 
                   <!-- Button trigger Create Truck Modal -->
                   <b-button
@@ -23,6 +23,16 @@
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -32,7 +42,8 @@
                     hover
                     :small="true"
                     :items="activeTrucks"
-                    :fields="trucksFields"
+                    :fields="truckFields"
+                    :filter="tableFilter"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     @row-clicked="truckInfo"
@@ -47,7 +58,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Trucks</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
 
                   <!-- Button trigger modal -->
                 </div>
@@ -62,7 +73,8 @@
                     hover
                     :small="true"
                     :items="inactiveTrucks"
-                    :fields="trucksFields"
+                    :fields="truckFields"
+                    :filter="tableFilter"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     @row-clicked="inactiveTruckInfo"
@@ -210,12 +222,13 @@ export default {
       trucks: [],
       truckType: [],
       company: [],
-      trucksFields: [
+      truckFields: [
         { key: "registrationNumber" },
         { key: "company.name", label: "Company" },
         { key: "truckType.name", label: "Truck Type" },
         { key: "activityStatus.name", label: "Activity Status" },
       ],
+      tableFilter: null,
       tableHeadVariant: "dark",
       newTruck: {
         registrationNumber: "",
@@ -239,6 +252,14 @@ export default {
     },
     inactiveTrucks() {
       return this.trucks.filter((trucks) => trucks.activityStatus.id === 3);
+    },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.truckFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
     },
   },
   mounted() {

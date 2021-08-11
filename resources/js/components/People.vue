@@ -9,7 +9,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">People</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                   <!-- Button trigger Create Person modal -->
                   <b-button
                     size="sm"
@@ -21,6 +21,16 @@
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -31,6 +41,7 @@
                     :small="true"
                     :items="activePeople"
                     :fields="peopleFields"
+                    :filter="tableFilter"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     @row-clicked="personInfo"
@@ -50,11 +61,21 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">People</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                   <!-- Button trigger Create Person modal -->
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -65,6 +86,7 @@
                     :small="true"
                     :items="inactivePeople"
                     :fields="peopleFields"
+                    :filter="tableFilter"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     @row-clicked="inactivePersonInfo"
@@ -676,7 +698,7 @@ export default {
       loading: false,
       people: [],
       peopleFields: [
-        { key: "Name", label: "Name" },
+        { key: "Name", label: "Name", sortable: true },
         { key: "dob" },
         { key: "age", sortable: true },
         { key: "company.name", label: "Company", sortable: true },
@@ -691,6 +713,7 @@ export default {
         { key: "licenseExpiryDate", label: "License Expiry", sortable: true },
         { key: "activityStatus.name", label: "Assignment Status" },
       ],
+      tableFilter: null,
       tableHeadVariant: "dark",
       company: [],
       departmentRoles: [],
@@ -765,6 +788,14 @@ export default {
     },
     inactivePeople() {
       return this.people.filter((people) => people.activityStatus.id === 3);
+    },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.peopleFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
     },
   },
   watch: {

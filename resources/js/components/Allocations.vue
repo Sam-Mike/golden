@@ -72,7 +72,7 @@
                 <div class="card-header py-3">
                   <div class="d-flex row justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">
-                      Allocations
+                      
                     </h6>
                     <b-button
                       size="sm"

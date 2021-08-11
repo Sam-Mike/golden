@@ -9,7 +9,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
 
                   <!-- Button trigger New Trailer Modal -->
                   <b-button
@@ -24,6 +24,16 @@
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -34,6 +44,7 @@
                     :small="true"
                     :items="activeTrailers"
                     :fields="trailersFields"
+                    :filter="tableFilter"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
                     @row-clicked="trailerInfo"
@@ -48,12 +59,21 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">Trailers</h6>
-
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                   <!-- Button trigger New Trailer Modal -->
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -242,6 +262,7 @@ export default {
         { key: "company.name", label: "Company" },
         { key: "activityStatus.name", label: "Assignment Status" },
       ],
+      tableFilter: null,
       tableHeadVariant: "dark",
       trailerType: [],
       company: [],
@@ -272,6 +293,14 @@ export default {
       return this.trailers.filter(
         (trailers) => trailers.activityStatus.id === 3
       );
+    },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.trailersFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
     },
   },
   mounted() {

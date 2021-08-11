@@ -12,10 +12,20 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -47,10 +57,20 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -61,9 +81,9 @@
                     :small="true"
                     :items="transitTrips"
                     :fields="tripFields"
+                    :filter="tableFilter"
                     :head-variant="tableHeadVariant"
                     :sticky-header="true"
-                    :filter="tableFilter"
                     @row-clicked="activeTripInfo"
                   >
                     <template #cell(driverName)="methods">
@@ -82,10 +102,20 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trips</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
@@ -497,8 +527,8 @@ export default {
         { key: "currentLocation", label: "Current Location" },
         { key: "activityStatus.name", label: "Status", sortable: true },
       ],
-      tableHeadVariant: "dark",
       tableFilter: null,
+      tableHeadVariant: "dark",
       editTrip: {
         id: "",
         client: "",
@@ -534,6 +564,14 @@ export default {
     },
     archivedTrips() {
       return this.trips.filter((trip) => trip.activityStatus.id === 1);
+    },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.tripFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
     },
     ...mapState({
       filesPath: "filesPath",

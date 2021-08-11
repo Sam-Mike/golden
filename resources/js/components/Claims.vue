@@ -54,7 +54,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
@@ -85,7 +85,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
@@ -116,7 +116,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
@@ -147,7 +147,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
@@ -178,7 +178,7 @@
             <div class="card shadow mb-4">
               <div class="card-header py-3">
                 <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Claims</h6>
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
               <div class="card-body">
@@ -538,6 +538,14 @@ export default {
     },
     declinedClaims() {
       return this.claims.filter((claim) => claim.claimStatus === "declined");
+    },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.claimFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
     },
     ...mapState({
       filesPath: "filesPath",
