@@ -101,6 +101,17 @@
           enctype="multipart/form-data"
         >
           <div class="form-group">
+            <label for="employeeNumber">Employee Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="employeeNumber"
+              v-model="newPerson.employeeNumber"
+              placeholder="Enter Employee Number"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="firstName">First Name</label>
             <input
               type="text"
@@ -198,6 +209,39 @@
             ></v-select>
           </div>
           <div class="form-group">
+            <label for="nidaNumber">NIDA Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="nidaNumber"
+              v-model="newPerson.nidaNumber"
+              placeholder="Enter NIDA Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="ssNumber">Social Security Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="ssNumber"
+              v-model="newPerson.ssNumber"
+              placeholder="Enter Social Security Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="tinNumber">TIN</label>
+            <input
+              type="number"
+              class="form-control"
+              name="tinNumber"
+              v-model="newPerson.tinNumber"
+              placeholder="Enter TIN"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="licenseNumber">License Number</label>
             <input
               type="number"
@@ -216,6 +260,17 @@
               name="licenseIssueDate"
               v-model="newPerson.licenseIssueDate"
               placeholder="Enter License Issue Date"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="licenseExpiryDate">License Expiry Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="licenseExpiryDate"
+              v-model="newPerson.licenseExpiryDate"
+              placeholder="Enter License Expiry Date"
               required
             />
           </div>
@@ -242,6 +297,39 @@
             <b-form-checkbox v-model="newPerson.licenseClasses.classG"
               >G</b-form-checkbox
             >
+          </div>
+          <div class="form-group">
+            <label for="passportNumber">Passport Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="passportNumber"
+              v-model="newPerson.passportNumber"
+              placeholder="Enter Passport Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="passportIssueDate">Passport Issue Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="passportIssueDate"
+              v-model="newPerson.passportIssueDate"
+              placeholder="Enter Passport Issue Date"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="passportExpiryDate">Passport Expiry Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="passportExpiryDate"
+              v-model="newPerson.passportExpiryDate"
+              placeholder="Enter Passport Expiry Date"
+              required
+            />
           </div>
           <div class="form-group">
             <label for="Profile Picture">Profile Picture</label>
@@ -282,7 +370,8 @@
           @submit.stop.prevent="updatePerson"
           enctype="multipart/form-data"
         >
-          <img id="profile-picture"
+          <img
+            id="profile-picture"
             v-bind:src="editPerson.profilePicture"
             alt=""
             style="
@@ -294,6 +383,17 @@
               width: 50%;
             "
           />
+          <div class="form-group">
+            <label for="employeeNumber">Employee Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="employeeNumber"
+              v-model="editPerson.employeeNumber"
+              placeholder="Enter Employee Number"
+              required
+            />
+          </div>
           <div class="form-group">
             <label for="firstName">First Name</label>
             <input
@@ -392,6 +492,39 @@
             ></v-select>
           </div>
           <div class="form-group">
+            <label for="nidaNumber">NIDA Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="nidaNumber"
+              v-model="editPerson.nidaNumber"
+              placeholder="Enter NIDA Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="ssNumber">Social Security Number</label>
+            <input
+              type="number"
+              class="form-control"
+              name="ssNumber"
+              v-model="editPerson.ssNumber"
+              placeholder="Enter Social Security Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="tinNumber">TIN</label>
+            <input
+              type="number"
+              class="form-control"
+              name="tinNumber"
+              v-model="editPerson.tinNumber"
+              placeholder="Enter TIN"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="licenseNumber">License Number</label>
             <input
               type="number"
@@ -410,6 +543,17 @@
               name="licenseIssueDate"
               v-model="editPerson.licenseIssueDate"
               placeholder="Enter License Issue Date"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="licenseExpiryDate">License Expiry Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="licenseExpiryDate"
+              v-model="editPerson.licenseExpiryDate"
+              placeholder="Enter License Expiry Date"
               required
             />
           </div>
@@ -445,6 +589,28 @@
               name="passportNumber"
               v-model="editPerson.passportNumber"
               placeholder="Enter Passport Number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="passportIssueDate">Passport Issue Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="passportIssueDate"
+              v-model="editPerson.passportIssueDate"
+              placeholder="Enter Passport Issue Date"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="passportExpiryDate">Passport Expiry Date</label>
+            <input
+              type="date"
+              class="form-control"
+              name="passportExpiryDate"
+              v-model="editPerson.passportExpiryDate"
+              placeholder="Enter Passport Expiry Date"
               required
             />
           </div>
@@ -490,6 +656,8 @@
           <p>{{ editPerson.company.name }}</p>
           <h6>Role</h6>
           <p>{{ editPerson.departmentRole.name }}</p>
+          <h6>NIDA Number</h6>
+          <p>{{ editPerson.nidaNumber }}</p>
           <h6>License Number</h6>
           <p>{{ editPerson.licenseNumber }}</p>
           <h6>License Issue Date</h6>
@@ -520,7 +688,6 @@ export default {
         { key: "departmentRole.name", label: "Role" },
         { key: "startDate", sortable: true },
         { key: "serviceTime", sortable: true },
-        { key: "licenseIssueDate" },
         { key: "licenseExpiryDate", label: "License Expiry", sortable: true },
         { key: "activityStatus.name", label: "Assignment Status" },
       ],
@@ -530,6 +697,7 @@ export default {
       departmentRolesCascade: [],
       departments: [],
       newPerson: {
+        employeeNumber: "",
         firstName: "",
         middleName: "",
         lastName: "",
@@ -539,7 +707,12 @@ export default {
         companyId: "",
         departmentId: "",
         departmentRoleId: "",
+        nidaNumber: "",
+        ssNumber: "",
+        tinNumber: "",
         licenseNumber: "",
+        licenseIssueDate: "",
+        licenseExpiryDate: "",
         licenseClasses: {
           classA: false,
           classB: false,
@@ -549,11 +722,14 @@ export default {
           classF: false,
           classG: false,
         },
-        licenseIssueDate: "",
-        licenseClassId: "",
+        passportNumber: "",
+        passportIssueDate: "",
+        passportExpiryDate: "",
+        activityStatus: "",
       },
       editPerson: {
         id: "",
+        employeeNumber: "",
         firstName: "",
         middleName: "",
         lastName: "",
@@ -566,9 +742,16 @@ export default {
         departmentId: "",
         departmentRole: "",
         departmentRoleId: "",
+        nidaNumber: "",
+        ssNumber: "",
+        tinNumber: "",
         licenseNumber: "",
         licenseIssueDate: "",
+        licenseExpiryDate: "",
         licenseClasses: "",
+        passportNumber: "",
+        passportIssueDate: "",
+        passportExpiryDate: "",
         activityStatus: "",
       },
     };
@@ -620,54 +803,37 @@ export default {
     async createPerson() {
       try {
         let newPersonForm = document.getElementById("newPersonForm");
-        let newPersonData = new FormData(newPersonForm);
+        let newPersonFormData = new FormData(newPersonForm);
         if (this.newPerson.companyId) {
-          newPersonData.append("companyId", this.newPerson.companyId);
+          newPersonFormData.append("companyId", this.newPerson.companyId);
         }
         if (this.newPerson.departmentRoleId) {
-          newPersonData.append(
+          newPersonFormData.append(
             "departmentRoleId",
             this.newPerson.departmentRoleId
           );
         }
         if (this.newPerson.licenseClasses) {
-          newPersonData.append(
+          newPersonFormData.append(
             "licenseClasses",
             JSON.stringify(this.newPerson.licenseClasses)
           );
         }
-        // const config = {
-        //   headers: {
-        //     "content-type": "multipart/form-data",
-        //     //enctype: "multipart/form-data",
-        //   },
-        // };
-        for (var person of newPersonData.entries()) {
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+            //enctype: "multipart/form-data",
+          },
+        };
+        for (var person of newPersonFormData.entries()) {
           console.log(person);
         }
-        // await api.post("people", {
-        //   firstName: this.newPerson.firstName,
-        //   middleName: this.newPerson.middleName,
-        //   lastName: this.newPerson.lastName,
-        //   dob: this.newPerson.dob,
-        //   mobile: this.newPerson.mobile,
-        //   startDate: this.newPerson.startDate,
-        //   companyId: this.newPerson.companyId,
-        //   departmentRoleId: this.newPerson.departmentRoleId,
-        //   licenseNumber: this.newPerson.licenseNumber,
-        //   licenseIssueDate: this.newPerson.licenseIssueDate,
-        //   //licenseClassId: this.newPerson.licenseClassid,
-        // });
+        await api
+          .post("people", newPersonFormData, config)
+          .then((response) => console.log(response))
+          .catch((error) => console.log(error));
         this.$nextTick(() => {
-          // this.$bvModal.hide("newPersonModal");
-          // this.newPerson.firstName = "";
-          // this.newPerson.middleName = "";
-          // this.newPerson.dob = "";
-          // this.newPerson.mobile = "";
-          // this.newPerson.startDate = "";
-          // this.newPerson.companyId = "";
-          // this.newPerson.departmentRoleId = "";
-          // this.newPerson.licenseIssueDate = "";
+          this.$bvModal.hide("newPersonModal");
           this.getPeople();
         });
       } catch (error) {
@@ -676,6 +842,7 @@ export default {
     },
     personInfo(item, button) {
       this.editPerson.id = item.id;
+      this.editPerson.employeeNumber = item.employeeNumber;
       this.editPerson.firstName = item.firstName;
       this.editPerson.middleName = item.middleName;
       this.editPerson.lastName = item.lastName;
@@ -686,10 +853,16 @@ export default {
       this.editPerson.companyId = item.company.id;
       this.editPerson.departmentId = item.departmentRole.department.id;
       this.editPerson.departmentRoleId = item.departmentRole.id;
+      this.editPerson.nidaNumber = item.nidaNumber;
+      this.editPerson.ssNumber = item.ssNumber;
+      this.editPerson.tinNumber = item.tinNumber;
       this.editPerson.licenseNumber = item.licenseNumber;
       this.editPerson.licenseClasses = item.licenseClasses;
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
       this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
+      this.editPerson.passportNumber = item.passportNumber;
+      this.editPerson.passportIssueDate = item.passportIssueDate;
+      this.editPerson.passportExpiryDate = item.passportExpiryDate;
       this.editPerson.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "updatePersonModal", button);
     },
@@ -753,7 +926,6 @@ export default {
           departmentId: this.editPerson.department.id,
           licenseNumber: this.editPerson.licenseNumber,
           licenseIssueDate: this.editPerson.licenseIssueDate,
-          //licenseClassId: this.editPerson.licenseClass.id,
           activityStatus: 3,
         });
         console.log("Person Deactivated");
@@ -785,7 +957,6 @@ export default {
           departmentId: this.editPerson.department.id,
           licenseNumber: this.editPerson.licenseNumber,
           licenseIssueDate: this.editPerson.licenseIssueDate,
-          //licenseClassId: this.editPerson.licenseClass.id,
           activityStatus: 1,
         });
         console.log("Person Activated");

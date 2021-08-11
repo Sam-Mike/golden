@@ -18,6 +18,7 @@ class PeopleResource extends JsonResource
         //$profilePicture = Storage::get($this->profile_picture);
         return [
             'id' => $this->id,
+            'employeeNumber' => $this->employee_number,
             'firstName' => $this->first_name,
             'middleName' => $this->middle_name,
             'lastName' => $this->last_name,
@@ -29,6 +30,9 @@ class PeopleResource extends JsonResource
             'serviceTime' => date_diff(date_create($this->start_date), today(), true)->format('%y years'),
             'company' => new CompanyResource($this->company),
             'departmentRole' => new DepartmentRoleResource($this->department_role),
+            'nidaNumber' => $this->nida_number,
+            'ssNumber' => $this->ss_number,
+            'tinNumber' => $this->tin_number,
             'licenseNumber' => $this->license_number,
             'licenseClasses' => json_decode($this->license_classes),
             'licenseIssueDate' => $this->license_issue_date,

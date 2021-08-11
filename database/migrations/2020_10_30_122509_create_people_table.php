@@ -15,6 +15,7 @@ class CreatePeopleTable extends Migration
     {
         Schema::create('people', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('employee_number');
             $table->string('first_name');
             $table->string('middle_name');
             $table->string('last_name');
@@ -24,6 +25,9 @@ class CreatePeopleTable extends Migration
             $table->date('start_date');
             $table->foreignId('company_id')->constrained('company');
             $table->foreignId('department_role_id')->constrained('department_role');
+            $table->Biginteger('nida_number')->nullable();
+            $table->Biginteger('ss_number')->nullable();
+            $table->Biginteger('tin_number')->nullable();
             $table->Biginteger('license_number')->nullable();
             $table->text('license_classes')->nullable();
             $table->date('license_issue_date')->nullable();

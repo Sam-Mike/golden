@@ -39,6 +39,7 @@ class PeopleController extends Controller
     public function store(Request $request)
     {
         $people = new People();
+        $people->employee_number = $request->input('employeeNumber');
         $people->first_name = $request->input('firstName');
         $people->middle_name = $request->input('middleName');
         $people->last_name = $request->input('lastName');
@@ -50,7 +51,10 @@ class PeopleController extends Controller
         }
         $people->start_date = $request->input('startDate');
         $people->company_id = $request->input('companyId');
-        $people->role_position_id = $request->input('rolePositionId');
+        $people->department_role_id = $request->input('departmentRoleId');
+        $people->nida_number = $request->input('nidaNumber');
+        $people->ss_number = $request->input('ssNumber');
+        $people->tin_number = $request->input('tinNumber');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
         $people->license_expiry_date = $request->input('licenseExpiryDate');
@@ -84,6 +88,7 @@ class PeopleController extends Controller
     public function update(Request $request, $id)
     {
         $people = People::findOrFail($id);
+        $people->employee_number = $request->input('employeeNumber');
         $people->first_name = $request->input('firstName');
         $people->middle_name = $request->input('middleName');
         $people->last_name = $request->input('lastName');
@@ -105,6 +110,9 @@ class PeopleController extends Controller
         $people->start_date = $request->input('startDate');
         $people->company_id = $request->input('companyId');
         $people->department_role_id = $request->input('departmentRoleId');
+        $people->nida_number = $request->input('nidaNumber');
+        $people->ss_number = $request->input('ssNumber');
+        $people->tin_number = $request->input('tinNumber');
         $people->license_number = $request->input('licenseNumber');
         $people->license_issue_date = $request->input('licenseIssueDate');
         $people->license_expiry_date = $request->input('licenseExpiryDate');

@@ -17,7 +17,6 @@
           <div class="row">
             <div class="input-group mb-1 col">
               <div class="col-md-10">
-                <b-button size="sm" class="btn btn-primary" id="new-item-btn"> New Client</b-button>
                 <v-select
                   v-model="newTrip.clientId"
                   label="name"
