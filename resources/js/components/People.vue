@@ -16,7 +16,7 @@
                     variant="primary"
                     v-b-modal.newPersonModal
                   >
-                    New Person
+                    Add New Person
                   </b-button>
                 </div>
               </div>

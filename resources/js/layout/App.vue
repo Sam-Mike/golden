@@ -9,7 +9,7 @@
           <!-- Topbar -->
           <div class="fixed-top d-flex flex-column">
             <nav
-              v-if="this.authenticated"
+              v-if="authenticated"
               class="navbar navbar-expand-lg navbar-dark bg-dark"
             >
               <button
@@ -25,10 +25,13 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                  <li class="nav-item">
+                  <li v-if="user.role_id === 1" class="nav-item">
                     <router-link class="nav-link" to="/">Home</router-link>
                   </li>
-                  <li class="nav-item dropdown">
+                  <li
+                    v-if="user.role_id === 1 || user.role_id === 3"
+                    class="nav-item dropdown"
+                  >
                     <a
                       class="nav-link dropdown-toggle"
                       href="#"
@@ -57,7 +60,10 @@
                       >
                     </div>
                   </li>
-                  <li class="nav-item dropdown">
+                  <li
+                    v-if="user.role_id === 1 || user.role_id === 3"
+                    class="nav-item dropdown"
+                  >
                     <a
                       class="nav-link dropdown-toggle"
                       href="#"
@@ -75,12 +81,18 @@
                       >
                     </div>
                   </li>
-                  <li class="nav-item">
+                  <li
+                    v-if="user.role_id === 1 || user.role_id === 3"
+                    class="nav-item"
+                  >
                     <router-link class="nav-link" to="/trailers"
                       >Trailers</router-link
                     >
                   </li>
-                  <li class="nav-item dropdown">
+                  <li
+                    v-if="user.role_id === 1 || user.role_id === 2"
+                    class="nav-item dropdown"
+                  >
                     <a
                       class="nav-link dropdown-toggle"
                       id="navbarDropdown"
@@ -97,7 +109,7 @@
                       >
                     </div>
                   </li>
-                  <li class="nav-item dropdown">
+                  <li v-if="user.role_id === 1" class="nav-item dropdown">
                     <a
                       class="nav-link dropdown-toggle"
                       id="navbarDropdown"

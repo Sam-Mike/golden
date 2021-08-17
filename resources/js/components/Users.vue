@@ -12,7 +12,7 @@
               variant="primary"
               data-toggle="modal"
               data-target="#exampleModal"
-              v-b-modal.addUserModal
+              v-b-modal.createUserModal
             >
               Create User
             </b-button>
@@ -52,7 +52,7 @@
         title="Add User"
         class="modal fade"
         button-size="sm"
-        id="addUserModal"
+        id="createUserModal"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -75,7 +75,7 @@
                 </b-form-group>
                 <b-form-group label="Email" invalid-feedback="email is required"
                   ><b-form-input
-                    type="text"
+                    type="email"
                     class="form-control"
                     v-model="newUser.email"
                     placeholder="Enter user email"
@@ -98,8 +98,8 @@
                     v-model="newUser.roleId"
                     label="name"
                     :options="roles"
-                    :reduce="(roles) => role.id"
-                    placeholder = "Choose user role"
+                    :reduce="(roles) => roles.id"
+                    placeholder="Choose user role"
                   ></v-select>
                 </b-form-group>
               </form>
@@ -214,13 +214,14 @@ export default {
         name: "",
         email: "",
         password: "",
-        roleId:""
+        roleId: "",
       },
       editUser: {
         id: "",
         name: "",
         email: "",
         password: "",
+        roleId: "",
       },
     };
   },
@@ -250,23 +251,24 @@ export default {
         });
     },
     handleCreateUser(bvModalEvt) {
-      bvModalEvt.PreventDefault();
+      bvModalEvt.preventDefault();
       this.createUser();
     },
-    createUser() {
-      {
-        api
-          .post("users", {
-            name: this.newUser.name,
-            username: this.newUser.username,
-            password: this.newUser.password,
-          })
-          .then((response) => {
-            this.users = response.data.users;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+    async createUser() {
+      try {
+        await api.post("users", {
+          name: this.newUser.name,
+          email: this.newUser.email,
+          password: this.newUser.password,
+          roleId: this.newUser.roleId,
+          userActivityStatus: 1,
+        });
+        this.$nextTick(() => {
+          this.$bvModal.hide("createUserModal");
+          this.getUsers();
+        });
+      } catch (error) {
+        console.log(error);
       }
     },
     userInfo(item, button) {
@@ -274,33 +276,64 @@ export default {
       this.editUser.name = item.name;
       this.editUser.email = item.email;
       this.editUser.password = item.password;
+      this.editUser.roleId = item.role.id;
       this.$root.$emit("bv::show::modal", "updateUserModal", button);
     },
     handleUpdateUser(bvModalEvt) {
-      bvModalEvt.PreventDefault();
+      bvModalEvt.preventDefault();
       this.updateUser();
     },
     async updateUser() {
       try {
-        await api.patch("users/", this.editUser);
+        await api.patch("users/" + this.editUser.id, {
+          name: this.editUser.name,
+          email: this.editUser.email,
+          password: this.editUser.password,
+          roleId: this.editUser.roleId,
+          userActivityStatus: 1,
+        });
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateUserModal");
+          this.getUsers();
+        });
       } catch (error) {
         console.log(error);
       }
     },
     async deactivateUser() {
       try {
-        await api.patch("users", this.editUser);
+        await api.patch("users", {
+          name: this.editUser.name,
+          email: this.editUser.email,
+          password: this.editUser.password,
+          roleId: this.editUser.roleId,
+          userActivityStatus: 2,
+        });
+        this.$nextTick(() => {
+          this.$bvModal.hide("updateUserModal");
+          this.getPeople();
+        });
       } catch (error) {
         console.log(error);
       }
     },
     handleActivateUser(bvModalEvt) {
-      bvModalEvt.PreventDefault();
+      bvModalEvt.preventDefault();
       this.activateUser();
     },
     async activateUser() {
       try {
-        await api.patch("users", this.editUser);
+        await api.patch("users", {
+          name: this.editUser.name,
+          email: this.editUser.email,
+          password: this.editUser.password,
+          roleId: this.editUser.roleId,
+          userActivityStatus: 1,
+        });
+        this.$nextTick(() => {
+          this.$bvModal.hide("inactiveUserModal");
+          this.getPeople();
+        });
       } catch (error) {
         console.log(error);
       }

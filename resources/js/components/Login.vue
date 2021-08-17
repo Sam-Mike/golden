@@ -4,7 +4,7 @@
       <div class="m-2">
         <!-- LOGO -->
         <div id="loginimg">
-          <img  src="/img/copy.ico" />
+          <img src="/img/copy.ico" />
         </div>
         <h3 class="my-12 text-center">Login</h3>
         <div class="form-panel">
@@ -40,7 +40,7 @@
   </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -51,7 +51,11 @@ export default {
       error: [],
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters({
+      user: "auth/user",
+    }),
+  },
   methods: {
     ...mapActions({
       login: "auth/login",
@@ -59,7 +63,18 @@ export default {
     async handleLogin() {
       try {
         await this.login(this.credentials);
-        await this.$router.push({ path: "/" });
+        switch (this.user.role_id) {
+          case 1:
+            await this.$router.push({ path: "/" });
+            break;
+          case 2:
+            await this.$router.push({ path: "/people" });
+            break;
+          case 3:
+            await this.$router.push({ path: "/" });
+            break;
+        }
+        //await this.$router.push({ path: "/" });
       } catch (error) {
         console.log(error);
       }

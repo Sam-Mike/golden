@@ -295,7 +295,7 @@
             <b-col v-if="editClaim.claimDocument" class="border rouded">
               <b>CLAIM DOCUMENT</b>
               <p>
-                <a :href="filesPath + editClaim.claimDocument" @click.prevent="">claim document</a>
+                <a :href="filesPath + editClaim.claimDocument" target="_blank" @click.prevent="">claim document</a>
               </p>
             </b-col>
             <b-col v-else class="border rouded">

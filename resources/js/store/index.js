@@ -9,7 +9,7 @@ export default new Vuex.Store({
     state: {
         //global Data
         company:[],
-        filesPath: "http://127.0.0.1/"
+        filesPath: "http://127.0.0.1:8000/"
     },
     mutations: {
         setGlobalData(state, data){
