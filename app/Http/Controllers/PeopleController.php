@@ -62,6 +62,8 @@ class PeopleController extends Controller
         $people->passport_number = $request->input('passportNumber');
         $people->passport_issue_date = $request->input('passportIssueDate');
         $people->passport_expiry_date = $request->input('passportExpiryDate');
+        $people->next_kin_name = $request->input('nextKinName');
+        $people->next_kin_mobile = $request->input('nextKinMobile');
         $people->activity_status_id = 1; //assignment status is active on creation
         $people->save();
         return  response()->json(['success'], 200);
@@ -120,9 +122,18 @@ class PeopleController extends Controller
         $people->passport_number = $request->input('passportNumber');
         $people->passport_issue_date = $request->input('passportIssueDate');
         $people->passport_expiry_date = $request->input('passportExpiryDate');
+        $people->next_kin_name = $request->input('nextKinName');
+        $people->next_kin_mobile = $request->input('nextKinMobile');
         $people->activity_status_id = $request->input('activityStatusId');
         $people->save();
 
+        return response()->json(["Person updated successfully"], 200);
+    }
+    public function switch_person_activity(Request $request, $id)
+    {
+        $people = People::findOrFail($id);
+        $people->activity_status_id = $request->input('activityStatusId');
+        $people->save();
         return response()->json(["Person updated successfully"], 200);
     }
 

@@ -41,6 +41,8 @@ class PeopleResource extends JsonResource
             'passportNumber' => $this->passport_number,
             'passportIssueDate' => $this->passport_issue_date,
             'passportExpiryDate' => $this->passport_expiry_date,
+            'nextKinName' => $this->next_kin_name,
+            'nextKinMobile' => $this->next_kin_mobile,
             'activityStatus' => new StatusResource($this->status),
         ];
     }

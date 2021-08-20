@@ -354,6 +354,28 @@
             />
           </div>
           <div class="form-group">
+            <label for="nextKinName">Next of Kin</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nextKinName"
+              v-model="newPerson.nextKinName"
+              placeholder="Enter name of next of kin"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="nextKinMobile">Next of Kin Mobile Contact</label>
+            <input
+              type="tel"
+              class="form-control"
+              name="nextKinMobile"
+              v-model="newPerson.nextKinMobile"
+              placeholder="Enter mobile contact of next of kin"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="Profile Picture">Profile Picture</label>
             <b-form-file
               size="sm"
@@ -637,6 +659,28 @@
             />
           </div>
           <div class="form-group">
+            <label for="nextKinName">Next of Kin</label>
+            <input
+              type="text"
+              class="form-control"
+              name="nextKinName"
+              v-model="editPerson.nextKinName"
+              placeholder="Enter name of next of kin"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="nextKinMobile">Next of Kin Mobile Contact</label>
+            <input
+              type="tel"
+              class="form-control"
+              name="nextKinMobile"
+              v-model="editPerson.nextKinMobile"
+              placeholder="Enter mobile contact of next of kin"
+              required
+            />
+          </div>
+          <div class="form-group">
             <label for="Profile Picture">Profile Picture</label>
             <b-form-file
               size="sm"
@@ -662,6 +706,21 @@
         title="Person Info"
       >
         <div class="modal-body">
+          <img
+            id="profile-picture"
+            v-bind:src="editPerson.profilePicture"
+            alt=""
+            style="
+              border-radius: 50%;
+              width: 100px;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;
+              width: 50%;
+            "
+          />
+          <h6>Employee Number</h6>
+          <p>{{ editPerson.employeeNumber }}</p>
           <h6>First Name</h6>
           <p>{{ editPerson.firstName }}</p>
           <h6>Middle Name</h6>
@@ -684,7 +743,10 @@
           <p>{{ editPerson.licenseNumber }}</p>
           <h6>License Issue Date</h6>
           <p>{{ editPerson.licenseIssueDate }}</p>
-          <h6>License Class</h6>
+          <h6>Next of Kin</h6>
+          <p>{{ editPerson.nextKinName }}</p>
+          <h6>Next of Kin Mobile Contact</h6>
+          <p>{{ editPerson.nextKinMobile }}</p>
         </div>
       </b-modal>
     </b-overlay>
@@ -748,6 +810,8 @@ export default {
         passportNumber: "",
         passportIssueDate: "",
         passportExpiryDate: "",
+        nextKinName: "",
+        nextKinMobile: "",
         activityStatus: "",
       },
       editPerson: {
@@ -775,6 +839,8 @@ export default {
         passportNumber: "",
         passportIssueDate: "",
         passportExpiryDate: "",
+        nextKinName: "",
+        nextKinMobile: "",
         activityStatus: "",
       },
     };
@@ -894,6 +960,8 @@ export default {
       this.editPerson.passportNumber = item.passportNumber;
       this.editPerson.passportIssueDate = item.passportIssueDate;
       this.editPerson.passportExpiryDate = item.passportExpiryDate;
+      this.editPerson.nextKinName = item.nextKinName;
+      this.editPerson.nextKinMobile = item.nextKinMobile;
       this.editPerson.activityStatus = item.activityStatus;
       this.$root.$emit("bv::show::modal", "updatePersonModal", button);
     },
@@ -946,18 +1014,8 @@ export default {
     },
     async deactivatePerson() {
       try {
-        await api.patch("people/" + this.editPerson.id, {
-          firstName: this.editPerson.firstName,
-          middleName: this.editPerson.middleName,
-          lastName: this.editPerson.lastName,
-          dob: this.editPerson.dob,
-          mobile: this.editPerson.mobile,
-          startDate: this.editPerson.startDate,
-          companyId: this.editPerson.company.id,
-          departmentId: this.editPerson.department.id,
-          licenseNumber: this.editPerson.licenseNumber,
-          licenseIssueDate: this.editPerson.licenseIssueDate,
-          activityStatus: 3,
+        await api.patch("switch_person_activity/" + this.editPerson.id, {
+          activityStatusId: 3,
         });
         console.log("Person Deactivated");
         this.$nextTick(() => {
@@ -977,18 +1035,8 @@ export default {
     },
     async activatePerson() {
       try {
-        await api.patch("people/" + this.editPerson.id, {
-          firstName: this.editPerson.firstName,
-          middleName: this.editPerson.middleName,
-          lastName: this.editPerson.lastName,
-          dob: this.editPerson.dob,
-          mobile: this.editPerson.mobile,
-          startDate: this.editPerson.startDate,
-          companyId: this.editPerson.company.id,
-          departmentId: this.editPerson.department.id,
-          licenseNumber: this.editPerson.licenseNumber,
-          licenseIssueDate: this.editPerson.licenseIssueDate,
-          activityStatus: 1,
+        await api.patch("switch_person_activity/" + this.editPerson.id, {
+          activityStatusId: 1,
         });
         console.log("Person Activated");
         this.$nextTick(() => {

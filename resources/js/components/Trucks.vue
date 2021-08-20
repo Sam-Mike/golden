@@ -331,10 +331,7 @@ export default {
     },
     async deactivateTruck() {
       try {
-        await api.patch("trucks/" + this.editTruck.content.id, {
-          registrationNumber: this.editTruck.content.registrationNumber,
-          companyId: this.editTruck.content.company.id,
-          truckTypeId: this.editTruck.content.truckType.id,
+        await api.patch("switch_truck_activity/" + this.editTruck.id, {
           activityStatusId: 3,
         });
         console.log("Truck deactivated");
@@ -359,10 +356,7 @@ export default {
     },
     async activateTruck() {
       try {
-        await api.patch("trucks/" + this.editTruck.content.id, {
-          registrationNumber: this.editTruck.content.registrationNumber,
-          companyId: this.editTruck.content.company.id,
-          truckTypeId: this.editTruck.content.truckType.id,
+        await api.patch("switch_truck_activity/" + this.editTruck.id, {
           activityStatusId: 1,
         });
         console.log("Truck activated");

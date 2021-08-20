@@ -74,6 +74,13 @@ class TrailerController extends Controller
 
         return  response()->json(['success'], 200);
     }
+    public function switch_trailer_activity(Request $request, $id)
+    {
+        $trailer = Trailer::findOrFail($id);
+        $trailer->activity_status_id = $request->input('activityStatusId');
+        $trailer->save();
+        return response()->json(["Trailer updated successfully"], 200);
+    }
 
     /**
      * Remove the specified resource from storage.

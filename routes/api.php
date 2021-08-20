@@ -29,9 +29,11 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
 Route::get('globalData', [HomeController::class, 'index']);
 Route::patch('endTrip/{id}', [TripController::class, 'endTrip']);
+Route::patch('switch_person_activity/{id}', [PeopleController::class, 'switch_person_activity']);
+Route::patch('switch_truck_activity/{id}', [TruckController::class, 'switch_truck_activity']);
+Route::patch('switch_trailer_activity/{id}', [TrailerController::class, 'switch_trailer_activity']);
 Route::apiResources([
     'clients' => ClientController::class,
     'people' => PeopleController::class,

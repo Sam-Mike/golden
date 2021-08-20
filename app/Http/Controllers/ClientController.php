@@ -78,6 +78,13 @@ class ClientController extends Controller
             "Client updated Successfully", 200
         ]);
     }
+    public function switch_client_activity(Request $request, $id)
+    {
+        $client = Client::findOrFail($id);
+        $client->activity_status_id = $request->input('activityStatusId');
+        $client->save();
+        return response()->json(["Client updated successfully"], 200);
+    }
 
     /**
      * Remove the specified resource from storage.

@@ -77,6 +77,13 @@ class TruckController extends Controller
         $truck->save();
         return  response()->json(['success'], 200);
     }
+    public function switch_truck_activity(Request $request, $id)
+    {
+        $truck = Truck::findOrFail($id);
+        $truck->activity_status_id = $request->input('activityStatusId');
+        $truck->save();
+        return response()->json(["Truck updated successfully"], 200);
+    }
 
     /**
      * Remove the specified resource from storage.

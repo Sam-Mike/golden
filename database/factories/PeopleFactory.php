@@ -42,6 +42,8 @@ class PeopleFactory extends Factory
             'passport_number' => $this->faker->numberBetween($min = 1000000000, $max = 1999999999),
             'passport_issue_date' => $this->faker->date($format = 'Y-m-d'),
             'passport_expiry_date' => $this->faker->date($format = 'Y-m-d'),
+            'next_kin_name' => $this->faker->name,
+            'next_kin_mobile' => $this->faker->phoneNumber,
             'activity_status_id' => 1,
         ];
     }

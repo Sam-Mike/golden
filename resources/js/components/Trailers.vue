@@ -372,11 +372,7 @@ export default {
     },
     async deactivateTrailer() {
       try {
-        await api.patch("trailers/" + this.editTrailer.id, {
-          registrationNumber: this.editTrailer.registrationNumber,
-          tlNumber: this.editTrailer.tlNumber,
-          trailerTypeId: this.editTrailer.trailerType.id,
-          companyId: this.editTrailer.company.id,
+        await api.patch("switch_trailer_activity/" + this.editTrailer.id, {
           activityStatusId: 3,
         });
         this.$nextTick(() => {
@@ -400,11 +396,7 @@ export default {
     },
     async activateTrailer() {
       try {
-        await api.patch("trailers/" + this.editTrailer.id, {
-          registrationNumber: this.editTrailer.registrationNumber,
-          tlNumber: this.editTrailer.tlNumber,
-          trailerTypeId: this.editTrailer.trailerType.id,
-          companyId: this.editTrailer.company.id,
+        await api.patch("switch_trailer_activity/" + this.editTrailer.id, {
           activityStatusId: 1,
         });
         console.log("Trailer activated");

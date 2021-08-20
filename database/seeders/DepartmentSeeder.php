@@ -14,13 +14,15 @@ class DepartmentSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('department')->insert(['name' => 'DIRECTORATE']);
         DB::table('department')->insert(['name' => 'OPERATIONS']);
-        DB::table('department')->insert(['name' => 'FINANCE']);
-        DB::table('department')->insert(['name' => 'HR']);
-        DB::table('department')->insert(['name' => 'IT']);
-        DB::table('department')->insert(['name' => 'ADMINISTRATION']);
-        DB::table('department')->insert(['name' => 'HSE']);
-        DB::table('department')->insert(['name' => 'TYRES']);
+        DB::table('department')->insert(['name' => 'H.R']);
+        DB::table('department')->insert(['name' => 'I.T']);
+        DB::table('department')->insert(['name' => 'H.S.E']);
         DB::table('department')->insert(['name' => 'WORKSHOP']);
+        DB::table('department')->insert(['name' => 'FINANCE']);
+        DB::table('department')->insert(['name' => 'ADMINISTRATION']);
+        DB::table('department')->insert(['name' => 'TYRES']);
+        DB::table('department')->insert(['name' => 'SECURITY']);
     }
 }
