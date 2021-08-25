@@ -21,6 +21,7 @@ use App\Http\Resources\ClientResource;
 use App\Http\Resources\CargoResource;
 use App\Http\Resources\LocationResource;
 use App\Http\Resources\TripClassResource;
+use Psy\Command\WhereamiCommand;
 
 class AllocationController extends Controller
 {
@@ -35,7 +36,15 @@ class AllocationController extends Controller
             "allocations" => AllocationResource::collection(Allocation::all()),
             "trucks" => TruckResource::collection(Truck::all()),
             "trailers" => TrailerResource::collection(Trailer::all()),
-            "drivers" => PeopleResource::collection(People::all()),
+            "drivers" => PeopleResource::collection(
+                People::all()
+                //where('department_role_id', 7)
+                // ->where('department_role_id', 8)
+                // ->where('department_role_id', 9)
+                // ->where('department_role_id', 10)
+                // ->where('department_role_id', 11)
+                // ->where('department_role_id', 12)
+            ),
             "clients" => ClientResource::collection(Client::all()),
             "company" => CompanyResource::collection(Company::all()),
             "cargo" => CargoResource::collection(Cargo::all()),

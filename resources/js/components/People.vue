@@ -3,8 +3,8 @@
     <b-overlay :show="loading">
       <b-card no-body>
         <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
-          <!-- Active People -->
-          <b-tab title="Active">
+          <!-- COACH People -->
+          <b-tab title="COACH">
             <!-- DataTales  -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -39,7 +39,111 @@
                     striped
                     hover
                     :small="true"
-                    :items="activePeople"
+                    :items="coachPeople"
+                    :fields="peopleFields"
+                    :filter="tableFilter"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                    @row-clicked="personInfo"
+                  >
+                    <template #cell(Name)="data">
+                      {{ data.item.firstName }} {{ data.item.middleName }}
+                      {{ data.item.lastName }}
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+          <!-- FLEET People -->
+          <b-tab title="FLEET">
+            <!-- DataTales  -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+                  <!-- Button trigger Create Person modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    v-b-modal.newPersonModal
+                  >
+                    Add New Person
+                  </b-button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="fleetPeople"
+                    :fields="peopleFields"
+                    :filter="tableFilter"
+                    :head-variant="tableHeadVariant"
+                    :sticky-header="true"
+                    @row-clicked="personInfo"
+                  >
+                    <template #cell(Name)="data">
+                      {{ data.item.firstName }} {{ data.item.middleName }}
+                      {{ data.item.lastName }}
+                    </template>
+                  </b-table>
+                </div>
+              </div>
+            </div>
+          </b-tab>
+          <!-- WHEELS People -->
+          <b-tab title="WHEELS">
+            <!-- DataTales  -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+                  <!-- Button trigger Create Person modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    v-b-modal.newPersonModal
+                  >
+                    Add New Person
+                  </b-button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="table-search">
+                  <b-input-group size="sm">
+                    <b-form-input
+                      id="tableFilter"
+                      type="search"
+                      v-model="tableFilter"
+                      placeholder="Search"
+                    ></b-form-input>
+                  </b-input-group>
+                </div>
+                <div class="table-responsive">
+                  <b-table
+                    class="table-list"
+                    responsive
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="wheelsPeople"
                     :fields="peopleFields"
                     :filter="tableFilter"
                     :head-variant="tableHeadVariant"
@@ -233,7 +337,7 @@
           <div class="form-group">
             <label for="nidaNumber">NIDA Number</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               name="nidaNumber"
               v-model="newPerson.nidaNumber"
@@ -538,7 +642,7 @@
           <div class="form-group">
             <label for="nidaNumber">NIDA Number</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               name="nidaNumber"
               v-model="editPerson.nidaNumber"
@@ -850,6 +954,27 @@ export default {
       return this.people.filter(
         (people) =>
           people.activityStatus.id === 1 || people.activityStatus.id === 2
+      );
+    },
+    coachPeople() {
+      return this.people.filter(
+        (people) =>
+          people.company.id === 1 &&
+          (people.activityStatus.id === 1 || people.activityStatus.id === 2)
+      );
+    },
+    fleetPeople() {
+      return this.people.filter(
+        (people) =>
+          people.company.id === 2 &&
+          (people.activityStatus.id === 1 || people.activityStatus.id === 2)
+      );
+    },
+    wheelsPeople() {
+      return this.people.filter(
+        (people) =>
+          people.company.id === 3 &&
+          (people.activityStatus.id === 1 || people.activityStatus.id === 2)
       );
     },
     inactivePeople() {

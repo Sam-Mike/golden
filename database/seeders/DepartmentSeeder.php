@@ -22,7 +22,7 @@ class DepartmentSeeder extends Seeder
         DB::table('department')->insert(['name' => 'WORKSHOP']);
         DB::table('department')->insert(['name' => 'FINANCE']);
         DB::table('department')->insert(['name' => 'ADMINISTRATION']);
-        DB::table('department')->insert(['name' => 'TYRES']);
         DB::table('department')->insert(['name' => 'SECURITY']);
+        DB::table('department')->insert(['name' => 'TYRES']);
     }
 }

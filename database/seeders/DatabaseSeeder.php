@@ -32,9 +32,6 @@ class DatabaseSeeder extends Seeder
             ClaimTypeSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
-            PeopleSeeder::class,
-            TruckSeeder::class,
-            TrailerSeeder::class,
         ]); 
     }
 }
