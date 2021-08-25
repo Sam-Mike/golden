@@ -864,6 +864,7 @@ export default {
       loading: false,
       people: [],
       peopleFields: [
+        { key: "employeeNumber", label: "Emp. No", sortable: true },
         { key: "Name", label: "Name", sortable: true },
         { key: "dob" },
         { key: "age", sortable: true },
@@ -876,7 +877,6 @@ export default {
         { key: "departmentRole.name", label: "Role" },
         { key: "startDate", sortable: true },
         { key: "serviceTime", sortable: true },
-        { key: "licenseExpiryDate", label: "License Expiry", sortable: true },
         { key: "activityStatus.name", label: "Assignment Status" },
       ],
       tableFilter: null,
