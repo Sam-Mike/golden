@@ -140,7 +140,6 @@
               </div>
             </nav>
           </div>
-          <div class="justify-between"></div>
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->

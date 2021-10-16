@@ -15,16 +15,16 @@ class CreateTrailerTable extends Migration
     {
         Schema::create('trailer', function (Blueprint $table) {
             $table->id();
-            $table->integer('tl_number');
+            $table->integer('tl_number')->nullable();
             $table->string('registration_number');
             $table->foreignId('trailer_make_id')->constrained('trailer_make');
-            $table->integer('year_model')->nullable();
+            $table->year('year_model')->nullable();
             $table->string('chassis_number')->nullable();
             $table->float('length', 5, 2)->nullable();
             $table->float('width', 5, 2)->nullable();
             $table->float('height', 5, 2)->nullable();
             $table->integer('maximum_weight')->nullable();
-            $table->integer('maximum_pallet')->nullable();
+            $table->integer('maximum_pallets')->nullable();
             $table->foreignId('trailer_type_id')->constrained('trailer_type');
             $table->foreignId('company_id')->constrained('company');
             $table->foreignId('activity_status_id')->constrained('status');

@@ -11,6 +11,7 @@ use App\Http\Resources\PeopleResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\DepartmentRoleResource;
 use App\Http\Resources\DepartmentResource;
+use GdImage;
 use Illuminate\Support\Facades\Storage;
 
 class PeopleController extends Controller
@@ -46,8 +47,9 @@ class PeopleController extends Controller
         $people->dob = $request->input('dob');
         $people->mobile = $request->input('mobile');
         if ($request->hasFile('profilePicture')) {
-            $pictureName = date('Ymd_Hi') . $request->file('profilePicture')->getClientOriginalName();
-            $people->profile_picture = $request->file('profilePicture')->storeAs('profilePictures', $pictureName);
+            $resized = $request->file('profilePicture')->imagecreatetruecolor(200, 200);
+            $pictureName = date('Ymd_Hi') . $resized->getClientOriginalName();
+            $people->profile_picture = $resized->storeAs('profilePictures', $pictureName);
         }
         $people->start_date = $request->input('startDate');
         $people->company_id = $request->input('companyId');

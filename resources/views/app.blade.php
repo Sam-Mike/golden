@@ -9,8 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Golden</title>
+    <title>Golden Group</title>
 
+    <link rel="shortcut icon" type="image/x-icon" href="gold_final.ico" />
 
     <!-- Custom fonts for this template-->
     {{-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> --}}
@@ -33,9 +34,6 @@
     <div id="app">
         <App />
     </div>
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
 
     <script src="{{mix('js/app.js')}}" type="text/javascript"></script>
     <!-- Bootstrap core JavaScript-->

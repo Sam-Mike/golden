@@ -102,12 +102,153 @@
       >
         <form>
           <div class="form-group">
-            <label for="">Reg Number</label>
+            <label for="">Fleet Number</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.fleetNumber"
+              placeholder="Enter vehicle fleet number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Registration Number</label>
             <input
               type="text"
               class="form-control"
               v-model="newTruck.registrationNumber"
-              placeholder="Enter truck registration number"
+              placeholder="Enter vehicle registration number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Make</label>
+            <v-select
+              v-model="newTruck.vehicleMakeId"
+              label="name"
+              :options="vehicleMake"
+              :reduce="(vehicleMake) => vehicleMake.id"
+              placeholder="Choose Vehicle Make"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="">Year Model</label>
+            <input
+              type="number"
+              min="1900"
+              class="form-control"
+              v-model="newTruck.yearModel"
+              placeholder="Enter vehicle model year"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Chassis Number</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.chassisNumber"
+              placeholder="Enter vehicle chassis number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Configuration Model</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.configurationModel"
+              placeholder="Enter vehicle configuration model"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Transmission Type</label>
+            <v-select
+              v-model="newTruck.transmissionTypeId"
+              label="name"
+              :options="vehicleTransmissionType"
+              :reduce="(vehicleTransmissionType) => vehicleTransmissionType.id"
+              placeholder="Choose vehicle transmission type"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="">Engine Size</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.engineSize"
+              placeholder="Enter vehicle engine size"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Autorized Payload</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.authorizedPayload"
+              placeholder="Enter vehicle authorized payload"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Length</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.length"
+              placeholder="Enter vehicle length"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Width</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.width"
+              placeholder="Enter vehicle width"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Height</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.height"
+              placeholder="Enter vehicle height"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Fuel Type</label>
+            <v-select
+              v-model="newTruck.fuelTypeId"
+              label="name"
+              :options="fuelType"
+              :reduce="(fuelType) => fuelType.id"
+              placeholder="Choose fuel type"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Fuel Capacity</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.fuelCapacity"
+              placeholder="Enter vehicle fuel capacity"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Fuel Comsumption</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.fuelConsumption"
+              placeholder="Enter vehicle fuel consumption"
               required
             />
           </div>
@@ -158,19 +299,160 @@
         </template>
         <form>
           <div class="form-group">
-            <label for="">Reg Number</label>
+            <label for="">Fleet Number</label>
             <input
               type="text"
               class="form-control"
-              v-model="editTruck.registrationNumber"
-              placeholder="Enter truck registration number"
+              v-model="newTruck.fleetNumber"
+              placeholder="Enter vehicle fleet number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Registration Number</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.registrationNumber"
+              placeholder="Enter vehicle registration number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Make</label>
+            <v-select
+              v-model="newTruck.vehicleMakeId"
+              label="name"
+              :options="vehicleMake"
+              :reduce="(vehicleMake) => vehicleMake.id"
+              placeholder="Choose Vehicle Make"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="">Year Model</label>
+            <input
+              type="number"
+              min="1900"
+              class="form-control"
+              v-model="newTruck.yearModel"
+              placeholder="Enter vehicle model year"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Chassis Number</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.chassisNumber"
+              placeholder="Enter vehicle chassis number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Configuration Model</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.configurationModel"
+              placeholder="Enter vehicle configuration model"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Transmission Type</label>
+            <v-select
+              v-model="newTruck.transmissionTypeId"
+              label="name"
+              :options="vehicleTransmissionType"
+              :reduce="(vehicleTransmissionType) => vehicleTransmissionType.id"
+              placeholder="Choose vehicle transmission type"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="">Engine Size</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.engineSize"
+              placeholder="Enter vehicle engine size"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Autorized Payload</label>
+            <input
+              type="text"
+              class="form-control"
+              v-model="newTruck.authorizedPayload"
+              placeholder="Enter vehicle authorized payload"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Length</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.length"
+              placeholder="Enter vehicle length"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Width</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.width"
+              placeholder="Enter vehicle width"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Height</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.height"
+              placeholder="Enter vehicle height"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Fuel Type</label>
+            <v-select
+              v-model="newTruck.fuelTypeId"
+              label="name"
+              :options="fuelType"
+              :reduce="(fuelType) => fuelType.id"
+              placeholder="Choose fuel type"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Fuel Capacity</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.fuelCapacity"
+              placeholder="Enter vehicle fuel capacity"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="">Vehicle Fuel Comsumption</label>
+            <input
+              type="number"
+              class="form-control"
+              v-model="newTruck.fuelConsumption"
+              placeholder="Enter vehicle fuel consumption"
               required
             />
           </div>
           <div class="form-group">
             <label for="">Company</label>
             <v-select
-              v-model="editTruck.company.id"
+              v-model="newTruck.companyId"
               label="name"
               :options="company"
               :reduce="(company) => company.id"
@@ -180,7 +462,7 @@
           <div class="form-group">
             <label for="">Truck Type</label>
             <v-select
-              v-model="editTruck.truckType.id"
+              v-model="newTruck.truckTypeId"
               label="name"
               :options="truckType"
               :reduce="(truckType) => truckType.id"
@@ -221,8 +503,12 @@ export default {
       loading: false,
       trucks: [],
       truckType: [],
+      vehicleMake: [],
+      vehicleTransmissionType: [],
+      fuelType: [],
       company: [],
       truckFields: [
+        { key: "fleetNumber" },
         { key: "registrationNumber" },
         { key: "company.name", label: "Company" },
         { key: "truckType.name", label: "Truck Type" },
@@ -271,6 +557,9 @@ export default {
       api.get("trucks").then(({ data }) => {
         this.trucks = data.trucks;
         this.truckType = data.truckType;
+        this.vehicleMake = data.vehicleMake;
+        this.vehicleTransmissionType = data.vehicleTransmissionType;
+        this.fuelType = data.fuelType;
         this.company = data.company;
         this.loading = false;
       });

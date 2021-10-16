@@ -22,7 +22,9 @@ class TruckFactory extends Factory
     public function definition()
     {
         return [
+            'fleet_number' => $this->faker->numerify('###'),
             'registration_number' => $this->faker->regexify('T[1-9]{3}[A-Z]{3}'),
+            'make_id' => $this->faker->numberBetween(1,3),
             'year_model' => $this->faker->year($max = 'now'),
             'chassis_number' => $this->faker->regexify('[A-Z]{4}[1-9]{8}'),
             'engine_size' => 300,
@@ -32,7 +34,7 @@ class TruckFactory extends Factory
             'height' => 3.8,
             'fuel_capacity' => 770,
             'fuel_consumption' => 2.21,
-            'vehicle_transmission_type_id' => $this->faker->numberBetween(1,2),
+            'transmission_type_id' => $this->faker->numberBetween(1,2),
             'fuel_type_id' => $this->faker->numberBetween(1,2),
             'make_id' => $this->faker->numberBetween(1,3),
             'company_id' => $this->faker->numberBetween(1, 3),

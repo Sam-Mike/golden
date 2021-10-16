@@ -27,7 +27,7 @@ class PeopleResource extends JsonResource
             'mobile' => $this->mobile,
             'profilePicture' => Storage::url($this->profile_picture),
             'startDate' => $this->start_date,
-            'serviceTime' => date_diff(date_create($this->start_date), today(), true)->format('%y years'),
+            'serviceTime' => date_diff(date_create($this->start_date), today(), true)->format('%y years, %m months'),
             'company' => new CompanyResource($this->company),
             'departmentRole' => new DepartmentRoleResource($this->department_role),
             'nidaNumber' => $this->nida_number,

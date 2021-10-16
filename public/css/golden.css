@@ -33,7 +33,7 @@ nav > div > ul > li.active > a {
 /*table search*/
 .table-search {
     width: 20%;
-    padding: 5px;
+    padding: 1px;
     float: left;
 }
 

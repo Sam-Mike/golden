@@ -14,6 +14,7 @@ class DepartmentRoleSeeder extends Seeder
      */
     public function run()
     {
+        //NOTE:ALL NEW ROLES ARE ADDED AT THE BOTTOM REGARDLESS OF THE DEPARTMENTS
         //DIRECTORATE roles DEPT 1
         DB::table('department_role')->insert(['name' => 'DIRECTOR', 'department_id' => 1]);
         //OPERATIONS roles DEPT 2
@@ -64,9 +65,10 @@ class DepartmentRoleSeeder extends Seeder
         DB::table('department_role')->insert(['name' => 'CLERK', 'department_id' => 8]);
         DB::table('department_role')->insert(['name' => 'CLEANER', 'department_id' => 8]);
         DB::table('department_role')->insert(['name' => 'GARDENER', 'department_id' => 8]);
-        DB::table('department_role')->insert(['name' => 'WORKSHOP-MANAGER', 'department_id' => 8]);
         //SECURITY roles dept 9
         DB::table('department_role')->insert(['name' => 'SECURITY-GUARD', 'department_id' => 9]);
+        //additional workshop roles
+        DB::table('department_role')->insert(['name' => 'TECH-MANAGER', 'department_id' => 6]);
         
 
     }

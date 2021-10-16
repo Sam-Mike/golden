@@ -1,212 +1,198 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <b-card no-body>
-        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
-          <!-- COACH People -->
-          <b-tab title="COACH">
-            <!-- DataTales  -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                  <!-- Button trigger Create Person modal -->
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    v-b-modal.newPersonModal
-                  >
-                    Add New Person
-                  </b-button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="coachPeople"
-                    :fields="peopleFields"
-                    :filter="tableFilter"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    @row-clicked="personInfo"
-                  >
-                    <template #cell(Name)="data">
-                      {{ data.item.firstName }} {{ data.item.middleName }}
-                      {{ data.item.lastName }}
-                    </template>
-                  </b-table>
-                </div>
+      <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
+        <!-- COACH People -->
+        <b-tab title="COACH">
+          <!-- DataTales  -->
+          <div class="card shadow">
+            <div class="card-header py-auto">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <!-- Button trigger Create Person modal -->
+                <b-button size="sm" variant="primary" v-b-modal.newPersonModal>
+                  Add New Person
+                </b-button>
               </div>
             </div>
-          </b-tab>
-          <!-- FLEET People -->
-          <b-tab title="FLEET">
-            <!-- DataTales  -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                  <!-- Button trigger Create Person modal -->
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    v-b-modal.newPersonModal
-                  >
-                    Add New Person
-                  </b-button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="fleetPeople"
-                    :fields="peopleFields"
-                    :filter="tableFilter"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    @row-clicked="personInfo"
-                  >
-                    <template #cell(Name)="data">
-                      {{ data.item.firstName }} {{ data.item.middleName }}
-                      {{ data.item.lastName }}
-                    </template>
-                  </b-table>
-                </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                  size="sm"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive-sm">
+              <b-table
+                class="table-list"
+                responsive
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="coachPeople"
+                :fields="peopleFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                :sticky-header="true"
+                @row-clicked="personInfo"
+              >
+                <template #cell(Name)="data">
+                  {{ data.item.firstName }} {{ data.item.middleName }}
+                  {{ data.item.lastName }}
+                </template>
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+        <!-- FLEET People -->
+        <b-tab title="FLEET">
+          <!-- DataTales  -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <!-- Button trigger Create Person modal -->
+                <b-button size="sm" variant="primary" v-b-modal.newPersonModal>
+                  Add New Person
+                </b-button>
               </div>
             </div>
-          </b-tab>
-          <!-- WHEELS People -->
-          <b-tab title="WHEELS">
-            <!-- DataTales  -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                  <!-- Button trigger Create Person modal -->
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    v-b-modal.newPersonModal
-                  >
-                    Add New Person
-                  </b-button>
-                </div>
+            <div class="card-body">
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
               </div>
-              <div class="card-body">
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="wheelsPeople"
-                    :fields="peopleFields"
-                    :filter="tableFilter"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    @row-clicked="personInfo"
-                  >
-                    <template #cell(Name)="data">
-                      {{ data.item.firstName }} {{ data.item.middleName }}
-                      {{ data.item.lastName }}
-                    </template>
-                  </b-table>
-                </div>
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="fleetPeople"
+                  :fields="peopleFields"
+                  :filter="tableFilter"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="personInfo"
+                >
+                  <template #cell(Name)="data">
+                    {{ data.item.firstName }} {{ data.item.middleName }}
+                    {{ data.item.lastName }}
+                  </template>
+                </b-table>
               </div>
             </div>
-          </b-tab>
-          <!-- Inactive People -->
-          <b-tab title="In-active">
-            <!-- DataTales  -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                  <!-- Button trigger Create Person modal -->
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="inactivePeople"
-                    :fields="peopleFields"
-                    :filter="tableFilter"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    @row-clicked="inactivePersonInfo"
-                  >
-                    <template #cell(Name)="data">
-                      {{ data.item.firstName }} {{ data.item.middleName }}
-                      {{ data.item.lastName }}
-                    </template>
-                  </b-table>
-                </div>
+          </div>
+        </b-tab>
+        <!-- WHEELS People -->
+        <b-tab title="WHEELS">
+          <!-- DataTales  -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <!-- Button trigger Create Person modal -->
+                <b-button size="sm" variant="primary" v-b-modal.newPersonModal>
+                  Add New Person
+                </b-button>
               </div>
             </div>
-          </b-tab>
-        </b-tabs>
-      </b-card>
-
+            <div class="card-body">
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </div>
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="wheelsPeople"
+                  :fields="peopleFields"
+                  :filter="tableFilter"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="personInfo"
+                >
+                  <template #cell(Name)="data">
+                    {{ data.item.firstName }} {{ data.item.middleName }}
+                    {{ data.item.lastName }}
+                  </template>
+                </b-table>
+              </div>
+            </div>
+          </div>
+        </b-tab>
+        <!-- Inactive People -->
+        <b-tab title="In-active">
+          <!-- DataTales  -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <!-- Button trigger Create Person modal -->
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </div>
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="inactivePeople"
+                  :fields="peopleFields"
+                  :filter="tableFilter"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="inactivePersonInfo"
+                >
+                  <template #cell(Name)="data">
+                    {{ data.item.firstName }} {{ data.item.middleName }}
+                    {{ data.item.lastName }}
+                  </template>
+                </b-table>
+              </div>
+            </div>
+          </div>
+        </b-tab>
+      </b-tabs>
       <!-- Create Person Modal -->
       <b-modal
         scrollable
@@ -232,6 +218,7 @@
               type="number"
               class="form-control"
               name="employeeNumber"
+              size="20"
               v-model="newPerson.employeeNumber"
               placeholder="Enter Employee Number"
               required
