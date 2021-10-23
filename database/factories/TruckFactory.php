@@ -22,7 +22,6 @@ class TruckFactory extends Factory
     public function definition()
     {
         return [
-            'fleet_number' => $this->faker->numerify('###'),
             'registration_number' => $this->faker->regexify('T[1-9]{3}[A-Z]{3}'),
             'make_id' => $this->faker->numberBetween(1,3),
             'year_model' => $this->faker->year($max = 'now'),

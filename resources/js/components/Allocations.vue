@@ -61,168 +61,151 @@
             </div>
           </div>
         </div>
-        <b-card no-body>
-          <!-- COACH TAB -->
-          <b-tabs
-            active-nav-item-class="font-weight-bold text-uppercase"
-            content-class="mt-3"
-          >
-            <b-tab title="Coach" active>
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <div class="d-flex row justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      
-                    </h6>
-                    <b-button
-                      size="sm"
-                      variant="primary"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                      v-b-modal.newCoachAllocationModal
-                    >
-                      New Allocation
-                    </b-button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <!-- dataTable -->
-                    <b-table
-                      class="table-list"
-                      responsive
-                      bordered
-                      striped
-                      hover
-                      :small="true"
-                      :items="coachAllocations"
-                      :fields="allocationsFields"
-                      :head-variant="tableHeadVariant"
-                      :sticky-header="true"
-                      @row-clicked="allocationInfo"
-                    >
-                      <template #cell(select)="methods"
-                        ><b-form-checkbox
-                          v-model="newTrip.checkedAllocations"
-                          :value="methods.item.id"
-                          unchecked-value=""
-                        ></b-form-checkbox
-                      ></template>
-                      <template #cell(driverName)="methods">
-                        {{ methods.item.driver.firstName }}
-                        {{ methods.item.driver.middleName }}
-                        {{ methods.item.driver.lastName }}
-                      </template>
-                      
-                    </b-table>
-                  </div>
-                </div>
+        <!-- COACH TAB -->
+        <b-tabs
+          active-nav-item-class="font-weight-bold text-uppercase"
+          content-class="mt-3"
+        >
+          <b-tab title="Coach" active>
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  v-b-modal.newCoachAllocationModal
+                >
+                  New Allocation
+                </b-button>
               </div>
-            </b-tab>
-            <!-- FLEET TAB -->
-            <b-tab title="Fleet">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <div class="d-flex row justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Allocations
-                    </h6>
-                    <b-button
-                      size="sm"
-                      variant="primary"
-                      data-toggle="modal"
-                      v-b-modal.newFleetAllocationModal
-                    >
-                      New Allocation
-                    </b-button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <b-table
-                      class="table-list"
-                      responsive
-                      bordered
-                      striped
-                      hover
-                      :small="true"
-                      :items="fleetAllocations"
-                      :fields="allocationsFields"
-                      :head-variant="tableHeadVariant"
-                      :sticky-header="true"
-                      @row-clicked="allocationInfo"
-                    >
-                      <template #cell(select)="methods"
-                        ><b-form-checkbox
-                          v-model="newTrip.checkedAllocations"
-                          :value="methods.item.id"
-                          unchecked-value=""
-                        ></b-form-checkbox
-                      ></template>
-                      <template #cell(driverName)="methods">
-                        {{ methods.item.driver.firstName }}
-                        {{ methods.item.driver.middleName }}
-                        {{ methods.item.driver.lastName }}
-                      </template>
-                      
-                    </b-table>
-                  </div>
-                </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <!-- dataTable -->
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="coachAllocations"
+                  :fields="allocationsFields"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="allocationInfo"
+                >
+                  <template #cell(select)="methods"
+                    ><b-form-checkbox
+                      v-model="newTrip.checkedAllocations"
+                      :value="methods.item.id"
+                      unchecked-value=""
+                    ></b-form-checkbox
+                  ></template>
+                  <template #cell(driverName)="methods">
+                    {{ methods.item.driver.firstName }}
+                    {{ methods.item.driver.middleName }}
+                    {{ methods.item.driver.lastName }}
+                  </template>
+                </b-table>
               </div>
-            </b-tab>
-            <!-- WHEELS TAB -->
-            <b-tab title="Wheels">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <div class="d-flex row justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      Allocations
-                    </h6>
-                    <b-button
-                      size="sm"
-                      variant="primary"
-                      data-toggle="modal"
-                      v-b-modal.newWheelsAllocationModal
-                    >
-                      New Allocation
-                    </b-button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <b-table
-                      class="table-list"
-                      responsive
-                      bordered
-                      striped
-                      hover
-                      :small="true"
-                      :items="wheelsAllocations"
-                      :fields="allocationsFields"
-                      :head-variant="tableHeadVariant"
-                      :sticky-header="true"
-                      @row-clicked="allocationInfo"
-                    >
-                      <template #cell(select)="methods"
-                        ><b-form-checkbox
-                          v-model="newTrip.checkedAllocations"
-                          :value="methods.item.id"
-                          unchecked-value=""
-                        ></b-form-checkbox
-                      ></template>
-                      <template #cell(driverName)="methods">
-                        {{ methods.item.driver.firstName }}
-                        {{ methods.item.driver.middleName }}
-                        {{ methods.item.driver.lastName }}
-                      </template>
-                      
-                    </b-table>
-                  </div>
-                </div>
+            </div>
+          </b-tab>
+          <!-- FLEET TAB -->
+          <b-tab title="Fleet">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  v-b-modal.newFleetAllocationModal
+                >
+                  New Allocation
+                </b-button>
               </div>
-            </b-tab>
-          </b-tabs>
-        </b-card>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="fleetAllocations"
+                  :fields="allocationsFields"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="allocationInfo"
+                >
+                  <template #cell(select)="methods"
+                    ><b-form-checkbox
+                      v-model="newTrip.checkedAllocations"
+                      :value="methods.item.id"
+                      unchecked-value=""
+                    ></b-form-checkbox
+                  ></template>
+                  <template #cell(driverName)="methods">
+                    {{ methods.item.driver.firstName }}
+                    {{ methods.item.driver.middleName }}
+                    {{ methods.item.driver.lastName }}
+                  </template>
+                </b-table>
+              </div>
+            </div>
+          </b-tab>
+          <!-- WHEELS TAB -->
+          <b-tab title="Wheels">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  v-b-modal.newWheelsAllocationModal
+                >
+                  New Allocation
+                </b-button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="wheelsAllocations"
+                  :fields="allocationsFields"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="allocationInfo"
+                >
+                  <template #cell(select)="methods"
+                    ><b-form-checkbox
+                      v-model="newTrip.checkedAllocations"
+                      :value="methods.item.id"
+                      unchecked-value=""
+                    ></b-form-checkbox
+                  ></template>
+                  <template #cell(driverName)="methods">
+                    {{ methods.item.driver.firstName }}
+                    {{ methods.item.driver.middleName }}
+                    {{ methods.item.driver.lastName }}
+                  </template>
+                </b-table>
+              </div>
+            </div>
+          </b-tab>
+        </b-tabs>
       </div>
       <!-- Allocation Tabs -->
 

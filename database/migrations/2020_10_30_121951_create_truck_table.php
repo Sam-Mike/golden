@@ -15,7 +15,6 @@ class CreateTruckTable extends Migration
     {
         Schema::create('truck', function (Blueprint $table) {
             $table->id();
-            $table->string('fleet_number')->nullable();
             $table->string('registration_number');
             $table->foreignId('make_id')->nullable()->constrained('vehicle_make');
             $table->foreignId('truck_type_id')->constrained('truck_type');
@@ -23,7 +22,7 @@ class CreateTruckTable extends Migration
             $table->string('chassis_number')->nullable();
             $table->string('truck_model_configuration')->nullable();
             $table->integer('engine_size')->nullable();
-            $table->integer('authorized_payload')->nullable();
+            $table->string('authorized_payload')->nullable();
             $table->float('length', 5, 2)->nullable();
             $table->float('width', 5, 2)->nullable();
             $table->float('height', 5, 2)->nullable();

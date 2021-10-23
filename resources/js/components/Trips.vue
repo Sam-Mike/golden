@@ -60,7 +60,7 @@
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
-              <div class="card-body">
+              <!-- <div class="card-body"> -->
                 <div class="table-search">
                   <b-input-group size="sm">
                     <b-form-input
@@ -93,7 +93,7 @@
                     </template>
                   </b-table>
                 </div>
-              </div>
+              <!-- </div> -->
             </div></b-tab
           >
           <b-tab title="ARCHIVE">
@@ -105,7 +105,7 @@
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
                 </div>
               </div>
-              <div class="card-body">
+              <!-- <div class="card-body"> -->
                 <div class="table-search">
                   <b-input-group size="sm">
                     <b-form-input
@@ -138,7 +138,7 @@
                     </template>
                   </b-table>
                 </div>
-              </div>
+              <!-- </div> -->
             </div>
           </b-tab>
         </b-tabs>

@@ -1,7 +1,6 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <b-card no-body>
         <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <b-tab title="Active">
             <!-- DataTales Example -->
@@ -22,7 +21,7 @@
                   </b-button>
                 </div>
               </div>
-              <div class="card-body">
+              <!-- <div class="card-body"> -->
                 <div class="table-search">
                   <b-input-group size="sm">
                     <b-form-input
@@ -50,7 +49,7 @@
                   >
                   </b-table>
                 </div>
-              </div>
+              <!-- </div> -->
             </div>
           </b-tab>
           <b-tab title="In-Active">
@@ -85,7 +84,6 @@
             </div>
           </b-tab>
         </b-tabs>
-      </b-card>
 
       <!-- New Truck Modal -->
       <b-modal

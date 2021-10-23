@@ -16,7 +16,6 @@ class CreateTrailerTypeTable extends Migration
         Schema::create('trailer_type', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('size');
             $table->timestamps();
         });
     }

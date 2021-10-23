@@ -9,6 +9,7 @@ import Trips from './components/Trips';
 import Claims from './components/Claims';
 import Login from './components/Login';
 import Users from './components/Users';
+import Expenses from './components/Expenses';
 import store from "./store";
 
 Vue.use(VueRouter);
@@ -66,6 +67,12 @@ const routes = [
     path: '/users',
     component: Users,
     name: 'users',
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/expenses',
+    component: Expenses,
+    name: 'expenses',
     meta: { requiresAuth: true }
   }
 ]

@@ -118,6 +118,25 @@
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
+                      Cash
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <router-link class="dropdown-item" to="/expenses"
+                        >Expenses</router-link
+                      >
+                      <router-link class="dropdown-item" to="/deposits"
+                        >Deposits</router-link>
+                    </div>
+                  </li>
+                  <li v-if="user.role_id === 1" class="nav-item dropdown">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      id="navbarDropdown"
+                      role="button"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
                       Admin
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">

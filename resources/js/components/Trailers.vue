@@ -23,7 +23,7 @@
                   </b-button>
                 </div>
               </div>
-              <div class="card-body">
+              <!-- <div class="card-body"> -->
                 <div class="table-search">
                   <b-input-group size="sm">
                     <b-form-input
@@ -51,7 +51,7 @@
                   >
                   </b-table>
                 </div>
-              </div>
+              <!-- </div> -->
             </div>
           </b-tab>
           <b-tab title="In-Active">
@@ -63,7 +63,7 @@
                   <!-- Button trigger New Trailer Modal -->
                 </div>
               </div>
-              <div class="card-body">
+              <!-- <div class="card-body"> -->
                 <div class="table-search">
                   <b-input-group size="sm">
                     <b-form-input
@@ -91,7 +91,7 @@
                     
                   </b-table>
                 </div>
-              </div>
+              <!-- </div> -->
             </div>
           </b-tab>
         </b-tabs>
