@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Trailer;
 use App\Models\TrailerType;
+use App\Models\TrailerMake;
 use App\Models\Company;
 use App\Http\Resources\TrailerResource;
 use App\Http\Resources\TrailerTypeResource;
+use App\Http\Resources\TrailerMakeResource;
 use App\Http\Resources\CompanyResource;
 
 class TrailerController extends Controller
@@ -22,6 +24,7 @@ class TrailerController extends Controller
         return [
             'trailers' => TrailerResource::collection(Trailer::all()),
             'trailerType' => TrailerTypeResource::collection(TrailerType::all()),
+            'trailerMake' => TrailerMakeResource::collection(TrailerMake::all()),
             'company' => CompanyResource::collection(Company::all()),
         ];
     }
@@ -37,6 +40,13 @@ class TrailerController extends Controller
         $trailer = new Trailer;
         $trailer->tl_number = $request->input('tlNumber');
         $trailer->registration_number = $request->input('registrationNumber');
+        $trailer->trailer_make_id = $request->input('trailerMakeId');
+        $trailer->year_model = $request->input('yearModel');
+        $trailer->chassis_number = $request->input('chassisNumber');
+        $trailer->length = $request->input('length');
+        $trailer->width = $request->input('width');
+        $trailer->height = $request->input('height');
+        $trailer->maximum_weight = $request->input('maximumWeight');
         $trailer->trailer_type_id = $request->input('trailerTypeId');
         $trailer->company_id = $request->input('companyId');
         $trailer->activity_status_id = 1; //assignment status is free on creation
@@ -67,9 +77,16 @@ class TrailerController extends Controller
         $trailer = Trailer::findOrFail($id);
         $trailer->tl_number = $request->input('tlNumber');
         $trailer->registration_number = $request->input('registrationNumber');
+        $trailer->trailer_make_id = $request->input('trailerMakeId');
+        $trailer->year_model = $request->input('yearModel');
+        $trailer->chassis_number = $request->input('chassisNumber');
+        $trailer->length = $request->input('length');
+        $trailer->width = $request->input('width');
+        $trailer->height = $request->input('height');
+        $trailer->maximum_weight = $request->input('maximumWeight');
         $trailer->trailer_type_id = $request->input('trailerTypeId');
         $trailer->company_id = $request->input('companyId');
-        $trailer->activity_status_id = $request->input('activityStatusId');
+        //$trailer->activity_status_id = $request->input('activityStatusId');
         $trailer->save();
 
         return  response()->json(['success'], 200);

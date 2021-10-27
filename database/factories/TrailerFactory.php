@@ -31,7 +31,6 @@ class TrailerFactory extends Factory
             'width' => 2.4,
             'height' => 1.4,
             'maximum_weight' => 36,
-            'maximum_pallet' => 20,
             'company_id' => $this->faker->numberBetween(1, 3),
             'trailer_type_id' => $this->faker->numberBetween(1, 3),
             'activity_status_id' => 1,

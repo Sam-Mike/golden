@@ -17,7 +17,6 @@ class TrailerTypeResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'size' => $this->size,
         ];
     }
 }

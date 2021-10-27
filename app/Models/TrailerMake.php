@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class TrailerMake extends Model
 {
     use HasFactory;
+    protected $table = 'trailer_make';
+
+    public function trailers()
+    {
+        return $this->hasMany(Trailer::class);
+    }
 }

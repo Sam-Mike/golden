@@ -1068,7 +1068,7 @@ export default {
       this.editPerson.licenseNumber = item.licenseNumber;
       this.editPerson.licenseClasses = item.licenseClasses;
       this.editPerson.licenseIssueDate = item.licenseIssueDate;
-      this.editPerson.licenceExpiryDate = item.licenceExpiryDate;
+      this.editPerson.licenseExpiryDate = item.licenceExpiryDate;
       this.editPerson.passportNumber = item.passportNumber;
       this.editPerson.passportIssueDate = item.passportIssueDate;
       this.editPerson.passportExpiryDate = item.passportExpiryDate;
@@ -1088,7 +1088,6 @@ export default {
         let updatePersonForm = document.getElementById("updatePersonForm");
         let updatePersonFormData = new FormData(updatePersonForm);
         updatePersonFormData.append("_method", "PATCH");
-        updatePersonFormData.append("companyId", this.editPerson.company.id);
         updatePersonFormData.append(
           "activityStatusId",
           this.editPerson.activityStatus.id

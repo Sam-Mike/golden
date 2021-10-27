@@ -18,8 +18,15 @@ class TrailerResource extends JsonResource
             'id' => $this->id,
             'tlNumber' => $this->tl_number,
             'registrationNumber' => $this->registration_number,
-            'company' => new CompanyResource($this->company),
+            'trailerMake' => new TrailerMakeResource($this->trailer_make),
+            'yearModel' => $this->year_model,
+            'chassisNumber' => $this->chassis_number,
+            'length' => $this->length,
+            'width' => $this->width,
+            'height' => $this->height,
+            'maximumWeight' => $this->maximum_weight,
             'trailerType' => new TrailerTypeResource($this->trailer_type),
+            'company' => new CompanyResource($this->company),
             'activityStatus' => new StatusResource($this->status),
         ];
     }

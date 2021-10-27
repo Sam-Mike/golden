@@ -20,10 +20,10 @@ class CreateTrailerTable extends Migration
             $table->foreignId('trailer_make_id')->constrained('trailer_make');
             $table->year('year_model')->nullable();
             $table->string('chassis_number')->nullable();
-            $table->float('length', 5, 2)->nullable();
-            $table->float('width', 5, 2)->nullable();
-            $table->float('height', 5, 2)->nullable();
-            $table->integer('maximum_weight')->nullable();
+            $table->double('length', 5, 2)->nullable();
+            $table->double('width', 5, 2)->nullable();
+            $table->double('height', 5, 2)->nullable();
+            $table->double('maximum_weight', 5, 2)->nullable();
             $table->foreignId('trailer_type_id')->constrained('trailer_type');
             $table->foreignId('company_id')->constrained('company');
             $table->foreignId('activity_status_id')->constrained('status');

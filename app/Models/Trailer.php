@@ -30,6 +30,10 @@ class Trailer extends Model
     {
         return $this->belongsTo(TrailerType::class);
     }
+    public function trailer_make()
+    {
+        return $this->belongsTo(TrailerMake::class);
+    }
     public function company()
     {
         return $this->belongsTo(Company::class);
