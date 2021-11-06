@@ -22,6 +22,5 @@ class TrailerMakeSeeder extends Seeder
         DB::table('trailer_make')->insert(['name' => 'AM TRAILER']);
         DB::table('trailer_make')->insert(['name' => 'UK TRL BOOSTER']);
         DB::table('trailer_make')->insert(['name' => 'OCEN']);
-        DB::table('trailer_make')->insert(['name' => 'DANGLER']);
     }
 }

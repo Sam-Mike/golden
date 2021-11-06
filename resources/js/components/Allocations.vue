@@ -40,7 +40,7 @@
             <div class="input-group mb-1 col">
               <div class="col-md-10">
                 <v-select
-                  v-model="newTrip.destinationLocationId"
+                  v-model="newTrip.destinationId"
                   label="name"
                   :options="locations"
                   :reduce="(locations) => locations.id"
@@ -229,10 +229,10 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
                   <v-select
-                    v-model="newAllocation.truckId"
+                    v-model="newAllocation.vehicleId"
                     label="registrationNumber"
-                    :options="coachTrucks"
-                    :reduce="(coachTrucks) => coachTrucks.id"
+                    :options="coachVehicles"
+                    :reduce="(coachVehicles) => coachVehicles.id"
                     placeholder="Choose Truck"
                   ></v-select>
                 </div>
@@ -289,10 +289,10 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
                   <v-select
-                    v-model="newAllocation.truckId"
+                    v-model="newAllocation.vehicleId"
                     label="registrationNumber"
-                    :options="fleetTrucks"
-                    :reduce="(fleetTrucks) => fleetTrucks.id"
+                    :options="fleetVehicles"
+                    :reduce="(fleetVehicles) => fleetVehicles.id"
                     placeholder="Choose Truck"
                   ></v-select>
                 </div>
@@ -349,10 +349,10 @@
                 <div class="form-group">
                   <label for="exampleInputEmail1">Truck</label>
                   <v-select
-                    v-model="newAllocation.truckId"
+                    v-model="newAllocation.vehicleId"
                     label="registrationNumber"
-                    :options="wheelsTrucks"
-                    :reduce="(fleetTrucks) => fleetTrucks.id"
+                    :options="wheelsVehicles"
+                    :reduce="(wheelsVehicles) => wheelsVehicles.id"
                     placeholder="Choose Truck"
                   ></v-select>
                 </div>
@@ -406,7 +406,7 @@
           <div class="modal-content">
             <div class="modal-body">
               <h6>Truck</h6>
-              <p>{{ editAllocation.truck.registrationNumber }}</p>
+              <p>{{ editAllocation.vehicle.registrationNumber }}</p>
 
               <h6>Trailer</h6>
               <p>{{ editAllocation.trailer.tlNumber }}</p>
@@ -434,7 +434,7 @@ export default {
       allocations: [],
       allocationsFields: [
         { key: "select" },
-        { key: "truck.registrationNumber", label: "Truck" },
+        { key: "vehicle.registrationNumber", label: "Truck" },
         { key: "trailer.tlNumber", label: "Trailer" },
         { key: "driverName", label: "Driver" },
         { key: "activityStatus.name", label: "Activity Status" },
@@ -444,24 +444,20 @@ export default {
       clients: [],
       cargo: [],
       locations: [],
-      trucks: [],
+      vehicles: [],
       trailers: [],
       drivers: [],
       tripClass: [],
-      newAllocation: {
-        truckId: "",
-        trailerId: "",
-        driverId: "",
-      },
+      newAllocation: {},
       newTrip: {
         clientId: "",
         cargoId: "",
-        destinationLocationId: "",
+        destinationId: "",
         tripClassId: "",
         checkedAllocations: [],
       },
       editAllocation: {
-        truck: "",
+        vehicle: "",
         trailer: "",
         driver: "",
       },
@@ -475,42 +471,42 @@ export default {
     };
   },
   computed: {
-    // compute allocation trucks by company and add render to ttp table for trip assignment
+    // compute allocations by company and add render to allocations table for trip assignment
     coachAllocations() {
       return this.allocations.filter(
         (allocation) =>
-          allocation.truck.company.id === 1 &&
+          allocation.vehicle.company.id === 1 &&
           allocation.activityStatus.id === 1
       );
     },
     fleetAllocations() {
       return this.allocations.filter(
         (allocation) =>
-          allocation.truck.company.id === 2 &&
+          allocation.vehicle.company.id === 2 &&
           allocation.activityStatus.id === 1
       );
     },
     wheelsAllocations() {
       return this.allocations.filter(
         (allocation) =>
-          allocation.truck.company.id === 3 &&
+          allocation.vehicle.company.id === 3 &&
           allocation.activityStatus.id === 1
       );
     },
-    //compute truck_trailer_driver by company name and render to company tabs to be selected during TTP allocation
-    coachTrucks() {
-      return this.trucks.filter(
-        (truck) => truck.company.id === 1 && truck.activityStatus.id === 1
+    //compute vehicles by company name and render to company tabs to be selected during allocation
+    coachVehicles() {
+      return this.vehicles.filter(
+        (vehicle) => vehicle.company.id === 1 && vehicle.activityStatus.id === 1
       );
     },
-    fleetTrucks() {
-      return this.trucks.filter(
-        (truck) => truck.company.id === 2 && truck.activityStatus.id === 1
+    fleetVehicles() {
+      return this.vehicles.filter(
+        (vehicle) => vehicle.company.id === 2 && vehicle.activityStatus.id === 1
       );
     },
-    wheelsTrucks() {
-      return this.trucks.filter(
-        (truck) => truck.company.id === 3 && truck.activityStatus.id === 1
+    wheelsVehicles() {
+      return this.vehicles.filter(
+        (vehicle) => vehicle.company.id === 3 && vehicle.activityStatus.id === 1
       );
     },
     unallocatedDrivers() {
@@ -543,7 +539,7 @@ export default {
         this.clients = response.data.clients;
         this.cargo = response.data.cargo;
         this.locations = response.data.locations;
-        this.trucks = response.data.trucks;
+        this.vehicles = response.data.vehicles;
         this.trailers = response.data.trailers;
         this.drivers = response.data.drivers;
         this.tripClass = response.data.tripClass;
@@ -563,7 +559,7 @@ export default {
     async createAllocation() {
       try {
         await api.post("/allocations", {
-          truckId: this.newAllocation.truckId,
+          vehicleId: this.newAllocation.vehicleId,
           trailerId: this.newAllocation.trailerId,
           driverId: this.newAllocation.driverId,
         });
@@ -571,9 +567,7 @@ export default {
           this.$bvModal.hide("newCoachAllocationModal");
           this.$bvModal.hide("newFleetAllocationModal");
           this.$bvModal.hide("newWheelsAllocationModal");
-          this.newAllocation.truckId = "";
-          this.newAllocation.trailerId = "";
-          this.newAllocation.driverId = "";
+          this.newAllocation = {};
           this.getAllocations();
         });
       } catch (error) {
@@ -584,13 +578,17 @@ export default {
     //creating trips
     async sendTripData() {
       try {
-        await api.post("trips", {
-          cargoId: this.newTrip.cargoId,
-          clientId: this.newTrip.clientId,
-          destinationId: this.newTrip.destinationLocationId,
-          tripClassId: this.newTrip.tripClassId,
-          allocationsList: this.newTrip.checkedAllocations,
-        });
+        await api.post(
+          "trips",
+          this.newTrip
+          // {
+          //   cargoId: this.newTrip.cargoId,
+          //   clientId: this.newTrip.clientId,
+          //   destinationId: this.newTrip.destinationLocationId,
+          //   tripClassId: this.newTrip.tripClassId,
+          //   allocationsList: this.newTrip.checkedAllocations,
+          // }
+        );
         this.$nextTick(() => {
           //this.$bvModal.hide("newAllocationModal");
           this.getAllocations();
@@ -599,7 +597,7 @@ export default {
         console.log(error);
       }
     },
-    // deleting Truck Trailer Drivers
+    // deleting Allocation
     allocationInfo(item, button) {
       this.editAllocation = item;
       this.$root.$emit("bv::show::modal", "updateAllocationModal", button);

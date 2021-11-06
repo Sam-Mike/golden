@@ -15,6 +15,10 @@ class Status extends Model
     {
         $this->hasMany(Truck::class);
     }
+    public function vehicles()
+    {
+        $this->hasMany(Vehicle::class);
+    }
     public function trailers()
     {
         $this->hasMany(Trailer::class);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Trip;
 use App\Models\Allocation;
 use App\Models\Truck;
+use App\Models\Vehicle;
 use App\Models\Trailer;
 use App\Models\People;
 use App\Http\Resources\TripResource;
@@ -38,9 +39,9 @@ class TripController extends Controller
             'cargoId' => 'required',
             'destinationId' => 'required',
             'tripClassId' => 'required',
-            'allocationsList' => 'required'
+            'checkedAllocations' => 'required'
         ]);
-        $allocations = request("allocationsList");
+        $allocations = request("checkedAllocations");
         foreach ($allocations as $allocation) {
             $trip = new Trip;
             $trip->client_id = $request->input('clientId');
@@ -55,7 +56,8 @@ class TripController extends Controller
             $allocation = Allocation::find($allocation);
             $allocation->activity_status_id = 2;
             $allocation->save();
-            //when trip ends delete truckTrailerDriver record to free the assigned
+            //changing activity status of vehicle, driver and trailer to "on trip" 
+            //when trip ends delete allocation record to free the assigned
         }
         return response()->json([
             'success'
@@ -119,9 +121,13 @@ class TripController extends Controller
         $allocation->activity_status_id = 3;
         $allocation->save();
 
-        $truck = Truck::find($allocation->truck_id);
-        $truck->activity_status_id = $request->input('truckActivityStatusId');
-        $truck->save();
+        // $truck = Truck::find($allocation->truck_id);
+        // $truck->activity_status_id = $request->input('truckActivityStatusId');
+        // $truck->save();
+
+        $vehicle = Vehicle::find($allocation->vehicle_id);
+        $vehicle->activity_status_id = $request->input('vehicleActivityStatusId');
+        $vehicle->save();
 
         $trailer = Trailer::find($allocation->trailer_id);
         $trailer->activity_status_id = $request->input('trailerActivityStatusId');

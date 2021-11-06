@@ -16,7 +16,7 @@ class AllocationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'truck' => new TruckResource($this->truck),
+            'vehicle' => new VehicleResource($this->vehicle),
             'trailer' => new TrailerResource($this->trailer),
             'driver' => new PeopleResource($this->driver),
             'activityStatus' => new StatusResource($this->status),

@@ -9,8 +9,8 @@ class VehicleMake extends Model
 {
     use HasFactory;
     protected $table = 'vehicle_make';
-    public function trucks()
+    public function vehicles()
     {
-        return $this->hasMany(Truck::class);
+        return $this->hasMany(Vehicle::class);
     }
 }

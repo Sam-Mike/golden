@@ -15,7 +15,7 @@ class CreateAllocationTable extends Migration
     {
         Schema::create('allocation', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('truck_id')->constrained('truck');
+            $table->foreignId('vehicle_id')->constrained('vehicle');
             $table->foreignId('trailer_id')->constrained('trailer');
             $table->foreignId('driver_id')->constrained('people');
             $table->foreignId('activity_status_id')->constrained('status');

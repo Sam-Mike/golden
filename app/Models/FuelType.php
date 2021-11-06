@@ -14,4 +14,8 @@ class FuelType extends Model
     {
         return $this->hasMany(Trucks::class);
     }
+    public function vehicles()
+    {
+        return $this->hasMany(Vehicle::class);
+    }
 }

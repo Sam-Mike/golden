@@ -206,7 +206,7 @@
             <b-col class="border rounded">
               <b>Truck</b>
               <p>
-                {{ editTrip.allocation.truck.registrationNumber }}
+                {{ editTrip.allocation.vehicle.registrationNumber }}
               </p>
             </b-col>
             <b-col class="border rouded">
@@ -408,7 +408,7 @@
             <b-col class="border rounded">
               <b>Truck</b>
               <p>
-                {{ editTrip.allocation.truck.registrationNumber }}
+                {{ editTrip.allocation.vehicle.registrationNumber }}
               </p>
             </b-col>
             <b-col class="border rouded">
@@ -519,7 +519,7 @@ export default {
         { key: "cargo.name", label: "Cargo", sortable: true },
         { key: "driverName", label: "Driver" },
         {
-          key: "allocation.truck.registrationNumber",
+          key: "allocation.vehicle.registrationNumber",
           label: "Truck",
           sortable: true,
         },
@@ -534,7 +534,7 @@ export default {
         client: "",
         cargo: "",
         destination: "",
-        allocation: { truck: "", trailer: "", driver: "" },
+        allocation: { vehicle: "", trailer: "", driver: "" },
         activityStatus: "",
         tripClass: "",
         dispatchDate: "",
@@ -649,7 +649,7 @@ export default {
         console.log(error);
       }
     },
-    async updateTruckLocation() {},
+    //async updateTruckLocation() {},
     handleEndTrip() {
       this.endTrip();
     },
@@ -657,7 +657,7 @@ export default {
       try {
         await api.patch("endTrip/" + this.editTrip.id, {
           tripActivityStatusId: 3,
-          truckActivityStatusId: 1,
+          vehicleActivityStatusId: 1,
           trailerActivityStatusId: 1,
           driverActivityStatusId: 1,
         });

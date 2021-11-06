@@ -73,11 +73,14 @@
                       aria-haspopup="true"
                       aria-expanded="false"
                     >
-                      Trucks
+                      Vehicles
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <router-link class="dropdown-item" to="/vehicles"
+                        >Trucks</router-link
+                      >
                       <router-link class="dropdown-item" to="/trucks"
-                        >All Trucks</router-link
+                        >All Vehicles</router-link
                       >
                     </div>
                   </li>

@@ -4,7 +4,7 @@
       <b-card no-body>
         <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <!-- ACTIVE TRAILERS -->
-          <b-tab title="Active">
+          <b-tab title="COACH">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
               <div class="card-header py-3">
@@ -42,7 +42,107 @@
                   striped
                   hover
                   :small="true"
-                  :items="activeTrailers"
+                  :items="coachTrailers"
+                  :fields="trailersFields"
+                  :filter="tableFilter"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="trailerInfo"
+                >
+                </b-table>
+              </div>
+              <!-- </div> -->
+            </div>
+          </b-tab>
+          <b-tab title="FLEET">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+
+                  <!-- Button trigger New Trailer Modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.newTrailerModal
+                  >
+                    New Trailer
+                  </b-button>
+                </div>
+              </div>
+              <!-- <div class="card-body"> -->
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </div>
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="fleetTrailers"
+                  :fields="trailersFields"
+                  :filter="tableFilter"
+                  :head-variant="tableHeadVariant"
+                  :sticky-header="true"
+                  @row-clicked="trailerInfo"
+                >
+                </b-table>
+              </div>
+              <!-- </div> -->
+            </div>
+          </b-tab>
+          <b-tab title="WHEELS">
+            <!-- DataTales Example -->
+            <div class="card shadow mb-4">
+              <div class="card-header py-3">
+                <div class="d-flex row justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+
+                  <!-- Button trigger New Trailer Modal -->
+                  <b-button
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.newTrailerModal
+                  >
+                    New Trailer
+                  </b-button>
+                </div>
+              </div>
+              <!-- <div class="card-body"> -->
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </div>
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="wheelsTrailers"
                   :fields="trailersFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
@@ -412,7 +512,10 @@ export default {
       trailersFields: [
         { key: "registrationNumber" },
         { key: "tlNumber", label: "TL Number", sortable: true },
-        { key: "company.name", label: "Company" },
+        { key: "trailerMake.name", label: "Trailer Make" },
+        { key: "chassisNumber" },
+        { key: "trailerType.name", label: "Trailer Type" },
+        { key: "maximumWeight" },
         { key: "activityStatus.name", label: "Assignment Status" },
       ],
       tableFilter: null,
@@ -442,15 +545,24 @@ export default {
     };
   },
   computed: {
-    activeTrailers() {
+    coachTrailers() {
       return this.trailers.filter(
-        (trailer) =>
-          trailer.activityStatus.id === 1 || trailer.activityStatus.id === 2 //or workshop
+        (trailer) => trailer.company.id === 1 && trailer.activityStatus.id !== 3
+      );
+    },
+    fleetTrailers() {
+      return this.trailers.filter(
+        (trailer) => trailer.company.id === 2 && trailer.activityStatus.id !== 3
+      );
+    },
+    wheelsTrailers() {
+      return this.trailers.filter(
+        (trailer) => trailer.company.id === 3 && trailer.activityStatus.id !== 3
       );
     },
     inactiveTrailers() {
       return this.trailers.filter(
-        (trailers) => trailers.activityStatus.id === 3
+        (trailer) => trailer.activityStatus.id === 3
       );
     },
     sortOptions() {
@@ -517,23 +629,7 @@ export default {
     },
     async updateTrailer() {
       try {
-        await api.patch(
-          "trailers/" + this.editTrailer.id,
-          this.editTrailer
-          // {
-          //   tlNumber: this.editTrailer.tlNumber,
-          //   registrationNumber: this.editTrailer.registrationNumber,
-          //   trailerMakeId: this.editTrailer.trailerMakeId,
-          //   yearModel: this.editTrailer.yearModel,
-          //   chassisNumber: this.editTrailer.chassisNumber,
-          //   length: this.editTrailer.length,
-          //   width: this.editTrailer.width,
-          //   height: this.editTrailer.height,
-          //   madimumWeight: this.editTrailer.maximumWeight,
-          //   trailerTypeId: this.editTrailer.trailerTypeId,
-          //   companyId: this.editTrailer.companyId,
-          // }
-        );
+        await api.patch("trailers/" + this.editTrailer.id, this.editTrailer);
         console.log("Trailer updated");
         this.$nextTick(() => {
           this.$bvModal.hide("updateTrailerModal");

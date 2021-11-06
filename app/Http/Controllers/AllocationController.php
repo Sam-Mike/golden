@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Allocation;
 use App\Models\People;
 use App\Models\Truck;
+use App\Models\Vehicle;
 use App\Models\Trailer;
 use App\Models\Client;
 use App\Models\Company;
@@ -15,6 +16,7 @@ use App\Models\Location;
 use App\Models\TripClass;
 use App\Http\Resources\PeopleResource;
 use App\Http\Resources\TruckResource;
+use App\Http\Resources\VehicleResource;
 use App\Http\Resources\TrailerResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ClientResource;
@@ -35,6 +37,7 @@ class AllocationController extends Controller
         return [
             "allocations" => AllocationResource::collection(Allocation::all()),
             "trucks" => TruckResource::collection(Truck::all()),
+            "vehicles" => VehicleResource::collection(Vehicle::all()),
             "trailers" => TrailerResource::collection(Trailer::all()),
             "drivers" => PeopleResource::collection(
                 People::all()
@@ -62,22 +65,22 @@ class AllocationController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'truckId' => 'required',
+            'vehicleId' => 'required',
             'trailerId' => 'required',
             'driverId' => 'required',
         ]);
 
         $allocation = new Allocation;
-        $allocation->truck_id = $request->input('truckId');
+        $allocation->vehicle_id = $request->input('vehicleId');
         $allocation->trailer_id = $request->input('trailerId');
         $allocation->driver_id = $request->input('driverId');
         $allocation->activity_status_id = 1;
         $allocation->save();
 
-        //changing truck, trailer and driver activity status to ALLOCATED
-        $truck = Truck::find($allocation->truck_id);
-        $truck->activity_status_id = 2;
-        $truck->save();
+        //changing vehicle, trailer and driver activity status to ALLOCATED
+        $vehicle = Vehicle::find($allocation->vehicle_id);
+        $vehicle->activity_status_id = 2;
+        $vehicle->save();
 
         $trailer = Trailer::find($allocation->trailer_id);
         $trailer->activity_status_id = 2;
@@ -124,10 +127,10 @@ class AllocationController extends Controller
         //getting the allocation
         $allocation = Allocation::findOrFail($id);
 
-        //changing truck, trailer and driver activity status to FREE
-        $truck = Truck::find($allocation->truck_id);
-        $truck->activity_status_id = 1;
-        $truck->save();
+        //changing vehicle, trailer and driver activity status to FREE
+        $vehicle = Vehicle::find($allocation->vehicle_id);
+        $vehicle->activity_status_id = 1;
+        $vehicle->save();
 
         $trailer = Trailer::find($allocation->trailer_id);
         $trailer->activity_status_id = 1;

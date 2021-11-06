@@ -10,8 +10,8 @@ class VehicleTransmissionType extends Model
     use HasFactory;
     protected $table = 'vehicle_transmission_type';
 
-    public function trucks()
+    public function vehicles()
     {
-        return $this->hasMany(Trucks::class);
+        return $this->hasMany(Vehicle::class);
     }
 }

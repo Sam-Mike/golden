@@ -15,6 +15,10 @@ class Allocation extends Model
     {
         return $this->belongsTo(Truck::class, 'truck_id', 'id');
     }
+    public function vehicle()
+    {
+        return $this->belongsTo(Vehicle::class, 'vehicle_id', 'id');
+    }
     public function trailer()
     {
         return $this->belongsTo(Trailer::class, 'trailer_id', 'id');

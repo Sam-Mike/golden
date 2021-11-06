@@ -4,6 +4,7 @@ import Clients from './components/Clients';
 import People from './components/People';
 import Trailers from './components/Trailers';
 import Trucks from './components/Trucks';
+import Vehicles from './components/Vehicles';
 import Allocations from './components/Allocations';
 import Trips from './components/Trips';
 import Claims from './components/Claims';
@@ -49,6 +50,12 @@ const routes = [
     path: '/trucks',
     component: Trucks,
     name: 'trucks',
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/vehicles',
+    component: Vehicles,
+    name: 'vehicles',
     meta: { requiresAuth: true }
   },
   {

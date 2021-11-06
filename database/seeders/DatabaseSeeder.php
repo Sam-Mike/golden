@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             DepartmentSeeder::class,
             LicenseClassSeeder::class,
             TripClassSeeder::class,
-            TruckTypeSeeder::class,
+            VehicleTypeSeeder::class,
             FuelTypeSeeder::class,
             VehicleMakeSeeder::class,
             VehicleTransmissionTypeSeeder::class,
@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             ClientSeeder::class,
+            //CargoSeeder::class,
         ]); 
     }
 }

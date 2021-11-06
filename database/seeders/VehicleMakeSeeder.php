@@ -17,5 +17,9 @@ class VehicleMakeSeeder extends Seeder
         DB::table('vehicle_make')->insert(['name' => 'SCANIA']);
         DB::table('vehicle_make')->insert(['name' => 'HOWO']);
         DB::table('vehicle_make')->insert(['name' => 'DAF']);
+        DB::table('vehicle_make')->insert(['name' => 'HINO']);
+        DB::table('vehicle_make')->insert(['name' => 'TATA']);
+        DB::table('vehicle_make')->insert(['name' => 'TOYOTA']);
+        DB::table('vehicle_make')->insert(['name' => 'FORD']);
     }
 }

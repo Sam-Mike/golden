@@ -19,5 +19,6 @@ class TrailerTypeSeeder extends Seeder
         DB::table('trailer_type')->insert(['name' => 'INTERLINK']);
         DB::table('trailer_type')->insert(['name' => 'GOOSE-NECK']);
         DB::table('trailer_type')->insert(['name' => 'LOW-BED']);
+        DB::table('trailer_type')->insert(['name' => 'DANGLER']);
     }
 }
