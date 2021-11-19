@@ -7,8 +7,8 @@
         <b-tab title="LOCAL"
           ><!-- LOCAL TRIPS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
@@ -51,8 +51,8 @@
         <b-tab title="TRANSIT"
           ><!-- TRANSIT TRIPS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
@@ -95,8 +95,8 @@
         <b-tab title="ARCHIVE">
           <!-- ARCHIVE TRIPS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>

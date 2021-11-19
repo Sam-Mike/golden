@@ -37,7 +37,7 @@
                 :fields="peopleFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="60vh"
                 @row-clicked="personInfo"
               >
                 <template #cell(Name)="data">
@@ -52,8 +52,8 @@
         <!-- FLEET People -->
         <b-tab title="FLEET">
           <!-- DataTales  -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                 <!-- Button trigger Create Person modal -->
@@ -62,7 +62,7 @@
                 </b-button>
               </div>
             </div>
-            <div class="card-body">
+            <!-- <div class="card-body"> -->
               <div class="table-search">
                 <b-input-group size="sm">
                   <b-form-input
@@ -84,7 +84,7 @@
                   :fields="peopleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  sticky-header="55vh"
+                  sticky-header="60vh"
                   @row-clicked="personInfo"
                 >
                   <template #cell(Name)="data">
@@ -93,14 +93,14 @@
                   </template>
                 </b-table>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
         </b-tab>
         <!-- WHEELS People -->
         <b-tab title="WHEELS">
           <!-- DataTales  -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                 <!-- Button trigger Create Person modal -->
@@ -109,7 +109,7 @@
                 </b-button>
               </div>
             </div>
-            <div class="card-body">
+            <!-- <div class="card-body"> -->
               <div class="table-search">
                 <b-input-group size="sm">
                   <b-form-input
@@ -123,7 +123,6 @@
               <div class="table-responsive">
                 <b-table
                   class="table-list"
-                  responsive
                   bordered
                   striped
                   hover
@@ -132,7 +131,7 @@
                   :fields="peopleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  :sticky-header="true"
+                  sticky-header="60vh"
                   @row-clicked="personInfo"
                 >
                   <template #cell(Name)="data">
@@ -141,20 +140,19 @@
                   </template>
                 </b-table>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
         </b-tab>
         <!-- Inactive People -->
         <b-tab title="In-active">
           <!-- DataTales  -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary"></h6>
+          <div class="card shadow">
+            <div class="card-header py-auto">
+              <div class="d-flex row justify-content-end">
                 <!-- Button trigger Create Person modal -->
               </div>
             </div>
-            <div class="card-body">
+            <!-- <div class="card-body"> -->
               <div class="table-search">
                 <b-input-group size="sm">
                   <b-form-input
@@ -168,7 +166,6 @@
               <div class="table-responsive">
                 <b-table
                   class="table-list"
-                  responsive
                   bordered
                   striped
                   hover
@@ -177,7 +174,7 @@
                   :fields="peopleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  :sticky-header="true"
+                  sticky-header="60vh"
                   @row-clicked="inactivePersonInfo"
                 >
                   <template #cell(Name)="data">
@@ -186,7 +183,7 @@
                   </template>
                 </b-table>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
         </b-tab>
       </b-tabs>

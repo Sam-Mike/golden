@@ -6,9 +6,9 @@
         <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <b-tab title="COACH">
             <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
+            <div class="card shadow">
+              <div class="card-header py-auto">
+                <div class="d-flex row justify-content-end">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
                   <!--button to trigger create vehicle modal-->
                   <b-button
@@ -55,8 +55,8 @@
           </b-tab>
           <b-tab title="FLEET">
             <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
+            <div class="card shadow">
+              <div class="card-header py-auto">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
 
@@ -104,8 +104,8 @@
           </b-tab>
           <b-tab title="WHEELS">
             <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
+            <div class="card shadow">
+              <div class="card-header py-auto">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
 
@@ -153,8 +153,8 @@
           </b-tab>
           <b-tab title="In-Active">
             <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
+            <div class="card shadow">
+              <div class="card-header py-auto">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
 

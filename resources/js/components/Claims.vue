@@ -5,8 +5,8 @@
         <b-tab title="Intimated">
           <!-- INTIMATED CLAIMS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-2">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-end">
                 <b-button
                   size="sm"
@@ -43,8 +43,8 @@
         <b-tab title="Submitted Document"
           ><!-- CLAIMS WITH SUBMITTED DOCUMENTS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
@@ -72,8 +72,8 @@
         <b-tab title="Assessed"
           ><!-- ASSESSED CLAIMS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
@@ -101,8 +101,8 @@
         <b-tab title="Vouchers Discharged">
           <!-- CLAIMS WITH DISCHARGED VOUCHERS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
@@ -130,8 +130,8 @@
         <b-tab title="Paid">
           <!-- PAID CLAIMS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
@@ -159,8 +159,8 @@
         <b-tab title="Declined">
           <!-- DECLINED CLAIMS -->
           <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
+          <div class="card shadow">
+            <div class="card-header py-auto">
               <div class="d-flex row justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
