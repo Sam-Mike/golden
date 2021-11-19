@@ -13,6 +13,6 @@ class PeopleSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\People::factory(10)->create();
+        \App\Models\People::factory(100)->create();
     }
 }

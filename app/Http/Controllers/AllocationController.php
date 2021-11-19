@@ -12,6 +12,8 @@ use App\Models\Trailer;
 use App\Models\Client;
 use App\Models\Company;
 use App\Models\Cargo;
+use App\Models\CargoType;
+use App\Models\HazardClass;
 use App\Models\Location;
 use App\Models\TripClass;
 use App\Http\Resources\PeopleResource;
@@ -21,9 +23,10 @@ use App\Http\Resources\TrailerResource;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\ClientResource;
 use App\Http\Resources\CargoResource;
+use App\Http\Resources\CargoTypeResource;
+use App\Http\Resources\HazardClassResource;
 use App\Http\Resources\LocationResource;
 use App\Http\Resources\TripClassResource;
-use Psy\Command\WhereamiCommand;
 
 class AllocationController extends Controller
 {
@@ -51,6 +54,8 @@ class AllocationController extends Controller
             "clients" => ClientResource::collection(Client::all()),
             "company" => CompanyResource::collection(Company::all()),
             "cargo" => CargoResource::collection(Cargo::all()),
+            "cargoType" => CargoTypeResource::collection(CargoType::all()),
+            "hazardClass" => HazardClassResource::collection(HazardClass::all()),
             "locations" => LocationResource::collection(Location::all()),
             "tripClass" =>  TripClassResource::collection(TripClass::all()),
         ];

@@ -7,8 +7,7 @@
           <!-- DataTales  -->
           <div class="card shadow">
             <div class="card-header py-auto">
-              <div class="d-flex row justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary"></h6>
+              <div class="d-flex row justify-content-end">
                 <!-- Button trigger Create Person modal -->
                 <b-button size="sm" variant="primary" v-b-modal.newPersonModal>
                   Add New Person
@@ -30,7 +29,6 @@
             <div class="table-responsive-sm">
               <b-table
                 class="table-list"
-                responsive
                 bordered
                 striped
                 hover
@@ -39,7 +37,7 @@
                 :fields="peopleFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                :sticky-header="true"
+                sticky-header="55vh"
                 @row-clicked="personInfo"
               >
                 <template #cell(Name)="data">
@@ -78,7 +76,6 @@
               <div class="table-responsive">
                 <b-table
                   class="table-list"
-                  responsive
                   bordered
                   striped
                   hover
@@ -87,7 +84,7 @@
                   :fields="peopleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  :sticky-header="true"
+                  sticky-header="55vh"
                   @row-clicked="personInfo"
                 >
                   <template #cell(Name)="data">
@@ -298,7 +295,7 @@
               label="name"
               :options="company"
               :reduce="(company) => company.id"
-              placeholder="Choose Company"
+              placeholder="Select Company"
             ></v-select>
           </div>
           <div class="form-group">
@@ -308,7 +305,7 @@
               label="name"
               :options="departments"
               :reduce="(departments) => departments.id"
-              placeholder="Choose Department"
+              placeholder="Select Department"
             ></v-select>
           </div>
           <div class="form-group">
@@ -318,7 +315,7 @@
               label="name"
               :options="departmentRolesCascade"
               :reduce="(departmentRoles) => departmentRoles.id"
-              placeholder="Choose Role"
+              placeholder="Select Role"
             ></v-select>
           </div>
           <div class="form-group">
@@ -471,7 +468,7 @@
             <b-form-file
               size="sm"
               name="profilePicture"
-              placeholder="Choose image..."
+              placeholder="Select image..."
               drop-placeholder="Drop image here..."
             ></b-form-file>
           </div>
@@ -603,7 +600,7 @@
               label="name"
               :options="company"
               :reduce="(company) => company.id"
-              placeholder="Choose Company"
+              placeholder="Select Company"
             ></v-select>
           </div>
           <div class="form-group">
@@ -613,7 +610,7 @@
               label="name"
               :options="departments"
               :reduce="(departments) => departments.id"
-              placeholder="Choose Department"
+              placeholder="Select Department"
             ></v-select>
           </div>
           <div class="form-group">
@@ -623,7 +620,7 @@
               label="name"
               :options="departmentRolesCascade"
               :reduce="(departmentRoles) => departmentRoles.id"
-              placeholder="Choose Role"
+              placeholder="Select Role"
             ></v-select>
           </div>
           <div class="form-group">
@@ -776,7 +773,7 @@
             <b-form-file
               size="sm"
               name="profilePicture"
-              placeholder="Choose image..."
+              placeholder="Select image..."
               drop-placeholder="Drop image here..."
             ></b-form-file>
           </div>

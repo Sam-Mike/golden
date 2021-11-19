@@ -13,6 +13,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\CargoController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,4 +48,6 @@ Route::apiResources([
     'trips' => TripController::class,
     'claims' => ClaimController::class,
     'users' => UserController::class,
+    'locations' => LocationController::class,
+    'cargo' => CargoController::class,
 ]);

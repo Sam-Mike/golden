@@ -27,13 +27,13 @@ class DatabaseSeeder extends Seeder
             TrailerTypeSeeder::class,
             TrailerMakeSeeder::class,
             CargoTypeSeeder::class,
+            HazardClassSeeder::class,
             LocationSeeder::class,
             DepartmentRoleSeeder::class,
             ClaimTypeSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
             ClientSeeder::class,
-            //CargoSeeder::class,
         ]); 
     }
 }

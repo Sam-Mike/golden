@@ -15,4 +15,12 @@ class Cargo extends Model
     {
         return $this->hasMany(Allocation::class);
     }
+    public function cargo_type()
+    {
+        return $this->belongsTo(CargoType::class);
+    }
+    public function hazard_class()
+    {
+        return $this->belongsTo(HazardClass::class);
+    }
 }

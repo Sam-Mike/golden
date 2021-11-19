@@ -13,6 +13,6 @@ class TrailerSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Trailer::factory(10)->create();
+        \App\Models\Trailer::factory(100)->create();
     }
 }

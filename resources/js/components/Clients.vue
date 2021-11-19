@@ -1,95 +1,91 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <b-card no-body>
-        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
-          <b-tab title="ACTIVE">
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                  <!-- Button trigger modal -->
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    v-b-modal.newClientModal
-                  >
-                    New Client
-                  </b-button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <b-table
-                  class="table-list"
-                  responsive
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="activeClients"
-                  :fields="clientsFields"
-                  :head-variant="tableHeadVariant"
-                  :sticky-header="true"
-                  :filter="tableFilter"
-                  @row-clicked="info"
+      <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
+        <b-tab title="ACTIVE">
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <!-- Button trigger modal -->
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  v-b-modal.newClientModal
                 >
-                </b-table>
+                  New Client
+                </b-button>
               </div>
             </div>
-          </b-tab>
-          <b-tab title="INACTIVE" nav-item-class>
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                  <!-- Button trigger modal -->
-                </div>
+            <!-- <div class="card-body"> -->
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
               </div>
-              <div class="card-body">
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <b-table
-                  class="table-list"
-                  responsive
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="inactiveClients"
-                  :fields="clientsFields"
-                  :head-variant="tableHeadVariant"
-                  :sticky-header="true"
-                  :filter="tableFilter"
-                  @row-clicked="inactiveInfo"
-                >
-                </b-table>
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="activeClients"
+                :fields="clientsFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="info"
+              >
+              </b-table>
+            </div>
+          <!-- </div> -->
+        </b-tab>
+        <b-tab title="INACTIVE" nav-item-class>
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <!-- Button trigger modal -->
               </div>
             </div>
-          </b-tab>
-        </b-tabs>
-      </b-card>
+            <div class="card-body">
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </div>
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="inactiveClients"
+                :fields="clientsFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="inactiveInfo"
+              >
+              </b-table>
+            </div>
+          </div>
+        </b-tab>
+      </b-tabs>
 
       <!-- DataTales Example -->
 
@@ -107,85 +103,73 @@
         aria-hidden="true"
         @ok="handleCreateClient"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="createClient">
-                <b-form-group label="Name" invalid-feedback="Name is required">
-                  <input
-                    id="client-name"
-                    type="text"
-                    class="form-control"
-                    v-model="newClient.name"
-                    placeholder="Enter client name"
-                    required
-                  />
-                </b-form-group>
-                <b-form-group
-                  label="Address"
-                  invalid-feedback="Address is required"
-                >
-                  <b-form-input
-                    type="text"
-                    class="form-control"
-                    v-model="newClient.address"
-                    placeholder="Enter client Address"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                  label="Phone Number"
-                  invalid-feedback="Phone number is required"
-                >
-                  <b-form-input
-                    type="tel"
-                    class="form-control"
-                    v-model="newClient.phoneNumber"
-                    placeholder="Enter client's phone number"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                  label="Contact Person"
-                  invalid-feedback="Contact person is required"
-                >
-                  <b-form-input
-                    type="text"
-                    class="form-control"
-                    v-model="newClient.contactPersonName"
-                    placeholder="Enter contact person's name"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                  label="Mobile Number"
-                  invalid-feedback="Mobile number is required"
-                >
-                  <b-form-input
-                    type="tel"
-                    class="form-control"
-                    v-model="newClient.mobile"
-                    placeholder="Enter mobile number"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-                <b-form-group
-                  label="Email address"
-                  invalid-feedback="is required"
-                >
-                  <b-form-input
-                    type="email"
-                    class="form-control"
-                    v-model="newClient.email"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter client's email"
-                    required
-                  ></b-form-input>
-                </b-form-group>
-              </form>
-            </div>
-          </div>
-        </div>
+        <form ref="form" @submit.stop.prevent="createClient">
+          <b-form-group label="Name" invalid-feedback="Name is required">
+            <input
+              id="client-name"
+              type="text"
+              class="form-control"
+              v-model="newClient.name"
+              placeholder="Enter client name"
+              required
+            />
+          </b-form-group>
+          <b-form-group label="Address" invalid-feedback="Address is required">
+            <b-form-input
+              type="text"
+              class="form-control"
+              v-model="newClient.address"
+              placeholder="Enter client Address"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Phone Number"
+            invalid-feedback="Phone number is required"
+          >
+            <b-form-input
+              type="tel"
+              class="form-control"
+              v-model="newClient.phoneNumber"
+              placeholder="Enter client's phone number"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Contact Person"
+            invalid-feedback="Contact person is required"
+          >
+            <b-form-input
+              type="text"
+              class="form-control"
+              v-model="newClient.contactPersonName"
+              placeholder="Enter contact person's name"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group
+            label="Mobile Number"
+            invalid-feedback="Mobile number is required"
+          >
+            <b-form-input
+              type="tel"
+              class="form-control"
+              v-model="newClient.mobile"
+              placeholder="Enter mobile number"
+              required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group label="Email address" invalid-feedback="is required">
+            <b-form-input
+              type="email"
+              class="form-control"
+              v-model="newClient.email"
+              aria-describedby="emailHelp"
+              placeholder="Enter client's email"
+              required
+            ></b-form-input>
+          </b-form-group>
+        </form>
       </b-modal>
 
       <!-- Update/Deactivate Client Modal -->
@@ -332,14 +316,7 @@ export default {
         { key: "email" },
       ],
       tableHeadVariant: "dark",
-      newClient: {
-        name: "",
-        address: "",
-        phoneNumber: "",
-        contactPersonName: "",
-        mobile: "",
-        email: "",
-      },
+      newClient: {},
       tableFilter: null,
       editClient: {
         id: "",
@@ -391,23 +368,11 @@ export default {
     },
     async createClient() {
       try {
-        await api.post("clients", {
-          clientName: this.newClient.name,
-          clientAddress: this.newClient.address,
-          clientPhoneNumber: this.newClient.phoneNumber,
-          clientContactPersonName: this.newClient.contactPersonName,
-          clientMobile: this.newClient.mobile,
-          clientEmail: this.newClient.email,
-        });
+        await api.post("clients", this.newClient);
         this.$nextTick(() => {
           this.$bvModal.hide("newClientModal");
-          this.newClient.name = "";
-          this.newClient.address = "";
-          this.newClient.phoneNumber = "";
-          this.newClient.contactPersonName = "";
-          this.newClient.mobile = "";
-          this.newClient.email = "";
           this.getClients();
+          this.newClient = {};
         });
       } catch (error) {
         console.log(error);

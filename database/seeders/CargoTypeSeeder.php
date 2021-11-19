@@ -14,13 +14,8 @@ class CargoTypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('cargo_type')->insert(['name' => 'NON-HAZARDOUS CARGO']);
-        DB::table('cargo_type')->insert(['name' => 'ACTIVATED CARBON']);
-        DB::table('cargo_type')->insert(['name' => 'BULK CEMENT']);
-        DB::table('cargo_type')->insert(['name' => 'SODIUM CYANIDE']);
-        DB::table('cargo_type')->insert(['name' => 'AMMONIUM NITRATE']);
-        DB::table('cargo_type')->insert(['name' => 'HCL']);
-        DB::table('cargo_type')->insert(['name' => 'LOOSE CARGO']);
-        DB::table('cargo_type')->insert(['name' => 'PIPES']);
+        DB::table('cargo_type')->insert(['name' => 'BREAK-BULK (LOOSE)']);
+        DB::table('cargo_type')->insert(['name' => 'CONTAINERIZED (20FT)']);
+        DB::table('cargo_type')->insert(['name' => 'CONTAINERIZED (40FT)']);
     }
 }

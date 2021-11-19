@@ -1,148 +1,142 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <b-card no-body>
-        <b-tabs
-          active-nav-item-class="font-weight-bold text-uppercase"
-          content-class="mt-2"
-        >
-          <b-tab title="LOCAL"
-            ><!-- LOCAL TRIPS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
+      <b-tabs
+        active-nav-item-class="font-weight-bold text-uppercase"
+      >
+        <b-tab title="LOCAL"
+          ><!-- LOCAL TRIPS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
-              <div class="card-body">
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="localTrips"
-                    :fields="tripFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="activeTripInfo"
-                  >
-                    <template #cell(driverName)="methods">
-                      {{ methods.item.allocation.driver.firstName }}
-                      {{ methods.item.allocation.driver.middleName }}
-                      {{ methods.item.allocation.driver.lastName }}
-                    </template>
-                  </b-table>
-                </div>
-              </div>
-            </div></b-tab
-          >
-          <b-tab title="TRANSIT"
-            ><!-- TRANSIT TRIPS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-              </div>
-              <!-- <div class="card-body"> -->
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="transitTrips"
-                    :fields="tripFields"
-                    :filter="tableFilter"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    @row-clicked="activeTripInfo"
-                  >
-                    <template #cell(driverName)="methods">
-                      {{ methods.item.allocation.driver.firstName }}
-                      {{ methods.item.allocation.driver.middleName }}
-                      {{ methods.item.allocation.driver.lastName }}
-                    </template>
-                  </b-table>
-                </div>
-              <!-- </div> -->
-            </div></b-tab
-          >
-          <b-tab title="ARCHIVE">
-            <!-- ARCHIVE TRIPS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-              </div>
-              <!-- <div class="card-body"> -->
-                <div class="table-search">
-                  <b-input-group size="sm">
-                    <b-form-input
-                      id="tableFilter"
-                      type="search"
-                      v-model="tableFilter"
-                      placeholder="Search"
-                    ></b-form-input>
-                  </b-input-group>
-                </div>
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="archivedTrips"
-                    :fields="tripFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="archiveTripInfo"
-                  >
-                    <template #cell(driverName)="methods">
-                      {{ methods.item.allocation.driver.firstName }}
-                      {{ methods.item.allocation.driver.middleName }}
-                      {{ methods.item.allocation.driver.lastName }}
-                    </template>
-                  </b-table>
-                </div>
-              <!-- </div> -->
             </div>
-          </b-tab>
-        </b-tabs>
-      </b-card>
+            <!-- <div class="card-body"> -->
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </div>
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  responsive
+                  striped
+                  hover
+                  :small="true"
+                  :items="localTrips"
+                  :fields="tripFields"
+                  :head-variant="tableHeadVariant"
+                  sticky-header="55vh"
+                  :filter="tableFilter"
+                  @row-clicked="activeTripInfo"
+                >
+                  <template #cell(driverName)="methods">
+                    {{ methods.item.allocation.driver.firstName }}
+                    {{ methods.item.allocation.driver.middleName }}
+                    {{ methods.item.allocation.driver.lastName }}
+                  </template>
+                </b-table>
+              </div>
+            <!-- </div> -->
+          </div></b-tab
+        >
+        <b-tab title="TRANSIT"
+          ><!-- TRANSIT TRIPS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+              </div>
+            </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="transitTrips"
+                :fields="tripFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                @row-clicked="activeTripInfo"
+              >
+                <template #cell(driverName)="methods">
+                  {{ methods.item.allocation.driver.firstName }}
+                  {{ methods.item.allocation.driver.middleName }}
+                  {{ methods.item.allocation.driver.lastName }}
+                </template>
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div></b-tab
+        >
+        <b-tab title="ARCHIVE">
+          <!-- ARCHIVE TRIPS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+              </div>
+            </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="archivedTrips"
+                :fields="tripFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="archiveTripInfo"
+              >
+                <template #cell(driverName)="methods">
+                  {{ methods.item.allocation.driver.firstName }}
+                  {{ methods.item.allocation.driver.middleName }}
+                  {{ methods.item.allocation.driver.lastName }}
+                </template>
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+      </b-tabs>
     </b-overlay>
     <!-- MODAL TO UPDATE TRIP INFORMATION -->
     <b-modal
@@ -277,7 +271,7 @@
               <b-form-file
                 v-else
                 size="sm"
-                placeholder="Choose a file..."
+                placeholder="Select a file..."
                 drop-placeholder="Drop file here..."
                 name="manifestDocument"
               ></b-form-file>
@@ -523,7 +517,7 @@ export default {
           label: "Truck",
           sortable: true,
         },
-        { key: "allocation.trailer.tlNumber", label: "Trailer" },
+        { key: "allocation.trailer.registrationNumber", label: "Trailer" },
         { key: "currentLocation", label: "Current Location" },
         { key: "activityStatus.name", label: "Status", sortable: true },
       ],
@@ -557,13 +551,13 @@ export default {
   },
   computed: {
     localTrips() {
-      return this.trips.filter((trip) => trip.tripClass.id === 1);
+      return this.trips.filter((trip) => trip.tripClass.id === 1 && trip.activityStatus.id !== 3);
     },
     transitTrips() {
-      return this.trips.filter((trip) => trip.tripClass.id === 2);
+      return this.trips.filter((trip) => trip.tripClass.id === 2 && trip.activityStatus.id !== 3);
     },
     archivedTrips() {
-      return this.trips.filter((trip) => trip.activityStatus.id === 1);
+      return this.trips.filter((trip) => trip.activityStatus.id === 3);
     },
     sortOptions() {
       // Create an options list from our fields

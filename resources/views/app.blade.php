@@ -11,7 +11,7 @@
 
     <title>Golden Group</title>
 
-    <link rel="shortcut icon" type="image/x-icon" href="gold_final.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="gold.ico" />
 
     <!-- Custom fonts for this template-->
     {{-- <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> --}}

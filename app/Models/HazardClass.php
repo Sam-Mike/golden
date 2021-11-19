@@ -1,0 +1,16 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class HazardClass extends Model
+{
+    use HasFactory;
+    protected $table = 'hazard_class';
+    public function cargo()
+    {
+        $this->hasMany(Cargo::class);
+    }
+}

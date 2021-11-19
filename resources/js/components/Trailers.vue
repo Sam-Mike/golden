@@ -1,200 +1,194 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <b-card no-body>
-        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
-          <!-- ACTIVE TRAILERS -->
-          <b-tab title="COACH">
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+      <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
+        <!-- ACTIVE TRAILERS -->
+        <b-tab title="COACH">
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
 
-                  <!-- Button trigger New Trailer Modal -->
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    v-b-modal.newTrailerModal
-                  >
-                    New Trailer
-                  </b-button>
-                </div>
-              </div>
-              <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  responsive
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="coachTrailers"
-                  :fields="trailersFields"
-                  :filter="tableFilter"
-                  :head-variant="tableHeadVariant"
-                  :sticky-header="true"
-                  @row-clicked="trailerInfo"
+                <!-- Button trigger New Trailer Modal -->
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  v-b-modal.newTrailerModal
                 >
-                </b-table>
+                  New Trailer
+                </b-button>
               </div>
-              <!-- </div> -->
             </div>
-          </b-tab>
-          <b-tab title="FLEET">
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+            <!-- <div class="card-body"> -->
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="coachTrailers"
+                :fields="trailersFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                @row-clicked="trailerInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+        <b-tab title="FLEET">
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
 
-                  <!-- Button trigger New Trailer Modal -->
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    v-b-modal.newTrailerModal
-                  >
-                    New Trailer
-                  </b-button>
-                </div>
-              </div>
-              <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  responsive
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="fleetTrailers"
-                  :fields="trailersFields"
-                  :filter="tableFilter"
-                  :head-variant="tableHeadVariant"
-                  :sticky-header="true"
-                  @row-clicked="trailerInfo"
+                <!-- Button trigger New Trailer Modal -->
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  v-b-modal.newTrailerModal
                 >
-                </b-table>
+                  New Trailer
+                </b-button>
               </div>
-              <!-- </div> -->
             </div>
-          </b-tab>
-          <b-tab title="WHEELS">
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+            <!-- <div class="card-body"> -->
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="fleetTrailers"
+                :fields="trailersFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                @row-clicked="trailerInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+        <b-tab title="WHEELS">
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
 
-                  <!-- Button trigger New Trailer Modal -->
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    v-b-modal.newTrailerModal
-                  >
-                    New Trailer
-                  </b-button>
-                </div>
-              </div>
-              <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  responsive
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="wheelsTrailers"
-                  :fields="trailersFields"
-                  :filter="tableFilter"
-                  :head-variant="tableHeadVariant"
-                  :sticky-header="true"
-                  @row-clicked="trailerInfo"
+                <!-- Button trigger New Trailer Modal -->
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  v-b-modal.newTrailerModal
                 >
-                </b-table>
+                  New Trailer
+                </b-button>
               </div>
-              <!-- </div> -->
             </div>
-          </b-tab>
-          <b-tab title="In-Active">
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                  <!-- Button trigger New Trailer Modal -->
-                </div>
-              </div>
-              <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  responsive
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="inactiveTrailers"
-                  :fields="trailersFields"
-                  :head-variant="tableHeadVariant"
-                  :sticky-header="true"
-                  @row-clicked="inactiveTrailerInfo"
-                >
-                </b-table>
-              </div>
-              <!-- </div> -->
+            <!-- <div class="card-body"> -->
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
             </div>
-          </b-tab>
-        </b-tabs>
-      </b-card>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="wheelsTrailers"
+                :fields="trailersFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                @row-clicked="trailerInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+        <b-tab title="In-Active">
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
+                <!-- Button trigger New Trailer Modal -->
+              </div>
+            </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="inactiveTrailers"
+                :fields="trailersFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                @row-clicked="inactiveTrailerInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+      </b-tabs>
 
       <!-- New Trailer Modal -->
       <b-modal
@@ -238,7 +232,7 @@
               label="name"
               :options="trailerMake"
               :reduce="(trailerMake) => trailerMake.id"
-              placeholder="Choose Trailer Make"
+              placeholder="Select Trailer Make"
             ></v-select>
           </div>
           <div class="form-group">
@@ -309,7 +303,7 @@
               label="name"
               :options="trailerType"
               :reduce="(trailerType) => trailerType.id"
-              placeholder="Choose Trailer Type"
+              placeholder="Select Trailer Type"
             ></v-select>
           </div>
           <div class="form-group">
@@ -319,7 +313,7 @@
               label="name"
               :options="company"
               :reduce="(company) => company.id"
-              placeholder="Choose Company"
+              placeholder="Select Company"
             ></v-select>
           </div>
         </form>
@@ -376,7 +370,7 @@
               label="name"
               :options="trailerMake"
               :reduce="(trailerMake) => trailerMake.id"
-              placeholder="Choose Trailer Make"
+              placeholder="Select Trailer Make"
             ></v-select>
           </div>
           <div class="form-group">
@@ -448,7 +442,7 @@
               label="name"
               :options="trailerType"
               :reduce="(trailerType) => trailerType.id"
-              placeholder="Choose Trailer Type"
+              placeholder="Select Trailer Type"
             ></v-select>
           </div>
           <div class="form-group">
@@ -458,7 +452,7 @@
               label="name"
               :options="company"
               :reduce="(company) => company.id"
-              placeholder="Choose Company"
+              placeholder="Select Company"
             ></v-select>
           </div>
         </form>
@@ -503,7 +497,6 @@
 </template>
 <script>
 import api from "../apis/api";
-import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -561,9 +554,7 @@ export default {
       );
     },
     inactiveTrailers() {
-      return this.trailers.filter(
-        (trailer) => trailer.activityStatus.id === 3
-      );
+      return this.trailers.filter((trailer) => trailer.activityStatus.id === 3);
     },
     sortOptions() {
       // Create an options list from our fields

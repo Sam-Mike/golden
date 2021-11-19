@@ -28,16 +28,16 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'clientName' => 'required',
+            'name' => 'required',
         ]);
 
         $client = new Client();
-        $client->name = $request->input('clientName');
-        $client->address = $request->input('clientAddress');
-        $client->phone = $request->input('clientPhoneNumber');
-        $client->contact_person_name = $request->input('clientContactPersonName');
-        $client->mobile = $request->input('clientMobile');
-        $client->email = $request->input('clientEmail');
+        $client->name = $request->input('name');
+        $client->address = $request->input('address');
+        $client->phone = $request->input('phoneNumber');
+        $client->contact_person_name = $request->input('contactPersonName');
+        $client->mobile = $request->input('mobile');
+        $client->email = $request->input('email');
         $client->activity_status_id = 1;
         $client->save();
         return response()->json(['success'], 200);
@@ -64,13 +64,13 @@ class ClientController extends Controller
     public function update(Request $request, $id)
     {
         $client = Client::findOrFail($id);
-        $client->name = $request->input('clientName');
-        $client->address = $request->input('clientAddress');
-        $client->phone = $request->input('clientPhoneNumber');
-        $client->contact_person_name = $request->input('clientContactPersonName');
-        $client->mobile = $request->input('clientMobile');
-        $client->email = $request->input('clientEmail');
-        $client->activity_status_id = $request->input('clientActivityStatusId');
+        $client->name = $request->input('name');
+        $client->address = $request->input('address');
+        $client->phone = $request->input('phoneNumber');
+        $client->contact_person_name = $request->input('contactPersonName');
+        $client->mobile = $request->input('mobile');
+        $client->email = $request->input('email');
+        $client->activity_status_id = $request->input('activityStatusId');
         $client->save();
         return response()->json([
             "Client updated Successfully", 200

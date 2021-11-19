@@ -17,7 +17,6 @@ class VehicleTypeSeeder extends Seeder
         DB::table('vehicle_type')->insert(['name' => 'SEMI']);
         DB::table('vehicle_type')->insert(['name' => '10 TON']);
         DB::table('vehicle_type')->insert(['name' => '3 TON']);
-        DB::table('vehicle_type')->insert(['name' => '1 TON']);
         DB::table('vehicle_type')->insert(['name' => 'LIGHT']);
     }
 }

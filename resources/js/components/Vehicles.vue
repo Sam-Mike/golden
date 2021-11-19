@@ -37,7 +37,6 @@
               <div class="table-responsive">
                 <b-table
                   class="table-list"
-                  responsive
                   bordered
                   striped
                   hover
@@ -46,7 +45,7 @@
                   :fields="vehicleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  :sticky-header="true"
+                  sticky-header="55vh"
                   @row-clicked="vehicleInfo"
                 >
                 </b-table>
@@ -87,7 +86,6 @@
               <div class="table-responsive">
                 <b-table
                   class="table-list"
-                  responsive
                   bordered
                   striped
                   hover
@@ -96,7 +94,7 @@
                   :fields="vehicleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  :sticky-header="true"
+                  sticky-header="55vh"
                   @row-clicked="vehicleInfo"
                 >
                 </b-table>
@@ -137,7 +135,6 @@
               <div class="table-responsive">
                 <b-table
                   class="table-list"
-                  responsive
                   bordered
                   striped
                   hover
@@ -146,7 +143,7 @@
                   :fields="vehicleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  :sticky-header="true"
+                  sticky-header="55vh"
                   @row-clicked="vehicleInfo"
                 >
                 </b-table>
@@ -168,7 +165,6 @@
                 <div class="table-responsive">
                   <b-table
                     class="table-list"
-                    responsive
                     bordered
                     striped
                     hover
@@ -177,7 +173,7 @@
                     :fields="vehicleFields"
                     :filter="tableFilter"
                     :head-variant="tableHeadVariant"
-                    :sticky-header="true"
+                    sticky-header="55vh"
                     @row-clicked="inactiveVehicleInfo"
                   >
                   </b-table>
@@ -219,7 +215,7 @@
               label="name"
               :options="vehicleMake"
               :reduce="(vehicleMake) => vehicleMake.id"
-              placeholder="Choose Vehicle Make"
+              placeholder="Select Vehicle Make"
             ></v-select>
           </div>
           <div class="form-group">
@@ -260,7 +256,7 @@
               label="name"
               :options="vehicleTransmissionType"
               :reduce="(vehicleTransmissionType) => vehicleTransmissionType.id"
-              placeholder="Choose vehicle transmission type"
+              placeholder="Select vehicle transmission type"
             ></v-select>
           </div>
           <div class="form-group">
@@ -320,7 +316,7 @@
               label="name"
               :options="fuelType"
               :reduce="(fuelType) => fuelType.id"
-              placeholder="Choose fuel type"
+              placeholder="Select fuel type"
             ></v-select>
           </div>
           <div class="form-group">
@@ -350,7 +346,7 @@
               label="name"
               :options="company"
               :reduce="(company) => company.id"
-              placeholder="Choose Company"
+              placeholder="Select Company"
             ></v-select>
           </div>
           <div class="form-group">
@@ -360,7 +356,7 @@
               label="name"
               :options="vehicleType"
               :reduce="(vehicleType) => vehicleType.id"
-              placeholder="Choose Vehicle Type"
+              placeholder="Select Vehicle Type"
             ></v-select>
           </div>
         </form>
@@ -406,7 +402,7 @@
               label="name"
               :options="vehicleMake"
               :reduce="(vehicleMake) => vehicleMake.id"
-              placeholder="Choose Vehicle Make"
+              placeholder="Select Vehicle Make"
             ></v-select>
           </div>
           <div class="form-group">
@@ -447,7 +443,7 @@
               label="name"
               :options="vehicleTransmissionType"
               :reduce="(vehicleTransmissionType) => vehicleTransmissionType.id"
-              placeholder="Choose vehicle transmission type"
+              placeholder="Select vehicle transmission type"
             ></v-select>
           </div>
           <div class="form-group">
@@ -507,7 +503,7 @@
               label="name"
               :options="fuelType"
               :reduce="(fuelType) => fuelType.id"
-              placeholder="Choose fuel type"
+              placeholder="Select fuel type"
             ></v-select>
           </div>
           <div class="form-group">
@@ -537,7 +533,7 @@
               label="name"
               :options="company"
               :reduce="(company) => company.id"
-              placeholder="Choose Company"
+              placeholder="Select Company"
             ></v-select>
           </div>
           <div class="form-group">
@@ -547,7 +543,7 @@
               label="name"
               :options="vehicleType"
               :reduce="(vehicleType) => vehicleType.id"
-              placeholder="Choose Vehicle Type"
+              placeholder="Select Vehicle Type"
             ></v-select>
           </div>
         </form>
@@ -633,7 +629,7 @@ export default {
     },
     wheelsVehicles() {
       return this.vehicles.filter(
-        (vehicle) => vehicle.company.id === 2 && vehicle.activityStatus.id !== 3
+        (vehicle) => vehicle.company.id === 3 && vehicle.activityStatus.id !== 3
       );
     },
     inactiveVehicles() {

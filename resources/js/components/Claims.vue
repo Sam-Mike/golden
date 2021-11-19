@@ -1,209 +1,191 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <b-card no-body>
-        <b-tabs
-          active-nav-item-class="font-weight-bold text-uppercase"
-          content-class="mt-2"
-        >
-          <b-tab title="Intimated">
-            <!-- INTIMATED CLAIMS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">
-                    Intimated Claims
-                  </h6>
-                  <b-button
-                    size="sm"
-                    variant="primary"
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                    v-b-modal.createClaimModal
-                  >
-                    New Claim
-                  </b-button>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="intimatedClaims"
-                    :fields="claimFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="claimInfo"
-                  >
-                    
-                  </b-table>
-                </div>
+      <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
+        <b-tab title="Intimated">
+          <!-- INTIMATED CLAIMS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-2">
+              <div class="d-flex row justify-content-end">
+                <b-button
+                  size="sm"
+                  variant="primary"
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                  v-b-modal.createClaimModal
+                >
+                  New Claim
+                </b-button>
               </div>
             </div>
-          </b-tab>
-          <b-tab title="Submitted Document"
-            ><!-- CLAIMS WITH SUBMITTED DOCUMENTS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="submittedClaims"
-                    :fields="claimFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="claimInfo"
-                  >
-                    
-                  </b-table>
-                </div>
+
+            <!-- <div class="card-body"> -->
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="intimatedClaims"
+                :fields="claimFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="claimInfo"
+              >
+              </b-table>
+            </div>
+          </div>
+          <!-- </div> -->
+        </b-tab>
+        <b-tab title="Submitted Document"
+          ><!-- CLAIMS WITH SUBMITTED DOCUMENTS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
             </div>
-          </b-tab>
-          <b-tab title="Assessed"
-            ><!-- ASSESSED CLAIMS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="assessedClaims"
-                    :fields="claimFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="claimInfo"
-                  >
-                    
-                  </b-table>
-                </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="submittedClaims"
+                :fields="claimFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="claimInfo"
+              >
+              </b-table>
+            </div>
+          </div>
+          <!-- </div> -->
+        </b-tab>
+        <b-tab title="Assessed"
+          ><!-- ASSESSED CLAIMS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
             </div>
-          </b-tab>
-          <b-tab title="Vouchers Discharged">
-            <!-- CLAIMS WITH DISCHARGED VOUCHERS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="vouchersDischargedClaims"
-                    :fields="claimFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="claimInfo"
-                  >
-                    
-                  </b-table>
-                </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="assessedClaims"
+                :fields="claimFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="claimInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+        <b-tab title="Vouchers Discharged">
+          <!-- CLAIMS WITH DISCHARGED VOUCHERS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
             </div>
-          </b-tab>
-          <b-tab title="Paid">
-            <!-- PAID CLAIMS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="paidClaims"
-                    :fields="claimFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="claimInfo"
-                  >
-                    
-                  </b-table>
-                </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="vouchersDischargedClaims"
+                :fields="claimFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="claimInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+        <b-tab title="Paid">
+          <!-- PAID CLAIMS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
             </div>
-          </b-tab>
-          <b-tab title="Declined">
-            <!-- DECLINED CLAIMS -->
-            <!-- DataTales Example -->
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <div class="d-flex row justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary"></h6>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <b-table
-                    class="table-list"
-                    responsive
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="declinedClaims"
-                    :fields="claimFields"
-                    :head-variant="tableHeadVariant"
-                    :sticky-header="true"
-                    :filter="tableFilter"
-                    @row-clicked="claimInfo"
-                  >
-                  </b-table>
-                </div>
+            <!-- <div class="card-body"> -->
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="paidClaims"
+                :fields="claimFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="claimInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+        <b-tab title="Declined">
+          <!-- DECLINED CLAIMS -->
+          <!-- DataTales Example -->
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <div class="d-flex row justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary"></h6>
               </div>
             </div>
-          </b-tab>
-        </b-tabs>
-      </b-card>
+            <!-- <div class="card-body"> -->
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="declinedClaims"
+                :fields="claimFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="claimInfo"
+              >
+              </b-table>
+            </div>
+            <!-- </div> -->
+          </div>
+        </b-tab>
+      </b-tabs>
     </b-overlay>
     <!-- MODAL TO CREATE CLAIM -->
     <b-modal
@@ -221,7 +203,7 @@
           v-model="newClaim.claimTypeId"
           :options="claimType"
           label="name"
-          placeholder="Choose Claim Type"
+          placeholder="Select Claim Type"
           :reduce="(claimType) => claimType.id"
         ></v-select>
       </div>
@@ -241,7 +223,7 @@
           v-model="newClaim.claimObjectOwner"
           :options="clientsWithTransporters"
           label="name"
-          placeholder="Choose Company"
+          placeholder="Select Company"
           :reduce="(clientsWithTransporters) => clientsWithTransporters"
         ></v-select>
       </div>
@@ -295,7 +277,12 @@
             <b-col v-if="editClaim.claimDocument" class="border rouded">
               <b>CLAIM DOCUMENT</b>
               <p>
-                <a :href="filesPath + editClaim.claimDocument" target="_blank" @click.prevent="">claim document</a>
+                <a
+                  :href="filesPath + editClaim.claimDocument"
+                  target="_blank"
+                  @click.prevent=""
+                  >claim document</a
+                >
               </p>
             </b-col>
             <b-col v-else class="border rouded">
@@ -303,7 +290,7 @@
               <b-form-file
                 size="sm"
                 name="claimDocument"
-                placeholder="Choose file..."
+                placeholder="Select file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
             </b-col>
@@ -366,7 +353,7 @@
               <b-form-file
                 size="sm"
                 name="incidentAssessDocument"
-                placeholder="Choose file..."
+                placeholder="Select file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
             </b-col>
@@ -409,7 +396,7 @@
               <b-form-file
                 size="sm"
                 name="dischargeVoucherDocument"
-                placeholder="Choose file..."
+                placeholder="Select file..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
             </b-col>
@@ -449,7 +436,7 @@
               <b-form-file
                 size="sm"
                 name="paymentDocument"
-                placeholder="Choose a file or drop it here..."
+                placeholder="Select a file or drop it here..."
                 drop-placeholder="Drop file here..."
               ></b-form-file>
             </b-col>

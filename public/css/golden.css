@@ -65,3 +65,9 @@ h1 {
 .field input{
     padding: 0 5px;
 }
+.quickAdd{
+    text-decoration: underline;
+}
+#tripAllocation{
+    padding: 10px;
+}

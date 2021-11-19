@@ -17,6 +17,7 @@ class CreateCargoTable extends Migration
             $table->id();
             $table->string('name');
             $table->foreignId('cargo_type_id')->constrained('cargo_type')->nullable();
+            $table->foreignId('hazard_class_id')->constrained('hazard_class')->nullable();
             $table->timestamps();
         });
     }
