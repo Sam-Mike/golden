@@ -15,7 +15,7 @@ class CreateLubeDispenseTable extends Migration
     {
         Schema::create('lube_dispense', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('truck_id')->constrained('truck');
+            $table->foreignId('vehicle_id')->constrained('vehicle');
             $table->foreignId('lube_id')->constrained('lube');
             $table->decimal('amount', 15, 2);
             $table->timestamps();

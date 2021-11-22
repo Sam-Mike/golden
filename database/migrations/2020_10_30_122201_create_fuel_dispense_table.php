@@ -15,7 +15,7 @@ class CreateFuelDispenseTable extends Migration
     {
         Schema::create('fuel_dispense', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('truck_id')->constrained('truck');
+            $table->foreignId('vehicle_id')->constrained('vehicle');
             $table->foreignId('fuel_tank_id')->constrained('fuel_tank');
             $table->decimal('litres', 15, 2);
             $table->timestamps();
