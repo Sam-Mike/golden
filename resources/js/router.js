@@ -3,7 +3,6 @@ import VueRouter from "vue-router";
 import Clients from './components/Clients';
 import People from './components/People';
 import Trailers from './components/Trailers';
-import Trucks from './components/Trucks';
 import Vehicles from './components/Vehicles';
 import Allocations from './components/Allocations';
 import Trips from './components/Trips';
@@ -44,12 +43,6 @@ const routes = [
     path: '/trailers',
     component: Trailers,
     name: 'trailers',
-    meta: { requiresAuth: true }
-  },
-  {
-    path: '/trucks',
-    component: Trucks,
-    name: 'trucks',
     meta: { requiresAuth: true }
   },
   {

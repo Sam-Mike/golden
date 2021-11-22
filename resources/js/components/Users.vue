@@ -210,12 +210,7 @@ export default {
         { key: "role.name", label: "Role" },
       ],
       tableHeadVariant: "dark",
-      newUser: {
-        name: "",
-        email: "",
-        password: "",
-        roleId: "",
-      },
+      newUser: {},
       editUser: {
         id: "",
         name: "",
@@ -256,16 +251,11 @@ export default {
     },
     async createUser() {
       try {
-        await api.post("users", {
-          name: this.newUser.name,
-          email: this.newUser.email,
-          password: this.newUser.password,
-          roleId: this.newUser.roleId,
-          userActivityStatus: 1,
-        });
+        await api.post("users", this.newUser);
         this.$nextTick(() => {
           this.$bvModal.hide("createUserModal");
           this.getUsers();
+          this.newUser = {};
         });
       } catch (error) {
         console.log(error);
@@ -285,13 +275,7 @@ export default {
     },
     async updateUser() {
       try {
-        await api.patch("users/" + this.editUser.id, {
-          name: this.editUser.name,
-          email: this.editUser.email,
-          password: this.editUser.password,
-          roleId: this.editUser.roleId,
-          userActivityStatus: 1,
-        });
+        await api.patch("users/" + this.editUser.id, this.editUser);
         this.$nextTick(() => {
           this.$bvModal.hide("updateUserModal");
           this.getUsers();
@@ -303,10 +287,6 @@ export default {
     async deactivateUser() {
       try {
         await api.patch("users", {
-          name: this.editUser.name,
-          email: this.editUser.email,
-          password: this.editUser.password,
-          roleId: this.editUser.roleId,
           userActivityStatus: 2,
         });
         this.$nextTick(() => {

@@ -39,7 +39,6 @@ class AllocationController extends Controller
     {
         return [
             "allocations" => AllocationResource::collection(Allocation::all()),
-            "trucks" => TruckResource::collection(Truck::all()),
             "vehicles" => VehicleResource::collection(Vehicle::all()),
             "trailers" => TrailerResource::collection(Trailer::all()),
             "drivers" => PeopleResource::collection(

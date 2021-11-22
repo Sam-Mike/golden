@@ -408,7 +408,7 @@
           <div class="form-group">
             <label for="passportNumber">Passport Number</label>
             <input
-              type="number"
+              type="text"
               class="form-control"
               name="passportNumber"
               v-model="newPerson.passportNumber"

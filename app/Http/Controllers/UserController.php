@@ -38,7 +38,7 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->password_visible = $request->input('password');
         $user->role_id = $request->input('roleId');
-        $user->user_activity_status = $request->input('userActivityStatus');
+        $user->user_activity_status = 1;
         $user->save();
     }
 
@@ -68,7 +68,12 @@ class UserController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->password_visible = $request->input('password');
         $user->role_id = $request->input('roleId');
-        $user->user_activity_status = $request->input('userActivityStatus');
+        $user->save();
+    }
+
+    public function switch_user_activity(Request $request, $id){
+        $user = User::find($id);
+        $user->user_activity_status = $request->input('userActivityStatusId');
         $user->save();
     }
 

@@ -79,7 +79,7 @@
                       <router-link class="dropdown-item" to="/vehicles"
                         >Trucks</router-link
                       >
-                      <router-link class="dropdown-item" to="/trucks"
+                      <router-link class="dropdown-item" to="/vehicles"
                         >All Vehicles</router-link
                       >
                     </div>
