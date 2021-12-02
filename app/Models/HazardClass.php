@@ -11,6 +11,6 @@ class HazardClass extends Model
     protected $table = 'hazard_class';
     public function cargo()
     {
-        $this->hasMany(Cargo::class);
+        return $this->hasMany(Cargo::class);
     }
 }

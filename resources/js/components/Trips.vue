@@ -1,9 +1,7 @@
 <template>
   <div>
     <b-overlay :show="loading">
-      <b-tabs
-        active-nav-item-class="font-weight-bold text-uppercase"
-      >
+      <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
         <b-tab title="LOCAL"
           ><!-- LOCAL TRIPS -->
           <!-- DataTales Example -->
@@ -14,37 +12,37 @@
               </div>
             </div>
             <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  responsive
-                  striped
-                  hover
-                  :small="true"
-                  :items="localTrips"
-                  :fields="tripFields"
-                  :head-variant="tableHeadVariant"
-                  sticky-header="55vh"
-                  :filter="tableFilter"
-                  @row-clicked="activeTripInfo"
-                >
-                  <template #cell(driverName)="methods">
-                    {{ methods.item.allocation.driver.firstName }}
-                    {{ methods.item.allocation.driver.middleName }}
-                    {{ methods.item.allocation.driver.lastName }}
-                  </template>
-                </b-table>
-              </div>
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                responsive
+                striped
+                hover
+                :small="true"
+                :items="localTrips"
+                :fields="tripFields"
+                :head-variant="tableHeadVariant"
+                sticky-header="55vh"
+                :filter="tableFilter"
+                @row-clicked="activeTripInfo"
+              >
+                <template #cell(driverName)="methods">
+                  {{ methods.item.allocation.driver.firstName }}
+                  {{ methods.item.allocation.driver.middleName }}
+                  {{ methods.item.allocation.driver.lastName }}
+                </template>
+              </b-table>
+            </div>
             <!-- </div> -->
           </div></b-tab
         >
@@ -509,15 +507,18 @@ export default {
       people: [],
       locations: [],
       tripFields: [
-        { key: "client.name", label: "Client", sortable: true },
-        { key: "cargo.name", label: "Cargo", sortable: true },
         { key: "driverName", label: "Driver" },
+        { key: "allocation.driver.licenseNumber", label: "License Number" },
+        { key: "allocation.driver.mobile", label: "Mobile" },
+        { key: "allocation.driver.passportNumber", label: "Passport Number" },
         {
           key: "allocation.vehicle.registrationNumber",
           label: "Truck",
           sortable: true,
         },
         { key: "allocation.trailer.registrationNumber", label: "Trailer" },
+        { key: "client.name", label: "Client", sortable: true },
+        { key: "cargo.name", label: "Cargo", sortable: true },
         { key: "currentLocation", label: "Current Location" },
         { key: "activityStatus.name", label: "Status", sortable: true },
       ],
@@ -551,10 +552,14 @@ export default {
   },
   computed: {
     localTrips() {
-      return this.trips.filter((trip) => trip.tripClass.id === 1 && trip.activityStatus.id !== 3);
+      return this.trips.filter(
+        (trip) => trip.tripClass.id === 1 && trip.activityStatus.id !== 3
+      );
     },
     transitTrips() {
-      return this.trips.filter((trip) => trip.tripClass.id === 2 && trip.activityStatus.id !== 3);
+      return this.trips.filter(
+        (trip) => trip.tripClass.id === 2 && trip.activityStatus.id !== 3
+      );
     },
     archivedTrips() {
       return this.trips.filter((trip) => trip.activityStatus.id === 3);

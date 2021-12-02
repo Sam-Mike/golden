@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         return [
-            'users' => UserResource::collection(User::all()),
+            'users' => UserResource::collection(User::with('role')->get()),
             'roles' => RoleResource::collection(Role::all())
         ];
     }

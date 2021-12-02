@@ -10,6 +10,7 @@ import Claims from './components/Claims';
 import Login from './components/Login';
 import Users from './components/Users';
 import Expenses from './components/Expenses';
+import Deposits from './components/Deposits';
 import store from "./store";
 
 Vue.use(VueRouter);
@@ -73,6 +74,12 @@ const routes = [
     path: '/expenses',
     component: Expenses,
     name: 'expenses',
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/deposits',
+    component: Deposits,
+    name: 'deposits',
     meta: { requiresAuth: true }
   }
 ]

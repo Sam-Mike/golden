@@ -14,6 +14,9 @@ use App\Http\Controllers\ClaimController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\DepositController;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -47,4 +50,10 @@ Route::apiResources([
     'users' => UserController::class,
     'locations' => LocationController::class,
     'cargo' => CargoController::class,
+    'expenses' => ExpenseController::class,
+    'deposits' => DepositController::class,
 ]);
+
+// DB::listen(function($query) {
+//     var_dump($query->sql);
+// });

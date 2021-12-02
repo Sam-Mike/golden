@@ -31,7 +31,7 @@ class ClientController extends Controller
             'name' => 'required',
         ]);
 
-        $client = new Client();
+        $client = new Client;
         $client->name = $request->input('name');
         $client->address = $request->input('address');
         $client->phone = $request->input('phoneNumber');

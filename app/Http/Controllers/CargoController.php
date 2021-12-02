@@ -44,7 +44,7 @@ class CargoController extends Controller
      */
     public function store(Request $request)
     {
-        $cargo = new Cargo();
+        $cargo = new Cargo;
         $cargo->name = $request->input('name');
         $cargo->cargo_type_id = $request->input('cargoTypeId');
         $cargo->hazard_class_id = $request->input('hazardClassId');

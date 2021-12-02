@@ -63,36 +63,36 @@
               </div>
             </div>
             <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="fleetPeople"
-                  :fields="peopleFields"
-                  :filter="tableFilter"
-                  :head-variant="tableHeadVariant"
-                  sticky-header="60vh"
-                  @row-clicked="personInfo"
-                >
-                  <template #cell(Name)="data">
-                    {{ data.item.firstName }} {{ data.item.middleName }}
-                    {{ data.item.lastName }}
-                  </template>
-                </b-table>
-              </div>
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="fleetPeople"
+                :fields="peopleFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                sticky-header="60vh"
+                @row-clicked="personInfo"
+              >
+                <template #cell(Name)="data">
+                  {{ data.item.firstName }} {{ data.item.middleName }}
+                  {{ data.item.lastName }}
+                </template>
+              </b-table>
+            </div>
             <!-- </div> -->
           </div>
         </b-tab>
@@ -110,36 +110,36 @@
               </div>
             </div>
             <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="wheelsPeople"
-                  :fields="peopleFields"
-                  :filter="tableFilter"
-                  :head-variant="tableHeadVariant"
-                  sticky-header="60vh"
-                  @row-clicked="personInfo"
-                >
-                  <template #cell(Name)="data">
-                    {{ data.item.firstName }} {{ data.item.middleName }}
-                    {{ data.item.lastName }}
-                  </template>
-                </b-table>
-              </div>
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="wheelsPeople"
+                :fields="peopleFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                sticky-header="60vh"
+                @row-clicked="personInfo"
+              >
+                <template #cell(Name)="data">
+                  {{ data.item.firstName }} {{ data.item.middleName }}
+                  {{ data.item.lastName }}
+                </template>
+              </b-table>
+            </div>
             <!-- </div> -->
           </div>
         </b-tab>
@@ -153,36 +153,36 @@
               </div>
             </div>
             <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <div class="table-responsive">
-                <b-table
-                  class="table-list"
-                  bordered
-                  striped
-                  hover
-                  :small="true"
-                  :items="inactivePeople"
-                  :fields="peopleFields"
-                  :filter="tableFilter"
-                  :head-variant="tableHeadVariant"
-                  sticky-header="60vh"
-                  @row-clicked="inactivePersonInfo"
-                >
-                  <template #cell(Name)="data">
-                    {{ data.item.firstName }} {{ data.item.middleName }}
-                    {{ data.item.lastName }}
-                  </template>
-                </b-table>
-              </div>
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
+            </div>
+            <div class="table-responsive">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                hover
+                :small="true"
+                :items="inactivePeople"
+                :fields="peopleFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+                sticky-header="60vh"
+                @row-clicked="inactivePersonInfo"
+              >
+                <template #cell(Name)="data">
+                  {{ data.item.firstName }} {{ data.item.middleName }}
+                  {{ data.item.lastName }}
+                </template>
+              </b-table>
+            </div>
             <!-- </div> -->
           </div>
         </b-tab>
@@ -867,22 +867,6 @@ export default {
       departmentRolesCascade: [],
       departments: [],
       newPerson: {
-        employeeNumber: "",
-        firstName: "",
-        middleName: "",
-        lastName: "",
-        dob: "",
-        mobile: "",
-        startDate: "",
-        companyId: "",
-        departmentId: "",
-        departmentRoleId: "",
-        nidaNumber: "",
-        ssNumber: "",
-        tinNumber: "",
-        licenseNumber: "",
-        licenseIssueDate: "",
-        licenseExpiryDate: "",
         licenseClasses: {
           classA: false,
           classB: false,
@@ -892,12 +876,6 @@ export default {
           classF: false,
           classG: false,
         },
-        passportNumber: "",
-        passportIssueDate: "",
-        passportExpiryDate: "",
-        nextKinName: "",
-        nextKinMobile: "",
-        activityStatus: "",
       },
       editPerson: {
         id: "",
@@ -1038,6 +1016,17 @@ export default {
         this.$nextTick(() => {
           this.$bvModal.hide("newPersonModal");
           this.getPeople();
+          this.newPerson = {
+            licenseClasses: {
+              classA: false,
+              classB: false,
+              classC: false,
+              classD: false,
+              classE: false,
+              classF: false,
+              classG: false,
+            },
+          };
         });
       } catch (error) {
         console.log(error);

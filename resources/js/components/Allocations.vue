@@ -85,9 +85,7 @@
             </div>
           </div>
         </div>
-        <b-tabs
-          active-nav-item-class="font-weight-bold text-uppercase"
-        >
+        <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <!-- COACH TAB -->
           <b-tab title="Coach" active>
             <div class="card-header py-2">
@@ -610,6 +608,9 @@ export default {
         { key: "vehicle.registrationNumber", label: "Truck" },
         { key: "trailer.registrationNumber", label: "Trailer" },
         { key: "driverName", label: "Driver" },
+        { key: "driver.licenseNumber", label: "License Number" },
+        { key: "driver.mobile", label: "Mobile" },
+        { key: "driver.passportNumber", label: "Passport Number" },
         { key: "activityStatus.name", label: "Activity Status" },
       ],
       tableHeadVariant: "dark",
@@ -786,7 +787,7 @@ export default {
     },
     async createClient() {
       try {
-        await api.post("clients/", this.newClient);
+        await api.post("clients", this.newClient);
         this.$nextTick(() => {
           this.$bvModal.hide("newClientModal");
           this.newClient = {};
@@ -802,13 +803,15 @@ export default {
     },
     async createCargo() {
       try {
-        await api.post("cargo/", this.newCargo);
+        await api.post("cargo", this.newCargo);
         this.$nextTick(() => {
           this.$bvModal.hide("newCargoModal");
           this.newCargo = {};
           this.getAllocations();
         });
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     },
     handleCreateDestination(bvModalEvt) {
       bvModalEvt.preventDefault();
@@ -816,7 +819,7 @@ export default {
     },
     async createDestination() {
       try {
-        await api.post("locations/", this.newDestination);
+        await api.post("locations", this.newDestination);
         this.$nextTick(() => {
           this.$bvModal.hide("newDestinationModal");
           this.newDestination = {};

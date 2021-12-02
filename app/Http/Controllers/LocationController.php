@@ -15,7 +15,7 @@ class LocationController extends Controller
      */
     public function index()
     {
-        return[
+        return [
             'locations' => LocationResource::collection(Location::all()),
         ];
     }
@@ -38,7 +38,7 @@ class LocationController extends Controller
      */
     public function store(Request $request)
     {
-        $location = new Location();
+        $location = new Location;
         $location->name = $request->input('name');
         $location->save();
         return response()->json(['success'], 200);

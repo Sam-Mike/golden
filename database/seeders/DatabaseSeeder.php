@@ -34,6 +34,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             ClientSeeder::class,
+            CurrencySeeder::class,
+            ExpenseCategorySeeder::class,
+            ExpenseSubCategorySeeder::class,
         ]); 
     }
 }
