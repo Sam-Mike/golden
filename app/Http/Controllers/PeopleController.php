@@ -39,7 +39,7 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
-        $people = new People();
+        $people = new People;
         $people->employee_number = $request->input('employeeNumber');
         $people->first_name = $request->input('firstName');
         $people->middle_name = $request->input('middleName');
