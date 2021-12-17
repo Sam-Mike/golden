@@ -40,7 +40,7 @@
               hover
               :small="true"
               :items="activeClients"
-              :fields="clientsFields"
+              :fields="clientFields"
               :head-variant="tableHeadVariant"
               sticky-header="55vh"
               :filter="tableFilter"
@@ -310,7 +310,7 @@ export default {
       loading: null,
       isSuccess: false,
       clients: [],
-      clientsFields: [
+      clientFields: [
         { key: "name", sortable: true },
         { key: "address" },
         { key: "phoneNumber" },
@@ -319,8 +319,8 @@ export default {
         { key: "email" },
       ],
       tableHeadVariant: "dark",
-      newClient: {},
       tableFilter: null,
+      newClient: {},
       editClient: {
         id: "",
         name: "",
@@ -345,7 +345,7 @@ export default {
     },
     sortOptions() {
       // Create an options list from our fields
-      return this.clientsFields
+      return this.clientFields
         .filter((f) => f.sortable)
         .map((f) => {
           return { text: f.label, value: f.key };

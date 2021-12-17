@@ -8,7 +8,7 @@
             <h6 class="m-0 font-weight-bold text-primary"></h6>
             <!-- Button trigger modal -->
             <b-button
-            class="float-right"
+              class="float-right"
               size="sm"
               variant="primary"
               data-toggle="modal"
@@ -19,32 +19,32 @@
             </b-button>
           </div>
         </div>
-        <div class="card-body">
-          <!-- <div class="table-search">
-            <b-input-group size="sm">
-              <b-form-input
-                id="tableFilter"
-                type="search"
-                v-model="tableFilter"
-                placeholder="Search"
-              ></b-form-input>
-            </b-input-group>
-          </div> -->
-          <b-table
-            class="table-list"
-            bordered
-            outlined
-            striped
-            hover
-            :small="true"
-            :items="activeUsers"
-            :fields="usersFields"
-            :head-variant="tableHeadVariant"
-            sticky-header="55vh"
-            @row-clicked="userInfo"
-          >
-          </b-table>
+        <!-- <div class="card-body"> -->
+        <div class="table-search">
+          <b-input-group size="sm">
+            <b-form-input
+              id="tableFilter"
+              type="search"
+              v-model="tableFilter"
+              placeholder="Search"
+            ></b-form-input>
+          </b-input-group>
         </div>
+        <b-table
+          class="table-list"
+          bordered
+          outlined
+          striped
+          hover
+          :small="true"
+          :items="activeUsers"
+          :fields="userFields"
+          :head-variant="tableHeadVariant"
+          sticky-header="55vh"
+          @row-clicked="userInfo"
+        >
+        </b-table>
+        <!-- </div> -->
       </div>
 
       <!-- Create User Modal -->
@@ -205,13 +205,14 @@ export default {
       loading: false,
       users: [],
       roles: [],
-      usersFields: [
+      userFields: [
         { key: "name" },
         { key: "email" },
         { key: "password" },
         { key: "role.name", label: "Role" },
       ],
       tableHeadVariant: "dark",
+      tableFilter: null,
       newUser: {},
       editUser: {
         id: "",
@@ -230,6 +231,14 @@ export default {
       return this.users.filter(
         (user) => user.userActivityStatus === "inactive"
       );
+    },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.userFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
     },
   },
   mounted() {

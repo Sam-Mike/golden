@@ -43,7 +43,7 @@
                 hover
                 :small="true"
                 :items="coachTrailers"
-                :fields="trailersFields"
+                :fields="trailerFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
                 sticky-header="60vh"
@@ -94,7 +94,7 @@
                 hover
                 :small="true"
                 :items="fleetTrailers"
-                :fields="trailersFields"
+                :fields="trailerFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
                 sticky-header="55vh"
@@ -145,7 +145,7 @@
                 hover
                 :small="true"
                 :items="wheelsTrailers"
-                :fields="trailersFields"
+                :fields="trailerFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
                 sticky-header="55vh"
@@ -185,7 +185,7 @@
                 hover
                 :small="true"
                 :items="inactiveTrailers"
-                :fields="trailersFields"
+                :fields="trailerFields"
                 :head-variant="tableHeadVariant"
                 sticky-header="55vh"
                 @row-clicked="inactiveTrailerInfo"
@@ -509,7 +509,7 @@ export default {
     return {
       loading: null,
       trailers: [],
-      trailersFields: [
+      trailerFields: [
         { key: "registrationNumber" },
         { key: "tlNumber", label: "TL Number", sortable: true },
         { key: "trailerMake.name", label: "Trailer Make" },
@@ -565,7 +565,7 @@ export default {
     },
     sortOptions() {
       // Create an options list from our fields
-      return this.trailersFields
+      return this.trailerFields
         .filter((f) => f.sortable)
         .map((f) => {
           return { text: f.label, value: f.key };

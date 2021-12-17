@@ -19,7 +19,7 @@ class DepositResource extends JsonResource
             'id'=> $this->id,
             'date'=> $this->date,
             'amount'=> $this->amount,
-            'currency' => new Currency($this->currency),
+            'currency' => new CurrencyResource($this->currency),
             'exchangeRate'=> $this->exchange_rate,
             'description'=> $this->description,
         ];

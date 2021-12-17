@@ -77,6 +77,9 @@
             <template #cell(amountUSD)="data">{{
               data.value.toLocaleString()
             }}</template>
+            <!-- <template #cell(personName)="data">{{
+              data.item.person.firstName
+            }}</template> -->
             <template slot="bottom-row">
               <td></td>
               <td></td>
@@ -189,7 +192,7 @@
             <label for="vehicle">Vehicle</label>
             <v-select
               v-model="newExpense.vehicleId"
-              label="name"
+              label="registrationNumber"
               :options="vehicles"
               :reduce="(vehicles) => vehicles.id"
               placeholder="Select Vehicle"
@@ -197,14 +200,20 @@
           </div>
 
           <div class="form-group">
-            <label for="companyId">Person</label>
+            <label for="personId">Person</label>
             <v-select
               v-model="newExpense.personId"
-              label="name"
+              label="firstName"
               :options="people"
               :reduce="(people) => people.id"
               placeholder="Select Person"
-            ></v-select>
+            >
+              <template v-slot:option="option">
+                {{ option.firstName }}
+                {{ option.middleName }}
+                {{ option.lastName }}
+              </template></v-select
+            >
           </div>
         </form>
       </b-modal>
@@ -218,7 +227,6 @@ export default {
     return {
       loading: null,
       tableBusy: false,
-      tableFilter: null,
       minDate: null,
       maxDate: null,
       expenses: [],
@@ -241,9 +249,10 @@ export default {
         { key: "currency.name", label: "Currency" },
         { key: "exchangeRate" },
         { key: "vehicle.registrationNumber", label: "Vehicle" },
-        { key: "people.firstname", label: "Person" },
+        { key: "person.firstName", label: "Person" },
         { key: "description" },
       ],
+      tableFilter: null,
       tableHeadVariant: "dark",
       newExpense: {
         exchangeRate: 1,

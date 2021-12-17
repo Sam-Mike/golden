@@ -43,7 +43,7 @@ class DepositController extends Controller
         $deposit = new Deposit;
         $deposit->date = $request->input('date');
         $deposit->amount = $request->input('amount');
-        $deposit->curency_id = $request->input('currencyId');
+        $deposit->currency_id = $request->input('currencyId');
         $deposit->exchange_rate = $request->input('exchangeRate');
         $deposit->description = $request->input('description');
         $deposit->save();

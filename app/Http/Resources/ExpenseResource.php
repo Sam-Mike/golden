@@ -22,6 +22,8 @@ class ExpenseResource extends JsonResource
             'amountUSD'=> $this->amount_usd,
             'exchangeRate'=> $this->exchange_rate,
             'currency' =>  new CurrencyResource($this->currency),
+            'person' =>  new PeopleResource($this->person),
+            'vehicle' =>  new VehicleResource($this->vehicle),
             'description'=> $this->description,
         ];
     }

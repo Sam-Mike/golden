@@ -112,7 +112,7 @@
                     hover
                     :small="true"
                     :items="coachAllocations"
-                    :fields="allocationsFields"
+                    :fields="allocationFields"
                     :head-variant="tableHeadVariant"
                     sticky-header="41vh"
                     @row-clicked="allocationInfo"
@@ -159,7 +159,7 @@
                 hover
                 :small="true"
                 :items="fleetAllocations"
-                :fields="allocationsFields"
+                :fields="allocationFields"
                 :head-variant="tableHeadVariant"
                 sticky-header="55vh"
                 @row-clicked="allocationInfo"
@@ -205,7 +205,7 @@
                 hover
                 :small="true"
                 :items="wheelsAllocations"
-                :fields="allocationsFields"
+                :fields="allocationFields"
                 :head-variant="tableHeadVariant"
                 sticky-header="55vh"
                 @row-clicked="allocationInfo"
@@ -589,7 +589,7 @@ export default {
       loading: false,
       isSuccess: false,
       allocations: [],
-      allocationsFields: [
+      allocationFields: [
         { key: "select" },
         { key: "vehicle.registrationNumber", label: "Truck" },
         { key: "trailer.registrationNumber", label: "Trailer" },

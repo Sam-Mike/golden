@@ -40,7 +40,7 @@
             hover
             :small="true"
             :items="deposits"
-            :fields="depositsFields"
+            :fields="depositFields"
             :filter="tableFilter"
             :head-variant="tableHeadVariant"
             sticky-header="60vh"
@@ -130,15 +130,26 @@ export default {
       newDeposit: {
         exchangeRate: 1,
       },
-      depositsFields: [
-        { key: "id" },
+      depositFields: [
+        { key: "id", label:"Log ID" },
         { key: "date" },
         { key: "amount" },
         { key: "exchangeRate" },
         { key: "description" },
       ],
+      tableFilter: null,
       tableHeadVariant: "dark",
     };
+  },
+  computed: {
+    sortOptions() {
+      // Create an options list from our fields
+      return this.depositFields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
+    },
   },
   mounted() {
     this.getDeposits();
