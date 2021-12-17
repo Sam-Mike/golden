@@ -3,13 +3,13 @@
     <div class="login-form mt-4">
       <div class="m-2">
         <!-- LOGO -->
-        <div id="loginimg">
-          <img src="/img/copy.ico" />
+        <div class="text-center">
+          <img src="/img/copy.ico"  />
         </div>
         <h3 class="my-12 text-center">Login</h3>
         <div class="form-panel">
           <form class="text-left" id="loginForm" @submit.prevent="handleLogin">
-            <span class="text-danger" v-if="error.data"> {{ error.data }}</span>
+            <span class="text-danger" v-if="loginError"> {{ loginError[0] }}</span>
             <div class="field mt-2">
               <label for="username">Username</label><br />
               <b-input
@@ -48,12 +48,12 @@ export default {
         name: "",
         password: "",
       },
-      error: [],
     };
   },
   computed: {
     ...mapGetters({
       user: "auth/user",
+      loginError: "auth/loginError",
     }),
   },
   methods: {
@@ -65,7 +65,7 @@ export default {
         await this.login(this.credentials);
         switch (this.user.role_id) {
           case 1:
-            await this.$router.push({ path: "/" });
+            await this.$router.push({ path: "/users" });
             break;
           case 2:
             await this.$router.push({ path: "/people" });
@@ -73,11 +73,12 @@ export default {
           case 3:
             await this.$router.push({ path: "/" });
             break;
+          case 4:
+            await this.$router.push({ path: "/expenses" });
+            break;
         }
         //await this.$router.push({ path: "/" });
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     },
   },
 };

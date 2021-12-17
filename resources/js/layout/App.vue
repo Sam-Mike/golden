@@ -112,7 +112,10 @@
                       >
                     </div>
                   </li>
-                  <li v-if="user.role_id === 1" class="nav-item dropdown">
+                  <li
+                    v-if="user.role_id === 1 || user.role_id === 4"
+                    class="nav-item dropdown"
+                  >
                     <a
                       class="nav-link dropdown-toggle"
                       id="navbarDropdown"
@@ -128,7 +131,8 @@
                         >Expenses</router-link
                       >
                       <router-link class="dropdown-item" to="/deposits"
-                        >Deposits</router-link>
+                        >Deposits</router-link
+                      >
                     </div>
                   </li>
                   <li v-if="user.role_id === 1" class="nav-item dropdown">

@@ -6,10 +6,11 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <div class="d-flex row justify-content-between">
+              <div class="col-md-auto justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                 <!-- Button trigger modal -->
                 <b-button
+                  class="float-right"
                   size="sm"
                   variant="primary"
                   data-toggle="modal"
@@ -21,31 +22,32 @@
               </div>
             </div>
             <!-- <div class="card-body"> -->
-              <div class="table-search">
-                <b-input-group size="sm">
-                  <b-form-input
-                    id="tableFilter"
-                    type="search"
-                    v-model="tableFilter"
-                    placeholder="Search"
-                  ></b-form-input>
-                </b-input-group>
-              </div>
-              <b-table
-                class="table-list"
-                bordered
-                striped
-                hover
-                :small="true"
-                :items="activeClients"
-                :fields="clientsFields"
-                :head-variant="tableHeadVariant"
-                sticky-header="55vh"
-                :filter="tableFilter"
-                @row-clicked="info"
-              >
-              </b-table>
+            <div class="table-search">
+              <b-input-group size="sm">
+                <b-form-input
+                  id="tableFilter"
+                  type="search"
+                  v-model="tableFilter"
+                  placeholder="Search"
+                ></b-form-input>
+              </b-input-group>
             </div>
+            <b-table
+              class="table-list"
+              bordered
+              outlined
+              striped
+              hover
+              :small="true"
+              :items="activeClients"
+              :fields="clientsFields"
+              :head-variant="tableHeadVariant"
+              sticky-header="55vh"
+              :filter="tableFilter"
+              @row-clicked="info"
+            >
+            </b-table>
+          </div>
           <!-- </div> -->
         </b-tab>
         <b-tab title="INACTIVE" nav-item-class>
@@ -71,6 +73,7 @@
               <b-table
                 class="table-list"
                 bordered
+                outlined
                 striped
                 hover
                 :small="true"

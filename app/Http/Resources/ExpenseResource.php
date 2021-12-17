@@ -18,9 +18,9 @@ class ExpenseResource extends JsonResource
             'id'=> $this->id,
             'date'=> $this->date,
             'expenseSubcategory' =>  new ExpenseSubCategoryResource($this->expense_subcategory),
-            'amountTzs'=> number_format($this->amount_tzs, 2),
-            'amountUsd'=> number_format($this->amount_usd, 2),
-            'exchangeRate'=> number_format($this->exchange_rate, 2),
+            'amountTZS'=> $this->amount_tzs,
+            'amountUSD'=> $this->amount_usd,
+            'exchangeRate'=> $this->exchange_rate,
             'currency' =>  new CurrencyResource($this->currency),
             'description'=> $this->description,
         ];

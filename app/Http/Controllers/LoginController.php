@@ -17,7 +17,7 @@ class LoginController extends Controller
             $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json(['accessToken' => $token, 'token_type' => 'Bearer'], 200);
         }
-        return response()->json('The provided credentials are incorrect', 401);
+        return response()->json(['The provided credentials are incorrect'], 401);
     }
     public function logout()
     {

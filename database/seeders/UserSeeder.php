@@ -30,8 +30,8 @@ class UserSeeder extends Seeder
             'name' => 'hr',
             'email' => 'example1@mail.com',
             'email_verified_at' => now(),
-            'password' => Hash::make('123'),
-            'password_visible' => '123',
+            'password' => Hash::make('goldenhr@2021'),
+            'password_visible' => 'goldenhr@2021',
             'role_id' => 2,
             'remember_token' => Str::random(10),
         ]);
@@ -42,6 +42,15 @@ class UserSeeder extends Seeder
             'password' => Hash::make('operations@gc'),
             'password_visible' => 'operations@gc',
             'role_id' => 3,
+            'remember_token' => Str::random(10),
+        ]);
+        DB::table('users')->insert([
+            'name' => 'finance',
+            'email' => 'example3@mail.com',
+            'email_verified_at' => now(),
+            'password' => Hash::make('finance@gcfw'),
+            'password_visible' => 'finance@gcfw',
+            'role_id' => 4,
             'remember_token' => Str::random(10),
         ]);
     }

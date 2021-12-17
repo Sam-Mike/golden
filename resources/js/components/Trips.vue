@@ -25,8 +25,9 @@
             <div class="table-responsive">
               <b-table
                 class="table-list"
-                responsive
                 striped
+                bordered
+                outlined
                 hover
                 :small="true"
                 :items="localTrips"
@@ -70,6 +71,7 @@
               <b-table
                 class="table-list"
                 bordered
+                outlined
                 striped
                 hover
                 :small="true"
@@ -114,6 +116,7 @@
               <b-table
                 class="table-list"
                 bordered
+                outlined
                 striped
                 hover
                 :small="true"

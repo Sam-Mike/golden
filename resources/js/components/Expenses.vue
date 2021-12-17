@@ -4,11 +4,12 @@
       <!-- DataTales Example -->
       <div class="card shadow">
         <div class="card-header py-auto">
-          <div class="d-flex row justify-content-end">
+          <div class="col-md-auto justify-content-end">
             <h6 class="m-0 font-weight-bold text-primary"></h6>
 
             <!-- Button trigger New Expense Modal -->
             <b-button
+              class="float-right"
               size="sm"
               variant="primary"
               data-toggle="modal"
@@ -20,29 +21,79 @@
           </div>
         </div>
         <!-- <div class="card-body"> -->
-        <div class="table-search">
-          <b-input-group size="sm">
-            <b-form-input
-              id="tableFilter"
-              type="search"
-              v-model="tableFilter"
-              placeholder="Search"
-            ></b-form-input>
-          </b-input-group>
+        <!-- <div class="table-search"></div> -->
+        <!-- date range picking -->
+        <div class="m-2 row justify-content">
+          <div class="col">
+            <b-input-group size="sm">
+              <b-form-input
+                id="tableFilter"
+                type="search"
+                v-model="tableFilter"
+                placeholder="Search"
+              ></b-form-input>
+            </b-input-group>
+          </div>
+          <div class="col">
+            <b-form-datepicker
+              id="range-datepicker"
+              v-model="minDate"
+              class="mb-2"
+              size="sm"
+              placeholder="min date"
+            ></b-form-datepicker>
+          </div>
+          <div class="col">
+            <b-form-datepicker
+              id="range-datepicker"
+              v-model="maxDate"
+              class="mb-2"
+              size="sm"
+              placeholder="max range"
+            ></b-form-datepicker>
+          </div>
+          <div class="col">
+            <b-button size="sm" variant="primary" @click="dateRangeFilter()"
+              >Filter Expenses</b-button
+            >
+          </div>
         </div>
-        <div class="table-responsive">
+        <div>
           <b-table
             class="table-list"
             bordered
             striped
+            outlined
             hover
             :small="true"
             :items="expenses"
             :fields="expenseFields"
             :filter="tableFilter"
             :head-variant="tableHeadVariant"
-            sticky-header="60vh"
           >
+            <template #cell(amountTZS)="data">{{
+              data.value.toLocaleString()
+            }}</template>
+            <template #cell(amountUSD)="data">{{
+              data.value.toLocaleString()
+            }}</template>
+            <template slot="bottom-row">
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <b>TOTAL: {{ sumTZS.toLocaleString() }}</b>
+              </td>
+              <td>
+                <b>TOTAL: {{ sumUSD.toLocaleString() }}</b>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </template>
           </b-table>
         </div>
         <!-- </div> -->
@@ -166,8 +217,13 @@ export default {
   data() {
     return {
       loading: null,
+      tableBusy: false,
       tableFilter: null,
+      minDate: null,
+      maxDate: null,
       expenses: [],
+      sumTZS: "",
+      sumUSD: "",
       currency: [],
       expenseCategories: [],
       expenseSubcategories: [],
@@ -180,9 +236,9 @@ export default {
         { key: "date" },
         { key: "expenseSubcategory.expenseCategory.name", label: "Category" },
         { key: "expenseSubcategory.name", label: "Subcategory" },
-        { key: "amountTzs", label:"Amount TZS" },
-        { key: "amountUsd", label:"Amount USD" },
-        { key: "currency.name" ,label:'Currency' },
+        { key: "amountTZS", label: "Amount TZS" },
+        { key: "amountUSD", label: "Amount USD" },
+        { key: "currency.name", label: "Currency" },
         { key: "exchangeRate" },
         { key: "vehicle.registrationNumber", label: "Vehicle" },
         { key: "people.firstname", label: "Person" },
@@ -210,6 +266,14 @@ export default {
         (expenseSubcategory) => expenseSubcategory.expenseCategory.id == value
       );
     },
+    expenses: function () {
+      this.sumTZS = this.expenses.reduce((totalTZS, expense) => {
+        return (totalTZS += expense.amountTZS);
+      }, 0);
+      this.sumUSD = this.expenses.reduce((totalUSD, expense) => {
+        return totalUSD + expense.amountUSD;
+      }, 0);
+    },
   },
   mounted() {
     this.getExpenses();
@@ -228,6 +292,19 @@ export default {
         this.loading = false;
       } catch (error) {
         console.log(error);
+      }
+    },
+    dateRangeFilter() {
+      if (this.minDate && this.maxDate) {
+        console.log("here i am");
+        const minDate = new Date(this.minDate);
+        const maxDate = new Date(this.maxDate);
+        this.tableBusy = true;
+        this.expenses = this.expenses.filter((expense) => {
+          const expenseDate = new Date(expense.date);
+          expenseDate >= minDate && expenseDate <= maxDate;
+        });
+        this.tableBusy = false;
       }
     },
     handleCreateExpense(bvModalEvt) {

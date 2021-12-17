@@ -94,17 +94,17 @@ class ExpenseSubCategorySeeder extends Seeder
 
         DB::table('expense_subcategory')->insert(['name' => 'ALLOWANCE & EXP- LOCAL', 'expense_category_id' => 14]);
         DB::table('expense_subcategory')->insert(['name' => 'ALLOWANCE & EXP- TRANSIT', 'expense_category_id' => 14]);
-        DB::table('expense_subcategory')->insert(['name' => 'ALLOWANCE & EXP- ESCORT/ CONVOY', 'expense_category_id' => 14]);
+        DB::table('expense_subcategory')->insert(['name' => 'ALLOWANCE & EXP- ESCORT/CONVOY', 'expense_category_id' => 14]);
         DB::table('expense_subcategory')->insert(['name' => 'SADQA - LOCAL', 'expense_category_id' => 14]);
         DB::table('expense_subcategory')->insert(['name' => 'SADQA - TRANSIT', 'expense_category_id' => 14]);
 
         DB::table('expense_subcategory')->insert(['name' => 'ALLOWANCE GENERAL', 'expense_category_id' => 15]);
-        DB::table('expense_subcategory')->insert(['name' => 'HEALTH CERTIFICATE/ FIRE TRAINING', 'expense_category_id' => 15]);
+        DB::table('expense_subcategory')->insert(['name' => 'HEALTH CERTIFICATE/FIRE TRAINING', 'expense_category_id' => 15]);
         DB::table('expense_subcategory')->insert(['name' => 'LPG GAS, ORYX GAS', 'expense_category_id' => 15]);
         DB::table('expense_subcategory')->insert(['name' => 'PLUMBING MATERIALS FOR FIRE TANK', 'expense_category_id' => 15]);
         DB::table('expense_subcategory')->insert(['name' => 'M/S PLATE - BENDING/CUTTING/OTHERS', 'expense_category_id' => 15]);
         DB::table('expense_subcategory')->insert(['name' => 'PAINT GOODS & SIKENS', 'expense_category_id' => 15]);
-        DB::table('expense_subcategory')->insert(['name' => 'CHAIN HIRING/ SPANNER/ FORK LIFT/ CRANE', 'expense_category_id' => 15]);
+        DB::table('expense_subcategory')->insert(['name' => 'CHAIN HIRING/SPANNER/FORK LIFT/CRANE', 'expense_category_id' => 15]);
         DB::table('expense_subcategory')->insert(['name' => 'PETROL - FIRE TRAINING/ OTHERS', 'expense_category_id' => 15]);
         DB::table('expense_subcategory')->insert(['name' => 'SAW DUST', 'expense_category_id' => 15]);
         DB::table('expense_subcategory')->insert(['name' => 'SPANNER & TOOLS', 'expense_category_id' => 15]);
@@ -117,7 +117,7 @@ class ExpenseSubCategorySeeder extends Seeder
         DB::table('expense_subcategory')->insert(['name' => 'CELL CARD - (BOSS/ALI/STAFF)', 'expense_category_id' => 16]);
         DB::table('expense_subcategory')->insert(['name' => 'COMPUTER PHOTOCOPY ACCESSORIES(TONNER, CARTRIDGE, GENERAL REPAIR)', 'expense_category_id' => 16]);
         DB::table('expense_subcategory')->insert(['name' => 'DIESEL TANK', 'expense_category_id' => 16]);
-        DB::table('expense_subcategory')->insert(['name' => 'POSTAL/ PARCEL CHARGE(M-PESA/DHL/OTHERS)', 'expense_category_id' => 16]);
+        DB::table('expense_subcategory')->insert(['name' => 'POSTAL/PARCEL CHARGE(M-PESA/DHL/OTHERS)', 'expense_category_id' => 16]);
         DB::table('expense_subcategory')->insert(['name' => 'ELECTRIC MATERIALS & LABOR EXPENSES', 'expense_category_id' => 16]);
         DB::table('expense_subcategory')->insert(['name' => 'EXTREME WEB TEC', 'expense_category_id' => 16]);
         DB::table('expense_subcategory')->insert(['name' => 'GARDEN - FLOWER PLANT & MEDICINE', 'expense_category_id' => 16]);

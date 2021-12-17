@@ -4,7 +4,7 @@ export default {
     state: {
         authenticated: false,
         user: null,
-        error: null,
+        loginError: null,
     },
     getters: {
         authenticated(state) {
@@ -12,6 +12,9 @@ export default {
         },
         user(state) {
             return state.user
+        },
+        loginError(state){
+            return state.loginError
         }
     },
     mutations: {
@@ -21,12 +24,12 @@ export default {
         setUser(state, user) {
             state.user = user;
         },
-        error(state, error) {
-            state.error = error
+        setError(state, error) {
+            state.loginError = error
         }
     },
     actions: {
-        async login({ dispatch }, login) {
+        async login({ dispatch, commit }, login) {
             try {
                 await axios.get("/sanctum/csrf-cookie");
                 await api.post("login", {
@@ -34,9 +37,8 @@ export default {
                     password: login.password
                 });
                 return dispatch("getUserInfo");
-
             } catch (error) {
-                console.log(error)
+                commit("setError", error.response.data);
             }
 
         },

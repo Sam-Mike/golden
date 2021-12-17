@@ -39,7 +39,7 @@ nav > div > ul > li.active > a {
 
 /*login_form*/
 .login-form {
-    max-width: 310px;
+    max-width: 350px;
     margin: 0 auto;
     border-style: solid;
     border-width: thin;

@@ -7,9 +7,15 @@
           <!-- DataTales  -->
           <div class="card shadow">
             <div class="card-header py-auto">
-              <div class="d-flex row justify-content-end">
+              <div class="col-md-auto justify-content-end">
                 <!-- Button trigger Create Person modal -->
-                <b-button size="sm" variant="primary" v-b-modal.newPersonModal>
+                <b-button
+                  class="float-right"
+                  size="sm"
+                  data-toggle="modal"
+                  variant="primary"
+                  v-b-modal.newPersonModal
+                >
                   Add New Person
                 </b-button>
               </div>
@@ -30,6 +36,7 @@
               <b-table
                 class="table-list"
                 bordered
+                outlined
                 striped
                 hover
                 :small="true"
@@ -54,10 +61,15 @@
           <!-- DataTales  -->
           <div class="card shadow">
             <div class="card-header py-auto">
-              <div class="d-flex row justify-content-between">
+              <div class="col-md-auto justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                 <!-- Button trigger Create Person modal -->
-                <b-button size="sm" variant="primary" v-b-modal.newPersonModal>
+                <b-button
+                  class="float-right"
+                  size="sm"
+                  variant="primary"
+                  v-b-modal.newPersonModal
+                >
                   Add New Person
                 </b-button>
               </div>
@@ -77,6 +89,7 @@
               <b-table
                 class="table-list"
                 bordered
+                outlined
                 striped
                 hover
                 :small="true"
@@ -84,7 +97,7 @@
                 :fields="peopleFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="60vh"
+                sticky-header="58vh"
                 @row-clicked="personInfo"
               >
                 <template #cell(Name)="data">
@@ -101,10 +114,15 @@
           <!-- DataTales  -->
           <div class="card shadow">
             <div class="card-header py-auto">
-              <div class="d-flex row justify-content-between">
+              <div class="col-md-auto justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                 <!-- Button trigger Create Person modal -->
-                <b-button size="sm" variant="primary" v-b-modal.newPersonModal>
+                <b-button
+                  class="float-right"
+                  size="sm"
+                  variant="primary"
+                  v-b-modal.newPersonModal
+                >
                   Add New Person
                 </b-button>
               </div>
@@ -124,6 +142,7 @@
               <b-table
                 class="table-list"
                 bordered
+                outlined
                 striped
                 hover
                 :small="true"
@@ -167,6 +186,7 @@
               <b-table
                 class="table-list"
                 bordered
+                outlined
                 striped
                 hover
                 :small="true"

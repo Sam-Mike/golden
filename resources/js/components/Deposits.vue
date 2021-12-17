@@ -4,11 +4,12 @@
       <!-- DataTales Example -->
       <div class="card shadow">
         <div class="card-header py-auto">
-          <div class="d-flex row justify-content-end">
+          <div class="col-md-auto justify-content-end">
             <h6 class="m-0 font-weight-bold text-primary"></h6>
 
             <!-- Button trigger New Deposit Modal -->
             <b-button
+            class="float-right"
               size="sm"
               variant="primary"
               data-toggle="modal"
@@ -34,6 +35,7 @@
           <b-table
             class="table-list"
             bordered
+            outlined
             striped
             hover
             :small="true"

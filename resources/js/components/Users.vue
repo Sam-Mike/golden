@@ -4,10 +4,11 @@
       <!-- DataTales Example -->
       <div class="card shadow mb-4">
         <div class="card-header py-3">
-          <div class="d-flex row justify-content-between">
+          <div class="d-flex col-md-auto justify-content-between">
             <h6 class="m-0 font-weight-bold text-primary"></h6>
             <!-- Button trigger modal -->
             <b-button
+            class="float-right"
               size="sm"
               variant="primary"
               data-toggle="modal"
@@ -31,15 +32,15 @@
           </div> -->
           <b-table
             class="table-list"
-            responsive
             bordered
+            outlined
             striped
             hover
             :small="true"
             :items="activeUsers"
             :fields="usersFields"
             :head-variant="tableHeadVariant"
-            :sticky-header="true"
+            sticky-header="55vh"
             @row-clicked="userInfo"
           >
           </b-table>
@@ -48,6 +49,7 @@
 
       <!-- Create User Modal -->
       <b-modal
+        scrollable
         ok-title="Save"
         title="Add User"
         class="modal fade"

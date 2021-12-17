@@ -15,7 +15,7 @@ class ExpenseCategorySeeder extends Seeder
     public function run()
     {
         DB::table('expense_category')->insert(['name'=>'MD HOUSE EXP']);
-        DB::table('expense_category')->insert(['name'=>'STAFF SALARY& LEAVE/OTHERS']);
+        DB::table('expense_category')->insert(['name'=>'STAFF SALARY & LEAVE/OTHERS']);
         DB::table('expense_category')->insert(['name'=>'VEHICLE SERVICE & MAINTENANCE']);
         DB::table('expense_category')->insert(['name'=>'LICENSE']);
         DB::table('expense_category')->insert(['name'=>'DIESEL & LUBRICANTS']);

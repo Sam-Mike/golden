@@ -8,7 +8,7 @@
             <!-- DataTales Example -->
             <div class="card shadow">
               <div class="card-header py-auto">
-                <div class="d-flex row justify-content-end">
+                <div class="col-md-auto justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
                   <!--button to trigger create vehicle modal-->
                   <b-button
@@ -38,6 +38,7 @@
                 <b-table
                   class="table-list"
                   bordered
+                  outlined
                   striped
                   hover
                   :small="true"
@@ -57,11 +58,11 @@
             <!-- DataTales Example -->
             <div class="card shadow">
               <div class="card-header py-auto">
-                <div class="d-flex row justify-content-between">
+                <div class="col-md-auto justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
-
                   <!-- Button trigger insert new Vehicle Modal -->
                   <b-button
+                  class="float-right"
                     size="sm"
                     variant="primary"
                     data-toggle="modal"
@@ -87,6 +88,7 @@
                 <b-table
                   class="table-list"
                   bordered
+                  outlined
                   striped
                   hover
                   :small="true"
@@ -106,11 +108,12 @@
             <!-- DataTales Example -->
             <div class="card shadow">
               <div class="card-header py-auto">
-                <div class="d-flex row justify-content-between">
+                <div class="col-md-auto justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
 
                   <!-- Button trigger insert new Vehicle Modal -->
                   <b-button
+                  class="float-right"
                     size="sm"
                     variant="primary"
                     data-toggle="modal"
@@ -136,6 +139,7 @@
                 <b-table
                   class="table-list"
                   bordered
+                  outlined
                   striped
                   hover
                   :small="true"
@@ -166,6 +170,7 @@
                   <b-table
                     class="table-list"
                     bordered
+                    outlined
                     striped
                     hover
                     :small="true"

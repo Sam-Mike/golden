@@ -88,56 +88,59 @@
         <b-tabs active-nav-item-class="font-weight-bold text-uppercase">
           <!-- COACH TAB -->
           <b-tab title="Coach" active>
-            <div class="card-header py-2">
-              <div class="d-flex row justify-content-end">
-                <b-button
-                  size="sm"
-                  variant="primary"
-                  data-toggle="modal"
-                  data-target="#exampleModal"
-                  v-b-modal.newCoachAllocationModal
-                >
-                  New Allocation
-                </b-button>
+            <div class="card shadow">
+              <div class="card-header py-auto">
+                <div class="col-md-auto justify-content-end">
+                  <b-button
+                    class="float-right"
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.newCoachAllocationModal
+                  >
+                    New Allocation
+                  </b-button>
+                </div>
+                <!-- <div class="card-body"> -->
+                <div class="table-responsive">
+                  <!-- dataTable -->
+                  <b-table
+                    class="table-list"
+                    bordered
+                    striped
+                    hover
+                    :small="true"
+                    :items="coachAllocations"
+                    :fields="allocationsFields"
+                    :head-variant="tableHeadVariant"
+                    sticky-header="41vh"
+                    @row-clicked="allocationInfo"
+                  >
+                    <template #cell(select)="methods"
+                      ><b-form-checkbox
+                        v-model="newTrip.checkedAllocations"
+                        :value="methods.item.id"
+                        unchecked-value=""
+                      ></b-form-checkbox
+                    ></template>
+                    <template #cell(driverName)="methods">
+                      {{ methods.item.driver.firstName }}
+                      {{ methods.item.driver.middleName }}
+                      {{ methods.item.driver.lastName }}
+                    </template>
+                  </b-table>
+                </div>
               </div>
             </div>
-            <!-- <div class="card-body"> -->
-            <div class="table-responsive">
-              <!-- dataTable -->
-              <b-table
-                class="table-list"
-                bordered
-                striped
-                hover
-                :small="true"
-                :items="coachAllocations"
-                :fields="allocationsFields"
-                :head-variant="tableHeadVariant"
-                sticky-header="41vh"
-                @row-clicked="allocationInfo"
-              >
-                <template #cell(select)="methods"
-                  ><b-form-checkbox
-                    v-model="newTrip.checkedAllocations"
-                    :value="methods.item.id"
-                    unchecked-value=""
-                  ></b-form-checkbox
-                ></template>
-                <template #cell(driverName)="methods">
-                  {{ methods.item.driver.firstName }}
-                  {{ methods.item.driver.middleName }}
-                  {{ methods.item.driver.lastName }}
-                </template>
-              </b-table>
-            </div>
-            <!-- </div> -->
           </b-tab>
           <!-- FLEET TAB -->
           <b-tab title="Fleet">
             <div class="card-header py-3">
-              <div class="d-flex row justify-content-between">
+              <div class="col-md-auto justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                 <b-button
+                  class="float-right"
                   size="sm"
                   variant="primary"
                   data-toggle="modal"
@@ -180,9 +183,10 @@
           <!-- WHEELS TAB -->
           <b-tab title="Wheels">
             <div class="card-header py-3">
-              <div class="d-flex row justify-content-between">
+              <div class="col-md-auto justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary"></h6>
                 <b-button
+                  class="float-right"
                   size="sm"
                   variant="primary"
                   data-toggle="modal"
@@ -239,51 +243,45 @@
         title=" New Allocation"
         @ok="handleCreateAllocation"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="submitAllocation">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Truck</label>
-                  <v-select
-                    v-model="newAllocation.vehicleId"
-                    label="registrationNumber"
-                    :options="coachVehicles"
-                    :reduce="(coachVehicles) => coachVehicles.id"
-                    placeholder="Select Truck"
-                  ></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Trailer</label>
-                  <v-select
-                    v-model="newAllocation.trailerId"
-                    label="registrationNumber"
-                    :options="unallocatedTrailers"
-                    :reduce="(trailers) => trailers.id"
-                    placeholder="Select Trailer"
-                  ></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="search">Driver</label>
-                  <v-select
-                    v-model="newAllocation.driverId"
-                    :options="unallocatedDrivers"
-                    label="firstName"
-                    :filterBy="driverSearch"
-                    :reduce="(drivers) => drivers.id"
-                    placeholder="Select Driver"
-                  >
-                    <template v-slot:option="option">
-                      {{ option.firstName }}
-                      {{ option.middleName }}
-                      {{ option.lastName }}
-                    </template>
-                  </v-select>
-                </div>
-              </form>
-            </div>
+        <form ref="form" @submit.stop.prevent="submitAllocation">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Truck</label>
+            <v-select
+              v-model="newAllocation.vehicleId"
+              label="registrationNumber"
+              :options="coachVehicles"
+              :reduce="(coachVehicles) => coachVehicles.id"
+              placeholder="Select Truck"
+            ></v-select>
           </div>
-        </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Trailer</label>
+            <v-select
+              v-model="newAllocation.trailerId"
+              label="registrationNumber"
+              :options="unallocatedTrailers"
+              :reduce="(trailers) => trailers.id"
+              placeholder="Select Trailer"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="search">Driver</label>
+            <v-select
+              v-model="newAllocation.driverId"
+              :options="unallocatedDrivers"
+              label="firstName"
+              :filterBy="driverSearch"
+              :reduce="(drivers) => drivers.id"
+              placeholder="Select Driver"
+            >
+              <template v-slot:option="option">
+                {{ option.firstName }}
+                {{ option.middleName }}
+                {{ option.lastName }}
+              </template>
+            </v-select>
+          </div>
+        </form>
       </b-modal>
 
       <!-- Modal to create Allocation combination for FLEET TRUCKS -->
@@ -299,51 +297,45 @@
         title=" New Allocation"
         @ok="handleCreateAllocation"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="submitAllocation">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Truck</label>
-                  <v-select
-                    v-model="newAllocation.vehicleId"
-                    label="registrationNumber"
-                    :options="fleetVehicles"
-                    :reduce="(fleetVehicles) => fleetVehicles.id"
-                    placeholder="Select Truck"
-                  ></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Trailer</label>
-                  <v-select
-                    v-model="newAllocation.trailerId"
-                    label="registrationNumber"
-                    :options="unallocatedTrailers"
-                    :reduce="(trailers) => trailers.id"
-                    placeholder="Select Trailer"
-                  ></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Driver</label>
-                  <v-select
-                    v-model="newAllocation.driverId"
-                    :options="unallocatedDrivers"
-                    label="firstName"
-                    :filterBy="driverSearch"
-                    :reduce="(drivers) => drivers.id"
-                    placeholder="Select Driver"
-                  >
-                    <template v-slot:option="option">
-                      {{ option.firstName }}
-                      {{ option.middleName }}
-                      {{ option.lastName }}
-                    </template>
-                  </v-select>
-                </div>
-              </form>
-            </div>
+        <form ref="form" @submit.stop.prevent="submitAllocation">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Truck</label>
+            <v-select
+              v-model="newAllocation.vehicleId"
+              label="registrationNumber"
+              :options="fleetVehicles"
+              :reduce="(fleetVehicles) => fleetVehicles.id"
+              placeholder="Select Truck"
+            ></v-select>
           </div>
-        </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Trailer</label>
+            <v-select
+              v-model="newAllocation.trailerId"
+              label="registrationNumber"
+              :options="unallocatedTrailers"
+              :reduce="(trailers) => trailers.id"
+              placeholder="Select Trailer"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Driver</label>
+            <v-select
+              v-model="newAllocation.driverId"
+              :options="unallocatedDrivers"
+              label="firstName"
+              :filterBy="driverSearch"
+              :reduce="(drivers) => drivers.id"
+              placeholder="Select Driver"
+            >
+              <template v-slot:option="option">
+                {{ option.firstName }}
+                {{ option.middleName }}
+                {{ option.lastName }}
+              </template>
+            </v-select>
+          </div>
+        </form>
       </b-modal>
 
       <!-- Modal to create Allocation combination for WHEELS TRUCKS -->
@@ -359,51 +351,45 @@
         title=" New Allocation"
         @ok="handleCreateAllocation"
       >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-body">
-              <form ref="form" @submit.stop.prevent="createAllocation">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Truck</label>
-                  <v-select
-                    v-model="newAllocation.vehicleId"
-                    label="registrationNumber"
-                    :options="wheelsVehicles"
-                    :reduce="(wheelsVehicles) => wheelsVehicles.id"
-                    placeholder="Select Truck"
-                  ></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Trailer</label>
-                  <v-select
-                    v-model="newAllocation.trailerId"
-                    label="registrationNumber"
-                    :options="unallocatedTrailers"
-                    :reduce="(trailers) => trailers.id"
-                    placeholder="Select Trailer"
-                  ></v-select>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Driver</label>
-                  <v-select
-                    v-model="newAllocation.driverId"
-                    :options="unallocatedDrivers"
-                    label="firstName"
-                    :filterBy="driverSearch"
-                    :reduce="(drivers) => drivers.id"
-                    placeholder="Select Driver"
-                  >
-                    <template v-slot:option="option">
-                      {{ option.firstName }}
-                      {{ option.middleName }}
-                      {{ option.lastName }}
-                    </template>
-                  </v-select>
-                </div>
-              </form>
-            </div>
+        <form ref="form" @submit.stop.prevent="createAllocation">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Truck</label>
+            <v-select
+              v-model="newAllocation.vehicleId"
+              label="registrationNumber"
+              :options="wheelsVehicles"
+              :reduce="(wheelsVehicles) => wheelsVehicles.id"
+              placeholder="Select Truck"
+            ></v-select>
           </div>
-        </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Trailer</label>
+            <v-select
+              v-model="newAllocation.trailerId"
+              label="registrationNumber"
+              :options="unallocatedTrailers"
+              :reduce="(trailers) => trailers.id"
+              placeholder="Select Trailer"
+            ></v-select>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Driver</label>
+            <v-select
+              v-model="newAllocation.driverId"
+              :options="unallocatedDrivers"
+              label="firstName"
+              :filterBy="driverSearch"
+              :reduce="(drivers) => drivers.id"
+              placeholder="Select Driver"
+            >
+              <template v-slot:option="option">
+                {{ option.firstName }}
+                {{ option.middleName }}
+                {{ option.lastName }}
+              </template>
+            </v-select>
+          </div>
+        </form>
       </b-modal>
 
       <!-- Modal to update/delete Allocation combinations-->
@@ -689,7 +675,10 @@ export default {
       );
     },
     unallocatedDrivers() {
-      return this.drivers.filter((driver) => driver.activityStatus.id === 1);
+      return this.drivers.filter(
+        (driver) =>
+          driver.activityStatus.id === 1 && driver.departmentRole.id === 7
+      );
     },
     unallocatedTrailers() {
       return this.trailers.filter((trailer) => trailer.activityStatus.id === 1);
