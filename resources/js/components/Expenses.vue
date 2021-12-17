@@ -35,22 +35,22 @@
             </b-input-group>
           </div>
           <div class="col">
-            <b-form-datepicker
+            <!-- <b-form-datepicker
               id="range-datepicker"
               v-model="minDate"
               class="mb-2"
               size="sm"
               placeholder="min date"
-            ></b-form-datepicker>
+            ></b-form-datepicker> -->
           </div>
           <div class="col">
-            <b-form-datepicker
+            <!-- <b-form-datepicker
               id="range-datepicker"
               v-model="maxDate"
               class="mb-2"
               size="sm"
               placeholder="max range"
-            ></b-form-datepicker>
+            ></b-form-datepicker> -->
           </div>
           <div class="col">
             <b-button size="sm" variant="primary" @click="dateRangeFilter()"
