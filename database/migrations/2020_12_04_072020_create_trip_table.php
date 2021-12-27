@@ -17,7 +17,7 @@ class CreateTripTable extends Migration
             $table->id();
             $table->foreignId('client_id')->constrained('client');
             $table->foreignId('cargo_id')->constrained('cargo');
-            $table->foreignId('destination_id')->constrained('location');
+            $table->foreignId('destination_id')->constrained('destination');
             $table->foreignId('allocation_id')->constrained('allocation');
             $table->foreignId('activity_status_id')->constrained('status');
             $table->foreignId('trip_class_id')->nullable()->constrained('trip_class');
@@ -36,7 +36,7 @@ class CreateTripTable extends Migration
             $table->integer('seal_number')->nullable();
             $table->integer('container_number')->nullable();
             $table->date('loading_date')->nullable();
-            $table->foreignId('loading_location_id')->nullable()->constrained('location');
+            $table->foreignId('loading_location_id')->nullable()->constrained('loading_location');
             $table->timestamps();
         });
     }

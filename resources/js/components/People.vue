@@ -209,6 +209,7 @@
       </b-tabs>
       <!-- Create Person Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         class="modal fade"
         id="newPersonModal"
@@ -493,6 +494,7 @@
       </b-modal>
       <!-- Update/Deactivate Person Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         class="modal fade"
         id="updatePersonModal"
@@ -799,6 +801,7 @@
 
       <!-- Inactive Person Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         button-size="sm"
         class="modal fade"

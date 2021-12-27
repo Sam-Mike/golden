@@ -199,6 +199,7 @@
 
       <!-- New Trailer Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         title="New Trailer"
         class="modal fade"
@@ -328,6 +329,7 @@
 
       <!-- Update Trailer Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         title="Trailer Info"
         ok-title="Save"
@@ -466,6 +468,7 @@
       </b-modal>
       <!-- Inactive Trailer Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         title="Trailer Info"
         ok-title="Activate"

@@ -77,9 +77,6 @@
             <template #cell(amountUSD)="data">{{
               data.value.toLocaleString()
             }}</template>
-            <!-- <template #cell(personName)="data">{{
-              data.item.person.firstName
-            }}</template> -->
             <template slot="bottom-row">
               <td></td>
               <td></td>
@@ -102,119 +99,136 @@
         <!-- </div> -->
       </div>
       <b-modal
-        scrollable
+        no-close-on-backdrop
+        size="xl"
         title="New Expense"
         class="modal fade"
         button-size="sm"
         id="newExpenseModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
         ok-title="Save"
         @ok="handleCreateExpense"
       >
         <form ref="forms" @submit.stop.prevent="createExpense">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Date</label>
-            <input
-              type="date"
-              class="form-control"
-              v-model="newExpense.date"
-              placeholder="Enter expense issue date"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Expense Category</label>
-            <v-select
-              v-model="newExpense.expenseCategoryId"
-              label="name"
-              :options="expenseCategories"
-              :reduce="(expenseCategories) => expenseCategories.id"
-              placeholder="Select Expense Category"
-            ></v-select>
-          </div>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Expense SubCategory</label>
-            <v-select
-              v-model="newExpense.expenseSubcategoryId"
-              label="name"
-              :options="expenseSubcategoriesCascade"
-              :reduce="
-                (expenseSubcategoriesCascade) => expenseSubcategoriesCascade.id
-              "
-              placeholder="Select Expense Category"
-            ></v-select>
-          </div>
-          <div class="form-group">
-            <label for="amount">Amount</label>
-            <input
-              type="number"
-              class="form-control"
-              v-model="newExpense.amount"
-              placeholder="Enter expense amount"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="currency">Currency</label>
-            <v-select
-              v-model="newExpense.currencyId"
-              label="name"
-              :options="currency"
-              :reduce="(currency) => currency.id"
-              placeholder="Select currency"
-            ></v-select>
-          </div>
-          <div class="form-group">
-            <label for="exchangeRate">Echange Rate</label>
-            <input
-              type="number"
-              min="1"
-              class="form-control"
-              v-model="newExpense.exchangeRate"
-              placeholder="Enter exchange rate"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="description">Description</label>
-            <input
-              type="text"
-              class="form-control"
-              v-model="newExpense.description"
-              placeholder="Enter expense description"
-              required
-            />
-          </div>
-          <div class="form-group">
-            <label for="vehicle">Vehicle</label>
-            <v-select
-              v-model="newExpense.vehicleId"
-              label="registrationNumber"
-              :options="vehicles"
-              :reduce="(vehicles) => vehicles.id"
-              placeholder="Select Vehicle"
-            ></v-select>
-          </div>
-
-          <div class="form-group">
-            <label for="personId">Person</label>
-            <v-select
-              v-model="newExpense.personId"
-              label="firstName"
-              :options="people"
-              :reduce="(people) => people.id"
-              placeholder="Select Person"
-            >
-              <template v-slot:option="option">
-                {{ option.firstName }}
-                {{ option.middleName }}
-                {{ option.lastName }}
-              </template></v-select
-            >
-          </div>
+          <b-container fluid>
+            <b-row class="border rounded">
+              <b-col class="border-rounded">
+                <label for="exampleInputEmail1"><b>Date</b></label>
+                <b-form-input
+                  size="sm"
+                  type="date"
+                  class="form-control"
+                  v-model="newExpense.date"
+                  placeholder="Enter expense issue date"
+                  required
+                ></b-form-input>
+              </b-col>
+              <b-col class="border rounded">
+                <label for="exampleInputEmail1"><b>Expense Category</b></label>
+                <v-select
+                  class="golden-v-select"
+                  v-model="newExpense.expenseCategoryId"
+                  label="name"
+                  :options="expenseCategories"
+                  :reduce="(expenseCategories) => expenseCategories.id"
+                  placeholder="Select Expense Category"
+                  ><template #search="{ attributes, events }">
+                    <input
+                      v-bind="attributes"
+                      v-on="events"
+                      class="vs__search" /></template
+                ></v-select>
+              </b-col>
+              <b-col class="border rounded">
+                <label for="exampleInputEmail1"
+                  ><b>Expense SubCategory</b></label
+                >
+                <v-select
+                  v-model="newExpense.expenseSubcategoryId"
+                  label="name"
+                  :options="expenseSubcategoriesCascade"
+                  :reduce="
+                    (expenseSubcategoriesCascade) =>
+                      expenseSubcategoriesCascade.id
+                  "
+                  placeholder="Select Expense Category"
+                ></v-select>
+              </b-col>
+            </b-row>
+            <b-row class="border rounded">
+              <b-col class="border rounded">
+                <label for="amount"><b>Amount</b></label>
+                <b-form-input
+                  size="sm"
+                  type="number"
+                  class="form-control"
+                  v-model="newExpense.amount"
+                  placeholder="Enter expense amount"
+                  required
+                ></b-form-input>
+              </b-col>
+              <b-col class="border rounded">
+                <label for="currency"><b>Currency</b></label>
+                <v-select
+                  v-model="newExpense.currencyId"
+                  label="name"
+                  :options="currency"
+                  :reduce="(currency) => currency.id"
+                  placeholder="Select currency"
+                ></v-select>
+              </b-col>
+              <b-col class="border rounded">
+                <label for="exchangeRate"><b>Echange Rate</b></label>
+                <b-form-input
+                  size="sm"
+                  type="number"
+                  min="1"
+                  class="form-control"
+                  v-model="newExpense.exchangeRate"
+                  placeholder="Enter exchange rate"
+                  required
+                ></b-form-input>
+              </b-col>
+              <b-col class="border rounded">
+                <label for="description"><b>Description</b></label>
+                <b-form-input
+                  size="sm"
+                  type="text"
+                  class="form-control"
+                  v-model="newExpense.description"
+                  placeholder="Enter expense description"
+                  required
+                ></b-form-input>
+              </b-col>
+            </b-row>
+            <b-row class="border rounded">
+              <b-col class="border rounded">
+                <label for="vehicle"><b>Vehicle</b></label>
+                <v-select
+                  v-model="newExpense.vehicleId"
+                  label="registrationNumber"
+                  :options="vehicles"
+                  :reduce="(vehicles) => vehicles.id"
+                  placeholder="Select Vehicle"
+                ></v-select>
+              </b-col>
+              <b-col class="border rounded">
+                <label for="personId"><b>Person</b></label>
+                <v-select
+                  v-model="newExpense.personId"
+                  label="firstName"
+                  :options="people"
+                  :reduce="(people) => people.id"
+                  placeholder="Select Person"
+                >
+                  <template v-slot:option="option">
+                    {{ option.firstName }}
+                    {{ option.middleName }}
+                    {{ option.lastName }}
+                  </template></v-select
+                >
+              </b-col>
+            </b-row>
+          </b-container>
         </form>
       </b-modal>
     </b-overlay>
@@ -249,7 +263,7 @@ export default {
         { key: "currency.name", label: "Currency" },
         { key: "exchangeRate" },
         { key: "vehicle.registrationNumber", label: "Vehicle" },
-        { key: "person.firstName", label: "Person" },
+        { key: "person.fullName", label: "Person" },
         { key: "description" },
       ],
       tableFilter: null,

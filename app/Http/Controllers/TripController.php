@@ -9,7 +9,9 @@ use App\Models\Truck;
 use App\Models\Vehicle;
 use App\Models\Trailer;
 use App\Models\People;
+use App\Models\LoadingLocation;
 use App\Http\Resources\TripResource;
+use App\Http\Resources\LocationResource;
 
 class TripController extends Controller
 {
@@ -22,6 +24,7 @@ class TripController extends Controller
     {
         return [
             "trips" =>  TripResource::collection(Trip::all()),
+            "loadingLocations" =>  LocationResource::collection(LoadingLocation::all()),
             //"dispatcher" => PeopleResource::collection(People::where('role_position_id', '=', '1')->get())
         ];
     }

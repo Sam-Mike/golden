@@ -26,7 +26,7 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                   <li v-if="user.role_id === 1" class="nav-item">
-                    <router-link class="nav-link" to="/">Home</router-link>
+                    <router-link class="nav-link" to="">Dashboard</router-link>
                   </li>
                   <li
                     v-if="user.role_id === 1 || user.role_id === 3"

@@ -22,6 +22,7 @@ class PeopleResource extends JsonResource
             'firstName' => $this->first_name,
             'middleName' => $this->middle_name,
             'lastName' => $this->last_name,
+            'fullName' => $this->first_name . " " . $this->middle_name . " " . $this->last_name,
             'dob' => $this->dob,
             'age' => date_diff(date_create($this->dob), today(), true)->format('%y years'),
             'mobile' => $this->mobile,

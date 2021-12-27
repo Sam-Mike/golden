@@ -194,6 +194,7 @@
     </b-overlay>
     <!-- MODAL TO CREATE CLAIM -->
     <b-modal
+      no-close-on-backdrop
       scrollable
       ok-title="Save"
       id="createClaimModal"
@@ -235,6 +236,7 @@
     </b-modal>
     <!-- MODAL TO UPDATE CLAIM INFORMATION -->
     <b-modal
+      no-close-on-backdrop
       scrollable
       id="updateClaimModal"
       size="xl"

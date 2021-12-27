@@ -16,6 +16,8 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\DepositController;
+use App\Http\Controllers\DestinationController;
+use App\Http\Controllers\LoadingLocationController;
 use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
@@ -37,7 +39,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('globalData', [HomeController::class, 'index']);
 Route::patch('endTrip/{id}', [TripController::class, 'endTrip']);
 Route::patch('switch_person_activity/{id}', [PeopleController::class, 'switch_person_activity']);
-Route::patch('switch_vehicle_activity/{id}', [VehiclecController::class, 'switch_vehicle_activity']);
+Route::patch('switch_vehicle_activity/{id}', [VehicleController::class, 'switch_vehicle_activity']);
 Route::patch('switch_trailer_activity/{id}', [TrailerController::class, 'switch_trailer_activity']);
 Route::apiResources([
     'clients' => ClientController::class,
@@ -52,6 +54,8 @@ Route::apiResources([
     'cargo' => CargoController::class,
     'expenses' => ExpenseController::class,
     'deposits' => DepositController::class,
+    'destinations' => DestinationController::class,
+    'loading_locations' => LoadingLocationController::class,
 ]);
 
 // DB::listen(function($query) {

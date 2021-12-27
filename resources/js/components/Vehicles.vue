@@ -161,7 +161,6 @@
               <div class="card-header py-auto">
                 <div class="d-flex row justify-content-between">
                   <h6 class="m-0 font-weight-bold text-primary"></h6>
-
                   <!-- Button trigger modal -->
                 </div>
               </div>
@@ -191,6 +190,7 @@
 
       <!-- New Vehicle Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         title="New Vehicle"
         button-size="sm"
@@ -368,6 +368,7 @@
       </b-modal>
       <!-- Update Vehicle Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         title="Update Vehicle"
         ok-title="Save"
@@ -555,6 +556,7 @@
       </b-modal>
       <!-- Inactive Vehicle Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         title="Inactive Vehicle"
         ok-title="Activate"

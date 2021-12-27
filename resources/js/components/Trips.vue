@@ -191,10 +191,6 @@
                 {{ editTrip.activityStatus.name }}
               </p>
             </b-col>
-            <b-col class="border rounded">
-              <b>Job Class</b>
-              <p>JOB CLASS INFO</p>
-            </b-col>
           </b-row>
           <!-- ALLOCATION INFORMATION -->
           <b-row class="border rounded">
@@ -224,13 +220,13 @@
             <b-col class="border rounded">
               <b>Dispatch Date</b>
               <p>
-                <b-input
+                <b-form-input
                   size="sm"
                   type="date"
                   placeholder="Enter dispatch date"
                   name="dispatchDate"
                   v-model="editTrip.dispatchDate"
-                ></b-input>
+                ></b-form-input>
               </p>
             </b-col>
           </b-row>
@@ -239,32 +235,34 @@
             <b-col class="border rounded">
               <b>MANIFEST NO</b>
               <p>
-                <b-input
+                <b-form-input
                   size="sm"
                   type="number"
                   name="manifestNumber"
                   v-model="editTrip.manifestNumber"
                   placeholder="Enter manifest number"
-                ></b-input>
+                ></b-form-input>
               </p>
             </b-col>
             <b-col class="border rounded">
               <b>MANIFEST DATE</b>
               <p>
-                <b-input
+                <b-form-input
                   size="sm"
                   type="date"
                   name="manifestDate"
                   v-model="editTrip.manifestDate"
                   placeholder="Enter manifest number"
-                ></b-input>
+                ></b-form-input>
               </p>
             </b-col>
             <b-col class="border rouded">
               <b>MANIFEST DOCUMENT</b>
               <b-col v-if="editTrip.manifestDocument" class="border rounded">
                 <p>
-                  <a :href="filesPath + editTrip.manifestDocument"
+                  <a
+                    href="#"
+                    @click="window.open(filesPath + editTrip.manifestDocument)"
                     >manifestDocument</a
                   >
                 </p>
@@ -298,52 +296,59 @@
             </b-col>
             <b-col class="border rounded">
               <b>Cargo Weight</b>
-              <b-input
+              <b-form-input
                 size="sm"
                 type="number"
                 name="cargoWeight"
                 v-model="editTrip.cargoWeight"
                 placeholder="Enter cargo Weight"
-              ></b-input>
+              ></b-form-input>
             </b-col>
             <b-col class="border rounded">
               <b>Cargo Quantity</b>
-              <b-input
+              <b-form-input
                 size="sm"
                 type="number"
                 name="cargoWeight"
                 v-model="editTrip.cargoQuantity"
                 placeholder="Enter cargo Quantity"
-              ></b-input>
+              ></b-form-input>
             </b-col>
             <b-col class="border rounded">
               <b>Seal No</b>
-              <b-input
+              <b-form-input
                 size="sm"
                 type="number"
                 name="sealNumber"
                 v-model="editTrip.sealNumber"
                 placeholder="Enter seal Number"
-              ></b-input>
+              ></b-form-input>
             </b-col>
             <b-col class="border rounded">
               <b>Container No</b>
-              <b-input
+              <b-form-input
                 size="sm"
                 type="number"
                 name="containerNumber"
                 v-model="editTrip.containerNumber"
                 placeholder="Enter container Number"
-              ></b-input>
+              ></b-form-input>
             </b-col>
             <b-col class="border rounded">
               <b>Loading Location</b>
               <v-select
                 v-model="editTrip.loadingLocation"
                 label="name"
-                :options="locations"
-                :reduce="(locations) => locations.id"
+                :options="loadingLocations"
+                :reduce="(loadingLocations) => loadingLocations.id"
               ></v-select>
+              <a
+                  class="quickAddLink"
+                  href="#"
+                  @click="$bvModal.show('newLoadingLocationModal')"
+                >
+                  <small>&#xFF0B;Loading Location</small></a
+                >
             </b-col>
           </b-row>
         </b-container>
@@ -497,6 +502,32 @@
         </b-container>
       </form>
     </b-modal>
+    <!-- modal to add new loading location-->
+    <b-modal
+      no-close-on-backdrop
+      ok-title="Save"
+      title="New Loading Location"
+      class="modal fade"
+      button-size="sm"
+      id="newLoadingLocationModal"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+      @ok="handleCreateLoadingLocation"
+    >
+      <form ref="form" @submit.stop.prevent="createLoadingLocation">
+        <b-form-group label="Name" invalid-feedback="Name is required">
+          <input
+            id="client-name"
+            type="text"
+            class="form-control"
+            v-model="newLoadingLocation.name"
+            placeholder="Enter loading location name"
+            required
+          />
+        </b-form-group>
+      </form>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -508,7 +539,7 @@ export default {
       loading: false,
       trips: [],
       people: [],
-      locations: [],
+      loadingLocations: [],
       tripFields: [
         { key: "driverName", label: "Driver" },
         { key: "allocation.driver.licenseNumber", label: "License Number" },
@@ -551,6 +582,7 @@ export default {
         loadingDate: "",
         loadingLocation: "",
       },
+      newLoadingLocation: {},
     };
   },
   computed: {
@@ -588,7 +620,7 @@ export default {
         this.loading = true;
         const response = await api.get("trips");
         this.trips = response.data.trips;
-        this.locations = response.data.locations;
+        this.loadingLocations = response.data.loadingLocations;
         this.loading = false;
       } catch (error) {
         console.log(error);
@@ -695,6 +727,21 @@ export default {
       this.editTrip.loadingDate = item.loadingDate;
       this.editTrip.loadingLocation = item.loadingLocation;
       this.$root.$emit("bv::show::modal", "archiveTripModal", button);
+    },
+    handleCreateLoadingLocation(bvModalEvt) {
+      bvModalEvt.preventDefault();
+      this.createLoadingLocation();
+    },
+    async createLoadingLocation() {
+      try {
+        await api.post("loading_locations", this.newLoadingLocation);
+        this.$nextTick(() => {
+          this.newLoadingLocation = {};
+          this.getTrips();
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };

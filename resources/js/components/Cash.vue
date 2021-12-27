@@ -204,7 +204,7 @@
 
       <!-- Create new Deposit Modal -->
       <b-modal
-        scrollable
+        no-close-on-backdrop
         title="New Deposit"
         class="modal fade"
         button-size="sm"
@@ -291,17 +291,17 @@ export default {
       expenseInfo: {},
     };
   },
-  mounted(){
-      this.getExpenses()
-      this.getDeposits()
+  mounted() {
+    this.getExpenses();
+    this.getDeposits();
   },
-  methods:{
-      getExpenses(){},
-      getDeposits(){},
-      handleCreateExpense(){},
-      createExpense(){},
-      handleCreateDeposit(){},
-      createDeposit(){},
-  }
+  methods: {
+    getExpenses() {},
+    getDeposits() {},
+    handleCreateExpense() {},
+    createExpense() {},
+    handleCreateDeposit() {},
+    createDeposit() {},
+  },
 };
 </script>

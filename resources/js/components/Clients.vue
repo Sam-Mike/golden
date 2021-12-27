@@ -94,6 +94,7 @@
 
       <!-- Create Client Modal -->
       <b-modal
+        no-close-on-backdrop
         ok-title="Save"
         scrollable
         title="Create Client"
@@ -177,6 +178,7 @@
 
       <!-- Update/Deactivate Client Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         ok-title="Save"
         title="Client Info"
@@ -270,6 +272,7 @@
       </b-modal>
       <!--  Activate Client Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         ok-title="Activate"
         title="Client Info"

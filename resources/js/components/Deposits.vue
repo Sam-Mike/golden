@@ -50,6 +50,7 @@
         <!-- </div> -->
       </div>
       <b-modal
+        no-close-on-backdrop
         scrollable
         title="New Deposit"
         class="modal fade"

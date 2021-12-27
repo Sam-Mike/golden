@@ -30,11 +30,11 @@ class Trip extends Model
     }
     public function destination()
     {
-        return $this->belongsTo(Location::class, 'destination_id', 'id');
+        return $this->belongsTo(Destination::class, 'destination_id', 'id');
     }
-    public function loadingLocation()
+    public function loading_location()
     {
-        return $this->belongsTo(Location::class, 'loading_location_id', 'id');
+        return $this->belongsTo(LoadingLocation::class, 'loading_location_id', 'id');
     }
     public function allocation()
     {

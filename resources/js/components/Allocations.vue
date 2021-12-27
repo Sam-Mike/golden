@@ -8,6 +8,7 @@
             <div class="input-group mb-1 col">
               <div class="col-md-10">
                 <v-select
+                  class="golden-v-select"
                   v-model="newTrip.clientId"
                   label="name"
                   :options="clients"
@@ -46,8 +47,8 @@
                 <v-select
                   v-model="newTrip.destinationId"
                   label="name"
-                  :options="locations"
-                  :reduce="(locations) => locations.id"
+                  :options="destinations"
+                  :reduce="(destinations) => destinations.id"
                   placeholder="Select Destination"
                 ></v-select>
                 <a
@@ -90,7 +91,7 @@
           <b-tab title="Coach" active>
             <div class="card shadow">
               <div class="card-header py-auto">
-                <div class="col-md-auto justify-content-end">
+                <div class="col-md-auto justify-content-between">
                   <b-button
                     class="float-right"
                     size="sm"
@@ -102,129 +103,131 @@
                     New Allocation
                   </b-button>
                 </div>
-                <!-- <div class="card-body"> -->
-                <div class="table-responsive">
-                  <!-- dataTable -->
-                  <b-table
-                    class="table-list"
-                    bordered
-                    striped
-                    hover
-                    :small="true"
-                    :items="coachAllocations"
-                    :fields="allocationFields"
-                    :head-variant="tableHeadVariant"
-                    sticky-header="41vh"
-                    @row-clicked="allocationInfo"
-                  >
-                    <template #cell(select)="methods"
-                      ><b-form-checkbox
-                        v-model="newTrip.checkedAllocations"
-                        :value="methods.item.id"
-                        unchecked-value=""
-                      ></b-form-checkbox
-                    ></template>
-                    <template #cell(driverName)="methods">
-                      {{ methods.item.driver.firstName }}
-                      {{ methods.item.driver.middleName }}
-                      {{ methods.item.driver.lastName }}
-                    </template>
-                  </b-table>
-                </div>
+              </div>
+              <!-- <div class="card-body"> -->
+              <div class="table-responsive">
+                <!-- dataTable -->
+                <b-table
+                  class="table-list"
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="coachAllocations"
+                  :fields="allocationFields"
+                  :head-variant="tableHeadVariant"
+                  sticky-header="41vh"
+                  @row-clicked="allocationInfo"
+                >
+                  <template #cell(select)="methods"
+                    ><b-form-checkbox
+                      v-model="newTrip.checkedAllocations"
+                      :value="methods.item.id"
+                      unchecked-value=""
+                    ></b-form-checkbox
+                  ></template>
+                  <template #cell(driverName)="methods">
+                    {{ methods.item.driver.firstName }}
+                    {{ methods.item.driver.middleName }}
+                    {{ methods.item.driver.lastName }}
+                  </template>
+                </b-table>
               </div>
             </div>
           </b-tab>
           <!-- FLEET TAB -->
           <b-tab title="Fleet">
-            <div class="card-header py-3">
-              <div class="col-md-auto justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary"></h6>
-                <b-button
-                  class="float-right"
-                  size="sm"
-                  variant="primary"
-                  data-toggle="modal"
-                  v-b-modal.newFleetAllocationModal
+            <div class="card shadow">
+              <div class="card-header py-auto">
+                <div class="col-md-auto justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+                  <b-button
+                    class="float-right"
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    v-b-modal.newFleetAllocationModal
+                  >
+                    New Allocation
+                  </b-button>
+                </div>
+              </div>
+              <!-- <div class="card-body"> -->
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="fleetAllocations"
+                  :fields="allocationFields"
+                  :head-variant="tableHeadVariant"
+                  sticky-header="55vh"
+                  @row-clicked="allocationInfo"
                 >
-                  New Allocation
-                </b-button>
+                  <template #cell(select)="methods"
+                    ><b-form-checkbox
+                      v-model="newTrip.checkedAllocations"
+                      :value="methods.item.id"
+                      unchecked-value=""
+                    ></b-form-checkbox
+                  ></template>
+                  <template #cell(driverName)="methods">
+                    {{ methods.item.driver.firstName }}
+                    {{ methods.item.driver.middleName }}
+                    {{ methods.item.driver.lastName }}
+                  </template>
+                </b-table>
               </div>
             </div>
-            <!-- <div class="card-body"> -->
-            <div class="table-responsive">
-              <b-table
-                class="table-list"
-                bordered
-                striped
-                hover
-                :small="true"
-                :items="fleetAllocations"
-                :fields="allocationFields"
-                :head-variant="tableHeadVariant"
-                sticky-header="55vh"
-                @row-clicked="allocationInfo"
-              >
-                <template #cell(select)="methods"
-                  ><b-form-checkbox
-                    v-model="newTrip.checkedAllocations"
-                    :value="methods.item.id"
-                    unchecked-value=""
-                  ></b-form-checkbox
-                ></template>
-                <template #cell(driverName)="methods">
-                  {{ methods.item.driver.firstName }}
-                  {{ methods.item.driver.middleName }}
-                  {{ methods.item.driver.lastName }}
-                </template>
-              </b-table>
-            </div>
-            <!-- </div> -->
           </b-tab>
           <!-- WHEELS TAB -->
           <b-tab title="Wheels">
-            <div class="card-header py-3">
-              <div class="col-md-auto justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary"></h6>
-                <b-button
-                  class="float-right"
-                  size="sm"
-                  variant="primary"
-                  data-toggle="modal"
-                  v-b-modal.newWheelsAllocationModal
+            <div class="card shadow">
+              <div class="card-header py-auto">
+                <div class="col-md-auto justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary"></h6>
+                  <b-button
+                    class="float-right"
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    v-b-modal.newWheelsAllocationModal
+                  >
+                    New Allocation
+                  </b-button>
+                </div>
+              </div>
+              <!-- <div class="card-body"> -->
+              <div class="table-responsive">
+                <b-table
+                  class="table-list"
+                  bordered
+                  striped
+                  hover
+                  :small="true"
+                  :items="wheelsAllocations"
+                  :fields="allocationFields"
+                  :head-variant="tableHeadVariant"
+                  sticky-header="55vh"
+                  @row-clicked="allocationInfo"
                 >
-                  New Allocation
-                </b-button>
+                  <template #cell(select)="methods"
+                    ><b-form-checkbox
+                      v-model="newTrip.checkedAllocations"
+                      :value="methods.item.id"
+                      unchecked-value=""
+                    ></b-form-checkbox
+                  ></template>
+                  <template #cell(driverName)="methods">
+                    {{ methods.item.driver.firstName }}
+                    {{ methods.item.driver.middleName }}
+                    {{ methods.item.driver.lastName }}
+                  </template>
+                </b-table>
               </div>
             </div>
-            <!-- <div class="card-body"> -->
-            <div class="table-responsive">
-              <b-table
-                class="table-list"
-                bordered
-                striped
-                hover
-                :small="true"
-                :items="wheelsAllocations"
-                :fields="allocationFields"
-                :head-variant="tableHeadVariant"
-                sticky-header="55vh"
-                @row-clicked="allocationInfo"
-              >
-                <template #cell(select)="methods"
-                  ><b-form-checkbox
-                    v-model="newTrip.checkedAllocations"
-                    :value="methods.item.id"
-                    unchecked-value=""
-                  ></b-form-checkbox
-                ></template>
-                <template #cell(driverName)="methods">
-                  {{ methods.item.driver.firstName }}
-                  {{ methods.item.driver.middleName }}
-                  {{ methods.item.driver.lastName }}
-                </template>
-              </b-table>
-            </div>
-            <!-- </div> -->
           </b-tab>
         </b-tabs>
       </div>
@@ -232,6 +235,7 @@
 
       <!-- Modal to create Allocation combination for COACH TRUCKS -->
       <b-modal
+        no-close-on-backdrop
         class="modal fade"
         button-size="sm"
         id="newCoachAllocationModal"
@@ -283,9 +287,9 @@
           </div>
         </form>
       </b-modal>
-
       <!-- Modal to create Allocation combination for FLEET TRUCKS -->
       <b-modal
+        no-close-on-backdrop
         class="modal fade"
         button-size="sm"
         id="newFleetAllocationModal"
@@ -337,9 +341,9 @@
           </div>
         </form>
       </b-modal>
-
       <!-- Modal to create Allocation combination for WHEELS TRUCKS -->
       <b-modal
+        no-close-on-backdrop
         class="modal fade"
         button-size="sm"
         id="newWheelsAllocationModal"
@@ -509,7 +513,6 @@
       <!-- modal to add new cargo-->
       <b-modal
         ok-title="Save"
-        tall
         title="New Cargo"
         class="modal fade"
         button-size="sm"
@@ -554,7 +557,6 @@
       <!-- modal to add new destination-->
       <b-modal
         ok-title="Save"
-        scrollable
         title="New Destination"
         class="modal fade"
         button-size="sm"
@@ -605,7 +607,7 @@ export default {
       cargo: [],
       cargoType: [],
       hazardClass: [],
-      locations: [],
+      destinations: [],
       vehicles: [],
       trailers: [],
       drivers: [],
@@ -700,7 +702,7 @@ export default {
         this.cargo = response.data.cargo;
         this.cargoType = response.data.cargoType;
         this.hazardClass = response.data.hazardClass;
-        this.locations = response.data.locations;
+        this.destinations = response.data.destinations;
         this.vehicles = response.data.vehicles;
         this.trailers = response.data.trailers;
         this.drivers = response.data.drivers;
@@ -808,7 +810,7 @@ export default {
     },
     async createDestination() {
       try {
-        await api.post("locations", this.newDestination);
+        await api.post("destinations", this.newDestination);
         this.$nextTick(() => {
           this.$bvModal.hide("newDestinationModal");
           this.newDestination = {};

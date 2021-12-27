@@ -15,6 +15,7 @@ use App\Models\Cargo;
 use App\Models\CargoType;
 use App\Models\HazardClass;
 use App\Models\Location;
+use App\Models\Destination;
 use App\Models\TripClass;
 use App\Http\Resources\PeopleResource;
 use App\Http\Resources\TruckResource;
@@ -47,7 +48,7 @@ class AllocationController extends Controller
             "cargo" => CargoResource::collection(Cargo::all()),
             "cargoType" => CargoTypeResource::collection(CargoType::all()),
             "hazardClass" => HazardClassResource::collection(HazardClass::all()),
-            "locations" => LocationResource::collection(Location::all()),
+            "destinations" => LocationResource::collection(Destination::all()),
             "tripClass" =>  TripClassResource::collection(TripClass::all()),
         ];
     }

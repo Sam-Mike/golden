@@ -49,6 +49,7 @@
 
       <!-- Create User Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         ok-title="Save"
         title="Add User"
@@ -109,9 +110,9 @@
           </div>
         </div>
       </b-modal>
-
       <!-- Update/Deactivate User Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         ok-title="Save"
         title="User Info"
@@ -175,6 +176,7 @@
       </b-modal>
       <!--  Activate User Modal -->
       <b-modal
+        no-close-on-backdrop
         scrollable
         ok-title="Activate"
         title="User Info"
