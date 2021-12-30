@@ -65,6 +65,7 @@
             striped
             outlined
             hover
+            sticky-header="58vh"
             :small="true"
             :items="expenses"
             :fields="expenseFields"

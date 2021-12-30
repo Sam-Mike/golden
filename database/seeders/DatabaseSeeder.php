@@ -28,15 +28,15 @@ class DatabaseSeeder extends Seeder
             TrailerMakeSeeder::class,
             CargoTypeSeeder::class,
             HazardClassSeeder::class,
-            DestinationSeeder::class,
             DepartmentRoleSeeder::class,
             ClaimTypeSeeder::class,
             RoleSeeder::class,
-            UserSeeder::class,
-            ClientSeeder::class,
             CurrencySeeder::class,
             ExpenseCategorySeeder::class,
             ExpenseSubCategorySeeder::class,
+            // DestinationSeeder::class,
+            UserSeeder::class,
+            // ClientSeeder::class,
         ]); 
     }
 }

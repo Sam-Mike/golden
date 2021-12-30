@@ -33,7 +33,7 @@
                 :items="localTrips"
                 :fields="tripFields"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="58vh"
                 :filter="tableFilter"
                 @row-clicked="activeTripInfo"
               >
@@ -79,7 +79,7 @@
                 :fields="tripFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="58vh"
                 @row-clicked="activeTripInfo"
               >
                 <template #cell(driverName)="methods">
@@ -123,7 +123,7 @@
                 :items="archivedTrips"
                 :fields="tripFields"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="58vh"
                 :filter="tableFilter"
                 @row-clicked="archiveTripInfo"
               >
@@ -496,7 +496,7 @@
             </b-col>
             <b-col class="border rounded">
               <b>Loading Location</b>
-              <p>{{ editTrip.loadingLocation }}</p>
+              <p>{{ editTrip.loadingLocation.name }}</p>
             </b-col>
           </b-row>
         </b-container>

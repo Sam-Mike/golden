@@ -42,7 +42,7 @@
               :items="activeClients"
               :fields="clientFields"
               :head-variant="tableHeadVariant"
-              sticky-header="55vh"
+              sticky-header="58vh"
               :filter="tableFilter"
               @row-clicked="info"
             >
@@ -80,7 +80,7 @@
                 :items="inactiveClients"
                 :fields="clientsFields"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="58vh"
                 :filter="tableFilter"
                 @row-clicked="inactiveInfo"
               >

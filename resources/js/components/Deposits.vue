@@ -43,7 +43,7 @@
             :fields="depositFields"
             :filter="tableFilter"
             :head-variant="tableHeadVariant"
-            sticky-header="60vh"
+            sticky-header="58vh"
           >
           </b-table>
         </div>

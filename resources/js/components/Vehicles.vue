@@ -46,7 +46,7 @@
                   :fields="vehicleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  sticky-header="55vh"
+                  sticky-header="58vh"
                   @row-clicked="vehicleInfo"
                 >
                 </b-table>
@@ -96,7 +96,7 @@
                   :fields="vehicleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  sticky-header="55vh"
+                  sticky-header="58vh"
                   @row-clicked="vehicleInfo"
                 >
                 </b-table>
@@ -147,7 +147,7 @@
                   :fields="vehicleFields"
                   :filter="tableFilter"
                   :head-variant="tableHeadVariant"
-                  sticky-header="55vh"
+                  sticky-header="58vh"
                   @row-clicked="vehicleInfo"
                 >
                 </b-table>
@@ -155,7 +155,7 @@
               <!-- </div> -->
             </div>
           </b-tab>
-          <b-tab title="In-Active">
+          <b-tab title="INACTIVE">
             <!-- DataTales Example -->
             <div class="card shadow">
               <div class="card-header py-auto">
@@ -177,7 +177,7 @@
                     :fields="vehicleFields"
                     :filter="tableFilter"
                     :head-variant="tableHeadVariant"
-                    sticky-header="55vh"
+                    sticky-header="58vh"
                     @row-clicked="inactiveVehicleInfo"
                   >
                   </b-table>

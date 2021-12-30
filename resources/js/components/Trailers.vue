@@ -46,7 +46,7 @@
                 :fields="trailerFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="60vh"
+                sticky-header="58vh"
                 @row-clicked="trailerInfo"
               >
               </b-table>
@@ -97,7 +97,7 @@
                 :fields="trailerFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="58vh"
                 @row-clicked="trailerInfo"
               >
               </b-table>
@@ -148,7 +148,7 @@
                 :fields="trailerFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="58vh"
                 @row-clicked="trailerInfo"
               >
               </b-table>
@@ -156,7 +156,7 @@
             <!-- </div> -->
           </div>
         </b-tab>
-        <b-tab title="In-Active">
+        <b-tab title="INACTIVE">
           <!-- DataTales Example -->
           <div class="card shadow">
             <div class="card-header py-auto">
@@ -187,7 +187,7 @@
                 :items="inactiveTrailers"
                 :fields="trailerFields"
                 :head-variant="tableHeadVariant"
-                sticky-header="55vh"
+                sticky-header="58vh"
                 @row-clicked="inactiveTrailerInfo"
               >
               </b-table>

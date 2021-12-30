@@ -44,7 +44,7 @@
                 :fields="peopleFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="60vh"
+                sticky-header="58vh"
                 @row-clicked="personInfo"
               >
                 <template #cell(Name)="data">
@@ -150,7 +150,7 @@
                 :fields="peopleFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="60vh"
+                sticky-header="58vh"
                 @row-clicked="personInfo"
               >
                 <template #cell(Name)="data">
@@ -163,7 +163,7 @@
           </div>
         </b-tab>
         <!-- Inactive People -->
-        <b-tab title="In-active">
+        <b-tab title="INACTIVE">
           <!-- DataTales  -->
           <div class="card shadow">
             <div class="card-header py-auto">
@@ -194,7 +194,7 @@
                 :fields="peopleFields"
                 :filter="tableFilter"
                 :head-variant="tableHeadVariant"
-                sticky-header="60vh"
+                sticky-header="58vh"
                 @row-clicked="inactivePersonInfo"
               >
                 <template #cell(Name)="data">

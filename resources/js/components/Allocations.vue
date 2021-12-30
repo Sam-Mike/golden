@@ -273,16 +273,11 @@
             <v-select
               v-model="newAllocation.driverId"
               :options="unallocatedDrivers"
-              label="firstName"
+              label="fullName"
               :filterBy="driverSearch"
               :reduce="(drivers) => drivers.id"
               placeholder="Select Driver"
             >
-              <template v-slot:option="option">
-                {{ option.firstName }}
-                {{ option.middleName }}
-                {{ option.lastName }}
-              </template>
             </v-select>
           </div>
         </form>

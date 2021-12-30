@@ -209,7 +209,6 @@ export default {
       roles: [],
       userFields: [
         { key: "name" },
-        { key: "email" },
         { key: "password" },
         { key: "role.name", label: "Role" },
       ],
@@ -219,7 +218,6 @@ export default {
       editUser: {
         id: "",
         name: "",
-        email: "",
         password: "",
         roleId: "",
       },

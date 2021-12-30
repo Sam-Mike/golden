@@ -1,12 +1,11 @@
 <template>
   <div class="container-fluid">
-    <div class="login-form mt-4">
+    <div class="login-form mt-2">
       <div class="m-2">
         <!-- LOGO -->
         <div class="text-center">
           <img src="/img/copy.ico"  />
         </div>
-        <h3 class="my-12 text-center">Login</h3>
         <div class="form-panel">
           <form class="text-left" id="loginForm" @submit.prevent="handleLogin">
             <span class="text-danger" v-if="loginError"> {{ loginError[0] }}</span>
@@ -30,7 +29,7 @@
             </div>
             <div class="field mt-1">
               <b-button size="sm" variant="primary" type="submit"
-                >Sign in</b-button
+                >Login</b-button
               >
             </div>
           </form>
