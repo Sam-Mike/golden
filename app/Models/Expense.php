@@ -9,6 +9,17 @@ class Expense extends Model
 {
     use HasFactory;
     protected $table = 'expense';
+    protected $fillable = [
+        'date',
+        'expense_subcategory_id',
+        'amount_tzs',
+        'amount_usd',
+        'currency_id',
+        'exchange_rate',
+        'description',
+        'vehicle_id',
+        'person_id',
+    ];
     public function expense_subcategory()
     {
         return $this->belongsTo(ExpenseSubCategory::class);

@@ -141,6 +141,7 @@
     </b-overlay>
     <!-- MODAL TO UPDATE TRIP INFORMATION -->
     <b-modal
+      no-close-on-backdrop
       scrollable
       id="updateTripModal"
       size="xl"
@@ -209,9 +210,7 @@
             <b-col class="border rounded">
               <b>Driver</b>
               <p>
-                {{ editTrip.allocation.driver.firstName }}
-                {{ editTrip.allocation.driver.middleName }}
-                {{ editTrip.allocation.driver.lastName }}
+                {{ editTrip.allocation.driver.fullName }}
               </p>
             </b-col>
           </b-row>
@@ -343,12 +342,12 @@
                 :reduce="(loadingLocations) => loadingLocations.id"
               ></v-select>
               <a
-                  class="quickAddLink"
-                  href="#"
-                  @click="$bvModal.show('newLoadingLocationModal')"
-                >
-                  <small>&#xFF0B;Loading Location</small></a
-                >
+                class="quickAddLink"
+                href="#"
+                @click="$bvModal.show('newLoadingLocationModal')"
+              >
+                <small>&#xFF0B;Loading Location</small></a
+              >
             </b-col>
           </b-row>
         </b-container>
@@ -356,6 +355,7 @@
     </b-modal>
     <!-- MODAL TO SHOW ARCHIVED TRIP INFORMATION -->
     <b-modal
+      no-close-on-backdrop
       scrollable
       id="archiveTripModal"
       size="xl"
@@ -496,7 +496,7 @@
             </b-col>
             <b-col class="border rounded">
               <b>Loading Location</b>
-              <p>{{ editTrip.loadingLocation.name }}</p>
+              <p>{{ editTrip.loadingLocation }}</p>
             </b-col>
           </b-row>
         </b-container>
@@ -671,9 +671,9 @@ export default {
             enctype: "multipart/form-data",
           },
         };
-        for (var entry of tripData.entries()) {
-          console.log(entry);
-        }
+        // for (var entry of tripData.entries()) {
+        //   console.log(entry);
+        // }
         await api.post("/trips/" + this.editTrip.id, tripData, config);
         this.$nextTick(() => {
           this.$bvModal.hide("updateTripModal");
@@ -737,6 +737,7 @@ export default {
         await api.post("loading_locations", this.newLoadingLocation);
         this.$nextTick(() => {
           this.newLoadingLocation = {};
+          this.$bvModal.hide("newLoadingLocationModal");
           this.getTrips();
         });
       } catch (error) {

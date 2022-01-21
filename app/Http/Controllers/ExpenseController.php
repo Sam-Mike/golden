@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CurrencyResource;
 use Illuminate\Http\Request;
 use App\Models\Expense;
 use App\Models\Currency;
@@ -29,7 +30,7 @@ class ExpenseController extends Controller
             'expenseCategories' => ExpenseCategory::all(),
             'vehicles' => VehicleResource::collection(Vehicle::all()),
             'people' => PeopleResource::collection(People::all()),
-            'currency' => Currency::all()
+            'currency' => CurrencyResource::collection(Currency::all())
         ];
     }
 
@@ -51,22 +52,30 @@ class ExpenseController extends Controller
      */
     public function store(Request $request)
     {
-        $expense = new Expense;
-        $expense->date = $request->input('date');
-        $expense->expense_subcategory_id = $request->input('expenseSubcategoryId');
-        if ($request->input('currencyId') == 1) {
-            $expense->amount_tzs = $request->input('amount');
-            $expense->amount_usd = 0;
-        } else {
-            $expense->amount_tzs = 0;
-            $expense->amount_usd = $request->input('amount');
+        $data = $request->input();
+        foreach ($data['newExpenses'] as $key => $newExpense) {
+            $expense = new Expense;
+            $expense->date = $newExpense['date'];
+            $expense->expense_subcategory_id = $newExpense['expenseSubcategory']['id'];
+            $currencyId = $newExpense['currency']['id'];
+            if ($currencyId == 1) {
+                $expense->amount_tzs = $newExpense['amount'];
+                $expense->amount_usd = 0;
+            } else {
+                $expense->amount_tzs = 0;
+                $expense->amount_usd = $newExpense['amount'];
+            }
+            $expense->currency_id = $currencyId;
+            $expense->exchange_rate = $newExpense['exchangeRate'];
+            $expense->description = $newExpense['description'];
+            $issuedTo = $newExpense['issuedTo'];
+            if ($issuedTo) {
+                $expense->person_id = $newExpense['person']['id'];
+            } else {
+                $expense->vehicle_id = $newExpense['vehicle']['id'];
+            }
+            $expense->save();
         }
-        $expense->currency_id = $request->input('currencyId');
-        $expense->exchange_rate = $request->input('exchangeRate');
-        $expense->description = $request->input('description');
-        $expense->vehicle_id = $request->input('vehicleId');
-        $expense->person_id = $request->input('personId');
-        $expense->save();
     }
 
     /**
@@ -111,6 +120,8 @@ class ExpenseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $expense = Expense::findOrFail($id);
+        $expense->delete();
+        return response()->json(['expense deleted successfully']);
     }
 }

@@ -10,14 +10,14 @@ window.Vue = require('vue');
 
 import store from './store';
 import 'es6-promise/auto'
-import { BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin } from 'bootstrap-vue';
+import { BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin, BootstrapVueIcons   } from 'bootstrap-vue';
 import router from './router';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 
-Vue.use(BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin);
+Vue.use(BootstrapVue, FormPlugin, OverlayPlugin, TablePlugin, BootstrapVueIcons  );
 
 Vue.component('v-select', vSelect);
 

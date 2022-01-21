@@ -111,8 +111,8 @@
       >
         <form ref="forms" @submit.stop.prevent="createExpense">
           <b-container fluid>
-            <b-row class="border rounded">
-              <b-col class="border-rounded">
+            <b-row class="">
+              <b-col class="border rounded">
                 <label for="exampleInputEmail1"><b>Date</b></label>
                 <b-form-input
                   size="sm"
@@ -144,18 +144,13 @@
                   ><b>Expense SubCategory</b></label
                 >
                 <v-select
-                  v-model="newExpense.expenseSubcategoryId"
+                  v-model="newExpense.expenseSubcategory"
                   label="name"
                   :options="expenseSubcategoriesCascade"
-                  :reduce="
-                    (expenseSubcategoriesCascade) =>
-                      expenseSubcategoriesCascade.id
-                  "
                   placeholder="Select Expense Category"
                 ></v-select>
               </b-col>
-            </b-row>
-            <b-row class="border rounded">
+              <div class="w-100"></div>
               <b-col class="border rounded">
                 <label for="amount"><b>Amount</b></label>
                 <b-form-input
@@ -170,10 +165,9 @@
               <b-col class="border rounded">
                 <label for="currency"><b>Currency</b></label>
                 <v-select
-                  v-model="newExpense.currencyId"
+                  v-model="newExpense.currency"
                   label="name"
                   :options="currency"
-                  :reduce="(currency) => currency.id"
                   placeholder="Select currency"
                 ></v-select>
               </b-col>
@@ -200,37 +194,83 @@
                   required
                 ></b-form-input>
               </b-col>
-            </b-row>
-            <b-row class="border rounded">
-              <b-col class="border rounded">
-                <label for="vehicle"><b>Vehicle</b></label>
+              <div class="w-100"></div>
+              <b-col cols="2" class="border rounded">
+                <label for="personId"><b>Issued to</b></label>
+                <div class="">
+                  <input
+                    type="radio"
+                    id="person"
+                    :value="true"
+                    v-model="issuedTo"
+                  />
+                  <label for="person" class="form-check-label">Person</label>
+                </div>
+                <div class="">
+                  <input
+                    type="radio"
+                    id="vehicle"
+                    :value="false"
+                    v-model="issuedTo"
+                  />
+                  <label for="vehicle" class="form-check-label">Vehicle</label>
+                </div>
+              </b-col>
+              <b-col v-if="issuedTo" class="border rounded">
+                <label for="personId"><b>Issued to</b></label>
                 <v-select
-                  v-model="newExpense.vehicleId"
-                  label="registrationNumber"
-                  :options="vehicles"
-                  :reduce="(vehicles) => vehicles.id"
-                  placeholder="Select Vehicle"
+                  v-model="newExpense.person"
+                  label="fullName"
+                  :options="people"
+                  placeholder="Select Person(s)"
                 ></v-select>
               </b-col>
-              <b-col class="border rounded">
-                <label for="personId"><b>Person</b></label>
+              <b-col v-else class="border rounded">
+                <label for="vehicle"><b>Issued to</b></label>
                 <v-select
-                  v-model="newExpense.personId"
-                  label="firstName"
-                  :options="people"
-                  :reduce="(people) => people.id"
-                  placeholder="Select Person"
-                >
-                  <template v-slot:option="option">
-                    {{ option.firstName }}
-                    {{ option.middleName }}
-                    {{ option.lastName }}
-                  </template></v-select
+                  v-model="newExpense.vehicle"
+                  label="registrationNumber"
+                  :options="vehicles"
+                  placeholder="Select Vehicle(s)"
+                ></v-select>
+              </b-col>
+              <b-col cols="" class="pt-4">
+                <b-button @click="addExpense" size="sm" variant="primary"
+                  >Add</b-button
                 >
               </b-col>
+            </b-row>
+            <div class="w-100"></div>
+            <b-row v-if="newExpenses.length > 0" class="border rounded">
+              <b-table
+                class="table-list"
+                bordered
+                striped
+                outlined
+                hover
+                sticky-header="58vh"
+                :small="true"
+                :items="newExpenses"
+                :fields="newExpenseArrayFields"
+                :filter="tableFilter"
+                :head-variant="tableHeadVariant"
+              >
+                <template #cell(amount)="data">{{
+                  data.value.toLocaleString()
+                }}</template>
+                <template #cell(action)="row">
+                  <b-button
+                    size="sm"
+                    variant="danger"
+                    @click="spliceExpense(row.index)"
+                    >Delete</b-button
+                  >
+                </template>
+              </b-table>
             </b-row>
           </b-container>
         </form>
+        <b-table></b-table>
       </b-modal>
     </b-overlay>
   </div>
@@ -255,7 +295,7 @@ export default {
       people: [],
       company: [],
       expenseFields: [
-        { key: "id" },
+        { key: "id", label: "Log ID" },
         { key: "date" },
         { key: "expenseSubcategory.expenseCategory.name", label: "Category" },
         { key: "expenseSubcategory.name", label: "Subcategory" },
@@ -267,11 +307,26 @@ export default {
         { key: "person.fullName", label: "Person" },
         { key: "description" },
       ],
+      newExpenseArrayFields: [
+        { key: "date" },
+        { key: "expenseSubcategory.expenseCategory.name", label: "Category" },
+        { key: "expenseSubcategory.name", label: "Subcategory" },
+        { key: "amount" },
+        { key: "currency.name", label: "Currency" },
+        { key: "exchangeRate" },
+        { key: "vehicle.registrationNumber", label: "Vehicle" },
+        { key: "person.fullName", label: "Person" },
+        { key: "description" },
+        { key: "action" },
+      ],
       tableFilter: null,
       tableHeadVariant: "dark",
       newExpense: {
-        exchangeRate: 1,
+        date: new Date().toISOString().substr(0, 10),
+        exchangeRate: 0,
       },
+      issuedTo: true,
+      newExpenses: [],
     };
   },
   computed: {
@@ -331,17 +386,56 @@ export default {
         this.tableBusy = false;
       }
     },
+    addExpense() {
+      if (this.issuedTo) {
+        this.newExpenses.push({
+          date: this.newExpense.date,
+          expenseSubcategory: this.newExpense.expenseSubcategory,
+          expenseSubcategoryId: this.newExpense.expenseSubcategory.id,
+          amount: this.newExpense.amount,
+          currency: this.newExpense.currency,
+          exchangeRate: this.newExpense.exchangeRate,
+          description: this.newExpense.description,
+          issuedTo:this.issuedTo,
+          person: this.newExpense.person,
+          personId: this.newExpense.person.id,
+        });
+      } else {
+        this.newExpenses.push({
+          date: this.newExpense.date,
+          expenseSubcategory: this.newExpense.expenseSubcategory,
+          expenseSubcategoryId: this.newExpense.expenseSubcategory.id,
+          amount: this.newExpense.amount,
+          currency: this.newExpense.currency,
+          exchangeRate: this.newExpense.exchangeRate,
+          description: this.newExpense.description,
+          issuedTo:this.issuedTo,
+          vehicle: this.newExpense.vehicle,
+          vehicleId: this.newExpense.vehicle.id,
+        });
+      }
+    },
+    spliceExpense(index) {
+      this.newExpenses.splice(index, 1);
+    },
     handleCreateExpense(bvModalEvt) {
       bvModalEvt.preventDefault();
       this.createExpense();
     },
     async createExpense() {
       try {
-        await api.post("expenses", this.newExpense);
+        const exp = {newExpenses: this.newExpenses}
+        await api
+          .post("expenses", exp)
+          .then((response) => console.log(response));
         this.$nextTick(() => {
           this.$bvModal.hide("newExpenseModal");
           this.getExpenses();
-          this.newExpense = {};
+          // this.newExpenses = [];
+          // this.newExpense = {
+          //   date: new Date().toISOString().substr(0, 10),
+          //   exchangeRate: 0,
+          // };
         });
       } catch (error) {
         console.log(error);

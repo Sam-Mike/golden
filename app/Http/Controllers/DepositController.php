@@ -91,6 +91,8 @@ class DepositController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $deposit = Deposit::findOrFail($id);
+        $deposit->delete();
+        return response()->json(['deposit deleted successfully']);
     }
 }
