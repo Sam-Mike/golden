@@ -41,6 +41,7 @@ Route::patch('endTrip/{id}', [TripController::class, 'endTrip']);
 Route::patch('switch_person_activity/{id}', [PeopleController::class, 'switch_person_activity']);
 Route::patch('switch_vehicle_activity/{id}', [VehicleController::class, 'switch_vehicle_activity']);
 Route::patch('switch_trailer_activity/{id}', [TrailerController::class, 'switch_trailer_activity']);
+Route::post('load_expenses', [ExpenseController::class, 'load_expenses']);
 Route::apiResources([
     'clients' => ClientController::class,
     'people' => PeopleController::class,

@@ -25,13 +25,19 @@ class ExpenseController extends Controller
     public function index()
     {
         return [
-            'expenses' => ExpenseResource::collection(Expense::with('currency')->with('expense_subcategory')->with('vehicle')->with('person')->get()),
+            // 'expenses' => ExpenseResource::collection(Expense::with('currency')->with('expense_subcategory')->with('vehicle')->with('person')->get()),
             'expenseSubcategories' => ExpenseSubCategoryResource::collection(ExpenseSubCategory::with('expense_category')->get()),
             'expenseCategories' => ExpenseCategory::all(),
             'vehicles' => VehicleResource::collection(Vehicle::all()),
             'people' => PeopleResource::collection(People::all()),
             'currency' => CurrencyResource::collection(Currency::all())
         ];
+    }
+    public function load_expenses(Request $request)
+    {
+        $from = date_create($request->input('from'));
+        $to = date_create($request->input('to'));
+        return ['expensesFiltered' => ExpenseResource::collection(Expense::whereBetween('date', [$from, $to])->get())];
     }
 
     /**

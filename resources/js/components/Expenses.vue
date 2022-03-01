@@ -23,7 +23,7 @@
         <!-- <div class="card-body"> -->
         <!-- <div class="table-search"></div> -->
         <!-- date range picking -->
-        <div class="m-2 row justify-content">
+        <div class="m-2 row justify-content-start">
           <div class="col">
             <b-input-group size="sm">
               <b-form-input
@@ -35,6 +35,14 @@
             </b-input-group>
           </div>
           <div class="col">
+             <b-input-group size="sm">
+              <b-form-input
+                id="from"
+                type="date"
+                v-model="dateRange.from"
+                placeholder="to"
+              ></b-form-input>
+            </b-input-group>
             <!-- <b-form-datepicker
               id="range-datepicker"
               v-model="minDate"
@@ -44,6 +52,14 @@
             ></b-form-datepicker> -->
           </div>
           <div class="col">
+             <b-input-group size="sm">
+              <b-form-input
+                id="to"
+                type="date"
+                v-model="dateRange.to"
+                placeholder="from"
+              ></b-form-input>
+            </b-input-group>
             <!-- <b-form-datepicker
               id="range-datepicker"
               v-model="maxDate"
@@ -53,8 +69,8 @@
             ></b-form-datepicker> -->
           </div>
           <div class="col">
-            <b-button size="sm" variant="primary" @click="dateRangeFilter()"
-              >Filter Expenses</b-button
+            <b-button size="sm" variant="primary" @click="loadExpenses()"
+              >Load Expenses</b-button
             >
           </div>
         </div>
@@ -282,8 +298,10 @@ export default {
     return {
       loading: null,
       tableBusy: false,
-      minDate: null,
-      maxDate: null,
+      dateRange: {
+        from: "",
+        to: "",
+      },
       expenses: [],
       sumTZS: "",
       sumUSD: "",
@@ -362,7 +380,7 @@ export default {
       try {
         this.loading = true;
         const response = await api.get("expenses");
-        this.expenses = response.data.expenses;
+        // this.expenses = response.data.expenses;
         this.vehicles = response.data.vehicles;
         this.people = response.data.people;
         this.expenseSubcategories = response.data.expenseSubcategories;
@@ -373,17 +391,18 @@ export default {
         console.log(error);
       }
     },
-    dateRangeFilter() {
-      if (this.minDate && this.maxDate) {
-        console.log("here i am");
-        const minDate = new Date(this.minDate);
-        const maxDate = new Date(this.maxDate);
+    async loadExpenses() {
+      if (this.dateRange.from && this.dateRange.to) {
         this.tableBusy = true;
-        this.expenses = this.expenses.filter((expense) => {
-          const expenseDate = new Date(expense.date);
-          expenseDate >= minDate && expenseDate <= maxDate;
-        });
+        try {
+          const response = await api.post("load_expenses", this.dateRange);
+          this.expenses = response.data.expensesFiltered;
+        } catch (error) {
+          console.log(error);
+        }
         this.tableBusy = false;
+      } else {
+        alert("make sure you entered all dates");
       }
     },
     addExpense() {
@@ -396,7 +415,7 @@ export default {
           currency: this.newExpense.currency,
           exchangeRate: this.newExpense.exchangeRate,
           description: this.newExpense.description,
-          issuedTo:this.issuedTo,
+          issuedTo: this.issuedTo,
           person: this.newExpense.person,
           personId: this.newExpense.person.id,
         });
@@ -409,7 +428,7 @@ export default {
           currency: this.newExpense.currency,
           exchangeRate: this.newExpense.exchangeRate,
           description: this.newExpense.description,
-          issuedTo:this.issuedTo,
+          issuedTo: this.issuedTo,
           vehicle: this.newExpense.vehicle,
           vehicleId: this.newExpense.vehicle.id,
         });
@@ -424,7 +443,7 @@ export default {
     },
     async createExpense() {
       try {
-        const exp = {newExpenses: this.newExpenses}
+        const exp = { newExpenses: this.newExpenses };
         await api
           .post("expenses", exp)
           .then((response) => console.log(response));

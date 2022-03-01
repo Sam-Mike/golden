@@ -24,18 +24,35 @@
               </div>
             </div>
             <!-- <div class="card-body"> -->
-            <div class="table-search">
-              <b-input-group size="sm">
-                <b-form-input
-                  id="tableFilter"
-                  type="search"
-                  v-model="tableFilter"
-                  placeholder="Search"
-                ></b-form-input>
-              </b-input-group>
+            <div>
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-form-input
+                    id="tableFilter"
+                    type="search"
+                    v-model="tableFilter"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </div>
+              <div class="table-search">
+                <b-input-group size="sm">
+                  <b-button
+                    class="float-right"
+                    size="sm"
+                    variant="primary"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    v-b-modal.newTrailerModal
+                  >
+                    Export to CSV
+                  </b-button>
+                </b-input-group>
+              </div>
             </div>
             <div class="table-responsive">
               <b-table
+                id="coachTrailers"
                 class="table-list"
                 bordered
                 outlined
@@ -507,6 +524,8 @@
 </template>
 <script>
 import api from "../apis/api";
+import "jquery/dist/jquery.min.js";
+import $ from "jquery";
 export default {
   data() {
     return {
@@ -688,6 +707,10 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    // code to export table jquery
+    exportToCSV() {
+      $("coachTrailers").table2csv();
     },
   },
 };

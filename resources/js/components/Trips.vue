@@ -336,7 +336,7 @@
             <b-col class="border rounded">
               <b>Loading Location</b>
               <v-select
-                v-model="editTrip.loadingLocation"
+                v-model="editTrip.loadingLocation.id"
                 label="name"
                 :options="loadingLocations"
                 :reduce="(loadingLocations) => loadingLocations.id"
@@ -496,7 +496,7 @@
             </b-col>
             <b-col class="border rounded">
               <b>Loading Location</b>
-              <p>{{ editTrip.loadingLocation }}</p>
+              <p>{{ editTrip.loadingLocation.name }}</p>
             </b-col>
           </b-row>
         </b-container>
@@ -542,8 +542,8 @@ export default {
       loadingLocations: [],
       tripFields: [
         { key: "driverName", label: "Driver" },
-        { key: "allocation.driver.licenseNumber", label: "License Number" },
         { key: "allocation.driver.mobile", label: "Mobile" },
+        { key: "allocation.driver.licenseNumber", label: "License Number" },
         { key: "allocation.driver.passportNumber", label: "Passport Number" },
         {
           key: "allocation.vehicle.registrationNumber",
@@ -580,7 +580,7 @@ export default {
         sealNumber: "",
         containerNumber: "",
         loadingDate: "",
-        loadingLocation: "",
+        loadingLocation: {},
       },
       newLoadingLocation: {},
     };
@@ -648,7 +648,7 @@ export default {
       this.editTrip.sealNumber = item.sealNumber;
       this.editTrip.containerNumber = item.containerNumber;
       this.editTrip.loadingDate = item.loadingDate;
-      this.editTrip.loadingLocation = item.loadingLocation;
+      this.editTrip.loadingLocation.name = item.loadingLocation;
       this.$root.$emit("bv::show::modal", "updateTripModal", button);
     },
     //UPDATE TRIP INFORMATION
